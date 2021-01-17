@@ -1,17 +1,13 @@
 import React, { Component, lazy } from "react";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
-import { View, Text, TouchableOpacity } from "react-native";
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from "react-native-responsive-screen";
+import { View, Text } from "react-native";
 import { useLinkTo } from "@react-navigation/native";
 import { ContextConsumer } from "../Context";
-import { RFValue, RFPercentage } from "react-native-responsive-fontsize";
 import Geocoder from "react-native-geocoding";
 import * as Location from "expo-location";
 const BigButton = lazy(() => import("../Components/Buttons"));
 const PickUpLocation = lazy(() => import("../Components/PickUpLocation"));
+const Destination = lazy(() => import("../Components/Destination"));
 const PreviousLocationModal = lazy(() =>
   import("../Components/PreviousLocationModal")
 );
@@ -30,7 +26,7 @@ class GoogleAutoComplete extends Component {
       distance: "",
       time: "",
       DestinationSelected: false,
-      savedLocationVisible: PrevLocations.length === 0 ? false : false, //When !!!!!!!InProduction!!!!!..Change to ===>> {savedLocationVisible: PrevLocations.length === 0 ? false : true},
+      savedLocationVisible: false, //When !!!!!!!InProduction!!!!!..Change to ===>> {savedLocationVisible: PrevLocations.length === 0 ? false : true},
       value: null,
     };
 
@@ -60,10 +56,6 @@ class GoogleAutoComplete extends Component {
       })
       .catch((error) => console.warn(error)); */
   };
-  componentDidMount() {
-    this.getlocation();
-  }
-
   getTripInfo = async () => {
     try {
       let response = await fetch(
@@ -82,11 +74,15 @@ class GoogleAutoComplete extends Component {
       console.error(error);
     }
   };
+  componentDidMount() {
+    this.getlocation();
+  }
   setCurrentLocationHandler = (val) => {
     this.setState({
       currentLocation: val,
     });
   };
+
   render() {
     return (
       <View
@@ -113,124 +109,25 @@ class GoogleAutoComplete extends Component {
               });
             }}
           />
-          <View
-            style={{
-              height: hp(15),
-              flexDirection: "column",
-              justifyContent: "center",
-              flex: 1,
-              alignSelf: "stretch",
-            }}
-          >
-            <Text style={{ fontSize: RFPercentage(3) }}>Destination</Text>
-
-            <View
-              style={{
-                height: hp(10),
-                alignSelf: "stretch",
-                flexDirection: "row",
-                justifyContent: "space-around",
-              }}
-            >
-              {this.state.DestinationSelected === false ? (
-                <>
-                  <GooglePlacesAutocomplete
-                    ref={(input) => (this.textInput = input)}
-                    keyboardShouldPersistTaps={true}
-                    listViewDisplayed={false}
-                    fetchDetails={true}
-                    placeholder="Enter destination..."
-                    onPress={(data) => {
-                      this.setState({ desitination: data.description }),
-                        this.setState({ DestinationSelected: true }),
-                        this.props.context.dispatch({
-                          type: "SAVE_DESTINATION",
-                          payload: this.state.desitination,
-                        });
-                    }}
-                    query={{
-                      key: "AIzaSyC5xUeX27_qX8nlwItKxi5IrMnP5R1j0jM",
-                      language: "en",
-                    }}
-                    requestUrl={{
-                      useOnPlatform: "web",
-                      url:
-                        "https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api",
-                    }}
-                    debounce={200}
-                    styles={{
-                      container: {},
-                      textInputContainer: {
-                        backgroundColor: "transparent",
-                        borderColor: null,
-                        borderTopWidth: 0,
-                        borderBottomWidth: 0,
-                      },
-                      textInput: {
-                        height: hp(5),
-                        color: "#5d5d5d",
-                        fontSize: 16,
-                      },
-                    }}
-                  />
-
-                  {PrevLocations.length !== 0 && (
-                    <TouchableOpacity
-                      onPress={() =>
-                        this.setState({ savedLocationVisible: true })
-                      }
-                      style={{
-                        justifyContent: "center",
-                        alignSelf: "center",
-                        flexDirection: "row",
-                        height: hp(5),
-                        marginBottom: hp(3),
-                        marginRight: wp(1),
-                      }}
-                    >
-                      <Text
-                        style={{
-                          alignSelf: "center",
-                          color: "blue",
-                          fontWeight: "bold",
-                          fontSize: RFValue(12),
-                        }}
-                      >
-                        Recent
-                      </Text>
-                    </TouchableOpacity>
-                  )}
-                </>
-              ) : (
-                <Text
-                  numberOfLines={3}
-                  style={{
-                    width: wp(55),
-                    alignSelf: "center",
-
-                    fontSize: RFValue(14),
-                  }}
-                >
-                  {this.state.desitination}
-                </Text>
-              )}
-              {this.state.DestinationSelected === true && (
-                <TouchableOpacity
-                  onPress={() => {
-                    {
-                      this.setState({ DestinationSelected: false }),
-                        this.setState({ desitination: "" }),
-                        this.setState({ value: null });
-                    }
-                  }}
-                  style={{
-                    justifyContent: "center",
-                    alignSelf: "center",
-                  }}
-                ></TouchableOpacity>
-              )}
-            </View>
-          </View>
+          <Destination
+            desitination={this.state.desitination}
+            setsavedLocationVisible={() =>
+              this.setState({ savedLocationVisible: true })
+            }
+            DestinationSelected={this.state.DestinationSelected}
+            setDestinationSelected={(val) =>
+              this.setState({
+                DestinationSelected: val,
+              })
+            }
+            setDestination={(val) => this.setState({ desitination: val })}
+            dispatchSaveDestination={(val) =>
+              this.props.context.dispatch({
+                type: "SAVE_DESTINATION",
+                payload: val,
+              })
+            }
+          />
           <BigButton
             onPress={() => {
               this.getTripInfo();
@@ -244,7 +141,7 @@ class GoogleAutoComplete extends Component {
               return (
                 <PreviousLocationModal
                   visible={this.state.savedLocationVisible}
-                  onPress={() => {
+                  onPress={(res) => {
                     this.setState({
                       value: res.key,
                     });

@@ -10,12 +10,19 @@ import { MaterialIcons } from "@expo/vector-icons";
 import SelectBankCard, { YOURCARDS } from "../Components/selectBankCard";
 import Icon from "react-native-vector-icons/AntDesign";
 import { ContextConsumer } from "../Context";
-import { gql, useQuery, useMutation } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 import { ADDCARD } from "./AddBankCard";
 import { Item } from "../Components/selectBankCard";
 import { TextInput } from "react-native-paper";
 import { NEW_REQUEST } from "../Queries";
-const MethodPicker = lazy(() => import("../Components/MethodPicker"));
+const SelectedPaymentMethod = lazy(() =>
+  import("../Components/SelectedPaymentMethod")
+);
+const PaymentMethodHeader = lazy(() =>
+  import("../Components/PaymentMethodHeader")
+);
+const CashSelectedText = lazy(() => import("../Components/CashSelectedText"));
+const TripDetails = lazy(() => import("../Components/TripDetails"));
 const BigButton = lazy(() => import("../Components/Buttons"));
 class TrippyPayment extends Component {
   constructor(props) {
@@ -72,107 +79,6 @@ class TrippyPayment extends Component {
     });
   }
 
-  HeadingText = () => {
-    switch (this.state.selectedValue) {
-      case "Select":
-        return (
-          <Text
-            style={{
-              alignSelf: "center",
-              marginLeft: wp(7),
-              fontSize: RFValue(24),
-              fontWeight: "600",
-            }}
-          >
-            Method
-          </Text>
-        );
-      case "Cash":
-        return (
-          <Text
-            style={{
-              alignSelf: "center",
-              marginLeft: wp(7),
-              fontSize: RFValue(24),
-              fontWeight: "600",
-            }}
-          >
-            Cash Payment
-          </Text>
-        );
-      case "Card":
-        return (
-          <Text
-            style={{
-              alignSelf: "center",
-              marginLeft: wp(7),
-              fontSize: RFValue(24),
-              fontWeight: "600",
-            }}
-          >
-            Card Payment
-          </Text>
-        );
-      default:
-        return (
-          <Text
-            style={{
-              alignSelf: "center",
-              marginLeft: wp(7),
-              fontSize: RFValue(24),
-              fontWeight: "600",
-            }}
-          >
-            Method
-          </Text>
-        );
-    }
-  };
-  PaymentMethodHeader = () => {
-    return (
-      <View
-        style={{
-          flexDirection: "row",
-        }}
-      >
-        {this.HeadingText()}
-        {this.state.selectedValue !== "Select" && (
-          <MethodPicker
-            selectedValue={this.state.selectedValue}
-            onValueChange={(itemValue) => {
-              this.setState({ cardselected: false });
-              this.setState({ selectedValue: itemValue }),
-                this.setState({ paymentMethod: itemValue });
-            }}
-          />
-        )}
-      </View>
-    );
-  };
-
-  TripDetails = () => {
-    return (
-      <View
-        style={{
-          flex: this.state.selectedValue === "Cash" ? 0.5 : 1,
-          width: wp(90),
-          alignSelf: "center",
-          justifyContent: "space-evenly",
-        }}
-      >
-        <Text style={{ fontSize: RFValue(24), fontWeight: "600" }}>
-          Details
-        </Text>
-
-        <Text>
-          {this.state.clientFirstName} {this.state.clientLastName}
-        </Text>``
-        <Text>{this.state.departure}</Text>
-        <Text>{this.state.timeRequested}</Text>
-        <Text>{this.state.clientCellNumber}</Text>
-      </View>
-    );
-  };
   PaymentButton = () => {
     const { addRequestFunction } = this.props;
     return (
@@ -232,58 +138,7 @@ class TrippyPayment extends Component {
       />
     );
   };
-  SelectPaymentMethod = () => {
-    return (
-      <>
-        <TouchableOpacity
-          onPress={() =>
-            this.setState({
-              paymentMethod: "Card",
-              selectedValue: "Card",
-            })
-          }
-          style={{
-            position: "absolute",
-            zIndex: 100,
-            top: hp(52),
-            left: wp(25),
-          }}
-        >
-          <Text
-            style={{
-              fontSize: RFValue(18),
-              fontWeight: "500",
-            }}
-          >
-            Card
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() =>
-            this.setState({
-              paymentMethod: "Cash",
-              selectedValue: "Cash",
-            })
-          }
-          style={{
-            position: "absolute",
-            zIndex: 100,
-            top: hp(52),
-            right: wp(30),
-          }}
-        >
-          <Text
-            style={{
-              fontSize: RFValue(18),
-              fontWeight: "500",
-            }}
-          >
-            Cash
-          </Text>
-        </TouchableOpacity>
-      </>
-    );
-  };
+
   CancelSelectedCard = () => {
     return (
       <TouchableOpacity
@@ -329,18 +184,7 @@ class TrippyPayment extends Component {
       </View>
     );
   };
-  CashSelectedText = () => {
-    return (
-      <Text
-        style={{
-          width: wp(85),
-          alignSelf: "center",
-        }}
-      >
-        You have chosen to pay cash, payment is due upon arrival.
-      </Text>
-    );
-  };
+
   YourBankCardsList = () => {
     return (
       <SelectBankCard
@@ -495,10 +339,45 @@ class TrippyPayment extends Component {
     const { addRequestFunction, state } = this.props;
     return (
       <View style={{ flex: 1, justifyContent: "space-evenly" }}>
-        {this.PaymentMethodHeader()}
-        {this.state.selectedValue === "Select" && this.SelectPaymentMethod()}
-        {this.state.paymentMethod === "Cash" && this.CashSelectedText()}
-        {this.state.paymentMethod === "Cash" && this.TripDetails()}
+        <PaymentMethodHeader
+          selectedValue={this.state.selectedValue}
+          onValueChange={(val) => {
+            this.setState({ cardselected: false });
+            this.setState({ selectedValue: val }),
+              this.setState({ paymentMethod: val });
+          }}
+        />
+        {this.state.selectedValue === "Select" && (
+          <SelectedPaymentMethod
+            onCardPress={() =>
+              this.setState({
+                paymentMethod: "Card",
+                selectedValue: "Card",
+              })
+            }
+            onCashPress={() =>
+              this.setState({
+                paymentMethod: "Cash",
+                selectedValue: "Cash",
+              })
+            }
+          />
+        )}
+        {this.state.paymentMethod === "Cash" && (
+          <CashSelectedText
+            text={"You have chosen to pay cash, payment is due upon arrival."}
+          />
+        )}
+        {this.state.paymentMethod === "Cash" && (
+          <TripDetails
+            selectedValue={this.state.selectedValue}
+            clientFirstName={this.state.clientFirstName}
+            clientLastName={this.state.clientLastName}
+            clientCellNumber={this.state.clientCellNumber}
+            departure={this.state.departure}
+            timeRequested={this.state.timeRequested}
+          />
+        )}
         {this.state.selectedValue === "Card" &&
           this.state.cardselected === false &&
           this.YourBankCardsList()}

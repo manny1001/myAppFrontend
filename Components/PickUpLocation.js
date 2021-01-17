@@ -6,6 +6,9 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import { RFValue, RFPercentage } from "react-native-responsive-fontsize";
+const GoogleAutoComplete = lazy(() =>
+  import("../Components/GoogleAutoComplete")
+);
 const PickUpLocation = ({
   isClicked,
   setisClicked,
@@ -58,45 +61,10 @@ const PickUpLocation = ({
             </Text>
           )
         ) : (
-          <GooglePlacesAutocomplete
-            keyboardShouldPersistTaps={true}
-            listViewDisplayed={false}
-            fetchDetails={true}
-            placeholder="Enter location..."
-            onPress={(data) => {
-              setisClicked();
-              setCurrentLocation();
-              dispatchSaveLocation(data);
-            }}
-            query={{
-              key: "AIzaSyC5xUeX27_qX8nlwItKxi5IrMnP5R1j0jM",
-              language: "en",
-            }}
-            requestUrl={{
-              useOnPlatform: "web",
-              url:
-                "https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api",
-            }}
-            debounce={200}
-            styles={{
-              container: {
-                width: wp(60),
-                alignSelf: "center",
-                marginLeft: wp(5),
-              },
-              textInputContainer: {
-                width: wp(60),
-                backgroundColor: "transparent",
-                borderColor: null,
-                borderTopWidth: 0,
-                borderBottomWidth: 0,
-              },
-              textInput: {
-                height: hp(5),
-                color: "#5d5d5d",
-                fontSize: 16,
-              },
-            }}
+          <GoogleAutoComplete
+            placeholder={"where should we find you?"}
+            setAddress={(val) => setCurrentLocation(val)}
+            setSelected={(val) => {}}
           />
         )}
       </View>

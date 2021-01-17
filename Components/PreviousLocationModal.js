@@ -56,7 +56,7 @@ const PreviousLocationModal = ({
             {PrevLocations.map((res) => {
               return (
                 <TouchableOpacity
-                  onPress={onPress}
+                  onPress={() => onPress(res)}
                   key={res.key}
                   style={{
                     marginBottom: 35,
