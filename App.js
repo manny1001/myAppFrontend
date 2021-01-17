@@ -12,47 +12,61 @@ const prefix = Linking.makeUrl("/");
 const linkingApp = {
   prefixes: [prefix],
   config: {
-    screens: {
-      HomeStack: {
-        path: "home",
-        initialRouteName: "AddName",
-        screens: {
-          Landing: { path: "Landing" },
-          Restaurants: {
-            path: "Restaurants",
-          },
-          Food: {
-            path: "Food/:item",
-            parse: {
-              item: (item) => {
-                item;
+    AppStack: {
+      path: "AppStack",
+      screens: {
+        HomeStack: {
+          path: "home",
+          initialRouteName: "AddName",
+          screens: {
+            Landing: { path: "Landing" },
+            Restaurants: {
+              path: "Restaurants",
+            },
+            Food: {
+              path: "Food/:item",
+              parse: {
+                item: (item) => {
+                  item;
+                },
               },
             },
+            getaride: { path: "getaride" },
+            Cart: { path: "Cart" },
+            Confirmationpage: { path: "Confirmationpage" },
+            Checkout: { path: "Checkout" },
+            ConfirmRide: { path: "ConfirmRide" },
+            ProductItem: { path: "ProductItem" },
+            TripPayment: { path: "TripPayment" },
+            AddName: { path: "AddName" },
+            AddEmail: { path: "AddEmail" },
+            TrackDriver: { path: "TrackDriver" },
           },
-          getaride: { path: "getaride" },
-          Cart: { path: "Cart" },
-          Confirmationpage: { path: "Confirmationpage" },
-          Checkout: { path: "Checkout" },
-          ConfirmRide: { path: "ConfirmRide" },
-          ProductItem: { path: "ProductItem" },
-          TripPayment: { path: "TripPayment" },
-          AddName: { path: "AddName" },
-          AddEmail: { path: "AddEmail" },
-          TrackDriver: { path: "TrackDriver" },
         },
-      },
-      Profile: { path: "Profile" },
-      SettingsStack: {
-        path: "Settings",
-        screens: {
-          AddBankCard: "AddBankCard",
-          Feedback: "Feedback",
-          About: "About",
-          CardSettings: "CardSettings",
-          EditBankcard: "EditBankcard",
+        Profile: { path: "Profile" },
+        SettingsStack: {
+          path: "Settings",
+          screens: {
+            AddBankCard: "AddBankCard",
+            Feedback: "Feedback",
+            About: "About",
+            CardSettings: "CardSettings",
+            EditBankcard: "EditBankcard",
+          },
         },
+        PaymentsStack: { path: "payments", screens: { Orders: "Orders" } },
       },
-      PaymentsStack: { path: "payments", screens: { Orders: "Orders" } },
+    },
+    AuthStack: {
+      path: "AuthStack",
+      Screens: {
+        Onboarding: "Onboarding",
+        PhoneAuth: "PhoneAuth",
+        AddEmail: "AddEmail",
+        AddName: "AddName",
+        EnterOTP: "EnterOTP",
+        AcceptTandCs: "AcceptTandCs",
+      },
     },
   },
 };

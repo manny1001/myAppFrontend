@@ -1,4 +1,5 @@
 import React, { useState, lazy, Suspense } from "react";
+import { Text } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
 const AddName = lazy(() => import("../Screens/AddName"));
 const AddEmail = lazy(() => import("../Screens/AddEmail"));
@@ -17,14 +18,8 @@ const AuthStack = () => {
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="AcceptTandCs"
-        component={AcceptTandCs}
-        options={{ headerShown: false }}
-      />
-
-      <Stack.Screen
-        name="AddName"
-        component={AddName}
+        name="PhoneAuth"
+        component={PhoneAuth}
         options={{ headerShown: false }}
       />
       <Stack.Screen
@@ -33,8 +28,13 @@ const AuthStack = () => {
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="PhoneAuth"
-        component={PhoneAuth}
+        name="AddName"
+        component={AddName}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="AcceptTandCs"
+        component={AcceptTandCs}
         options={{ headerShown: false }}
       />
 

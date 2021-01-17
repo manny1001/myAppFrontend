@@ -20,10 +20,11 @@ const BigButton = ({
     activeOpacity={activeOpacity}
     disabled={disabled}
     onPress={onPress}
-    containerStyle={containerStyle}
+    containerStyle={[containerStyle, { justifyContent: "center" }]}
     title={title}
     buttonStyle={{
       ...buttonStyle,
+      alignSelf: "center",
       backgroundColor: "#6c63ff",
       width: wp(50),
       height: hp(10),

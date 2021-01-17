@@ -36,57 +36,47 @@ export class Driver extends React.Component {
     return (
       <View
         style={{
-          flexDirection: "column",
+          flex: 1,
           width: wp(100),
           alignSelf: "center",
-          justifyContent: "space-between",
         }}
       >
         <Image
           style={{
             alignSelf: "center",
-            width: wp(25),
-            height: wp(25),
-            borderRadius: wp(12.5),
+            width: wp(20),
+            height: wp(20),
+            borderRadius: wp(10),
             resizeMode: "contain",
           }}
           source={require("../assets/profilePic.png")}
         />
-        <View
-          style={{
-            width: wp(80),
-            height: hp(15),
-            alignSelf: "center",
-            justifyContent: "space-evenly",
-          }}
-        >
-          <View style={styles.driverDetails}>
-            <Text style={{ fontWeight: "bold" }}>Name</Text>
-            <Text>John Keneddy</Text>
+        <View style={styles.driverDetails}>
+          <Text style={{ fontWeight: "bold" }}>Name</Text>
+          <Text>John Keneddy</Text>
+        </View>
+        <TouchableOpacity style={styles.driverDetails}>
+          <Text style={{ fontWeight: "bold" }}>Cellphone</Text>
+          <View style={{ flexDirection: "row" }}>
+            {/* <MaterialIcons
+              name="call"
+              size={wp(4)}
+              color="black"
+              style={{
+                alignSelf: "center",
+                marginRight: wp(3),
+              }}
+            /> */}
+            <Text>078 598 6325</Text>
           </View>
-          <TouchableOpacity style={styles.driverDetails}>
-            <Text style={{ fontWeight: "bold" }}>Cellphone</Text>
-            <View style={{ flexDirection: "row" }}>
-              {/* <MaterialIcons
-                name="call"
-                size={wp(4)}
-                color="black"
-                style={{
-                  alignSelf: "center",
-                  marginRight: wp(3),
-                }}
-              /> */}
-              <Text>078 598 6325</Text>
-            </View>
-          </TouchableOpacity>
-          <View style={styles.driverDetails}>
-            <Text style={{ fontWeight: "bold" }}>Registration</Text>
-            <Text>CX 01 BC GP</Text>
-          </View>
-          <View style={styles.driverDetails}>
-            <Text style={{ fontWeight: "bold" }}>Vehicle Type</Text>
-            <Text>Hyundai i20</Text>
-          </View>
+        </TouchableOpacity>
+        <View style={styles.driverDetails}>
+          <Text style={{ fontWeight: "bold" }}>Registration</Text>
+          <Text>CX 01 BC GP</Text>
+        </View>
+        <View style={styles.driverDetails}>
+          <Text style={{ fontWeight: "bold" }}>Vehicle Type</Text>
+          <Text>Hyundai i20</Text>
         </View>
       </View>
     );
@@ -94,83 +84,76 @@ export class Driver extends React.Component {
 
   render() {
     return (
-      <View
-        style={{
-          width: windowWidth,
-          height: windowHeight,
+      <FlatList
+        ref={(ref) => {
+          this.flatListRef = ref;
         }}
-      >
-        <>
-          <FlatList
-            ref={(ref) => {
-              this.flatListRef = ref;
-            }}
-            snapToAlignment={"start"}
-            snapToInterval={windowWidth}
-            decelerationRate={"fast"}
-            pagingEnabled={true}
-            showsHorizontalScrollIndicator={false}
-            horizontal={true}
-            data={DriverDetails}
-            renderItem={this.Driver}
-            keyExtractor={(item) => {
-              item.id;
-            }}
-            style={{
-              width: windowWidth,
-              height: windowHeight - hp(20),
-              alignSelf: "center",
-            }}
-          />
-        </>
-
-        {/* {this.state.isPressed < 3 && (
-          <>
-            <BigButton
-              onPress={() => {
-                this.setState({ isPressed: this.state.isPressed + 1 });
-                this.flatListRef.scrollToIndex({
-                  animated: true,
-                  index: this.state.isPressed,
-                });
-              }}
-              containerStyle={{
-                height: hp(15),
-                justifyContent: "center",
-              }}
-              title={"Next"}
-              buttonStyle={{
-                height: hp(10),
-                width: wp(80),
-                alignSelf: "center",
-                backgroundColor: "#6c63ff",
-              }}
-            />
-          </>
-        )}
-        {this.state.isPressed == 3 && (
-          <BigButton
-            onPress={() => {
-              this.props.navigation.navigate("AcceptTandCs");
-            }}
-            containerStyle={{
-              height: hp(15),
-              justifyContent: "center",
-            }}
-            title={"Start"}
-            buttonStyle={{
-              height: hp(10),
-              width: wp(80),
-              alignSelf: "center",
-              backgroundColor: "#6c63ff",
-            }}
-          />
-        )} */}
-      </View>
+        snapToAlignment={"start"}
+        snapToInterval={windowWidth}
+        decelerationRate={"fast"}
+        pagingEnabled={true}
+        showsHorizontalScrollIndicator={false}
+        horizontal={true}
+        data={DriverDetails}
+        renderItem={this.Driver}
+        keyExtractor={(item) => {
+          item.id;
+        }}
+        contentContainerStyle={{
+          width: windowWidth,
+          flex: 1,
+          alignSelf: "center",
+        }}
+      />
     );
   }
 }
-
+/* {
+  this.state.isPressed < 3 && (
+    <>
+      <BigButton
+        onPress={() => {
+          this.setState({ isPressed: this.state.isPressed + 1 });
+          this.flatListRef.scrollToIndex({
+            animated: true,
+            index: this.state.isPressed,
+          });
+        }}
+        containerStyle={{
+          height: hp(15),
+          justifyContent: "center",
+        }}
+        title={"Next"}
+        buttonStyle={{
+          height: hp(10),
+          width: wp(80),
+          alignSelf: "center",
+          backgroundColor: "#6c63ff",
+        }}
+      />
+    </>
+  );
+}
+{
+  this.state.isPressed == 3 && (
+    <BigButton
+      onPress={() => {
+        this.props.navigation.navigate("AcceptTandCs");
+      }}
+      containerStyle={{
+        height: hp(15),
+        justifyContent: "center",
+      }}
+      title={"Start"}
+      buttonStyle={{
+        height: hp(10),
+        width: wp(80),
+        alignSelf: "center",
+        backgroundColor: "#6c63ff",
+      }}
+    />
+  );
+} */
 export default function (props) {
   const linkTo = useLinkTo();
 
@@ -198,7 +181,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     width: wp(80),
-    alignSelf: "flex-start",
+    alignSelf: "center",
   },
   heading3: {
     fontSize: RFValue(16),

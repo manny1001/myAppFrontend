@@ -1,5 +1,4 @@
-import React, { Component } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import React from "react";
 import { Context, ContextConsumer } from "./Context";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 import App from "./App";
@@ -21,5 +20,4 @@ const Index = () => {
   );
 };
 
-//make this component available to the app
 export default Index;

@@ -24,8 +24,6 @@ import Geocoder from "react-native-geocoding";
 import * as Location from "expo-location";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import BigButton from "../Components/Buttons.js";
-import Header from "../Components/Header";
-
 import { ContextConsumer } from "../Context";
 import Driver from "../Components/ScrollToIndexFlatlist";
 const windowWidth = Dimensions.get("window").width;
@@ -153,31 +151,22 @@ class ConfirmRide extends Component {
 
               <View
                 style={{
-                  width: wp(100),
+                  flexDirection: "column",
                   alignSelf: "center",
-                  borderRadius: 5,
-                  elevation: 10,
                   flex: 1,
+                  justifyContent: "space-around",
                 }}
               >
                 <Text
                   style={{
                     fontSize: RFValue(16),
                     fontWeight: "bold",
-                    textAlign: "flex-start",
                   }}
                 >
                   Driver
                 </Text>
-                <View
-                  style={{
-                    height: windowHeight / 4.1,
-                    alignSelf: "center",
-                  }}
-                >
-                  <Driver />
-                </View>
-                <View
+                <Driver />
+                {/* <View
                   style={{
                     width: wp(30),
                     height: hp(10),
@@ -187,11 +176,11 @@ class ConfirmRide extends Component {
                   }}
                 >
                   <Dots />
-                </View>
+                </View> */}
               </View>
               <View
                 style={{
-                  flex: 0.5,
+                  flex: 0.25,
                   width: wp(100),
                   alignSelf: "center",
                   justifyContent: "center",
@@ -200,7 +189,6 @@ class ConfirmRide extends Component {
                 <BigButton
                   buttonStyle={{
                     width: wp(80),
-                    flex: 1,
                     alignSelf: "center",
                   }}
                   titleStyle={{ fontWeight: "bold" }}

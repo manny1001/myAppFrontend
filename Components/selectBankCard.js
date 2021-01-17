@@ -14,7 +14,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-export const DATA = [
+export const YOURCARDS = [
   {
     id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
     title: "FNB",
@@ -73,8 +73,8 @@ export function Item({
       style={[
         styles.item,
         {
-          width: selected ? wp(55) : wp(50),
-          height: height ? height : hp(20),
+          width: wp(50),
+          height: hp(20),
           alignSelf: "center",
         },
       ]}
@@ -154,7 +154,7 @@ export default function SelectBankCard({
   setselectedCard,
 }) {
   const [selected, setSelected] = React.useState(new Map());
-  const [NewDATA, setNewDATA] = React.useState(DATA);
+  const [NewDATA, setNewDATA] = React.useState(YOURCARDS);
   const newSelected = new Map(selected);
   const onSelect = React.useCallback(
     (id) => {
@@ -171,11 +171,11 @@ export default function SelectBankCard({
     <View
       style={[
         style,
-        styles.container2,
+
         {
+          justifyContent: "space-evenly",
           alignSelf: "center",
           width: wp(90),
-
           justifyContent: "center",
         },
       ]}
@@ -233,10 +233,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     paddingTop: Constants.statusBarHeight,
   },
-  container2: {
-    justifyContent: "space-evenly",
-    paddingTop: Constants.statusBarHeight,
-  },
+
   section: {
     justifyContent: "center",
 

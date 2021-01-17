@@ -1,16 +1,16 @@
-import React, { useState } from "react";
-import { View, Text, Animated, Image, StyleSheet } from "react-native";
-import { useLinkTo } from "@react-navigation/native";
+import React, { useState, lazy } from "react";
+import { View, StyleSheet } from "react-native";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import { RFPercentage } from "react-native-responsive-fontsize";
 import { ContextConsumer } from "../Context";
-import Chat from "../Components/ChatApp";
-import { CountdownCircleTimer } from "react-native-countdown-circle-timer";
+const Chat = lazy(() => import("../Components/ChatApp"));
+const CountDown = lazy(() => import("../Components/CountDown"));
+const DriversInfo = lazy(() => import("../Components/DriversInfo"));
+const CallDriver = lazy(() => import("../Components/CallDriver"));
+const ProfilePicture = lazy(() => import("../Components/ProfilePicture"));
 const TrackDriver = () => {
-  const [DriverTimeLeft, setDriverTimeLeft] = useState("03:12");
   const [DriverName, setDriverName] = useState("Peter");
   const [DriverRegistration, setDriverRegistration] = useState("YH KO HJ GP");
   const [DriverCarModel, setDriverCarModel] = useState("Hyundai i20");
@@ -30,113 +30,28 @@ const TrackDriver = () => {
           flexDirection: "row",
           flexWrap: "wrap",
           justifyContent: "space-around",
-
           padding: wp(8),
         }}
       >
-        <View
-          style={[
-            styles.TopInfo,
-            { alignSelf: "flex-start", borderWidth: 0, backgroundColor: "" },
-          ]}
-        >
-          <Image
-            style={{
-              width: wp(28),
-              height: wp(28),
-              alignSelf: "center",
-              borderRadius: wp(14),
-            }}
-            source={{ uri: "https://randomuser.me/api/portraits/men/41.jpg" }}
-          />
-        </View>
-        <View style={styles.TopInfo}>
-          <Text
-            style={{
-              alignSelf: "center",
-              flexDirection: "column",
-              fontSize: RFPercentage(2),
-            }}
-          >
-            {DriverName}
-          </Text>
-          <Text
-            style={{
-              alignSelf: "center",
-              flexDirection: "column",
-              fontSize: RFPercentage(2),
-            }}
-          >
-            {DriverCarModel}
-          </Text>
-          <Text
-            style={{
-              fontSize: RFPercentage(2),
-              alignSelf: "center",
-              fontWeight: "700",
-            }}
-          >
-            {DriverRegistration}
-          </Text>
-        </View>
-        <View
-          style={[
-            styles.TopInfo,
-            { alignSelf: "flex-end", borderWidth: 0, backgroundColor: "" },
-          ]}
-        >
-          <CountdownCircleTimer
-            size={160}
-            isPlaying
-            duration={15}
-            colors={[
-              ["#004777", 0.4],
-              ["#F7B801", 0.4],
-              ["#A30000", 0.2],
-            ]}
-          >
-            {({ remainingTime, animatedColor }) => (
-              <Animated.View
-                style={{
-                  width: 160,
-                  borderRadius: wp(80),
-                  flex: 1,
-                  justifyContent: "center",
-                }}
-              >
-                {remainingTime > 10 && (
-                  <Animated.Text
-                    style={{ color: animatedColor, alignSelf: "center" }}
-                  >
-                    Arriving in
-                  </Animated.Text>
-                )}
-                {remainingTime <= 10 && remainingTime !== 0 && (
-                  <Animated.Text
-                    style={{ color: animatedColor, alignSelf: "center" }}
-                  >
-                    Almost there
-                  </Animated.Text>
-                )}
-                {remainingTime === 0 && (
-                  <Animated.Text
-                    style={{ color: animatedColor, alignSelf: "center" }}
-                  >
-                    Driver has arrived
-                  </Animated.Text>
-                )}
-                <Animated.Text
-                  style={{ color: animatedColor, alignSelf: "center" }}
-                >
-                  {remainingTime}
-                </Animated.Text>
-              </Animated.View>
+        <ProfilePicture
+          source={{ uri: "https://randomuser.me/api/portraits/men/41.jpg" }}
+          style={{
+            width: wp(28),
+            height: wp(28),
+            alignSelf: "center",
+            borderRadius: wp(14),
+            borderWidth: wp(1.5),
+            borderColor: "#6c63ff",
+          }}
+        />
+        <CallDriver />
+        <DriversInfo
+          DriverName={DriverName}
+          DriverCarModel={DriverCarModel}
+          DriverRegistration={DriverRegistration}
+        />
 
-              /*  <Text style={{ alignSelf: "center" }}>Arriving in </Text> */
-            )}
-          </CountdownCircleTimer>
-        </View>
-        {/* */}
+        <CountDown />
       </View>
 
       <View
@@ -144,6 +59,8 @@ const TrackDriver = () => {
           width: wp(95),
           flex: 1,
           alignSelf: "center",
+          marginBottom: hp(1),
+          borderRadius: wp(3),
         }}
       >
         <Chat />
@@ -153,11 +70,10 @@ const TrackDriver = () => {
 };
 
 export default function (props) {
-  const linkTo = useLinkTo();
   return (
     <ContextConsumer>
       {(context) => {
-        return <TrackDriver {...props} linkTo={linkTo} context={context} />;
+        return <TrackDriver {...props} context={context} />;
       }}
     </ContextConsumer>
   );
