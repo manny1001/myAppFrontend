@@ -14,7 +14,7 @@ const AppStack = () => {
       }}
     >
       <Tabs.Screen
-        name="HomeStack"
+        name="Home"
         component={HomeStack}
         options={{
           tabBarLabel: "Home",
@@ -24,7 +24,7 @@ const AppStack = () => {
         }}
       />
       <Tabs.Screen
-        name="PaymentsStack"
+        name="Manny"
         component={PaymentsStack}
         options={{
           tabBarLabel: "Payments",
@@ -34,7 +34,7 @@ const AppStack = () => {
         }}
       />
       <Tabs.Screen
-        name="SettingsStack"
+        name="App"
         component={SettingsStack}
         options={{
           tabBarLabel: "Settings",
@@ -42,9 +42,9 @@ const AppStack = () => {
             <Feather name="settings" color="#333" size={wp(5)} />
           ), */
         }}
-      />
+      /> 
       <Tabs.Screen
-        name="Profile"
+        name="ProfilePage"
         component={ProfileStack}
         options={{
           tabBarLabel: "Profile",

@@ -7,7 +7,7 @@ const PaymentsStack = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="Orders"
+        name="Payments"
         component={Payments}
         options={{ headerShown: false }}
       />

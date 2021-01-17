@@ -8,7 +8,7 @@ import { RFValue } from "react-native-responsive-fontsize";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 const BigButton = lazy(() => import("../Components/Buttons"));
 const Driver = lazy(() => import("../Components/ScrollToIndexFlatlist"));
-class ConfirmRide extends Component {
+class Confirm extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -84,7 +84,7 @@ class ConfirmRide extends Component {
             titleStyle={{ fontWeight: "bold" }}
             title={"Proceed" + " " + "\n" + "R" + " " + this.state.tripAmount}
             onPress={() => {
-              this.props.navigation.navigate("TripPayment", {
+              this.props.navigation.navigate("Payment", {
                 from: "ride",
               });
             }}
@@ -94,7 +94,7 @@ class ConfirmRide extends Component {
     );
   }
 }
-export default ConfirmRide;
+export default Confirm;
 
 const styles = StyleSheet.create({
   heading: {

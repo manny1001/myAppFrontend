@@ -235,7 +235,7 @@ const Cart = (props) => {
         <BigButton
           /* onPress={() => cancel this guys order} */
           onPress={() => {
-            props.navigation.navigate("TripPayment", {
+            props.navigation.navigate("Payment", {
               Restaurant: Restaurant,
               from: "order",
             });

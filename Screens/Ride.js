@@ -131,7 +131,7 @@ class GoogleAutoComplete extends Component {
           <BigButton
             onPress={() => {
               this.getTripInfo();
-              this.props.navigation.navigate("ConfirmRide");
+              this.props.navigation.navigate("Confirm");
             }}
             title={"Request"}
             titleStyle={{ fontWeight: "bold" }}

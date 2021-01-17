@@ -9,8 +9,8 @@ const Cart = lazy(() => import("../Screens/Cart"));
 const Checkout = lazy(() => import("../Screens/Checkout"));
 const Rating = lazy(() => import("../Screens/Rating"));
 const ProductItem = lazy(() => import("../Screens/ProductItem"));
-const ConfirmRide = lazy(() => import("../Screens/ConfirmRide"));
-const TripPayment = lazy(() => import("../Screens/TripPayment"));
+const Confirm = lazy(() => import("../Screens/Confirm"));
+const Payment = lazy(() => import("../Screens/Payment"));
 const TrackDriver = lazy(() => import("../Screens/TrackDriver"));
 const HomeStack = () => {
   const Stack = createStackNavigator();
@@ -27,8 +27,8 @@ const HomeStack = () => {
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="ConfirmRide"
-        component={ConfirmRide}
+        name="Confirm"
+        component={Confirm}
         options={{ headerShown: false }}
       />
       <Stack.Screen
@@ -63,7 +63,7 @@ const HomeStack = () => {
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="getaride"
+        name="Trip"
         component={Ride}
         options={{ headerShown: false }}
       />
@@ -73,8 +73,8 @@ const HomeStack = () => {
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="TripPayment"
-        component={TripPayment}
+        name="Payment"
+        component={Payment}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

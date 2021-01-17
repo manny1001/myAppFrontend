@@ -37,7 +37,6 @@ const AddNames = (props) => {
           flexDirection: "column",
           justifyContent: "space-evenly",
           flex: 1,
-          backgroundColor: "green",
         }}
       >
         <TextInput

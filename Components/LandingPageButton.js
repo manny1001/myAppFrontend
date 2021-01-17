@@ -9,7 +9,7 @@ const LandingPageButton = (props) => {
   return (
     <TouchableOpacity
       onPress={() => {
-        props.navigation.navigate("getaride");
+        props.navigation.navigate("Trip");
       }}
       style={{
         justifyContent: "center",

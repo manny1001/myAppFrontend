@@ -169,8 +169,8 @@ const ProfileStack = (props) => {
         </View>
         <View
           style={{
-            borderTopWidth: 1,
-            borderTopColor: "grey",
+            borderTopWidth: wp(1),
+            borderTopColor: "#6c63ff",
             backgroundColor: "#f5f5f5",
             width: wp(100),
             height: hp(8),
