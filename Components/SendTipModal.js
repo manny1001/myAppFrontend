@@ -7,7 +7,7 @@ import {
 } from "react-native-responsive-screen";
 import { RFValue } from "react-native-responsive-fontsize";
 import { TextInput } from "react-native-paper";
-import { Card, List, Divider } from "react-native-paper";
+
 import { Button } from "react-native-elements";
 export const SendTipModal = ({ TipModalVisible, settTipModalVisible }) => {
   const [tipAmount, setTipAmonut] = useState("");
@@ -24,7 +24,7 @@ export const SendTipModal = ({ TipModalVisible, settTipModalVisible }) => {
         }}
         isVisible={TipModalVisible}
       >
-        <Card
+        <View
           style={{
             marginTop: hp(2),
             borderWidth: wp(0.05),
@@ -52,16 +52,6 @@ export const SendTipModal = ({ TipModalVisible, settTipModalVisible }) => {
               justifyContent: "space-Send",
             }}
           >
-            <Image
-              style={{
-                alignSelf: "flex-start",
-                width: wp(25),
-                height: hp(15),
-                resizeMode: "contain",
-                marginLeft: wp(3),
-              }}
-              source={require("../assets/profilePic.png")}
-            />
             <View
               style={{
                 flexDirecction: "row",
@@ -158,7 +148,7 @@ export const SendTipModal = ({ TipModalVisible, settTipModalVisible }) => {
               type="outline"
             />
           </View>
-        </Card>
+        </View>
       </Modal>
     </View>
   );

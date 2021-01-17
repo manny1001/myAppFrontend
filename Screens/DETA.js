@@ -35,7 +35,7 @@ export const BIGDATA = [
     id: "1",
     title: "Debonairs Pizza",
     type: "FastFood",
-    image: require("../assets/debonairs.png"),
+    image: "",
     Address:
       "Shop 49 The CarlsWald Shopping Centre, Halfway House, Midrand, 1685",
     Operating_Hours: `Saturday	9am–9pm

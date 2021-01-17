@@ -86,7 +86,7 @@ export const DATA3 = [
     Name: "Debonairs",
     Contact: "013 879 9635",
     type: "FastFood",
-    Logo: require("../assets/debonairs.png"),
+    Logo: "",
     Address: "Halfway House Midrand, Shop 49 CarlsWald Shopping Centre, 1685",
     Operating_Hours: `daily from 9am–9pm`,
     Menu: [
@@ -229,7 +229,7 @@ export const DATA3 = [
     Name: "Dominos",
     Contact: "011 585 6987",
     type: "FastFood,Pizza,Tasty",
-    Logo: require("../assets/Dominos.png"),
+    Logo: "",
     Address: "Stoneridge Dr Edenvale , Cnr Greenstone & Stoneridge Dr",
     Operating_Hours: `24/7`,
     Menu: [
@@ -371,7 +371,7 @@ export const DATA3 = [
     id: 1,
     Name: "Debonairs",
     type: "FastFood",
-    Logo: require("../assets/debonairs.png"),
+    Logo: "",
     Address: "Halfway House Midrand, Shop 49 CarlsWald Shopping Centre, 1685",
     Operating_Hours: `daily from 9am–9pm`,
     Menu: [
@@ -513,7 +513,7 @@ export const DATA3 = [
     id: 2,
     Name: "Dominos",
     type: "FastFood Pizza",
-    Logo: require("../assets/Dominos.png"),
+    Logo: "",
     Address: "Stoneridge Dr Edenvale,Cnr Greenstone & Stoneridge Dr",
     Operating_Hours: `24/7`,
     Menu: [
@@ -656,7 +656,7 @@ export const DATA3 = [
     Name: "Debonairs",
 
     type: "FastFood",
-    Logo: require("../assets/debonairs.png"),
+    Logo: "",
     Address: "Halfway House Midrand, Shop 49 CarlsWald Shopping Centre, 1685",
     Operating_Hours: `daily from 9am–9pm`,
     Menu: [
@@ -799,7 +799,7 @@ export const DATA3 = [
     Name: "Dominos",
 
     type: "FastFood Pizza",
-    Logo: require("../assets/Dominos.png"),
+    Logo: "",
     Address: "Stoneridge Dr Edenvale,Cnr Greenstone & Stoneridge Dr",
     Operating_Hours: `24/7`,
     Menu: [

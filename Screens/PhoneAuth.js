@@ -31,6 +31,7 @@ const PhoneAuth = ({ props }) => {
     <View
       style={{
         flex: 1,
+        justifyContent: "space-around",
       }}
     >
       <VerificationModal
@@ -43,30 +44,24 @@ const PhoneAuth = ({ props }) => {
         loginAsync={loginAsync}
         setvisibleModal={setvisibleModal}
       />
-      <View
+
+      <PhoneAuthImage />
+
+      <TextInput
+        maxLength={10}
         style={{
-          flex: 1,
-          justifyContent: "space-around",
+          backgroundColor: "#f3f3f3",
+          alignSelf: "center",
+          width: wp(60),
+          height: hp(6),
+          fontSize: RFValue(14),
         }}
-      >
-        <PhoneAuthImage />
-        <View style={{ flex: 1 }}>
-          <TextInput
-            maxLength={10}
-            style={{
-              backgroundColor: "#f3f3f3",
-              alignSelf: "center",
-              width: wp(60),
-              height: hp(6),
-              fontSize: RFValue(14),
-            }}
-            keyboardType={"default"}
-            label="eg. 012 345 6789"
-            text={CellNumber}
-            onChangeText={(text) => setCellNumber(text)}
-          />
-        </View>
-      </View>
+        keyboardType={"number-pad"}
+        label="eg. 012 345 6789"
+        text={CellNumber}
+        onChangeText={(text) => setCellNumber(text)}
+      />
+
       <ContextConsumer>
         {(context) => {
           return (

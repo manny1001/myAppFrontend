@@ -1,23 +1,20 @@
-import React, { useState } from "react";
+import React, { lazy, useState } from "react";
 import {
   Text,
   View,
   StyleSheet,
-  Button,
   Image,
   TouchableOpacity,
   Modal,
   Alert,
 } from "react-native";
-import Constants from "expo-constants";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import { RFValue } from "react-native-responsive-fontsize";
 import { TextInput } from "react-native-paper";
-import Header from "../Components/Header";
-import BigButton from "../Components/Buttons.js";
+const BigButton = lazy(() => import("../Components/Buttons"));
 export default function AddBankCard(props) {
   const [cardName, setcardName] = React.useState("");
   const [cardNumber, setcardNumber] = React.useState("");
@@ -28,12 +25,6 @@ export default function AddBankCard(props) {
   const [modalVisible, setModalVisible] = useState(false);
   return (
     <>
-      <Header
-        backColor={"transparent"}
-        CenterComponent={
-          <Text style={{ fontSize: RFValue(20) }}>New card</Text>
-        }
-      />
       <Modal
         animationType="slide"
         visible={modalVisible}
@@ -45,11 +36,10 @@ export default function AddBankCard(props) {
           style={{
             justifyContent: "center",
             alignSelf: "center",
-            height: hp(50),
-            width: wp(100),
+            flex: 1,
             justifyContent: "space-evenly",
-            backgroundColor: "white",
-            top: hp(25),
+            backgroundColor: "#f2f2f2",
+            width: wp(100),
           }}
         >
           <Text
@@ -99,12 +89,20 @@ export default function AddBankCard(props) {
         </View>
       </Modal>
       <ADDCARD
+        setcardName={setcardName}
+        setcardNumber={setcardNumber}
+        setmonths={setmonths}
+        setYear={setYear}
+        setCVV={setCVV}
+        setdoneEditing={setdoneEditing}
+        style={{ flex: 1, justifyContent: "space-evenly" }}
         cardName={cardName}
         cardNumber={cardNumber}
         months={months}
         year={year}
         cvv={cvv}
         doneEditing={doneEditing}
+        setModalVisible={setModalVisible}
       />
     </>
   );
@@ -118,54 +116,25 @@ export const ADDCARD = ({
   logos,
   doneEditing,
   style,
+  setModalVisible,
+  setcardName,
+  setcardNumber,
+  setCVV,
+  setYear,
+  setmonths,
 }) => {
   return (
     <View style={style}>
       {logos !== "none" && (
         <View
           style={{
-            height: hp(10),
-            width: wp(70),
+            width: wp(75),
+            flex: 0.5,
             alignSelf: "center",
+            justifyContent: "space-betwenn",
             flexDirection: "row",
           }}
-        >
-          <View
-            style={{
-              height: hp(10),
-              width: wp(35),
-
-              justifyContent: "center",
-            }}
-          >
-            <Image
-              style={{
-                alignSelf: "center",
-                width: wp(10),
-                height: hp(10),
-                resizeMode: "contain",
-              }}
-              source={require("../assets/visa.png")}
-            />
-          </View>
-          <View
-            style={{
-              height: hp(10),
-              justifyContent: "center",
-              width: wp(35),
-            }}
-          >
-            <Image
-              style={{
-                alignSelf: "center",
-                width: wp(10),
-                height: hp(10),
-                resizeMode: "contain",
-              }}
-              source={require("../assets/mastercard.png")}
-            />
-          </View>
-        </View>
+        ></View>
       )}
 
       <View style={[styles.section, { height: hp(10) }]}>

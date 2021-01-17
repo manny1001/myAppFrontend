@@ -19,7 +19,7 @@ import Header from "../Components/Header";
 import Modal from "modal-enhanced-react-native-web";
 
 import BigButton from "../Components/Buttons.js";
-import { List, Divider } from "react-native-paper";
+
 import { RFValue } from "react-native-responsive-fontsize";
 
 const Cart = (props) => {
@@ -93,7 +93,6 @@ const Cart = (props) => {
         }}
         description={"R" + " " + item.Price}
       />
-      <Divider />
     </>
   );
   const linkTo = useLinkTo();

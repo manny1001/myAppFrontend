@@ -12,8 +12,7 @@ import {
   ScrollView,
   TouchableOpacity,
 } from "react-native";
-import Constants from "expo-constants";
-import { Card, List, Divider } from "react-native-paper";
+
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -89,33 +88,14 @@ export default function Checkout(props) {
       Price: 55.0,
     },
   ];
-  const renderItem = ({ item }) => (
-    <>
-      <List.Item
-        title={item.Quantity + " " + item.Name}
-        titleStyle={{
-          marginLeft: wp(5),
-          fontWeight: "bold",
-          fontSize: RFValue(13),
-        }}
-        descriptionStyle={{
-          fontWeight: "bold",
-          right: wp(5),
-          position: "absolute",
-          fontSize: RFValue(11),
-        }}
-        description={"R" + " " + item.Price}
-      />
-      <Divider style={{ width: wp(75), alignSelf: "center" }} />
-    </>
-  );
+
   /*  const Restaurant = props.route.params.Restaurant; */
   const Restaurant = {
     id: 1,
     Name: "Debonairs",
     Contact: "013 879 9635",
     type: "FastFood",
-    Logo: require("../assets/debonairs.png"),
+    Logo: "",
     Address: "Halfway House Midrand, Shop 49 CarlsWald Shopping Centre, 1685",
     Operating_Hours: `daily from 9am–9pm`,
     Menu: [

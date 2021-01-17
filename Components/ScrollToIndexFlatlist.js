@@ -41,7 +41,7 @@ export class Driver extends React.Component {
           alignSelf: "center",
         }}
       >
-        <Image
+        <View
           style={{
             alignSelf: "center",
             width: wp(20),
@@ -49,7 +49,6 @@ export class Driver extends React.Component {
             borderRadius: wp(10),
             resizeMode: "contain",
           }}
-          source={require("../assets/profilePic.png")}
         />
         <View style={styles.driverDetails}>
           <Text style={{ fontWeight: "bold" }}>Name</Text>

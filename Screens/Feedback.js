@@ -17,26 +17,12 @@ const Feedback = (props) => {
 
   return (
     <View style={styles.container}>
-      <Header
-        backColor={"transparent"}
-        LeftComponent={
-          {
-            /* <TouchableOpacity onPress={() => props.navigation.goBack()}>
-            <AntDesign name="arrowleft" size={wp(7)} color="black" />
-          </TouchableOpacity> */
-          }
-        }
-        CenterComponent={
-          <Text style={{ fontSize: RFValue(20) }}>Send feedback</Text>
-        }
-      />
       <TextInput
         style={{
-          height: hp(60),
-          width: wp(95),
+          flex: 1,
+          width: wp(100),
           alignSelf: "center",
           borderColor: "gray",
-          /*   borderWidth: 0.25, */
           placeholderTextColor: "gray",
         }}
         value={feedback}
@@ -51,34 +37,23 @@ const Feedback = (props) => {
 
       <View
         style={{
-          width: wp(70),
-          height: hp(15),
+          width: wp(100),
+          flex: 0.25,
           alignSelf: "center",
-          top: hp(4),
           justifyContent: "space-around",
           flexDirection: "row",
         }}
       >
         <TouchableOpacity
           onPress={() => props.navigation.goBack()}
-          style={{ flexDirection: "column" }}
+          style={{ flexDirection: "column", alignSelf: "center" }}
         >
-          {/* <MaterialIcons
-            name="cancel"
-            size={wp(10)}
-            color="black"
-            style={{ alignSelf: "center" }}
-          /> */}
           <Text style={{ alignSelf: "center" }}>Cancel</Text>
         </TouchableOpacity>
         {feedback !== "" && (
-          <TouchableOpacity style={{ flexDirection: "column" }}>
-            <FontAwesome
-              name="send"
-              size={wp(10)}
-              color="black"
-              style={{ alignSelf: "center" }}
-            />
+          <TouchableOpacity
+            style={{ flexDirection: "column", alignSelf: "center" }}
+          >
             <Text style={{ alignSelf: "center" }}>Send</Text>
           </TouchableOpacity>
         )}

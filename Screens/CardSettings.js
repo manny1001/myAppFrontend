@@ -19,12 +19,6 @@ const CardSettings = (props) => {
   ];
   return (
     <View style={styles.container}>
-      <Header
-        backColor={"transparent"}
-        CenterComponent={
-          <Text style={{ fontSize: RFValue(20) }}>Bank Cards</Text>
-        }
-      />
       <FlatListSettings
         DATA={DATA}
         onPress1={() => props.navigation.navigate("AddBankCard")}
