@@ -24,7 +24,7 @@ const LandingPageButton = (props) => {
       <Text
         style={{
           alignSelf: "center",
-          fontSize: RFPercentage(5),
+          fontSize: RFPercentage(2),
           color: "white",
           fontWeight: "bold",
         }}

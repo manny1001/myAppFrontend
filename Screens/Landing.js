@@ -10,7 +10,6 @@ const LandingPage = (props) => {
         flexDirection: "column",
       }}
     >
-      <LandingPageTitle text={"What are we doing today?"} />
       <LandingPageButton {...props} />
     </View>
   );

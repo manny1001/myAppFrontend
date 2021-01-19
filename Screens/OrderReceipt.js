@@ -319,20 +319,6 @@ export default function App({ onPress, orderObject }) {
             Close
           </Text>
         </TouchableOpacity>
-        <TouchableOpacity
-          style={{
-            width: "40%",
-            height: "40%",
-            backgroundColor: "black",
-            alignSelf: "center",
-            borderRadius: 100,
-            justifyContent: "center",
-          }}
-        >
-          <Text style={{ alignSelf: "center", fontSize: 22, color: "white" }}>
-            Re-order
-          </Text>
-        </TouchableOpacity>
       </View>
     </View>
   );

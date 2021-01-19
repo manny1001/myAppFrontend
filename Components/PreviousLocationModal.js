@@ -7,7 +7,6 @@ import {
 import { RFValue, RFPercentage } from "react-native-responsive-fontsize";
 const BigButton = lazy(() => import("../Components/Buttons"));
 import { PrevLocations } from "../DATA";
-import Loader from "../navigation/Loader";
 const PreviousLocationModal = ({
   visible,
   onPress,
