@@ -5,19 +5,46 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import { RFPercentage } from "react-native-responsive-fontsize";
-import EnterOTP from "../screens/EnterOTP";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import Enterotp from "../screens/Enterotp";
 import Modal from "modal-enhanced-react-native-web";
 import { ContextConsumer } from "../Context";
+import { useMutation } from "@apollo/client";
+import gql from "graphql-tag";
 const VerificationModal = ({
-  OTPHandlerisEqual,
+  otpHandlerisEqual,
   visibleModal,
-  CellNumber,
-  OTP,
+  cellphone,
+  otp,
   OTPHandler,
-  loginAsync,
   setvisibleModal,
   props,
 }) => {
+  const LOGIN = gql`
+    mutation login($cellphone: String!, $otp: String!) {
+      login(cellphone: $cellphone, otp: $otp) {
+        token
+        user {
+          username
+        }
+      }
+    }
+  `;
+  const [login, { loading, error, data }] = useMutation(LOGIN, {
+    onError: (error) => {
+      console.log(loading, error);
+    },
+    onCompleted: () => {
+      console.log(data);
+    },
+  });
+  const loginAsync = async (value) => {
+    try {
+      /* await AsyncStorage.setItem("accessToken", value); */
+    } catch (e) {
+      console.log(e);
+    }
+  };
   return (
     <Modal
       style={{
@@ -31,22 +58,27 @@ const VerificationModal = ({
       <ContextConsumer>
         {(context) => {
           return (
-            <EnterOTP
-              CellNumber={CellNumber}
+            <Enterotp
+              cellphone={cellphone}
               OTPHandler={OTPHandler}
-              OTP={OTP}
+              otp={otp}
               props={props}
               onPress={() => {
-                loginAsync(1),
-                  context.dispatch({ type: "SIGN_IN", userToken: 1 });
-                setvisibleModal(false);
+                /*  setvisibleModal(false); */
+                login({ variables: { cellphone: "0658987378", otp: "4545" } });
+                /* context.dispatch({
+                    type: "SIGN_IN",
+                    payload: {
+                      userToken: 1,
+                    },
+                  }); */
               }}
             />
           );
         }}
       </ContextConsumer>
 
-      {OTPHandlerisEqual === false && (
+      {otpHandlerisEqual === false && (
         <View
           style={{
             height: hp(20),
@@ -66,7 +98,7 @@ const VerificationModal = ({
               marginTop: hp(5),
             }}
           >
-            Incorrect OTP,Please try again.
+            Incorrect otp,Please try again.
           </Text>
         </View>
       )}

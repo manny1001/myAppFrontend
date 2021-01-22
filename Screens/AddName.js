@@ -9,8 +9,7 @@ import { ContextConsumer } from "../Context";
 import BigButton from "../Components/Buttons.js";
 import { RFPercentage } from "react-native-responsive-fontsize";
 const AddNames = (props) => {
-  const [UserFirstName, setUserFirstName] = React.useState(null);
-  const [UserLastName, setUserLastName] = React.useState(null);
+  const [username, setusername] = React.useState(null);
 
   return (
     <View
@@ -48,36 +47,15 @@ const AddNames = (props) => {
             fontSize: RFPercentage(2),
           }}
           keyboardType={"default"}
-          label={"First Name"}
-          text={UserFirstName}
+          label={"Username"}
+          text={username}
           onChangeText={(text) => {
             {
-              text === "" && setUserFirstName(null);
+              text === "" && setusername(null);
             }
 
             {
-              text !== "" && setUserFirstName(text);
-            }
-          }}
-        />
-        <TextInput
-          style={{
-            backgroundColor: "#f3f3f3",
-            alignSelf: "center",
-            width: wp(80),
-            height: hp(7),
-            fontSize: RFPercentage(2),
-          }}
-          keyboardType={"default"}
-          label={"Last Name"}
-          text={UserLastName}
-          onChangeText={(text) => {
-            {
-              text === "" && setUserLastName(null);
-            }
-
-            {
-              text !== "" && setUserLastName(text);
+              text !== "" && setusername(text);
             }
           }}
         />
@@ -88,21 +66,14 @@ const AddNames = (props) => {
             <BigButton
               onPress={() => {
                 context.dispatch({
-                  type: "SAVE_NAMES",
+                  type: "SIGN_IN",
                   payload: {
-                    FirstName: UserFirstName,
-                    LastName: UserLastName,
+                    username: username,
+                    userToken: 1,
                   },
                 });
-                props.navigation.navigate("AddEmail");
               }}
-              disabled={
-                UserFirstName === null
-                  ? true
-                  : UserLastName === null
-                  ? true
-                  : null
-              }
+              disabled={username === null ? true : false}
               title={"Save"}
             />
           );

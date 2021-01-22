@@ -13,14 +13,10 @@ const { Provider, Consumer } = React.createContext();
 class Context extends Component {
   state = {
     sessionArray: {
-      /*  cardName: "",
-      cardNumber: "",
-      cardDate: "",
-      cardCVV: "", */
       clientCellNumber: "",
-      clientFirstName: "",
+      username: "",
       clientLastName: "",
-      clientEmail: "",
+      email: "",
       destination: "",
       departureTime: "",
       destinationArrivalTime: "",
@@ -38,11 +34,19 @@ class Context extends Component {
       total: "",
       isloggedIn: false,
       userToken: null,
+      AcceptedTCs: false,
     },
   };
 
   dispatch = (action) => {
     switch (action.type) {
+      case "AcceptedTCs":
+        return this.setState((state) => ({
+          sessionArray: {
+            ...this.state.sessionArray,
+            AcceptedTCs: true,
+          },
+        }));
       case "SET_FIRST_TIME":
         /*    console.log(action); */
         return this.setState((state) => ({
@@ -52,21 +56,16 @@ class Context extends Component {
           },
         }));
       case "SAVE_EMAIL":
-        return this.setState((state) => ({
-          sessionArray: {
-            ...this.state.sessionArray,
-            clientEmail: action.payload,
-          },
-        }));
-      case "SAVE_NAMES":
-        /*        console.log(action); */
-        return this.setState((state) => ({
-          sessionArray: {
-            ...this.state.sessionArray,
-            clientFirstName: action.payload.FirstName,
-            clientLastName: action.payload.LastName,
-          },
-        }));
+        return this.setState(
+          (state) => ({
+            sessionArray: {
+              ...this.state.sessionArray,
+              email: action.payload,
+            },
+          }),
+          console.log(action)
+        );
+
       case "SAVE_CELL":
         return this.setState((state) => ({
           sessionArray: {
@@ -91,13 +90,17 @@ class Context extends Component {
           },
         }));
       case "SIGN_IN":
-        return this.setState((state) => ({
-          sessionArray: {
-            ...this.state.sessionArray,
-            isloggedIn: true,
-            userToken: action.userToken,
-          },
-        }));
+        return this.setState(
+          (state) => ({
+            sessionArray: {
+              ...this.state.sessionArray,
+              isloggedIn: true,
+              userToken: 1,
+              username: action.username,
+            },
+          }),
+          console.log(action)
+        );
       case "SIGN_OUT":
         return this.setState((state) => ({
           sessionArray: {

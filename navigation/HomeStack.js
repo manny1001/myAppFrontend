@@ -11,6 +11,7 @@ const Rating = lazy(() => import("../Screens/Rating"));
 const ProductItem = lazy(() => import("../Screens/ProductItem"));
 const Confirm = lazy(() => import("../Screens/Confirm"));
 const Payment = lazy(() => import("../Screens/Payment"));
+const AddName = lazy(() => import("../Screens/AddName"));
 const TrackDriver = lazy(() => import("../Screens/TrackDriver"));
 const HomeStack = () => {
   const Stack = createStackNavigator();
@@ -75,6 +76,11 @@ const HomeStack = () => {
       <Stack.Screen
         name="Payment"
         component={Payment}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="AddName"
+        component={AddName}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

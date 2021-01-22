@@ -5,6 +5,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
+import { ContextConsumer } from "../Context";
 const BigButton = lazy(() => import("../Components/Buttons"));
 const AcceptTermsButton = lazy(() => import("../Components/AcceptTermsButton"));
 const AcceptTermsImage = lazy(() => import("../Components/AcceptTermsImage"));
@@ -56,14 +57,23 @@ class AcceptTandCs extends Component {
             </TouchableOpacity>
           </View>
         </View>
-        <BigButton
-          disabled={this.state.isAccepted === false ? true : false}
-          activeOpacity={this.state.isAccepted === false ? 2 : 0.3}
-          onPress={() => {
-            this.props.navigation.navigate("AddName");
+        <ContextConsumer>
+          {(context) => {
+            return (
+              <BigButton
+                disabled={this.state.isAccepted === false ? true : false}
+                activeOpacity={this.state.isAccepted === false ? 2 : 0.3}
+                onPress={() => {
+                  this.props.navigation.navigate("PhoneAuth");
+                  context.dispatch({
+                    type: "AcceptedTCs",
+                  });
+                }}
+                title={"Continue"}
+              />
+            );
           }}
-          title={"Continue"}
-        />
+        </ContextConsumer>
       </View>
     );
   }

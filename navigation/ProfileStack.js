@@ -27,26 +27,13 @@ const ProfileStack = (props) => {
   const [clientEmail, setclientEmail] = React.useState("");
   const AysncLogout = async (userid) => {
     try {
-      await AsyncStorage.removeItem("loggedInTrue");
+      await AsyncStorage.removeItem("accessToken");
       return true;
     } catch (e) {
       return false;
     }
   };
-  React.useEffect(() => {
-    AsyncStorage.multiGet([
-      "clientFirstName",
-      "clientLastName",
-      "clientCellNumber",
-      "clientEmail",
-    ]).then((response) => {
-      /*     console.log(response); */
-      setclientFirstName(response[0][1]);
-      setclientLastName(response[1][1]);
-      setclientCellNumber(response[2][1]);
-      setclientEmail(response[3][1]);
-    });
-  }, []);
+
   return (
     <View
       style={{ flexDirection: "column", justifyContent: "center", flex: 1 }}

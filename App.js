@@ -62,7 +62,6 @@ const linkingApp = {
       Screens: {
         Onboarding: "Onboarding",
         PhoneAuth: "PhoneAuth",
-        AddEmail: "AddEmail",
         AddName: "AddName",
         EnterOTP: "EnterOTP",
         AcceptTandCs: "AcceptTandCs",
@@ -76,7 +75,7 @@ export default function App(props) {
   React.useEffect(() => {
     const RestoreAsync = async () => {
       try {
-        const userToken = await AsyncStorage.getItem("loggedInTrue");
+        const userToken = await AsyncStorage.getItem("accessToken");
         props.context.dispatch({
           type: "RESTORE_TOKEN",
           userToken: userToken,

@@ -5,24 +5,19 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import TextInput from "../Components/TextInput";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { RFValue } from "react-native-responsive-fontsize";
+
 import { ContextConsumer } from "../Context";
 const VerificationModal = lazy(() => import("../Components/VerificationModal"));
 const BigButton = lazy(() => import("../Components/Buttons"));
 const PhoneAuthImage = lazy(() => import("../Components/PhoneAuthImage"));
-const PhoneAuth = ({ props }) => {
-  const [CellNumber, setCellNumber] = React.useState(1451651515);
-  const [visibleModal, setvisibleModal] = React.useState(false);
+
+const PhoneAuth = (props) => {
+  const [cellphone, setcellphone] = React.useState(1451651515);
+  const [visibleModal, setvisibleModal] = React.useState(true);
   const [OTP, setOTP] = React.useState("4545");
   const [OTPHandlerisEqual, setOTPHandlerisEqual] = useState(false);
-  const loginAsync = async (value) => {
-    try {
-      await AsyncStorage.setItem("loggedInTrue", value);
-    } catch (e) {
-      console.log(e);
-    }
-  };
+
   const OTPHandler = (val) => {
     setOTPHandlerisEqual(val);
   };
@@ -35,13 +30,12 @@ const PhoneAuth = ({ props }) => {
       }}
     >
       <VerificationModal
-        {...props}
+        props={props}
         OTPHandlerisEqual={OTPHandlerisEqual}
         visibleModal={visibleModal}
-        CellNumber={CellNumber}
+        cellphone={cellphone}
         OTP={OTP}
         OTPHandler={OTPHandler}
-        loginAsync={loginAsync}
         setvisibleModal={setvisibleModal}
       />
 
@@ -58,17 +52,16 @@ const PhoneAuth = ({ props }) => {
         }}
         keyboardType={"number-pad"}
         label="eg. 012 345 6789"
-        text={CellNumber}
-        onChangeText={(text) => setCellNumber(text)}
+        text={cellphone}
+        onChangeText={(text) => setcellphone(text)}
       />
 
       <ContextConsumer>
         {(context) => {
           return (
             <BigButton
-              disabled={CellNumber.length === 10 ? false : true}
+              disabled={cellphone.length === 10 ? false : true}
               onPress={() => {
-                context.dispatch({ type: "SAVE_CELL", cell: CellNumber });
                 setvisibleModal(true);
               }}
               title={"Sign In"}
