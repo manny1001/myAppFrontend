@@ -21,7 +21,7 @@ import { useQuery } from "@apollo/client";
 const GET_PROFILE = gql`
   query getProfile {
     currentUser {
-      email
+      id
     }
   }
 `;
@@ -31,15 +31,15 @@ const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 const ProfileStack = (props) => {
   const { loading, error, data } = useQuery(GET_PROFILE);
-  if (loading) return null;
-  if (error) return `Error! ${error}`;
-
+  /*   if (loading) return null;
+  if (error) return `Error! ${error}`; */
+  console.log(data);
   const [UserNameText, setUserNameText] = React.useState("");
   const [clientCellNumber, setclientCellNumber] = React.useState("");
   const [clientFirstName, setclientFirstName] = React.useState("");
   const [clientLastName, setclientLastName] = React.useState("");
   const [clientEmail, setclientEmail] = React.useState("");
-  const AysncLogout = async (userid) => {
+  const AysncLogout = async () => {
     try {
       await AsyncStorage.removeItem("accessToken");
       return true;
@@ -67,8 +67,8 @@ const ProfileStack = (props) => {
             blurRadius={5}
             source={require("./assets/lad.jpg")}
             style={{ flex: 1 }}
-          /> */}
-          {/* <Avatar
+          /> */
+          /* <Avatar
             rounded
             size="xlarge"
             containerStyle={{
@@ -86,9 +86,7 @@ const ProfileStack = (props) => {
 
           <TouchableOpacity
             style={{ position: "absolute", right: wp(3), bottom: hp(1) }}
-          >
-            {/*  <FontAwesome5 name="camera-retro" size={30} color="black" /> */}
-          </TouchableOpacity>
+          ></TouchableOpacity>
         </View>
 
         <View
@@ -204,7 +202,6 @@ const ProfileStack = (props) => {
                   }}
                 >
                   <Text>Logout</Text>
-                  {/* <SimpleLineIcons size={hp(4)} name="logout" color="black" /> */}
                 </TouchableOpacity>
               );
             }}
