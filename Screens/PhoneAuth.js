@@ -6,15 +6,26 @@ import {
 } from "react-native-responsive-screen";
 import TextInput from "../Components/TextInput";
 import { RFValue } from "react-native-responsive-fontsize";
+import gql from "graphql-tag";
+import { useMutation } from "@apollo/client";
 
+const USER_LOGIN = gql`
+  mutation login($cellphone: String!, $otp: String!) {
+    login(cellphone: $cellphone, otp: $otp) {
+      token
+    }
+  }
+`;
 import { ContextConsumer } from "../Context";
 const VerificationModal = lazy(() => import("../Components/VerificationModal"));
 const BigButton = lazy(() => import("../Components/Buttons"));
 const PhoneAuthImage = lazy(() => import("../Components/PhoneAuthImage"));
 
 const PhoneAuth = (props) => {
-  const [cellphone, setcellphone] = React.useState(1451651515);
-  const [visibleModal, setvisibleModal] = React.useState(true);
+  const [login, { data }] = useMutation(USER_LOGIN);
+  console.log(data && data);
+  const [cellphone, setcellphone] = React.useState("");
+  const [visibleModal, setvisibleModal] = React.useState(false);
   const [OTP, setOTP] = React.useState("4545");
   const [OTPHandlerisEqual, setOTPHandlerisEqual] = useState(false);
 
@@ -29,6 +40,16 @@ const PhoneAuth = (props) => {
         justifyContent: "space-around",
       }}
     >
+      <ContextConsumer>
+        {(context) => {
+          data &&
+            data.login.token &&
+            context.dispatch({
+              type: "SIGN_IN",
+              userToken: data.login.token,
+            });
+        }}
+      </ContextConsumer>
       <VerificationModal
         props={props}
         OTPHandlerisEqual={OTPHandlerisEqual}
@@ -62,7 +83,7 @@ const PhoneAuth = (props) => {
             <BigButton
               disabled={cellphone.length === 10 ? false : true}
               onPress={() => {
-                setvisibleModal(true);
+                login({ variables: { cellphone, otp: "4545" } });
               }}
               title={"Sign In"}
             />

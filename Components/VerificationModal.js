@@ -65,7 +65,6 @@ const VerificationModal = ({
               props={props}
               onPress={() => {
                 /*  setvisibleModal(false); */
-                login({ variables: { cellphone: "0658987378", otp: "4545" } });
                 /* context.dispatch({
                     type: "SIGN_IN",
                     payload: {

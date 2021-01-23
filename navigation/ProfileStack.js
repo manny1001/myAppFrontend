@@ -16,10 +16,24 @@ import { RFValue } from "react-native-responsive-fontsize";
 import InputField from "../Components/TextInput";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ContextConsumer } from "../Context";
+import gql from "graphql-tag";
+import { useQuery } from "@apollo/client";
+const GET_PROFILE = gql`
+  query getProfile {
+    currentUser {
+      email
+    }
+  }
+`;
+
 const BigButton = lazy(() => import("../Components/Buttons"));
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 const ProfileStack = (props) => {
+  const { loading, error, data } = useQuery(GET_PROFILE);
+  if (loading) return null;
+  if (error) return `Error! ${error}`;
+
   const [UserNameText, setUserNameText] = React.useState("");
   const [clientCellNumber, setclientCellNumber] = React.useState("");
   const [clientFirstName, setclientFirstName] = React.useState("");

@@ -12,6 +12,7 @@ class Confirm extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      departure: "",
       destination: "",
       distance: "",
       tripAmount: 25.0,

@@ -76,6 +76,7 @@ export default function App(props) {
     const RestoreAsync = async () => {
       try {
         const userToken = await AsyncStorage.getItem("accessToken");
+        console.log(userToken);
         props.context.dispatch({
           type: "RESTORE_TOKEN",
           userToken: userToken,
@@ -84,7 +85,14 @@ export default function App(props) {
         console.log(e);
       }
     };
-
+    const storeData = async (value) => {
+      try {
+        await AsyncStorage.setItem("accessToken", value);
+      } catch (e) {
+        // saving error
+      }
+    };
+    /* storeData(null); */
     RestoreAsync();
   }, []);
 
