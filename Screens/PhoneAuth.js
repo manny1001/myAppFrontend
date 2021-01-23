@@ -4,12 +4,19 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import TextInput from "../Components/TextInput";
-import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import Modal from "modal-enhanced-react-native-web";
-import { ContextConsumer } from "../Context";
+import TextInput from "../Components/TextInput";
+import { RFValue, RFPercentage } from "react-native-responsive-fontsize";
+import gql from "graphql-tag";
 import { useMutation } from "@apollo/client";
+const USER_LOGIN = gql`
+  mutation login($cellphone: String!) {
+    login(cellphone: $cellphone) {
+      token
+    }
+  }
+`;
+import { ContextConsumer } from "../Context";
 import {
   CodeField,
   Cursor,
@@ -18,10 +25,8 @@ import {
 } from "react-native-confirmation-code-field";
 const BigButton = lazy(() => import("../Components/Buttons"));
 const PhoneAuthImage = lazy(() => import("../Components/PhoneAuthImage"));
+
 const PhoneAuth = (props) => {
-  const [OTP, setOTP] = React.useState("4545");
-  const [cellphone, setcellphone] = React.useState(1451651515);
-  const [visibleModal, setvisibleModal] = React.useState(true);
   const CELL_COUNT = 4;
   const [value, setValue] = useState("");
   const ref = useBlurOnFulfill({ value, cellCount: CELL_COUNT });
@@ -29,33 +34,10 @@ const PhoneAuth = (props) => {
     value,
     setValue,
   });
-  /* const LOGIN_MUTATION = gql`
-    mutation LoginMutation($cellphone: String!, $otp: String!) {
-      login(cellphone: $cellphone, otp: $otp) {
-        token
-        user {
-          username
-        }
-      }
-    }
-  `;
+  const [login, { data }] = useMutation(USER_LOGIN);
+  const [cellphone, setcellphone] = React.useState("");
+  const [visibleModal, setvisibleModal] = React.useState(false);
 
-  const [login, { loading, error, data }] = useMutation(LOGIN_MUTATION, {
-    onError: (error) => {
-      console.log(loading, error);
-    },
-    onCompleted: () => {
-      console.log(data);
-    },
-  }); */
-  const DelayedFunction = ({ value }) => {
-    {
-      OTP === value
-        ? console.log("its equal")
-        : console.log("its NOOOOT equal");
-    }
-    return null;
-  };
   return (
     <View
       style={{
@@ -63,7 +45,6 @@ const PhoneAuth = (props) => {
         justifyContent: "space-around",
       }}
     >
-      <DelayedFunction OTP={OTP} value={value} />
       <Modal
         style={{
           flex: 1,
@@ -170,6 +151,16 @@ const PhoneAuth = (props) => {
           </Text>
         </View> */}
       </Modal>
+      <ContextConsumer>
+        {(context) => {
+          data &&
+            data.login.token &&
+            context.dispatch({
+              type: "SIGN_IN",
+              userToken: data.login.token,
+            });
+        }}
+      </ContextConsumer>
       <PhoneAuthImage />
 
       <TextInput
@@ -187,13 +178,19 @@ const PhoneAuth = (props) => {
         onChangeText={(text) => setcellphone(text)}
       />
 
-      <BigButton
-        disabled={cellphone.length === 10 ? false : true}
-        onPress={() => {
-          setvisibleModal(true);
+      <ContextConsumer>
+        {(context) => {
+          return (
+            <BigButton
+              disabled={cellphone.length === 10 ? false : true}
+              onPress={() => {
+                login({ variables: { cellphone } });
+              }}
+              title={"Sign In"}
+            />
+          );
         }}
-        title={"Sign In"}
-      />
+      </ContextConsumer>
     </View>
   );
 };

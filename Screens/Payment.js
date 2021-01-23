@@ -29,7 +29,7 @@ class TrippyPayment extends Component {
       clientLastName: "",
       departure: "",
       timeRequested: "",
-      desitination: "",
+      destination: "",
       isVisible: true,
       tipModalVisible: false,
       tipAdded: false,

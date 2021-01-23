@@ -17,7 +17,7 @@ class GoogleAutoComplete extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      desitination: "",
+      destination: "",
       errorMsg: null,
       latitude: null,
       longitude: null,
@@ -25,17 +25,17 @@ class GoogleAutoComplete extends Component {
       isClicked: false,
       distance: "",
       time: "",
-      DestinationSelected: false,
+      DestinationSelected: true,
       savedLocationVisible: false, //When !!!!!!!InProduction!!!!!..Change to ===>> {savedLocationVisible: PrevLocations.length === 0 ? false : true},
       value: null,
     };
 
-    /*   Geocoder.init("AIzaSyD7WWrmocEDp4T9JonO47DB1GSPllLJbsk"); */
+    /*  Geocoder.init("AIzaSyD7WWrmocEDp4T9JonO47DB1GSPllLJbsk"); */
   }
 
   getlocation = async () => {
     let status = await Location.requestPermissionsAsync();
-
+    /**/
     if (status !== "granted") {
       this.setState({ errorMsg: "Permission to access location was denied" });
     }
@@ -51,10 +51,23 @@ class GoogleAutoComplete extends Component {
         this.setState({ currentLocation: addressComponent.formatted_address });
         this.props.context.dispatch({
           type: "SAVE_PICKUPLOCATION",
-          payload: this.state.currentLocation,
+          departure: this.state.currentLocation,
         });
       })
       .catch((error) => console.warn(error)); */
+  };
+  SetPickUp = async () => {
+    this.props.context.dispatch({
+      type: "SAVE_PICKUPLOCATION",
+      departure: "22 Allan RdGlen Austin AH, Midrand, 1685",
+    });
+  };
+  SetDestination = async () => {
+    this.props.context.dispatch({
+      type: "SAVE_DESTINATION",
+      destination:
+        "O.R. Tambo International Airport. Private Bag X1. Kempton Park. 1627.",
+    });
   };
   getTripInfo = async () => {
     try {
@@ -62,7 +75,7 @@ class GoogleAutoComplete extends Component {
         "https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/directions/json?origin=" +
           this.state.currentLocation +
           "&destination=" +
-          this.state.desitination +
+          this.state.destination +
           "&key=AIzaSyC5xUeX27_qX8nlwItKxi5IrMnP5R1j0jM"
       );
       let json = await response.json();
@@ -75,7 +88,9 @@ class GoogleAutoComplete extends Component {
     }
   };
   componentDidMount() {
-    this.getlocation();
+    this.SetPickUp();
+    this.SetDestination();
+    /* this.getlocation(); */
   }
   setCurrentLocationHandler = (val) => {
     this.setState({
@@ -110,7 +125,6 @@ class GoogleAutoComplete extends Component {
             }}
           />
           <Destination
-            desitination={this.state.desitination}
             setsavedLocationVisible={() =>
               this.setState({ savedLocationVisible: true })
             }
@@ -120,7 +134,7 @@ class GoogleAutoComplete extends Component {
                 DestinationSelected: val,
               })
             }
-            setDestination={(val) => this.setState({ desitination: val })}
+            setDestination={(val) => this.setState({ destination: val })}
             dispatchSaveDestination={(val) =>
               this.props.context.dispatch({
                 type: "SAVE_DESTINATION",
@@ -148,11 +162,11 @@ class GoogleAutoComplete extends Component {
                   }}
                   onPress2={() => {
                     this.setState({ savedLocationVisible: false }),
-                      this.setState({ desitination: "" }),
+                      this.setState({ destination: "" }),
                       this.setState({ value: null });
                   }}
                   onPress3={() => {
-                    this.setState({ desitination: this.state.value }),
+                    this.setState({ destination: this.state.value }),
                       this.setState({ DestinationSelected: true }),
                       this.setState({ savedLocationVisible: false }),
                       context.dispatch({

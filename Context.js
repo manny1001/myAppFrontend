@@ -1,15 +1,21 @@
 import React, { Component } from "react";
 import { gql, useQuery } from "@apollo/client";
-const NEW_REQUEST = gql`
+import AsyncStorage from "@react-native-async-storage/async-storage";
+const { Provider, Consumer } = React.createContext();
+/* const NEW_REQUEST = gql`
   mutation($CustomerName: String) {
     newRequest(CustomerName: $CustomerName) {
       value
     }
   }
-`;
-
-const { Provider, Consumer } = React.createContext();
-
+`; */
+const storeData = async (key, value) => {
+  try {
+    await AsyncStorage.setItem(key, value);
+  } catch (e) {
+    console.log(e);
+  }
+};
 class Context extends Component {
   state = {
     sessionArray: {
@@ -25,7 +31,7 @@ class Context extends Component {
       driverRegistration: "",
       driverImage: "",
       driverRegistration: "",
-      departure: "",
+      departure: "37 Launceston Rd, New Redruth, Alberton, 1449, South Africa",
       timeRequested: "",
       paymentMethod: "",
       tripFee: "",
@@ -74,32 +80,36 @@ class Context extends Component {
           },
         }));
       case "SAVE_PICKUPLOCATION":
-        /*   console.log(action); */
-        return this.setState((state) => ({
-          sessionArray: {
-            ...this.state.sessionArray,
-            departure: action.payload,
-          },
-        }));
+        return this.setState(
+          (state) => ({
+            sessionArray: {
+              ...this.state.sessionArray,
+              departure: action.departure,
+            },
+          }),
+          () => storeData("departure", action.departure)
+        );
       case "SAVE_DESTINATION":
-        /*  console.log(action); */
-        return this.setState((state) => ({
-          sessionArray: {
-            ...this.state.sessionArray,
-            destination: action.payload,
-          },
-        }));
+        console.log(action);
+        return this.setState(
+          (state) => ({
+            sessionArray: {
+              ...this.state.sessionArray,
+              destination: action.destination,
+            },
+          }),
+          () => storeData("destination", action.destination)
+        );
       case "SIGN_IN":
         return this.setState(
           (state) => ({
             sessionArray: {
               ...this.state.sessionArray,
               isloggedIn: true,
-              userToken: 1,
-              username: action.username,
+              userToken: action.userToken,
             },
           }),
-          console.log(action)
+          () => storeData("accessToken", action.userToken)
         );
       case "SIGN_OUT":
         return this.setState((state) => ({
