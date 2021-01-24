@@ -1,4 +1,4 @@
-import React, { useState, lazy } from "react";
+import React, { useState, lazy, Suspense } from "react";
 import { View, Text } from "react-native";
 import {
   widthPercentageToDP as wp,
@@ -37,7 +37,7 @@ const PhoneAuth = (props) => {
   const [login, { data }] = useMutation(USER_LOGIN);
   const [cellphone, setcellphone] = React.useState("");
   const [visibleModal, setvisibleModal] = React.useState(false);
-
+  /*   React.useEffect(() => {}, []); */
   return (
     <View
       style={{
@@ -151,16 +151,7 @@ const PhoneAuth = (props) => {
           </Text>
         </View> */}
       </Modal>
-      <ContextConsumer>
-        {(context) => {
-          data &&
-            data.login.token &&
-            context.dispatch({
-              type: "SIGN_IN",
-              userToken: data.login.token,
-            });
-        }}
-      </ContextConsumer>
+
       <PhoneAuthImage />
 
       <TextInput
@@ -177,20 +168,32 @@ const PhoneAuth = (props) => {
         text={cellphone}
         onChangeText={(text) => setcellphone(text)}
       />
-
-      <ContextConsumer>
-        {(context) => {
-          return (
-            <BigButton
-              disabled={cellphone.length === 10 ? false : true}
-              onPress={() => {
-                login({ variables: { cellphone } });
-              }}
-              title={"Sign In"}
-            />
-          );
-        }}
-      </ContextConsumer>
+      <Suspense fallback={<Text>Loading Buddy</Text>}>
+        <ContextConsumer>
+          {(context) => {
+            return (
+              <BigButton
+                disabled={cellphone.length === 10 ? false : true}
+                onPress={() => {
+                  login({ variables: { cellphone } })
+                    .then(({ data }) => {
+                      console.log(data);
+                      data.login.token &&
+                        context.dispatch({
+                          type: "SIGN_IN",
+                          userToken: data.login.token,
+                        });
+                    })
+                    .catch((e) => {
+                      // you can do something with the error here
+                    });
+                }}
+                title={"Sign In"}
+              />
+            );
+          }}
+        </ContextConsumer>
+      </Suspense>
     </View>
   );
 };

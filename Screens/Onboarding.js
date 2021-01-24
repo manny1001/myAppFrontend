@@ -1,9 +1,5 @@
 import React, { lazy, useState, useRef } from "react";
 import { View, FlatList, Dimensions } from "react-native";
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from "react-native-responsive-screen";
 import { SlideData } from "../DATA";
 const BigButton = lazy(() => import("../Components/Buttons"));
 const OnboardingSlide = lazy(() => import("../Components/OnboardingSlide"));

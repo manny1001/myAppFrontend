@@ -1,4 +1,5 @@
 import React, { useState, lazy, Suspense } from "react";
+import { Text } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 const ProfileStack = lazy(() => import("../navigation/ProfileStack"));
 const HomeStack = lazy(() => import("../navigation/HomeStack"));
@@ -42,10 +43,10 @@ const AppStack = () => {
             <Feather name="settings" color="#333" size={wp(5)} />
           ), */
         }}
-      /> 
+      />
       <Tabs.Screen
         name="ProfilePage"
-        component={ProfileStack}
+        component={() => <ProfileStack />}
         options={{
           tabBarLabel: "Profile",
           /* tabBarIcon: ({ color, size }) => (

@@ -17,19 +17,19 @@ const AuthStack = () => {
       />
       <Stack.Screen
         name="PhoneAuth"
-        component={PhoneAuth}
+        component={(props) => <PhoneAuth {...props} />}
         options={{ headerShown: false }}
       />
       {/* */}
       <Stack.Screen
         name="AcceptTandCs"
-        component={AcceptTandCs}
+        component={(props) => <AcceptTandCs {...props} />}
         options={{ headerShown: false }}
       />
 
       <Stack.Screen
         name="EnterOTP"
-        component={EnterOTP}
+        component={(props) => <EnterOTP {...props} />}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

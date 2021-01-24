@@ -2,10 +2,13 @@ import React, { useState, lazy, Suspense } from "react";
 import {
   StyleSheet,
   Text,
+  ActivityIndicator,
   View,
   Dimensions,
   TouchableOpacity,
   ScrollView,
+  Keyboard,
+  Alert,
 } from "react-native";
 import {
   widthPercentageToDP as wp,
@@ -13,16 +16,43 @@ import {
 } from "react-native-responsive-screen";
 import { StatusBar } from "expo-status-bar";
 import { RFValue } from "react-native-responsive-fontsize";
+import { Avatar, Image } from "react-native-elements";
+import Loader from "../Components/Loader";
 import InputField from "../Components/TextInput";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ContextConsumer } from "../Context";
 import gql from "graphql-tag";
-import { useQuery } from "@apollo/client";
+import { useQuery, useMutation } from "@apollo/client";
 const GET_PROFILE = gql`
   query getProfile {
     currentUser {
       id
+      picture
+      username
+      email
+      cellphone
+      homeaddress
+      workaddress
     }
+  }
+`;
+const UPDATE_PROFILE = gql`
+  mutation updateProfile(
+    $id: String!
+    $username: String
+    $email: String
+    $cellphone: String
+    $homeaddress: String
+    $workaddress: String
+  ) {
+    updateProfile(
+      id: $id
+      username: $username
+      email: $email
+      cellphone: $cellphone
+      homeaddress: $homeaddress
+      workaddress: $workaddress
+    )
   }
 `;
 
@@ -30,15 +60,28 @@ const BigButton = lazy(() => import("../Components/Buttons"));
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 const ProfileStack = (props) => {
-  const { loading, error, data } = useQuery(GET_PROFILE);
-  /*   if (loading) return null;
-  if (error) return `Error! ${error}`; */
-  console.log(data);
-  const [UserNameText, setUserNameText] = React.useState("");
-  const [clientCellNumber, setclientCellNumber] = React.useState("");
-  const [clientFirstName, setclientFirstName] = React.useState("");
-  const [clientLastName, setclientLastName] = React.useState("");
-  const [clientEmail, setclientEmail] = React.useState("");
+  const [id, setID] = useState(null);
+  const { loading, data } = useQuery(GET_PROFILE, {
+    notifyOnNetworkStatusChange: true,
+    onCompleted: () => setID(data && data.currentUser.id),
+  });
+  const [updateProfile, { error }] = useMutation(UPDATE_PROFILE, {
+    refetchQueries: [{ query: GET_PROFILE }],
+    onCompleted: () => alert("Profile Succesfully Updated"),
+  });
+  const [username, setusername] = React.useState(
+    data && data.currentUser.username
+  );
+  const [cellphone, setcellphone] = React.useState(
+    data && data.currentUser.cellphone
+  );
+  const [email, setemail] = React.useState(data && data.currentUser.email);
+  const [homeaddress, sethomeaddress] = React.useState(
+    data && data.currentUser.homeaddress
+  );
+  const [workaddress, setworkaddress] = React.useState(
+    data && data.currentUser.workaddress
+  );
   const AysncLogout = async () => {
     try {
       await AsyncStorage.removeItem("accessToken");
@@ -48,9 +91,11 @@ const ProfileStack = (props) => {
     }
   };
 
+  if (loading && data === undefined) return <Loader />;
+  const User = data.currentUser;
   return (
     <View
-      style={{ flexDirection: "column", justifyContent: "center", flex: 1 }}
+      style={{ flexDirection: "column", flex: 1, justifyContent: "center" }}
     >
       <StatusBar translucent={false} style="light" />
       <ScrollView
@@ -63,12 +108,13 @@ const ProfileStack = (props) => {
             height: hp(15),
           }}
         >
-          {/* <Image
+          <Image
             blurRadius={5}
-            source={require("./assets/lad.jpg")}
-            style={{ flex: 1 }}
-          /> */
-          /* <Avatar
+            source={User.picture ? { uri: User.picture } : ""}
+            style={{ width: wp(100), height: hp(15) }}
+          />
+          <Avatar
+            renderPlaceholderContent={User.picture && <ActivityIndicator />}
             rounded
             size="xlarge"
             containerStyle={{
@@ -81,9 +127,8 @@ const ProfileStack = (props) => {
               bottom: 0,
             }}
             avatarStyle={{}}
-            source={require("./assets/lad.jpg")}
-          /> */}
-
+            source={User.picture ? { uri: User.picture } : ""}
+          />
           <TouchableOpacity
             style={{ position: "absolute", right: wp(3), bottom: hp(1) }}
           ></TouchableOpacity>
@@ -98,56 +143,41 @@ const ProfileStack = (props) => {
             justifyContent: "space-around",
           }}
         >
-          <View
-            style={{
-              width: wp(80),
-              height: hp(6),
-              alignSelf: "center",
-              flexDirection: "row",
-              justifyContent: "space-between",
-            }}
-          >
-            <InputField
-              style={[styles.inputStyle, { width: wp(35) }]}
-              keyboardType={"default"}
-              label={clientFirstName}
-              text={UserNameText}
-              onChangeText={(text) => setUserNameText(text)}
-            />
-            <InputField
-              style={[styles.inputStyle, { width: wp(35) }]}
-              keyboardType={"default"}
-              label={clientLastName}
-              text={UserNameText}
-              onChangeText={(text) => setUserNameText(text)}
-            />
-          </View>
+          <InputField
+            style={styles.inputStyle}
+            keyboardType={"default"}
+            defaultValue={User.username && User.username}
+            label={"Username"}
+            onChangeText={(text) => setusername(text)}
+            selectionColor={"blue"}
+          />
           <InputField
             style={styles.inputStyle}
             keyboardType={"phone-pad"}
-            label={clientCellNumber}
-            onChangeText={(text) => setclientCellNumber(text)}
+            defaultValue={User.cellphone && User.cellphone}
+            label={"Cellphone"}
+            onChangeText={(text) => setcellphone(text)}
           />
           <InputField
             style={styles.inputStyle}
             keyboardType={"email-address"}
-            label={clientEmail}
-            text={UserNameText}
-            onChangeText={(text) => setUserNameText(text)}
+            defaultValue={User.email && User.email}
+            label={"Email"}
+            onChangeText={(text) => setemail(text)}
           />
           <InputField
             style={styles.inputStyle}
             keyboardType={"default"}
-            label={"Home Address"}
-            text={UserNameText}
-            onChangeText={(text) => setUserNameText(text)}
+            defaultValue={User.homeaddress && User.homeaddress}
+            label={"Home address"}
+            onChangeText={(text) => sethomeaddress(text)}
           />
           <InputField
             style={styles.inputStyle}
             keyboardType={"default"}
-            label={"Work Address"}
-            text={UserNameText}
-            onChangeText={(text) => setUserNameText(text)}
+            defaultValue={User.workaddress && User.workaddress}
+            label={"Work address"}
+            onChangeText={(text) => setworkaddress(text)}
           />
         </View>
         <View
@@ -159,6 +189,19 @@ const ProfileStack = (props) => {
           }}
         >
           <BigButton
+            onPress={() => {
+              Keyboard.dismiss(),
+                updateProfile({
+                  variables: {
+                    id: id && JSON.stringify(id),
+                    username: username,
+                    cellphone: cellphone && cellphone,
+                    email: email && email,
+                    homeaddress: homeaddress && homeaddress,
+                    workaddress: workaddress && workaddress,
+                  },
+                });
+            }}
             title={"Update"}
             buttonStyle={{
               alignSelf: "center",
@@ -168,7 +211,7 @@ const ProfileStack = (props) => {
         </View>
         <View
           style={{
-            borderTopWidth: wp(1),
+            borderTopWidth: wp(0.75),
             borderTopColor: "#6c63ff",
             backgroundColor: "#f5f5f5",
             width: wp(100),
@@ -178,7 +221,11 @@ const ProfileStack = (props) => {
           }}
         >
           <Text
-            style={{ marginLeft: wp(5), fontSize: wp(5), alignSelf: "center" }}
+            style={{
+              marginLeft: wp(5),
+              fontSize: wp(5),
+              alignSelf: "center",
+            }}
           >
             Logout
           </Text>
@@ -211,6 +258,7 @@ const ProfileStack = (props) => {
     </View>
   );
 };
+
 const styles = StyleSheet.create({
   inputStyle: {
     backgroundColor: "#f3f3f3",
