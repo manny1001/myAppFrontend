@@ -150,7 +150,7 @@ export default function (props) {
   const linkTo = useLinkTo();
   const GET_DRIVERS = gql`
     query {
-      allDrivers {
+      allDriver {
         name
         surname
         cellphone
@@ -174,7 +174,7 @@ export default function (props) {
             {...props}
             linkTo={linkTo}
             context={context}
-            DriverDetails={data && data.allDrivers}
+            DriverDetails={data && data.allDriver}
           />
         );
       }}
