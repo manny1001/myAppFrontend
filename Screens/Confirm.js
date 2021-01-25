@@ -6,6 +6,7 @@ import {
 } from "react-native-responsive-screen";
 import { RFValue } from "react-native-responsive-fontsize";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { ContextConsumer } from "../Context";
 const BigButton = lazy(() => import("../Components/Buttons"));
 const Driver = lazy(() => import("../Components/ScrollToIndexFlatlist"));
 class Confirm extends Component {
@@ -16,15 +17,19 @@ class Confirm extends Component {
       destination: "",
       distance: "",
       tripAmount: 25.0,
+      selectedDriver: {
+        name: "Manny",
+        surname: "Mann",
+        cellphone: "0722889887",
+        picture:
+          "https://firebasestorage.googleapis.com/v0/b/shop4-962e4.appspot.com/o/PicsArt_09-23-03.38.25.jpg?alt=media&token=ccd69fd1-d2bc-43f3-b788-63b7ce56d2b8",
+        registration: "VCX BVN GP",
+        model: "Polo",
+      },
     };
   }
   componentDidMount() {
-    AsyncStorage.multiGet([
-      "departure",
-      "destination",
-      "clientCellNumber",
-      "clientEmail",
-    ]).then((response) => {
+    AsyncStorage.multiGet(["departure", "destination"]).then((response) => {
       this.setState({ departure: response[0][1] });
       this.setState({ destination: response[1][1] });
     });
@@ -77,19 +82,37 @@ class Confirm extends Component {
             justifyContent: "center",
           }}
         >
-          <BigButton
-            buttonStyle={{
-              width: wp(80),
-              alignSelf: "center",
+          <ContextConsumer>
+            {(context) => {
+              return (
+                <BigButton
+                  buttonStyle={{
+                    width: wp(80),
+                    alignSelf: "center",
+                  }}
+                  titleStyle={{ fontWeight: "bold" }}
+                  title={
+                    "Proceed" + " " + "\n" + "R" + " " + this.state.tripAmount
+                  }
+                  onPress={() => {
+                    this.props.navigation.navigate("Payment"),
+                      context.dispatch({
+                        type: "SAVE_DRIVER",
+                        selectedDriver: {
+                          name: "Manny",
+                          surname: "Mann",
+                          cellphone: "0722889887",
+                          picture:
+                            "https://firebasestorage.googleapis.com/v0/b/shop4-962e4.appspot.com/o/PicsArt_09-23-03.38.25.jpg?alt=media&token=ccd69fd1-d2bc-43f3-b788-63b7ce56d2b8",
+                          registration: "VCX BVN GP",
+                          model: "Polo",
+                        },
+                      });
+                  }}
+                />
+              );
             }}
-            titleStyle={{ fontWeight: "bold" }}
-            title={"Proceed" + " " + "\n" + "R" + " " + this.state.tripAmount}
-            onPress={() => {
-              this.props.navigation.navigate("Payment", {
-                from: "ride",
-              });
-            }}
-          />
+          </ContextConsumer>
         </View>
       </>
     );

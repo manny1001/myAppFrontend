@@ -6,82 +6,75 @@ import {
   FlatList,
   Dimensions,
   TouchableOpacity,
-  Image,
+  ActivityIndicator,
 } from "react-native";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
+import { Avatar } from "react-native-elements";
 import { RFValue } from "react-native-responsive-fontsize";
 import { useLinkTo } from "@react-navigation/native";
-import BigButton from "../Components/Buttons.js";
-import { SlideData, DriverDetails } from "../DATA";
 import { ContextConsumer } from "../Context";
+import { gql, useQuery } from "@apollo/client";
 const windowWidth = Dimensions.get("window").width;
-const windowHeight = Dimensions.get("window").height;
+import { useQuery, useMutation } from "@apollo/client";
+const Drivers = (props) => {
+  const { name, surname, cellphone, picture, registration, model } = props;
+  return (
+    <View
+      style={{
+        justifyContent: "space-between",
+        flex: 1,
+        flexDirection: "row",
+        width: wp(100),
+        alignSelf: "center",
+        height: hp(30),
+      }}
+    >
+      <View style={styles.driverDetails}>
+        <Text style={{ fontWeight: "bold" }}>Name</Text>
+        <Text>
+          {name} {surname}
+        </Text>
+        <Text style={{ fontWeight: "bold", alignSelf: "flex-start" }}>
+          Cellphone
+        </Text>
+        <TouchableOpacity>{cellphone}</TouchableOpacity>
+        <Text style={{ fontWeight: "bold" }}>Registration</Text>
+        <Text>{registration} </Text>
+        <Text style={{ fontWeight: "bold" }}>Model</Text>
+        <Text>{model}</Text>
+      </View>
+      <View style={{ flex: 1, justifyContent: "space-around" }}>
+        <Avatar
+          renderPlaceholderContent={picture && <ActivityIndicator />}
+          rounded
+          size="xlarge"
+          containerStyle={{
+            height: hp(15),
+            width: hp(15),
+            borderRadius: hp(7.5),
+            alignSelf: "center",
+          }}
+          source={{ uri: picture }}
+        />
+        <Text style={{ alignSelf: "center" }}>7 mins away</Text>
+      </View>
+    </View>
+  );
+};
+
 export class Driver extends React.Component {
   constructor(props) {
     super(props);
-    const items = [];
-
     this.state = {
-      currentTab: 1,
-      refreshing: false,
-      items: items,
       isPressed: 1,
     };
   }
 
-  Driver = ({ item, index }) => {
-    return (
-      <View
-        style={{
-          flex: 1,
-          width: wp(100),
-          alignSelf: "center",
-        }}
-      >
-        <View
-          style={{
-            alignSelf: "center",
-            width: wp(20),
-            height: wp(20),
-            borderRadius: wp(10),
-            resizeMode: "contain",
-          }}
-        />
-        <View style={styles.driverDetails}>
-          <Text style={{ fontWeight: "bold" }}>Name</Text>
-          <Text>John Keneddy</Text>
-        </View>
-        <TouchableOpacity style={styles.driverDetails}>
-          <Text style={{ fontWeight: "bold" }}>Cellphone</Text>
-          <View style={{ flexDirection: "row" }}>
-            {/* <MaterialIcons
-              name="call"
-              size={wp(4)}
-              color="black"
-              style={{
-                alignSelf: "center",
-                marginRight: wp(3),
-              }}
-            /> */}
-            <Text>078 598 6325</Text>
-          </View>
-        </TouchableOpacity>
-        <View style={styles.driverDetails}>
-          <Text style={{ fontWeight: "bold" }}>Registration</Text>
-          <Text>CX 01 BC GP</Text>
-        </View>
-        <View style={styles.driverDetails}>
-          <Text style={{ fontWeight: "bold" }}>Vehicle Type</Text>
-          <Text>Hyundai i20</Text>
-        </View>
-      </View>
-    );
-  };
-
   render() {
+    const { DriverDetails } = this.props;
     return (
       <FlatList
         ref={(ref) => {
@@ -94,12 +87,12 @@ export class Driver extends React.Component {
         showsHorizontalScrollIndicator={false}
         horizontal={true}
         data={DriverDetails}
-        renderItem={this.Driver}
+        renderItem={({ item }) => <Drivers {...item} />}
         keyExtractor={(item) => {
           item.id;
         }}
         contentContainerStyle={{
-          width: windowWidth,
+          width: wp(100),
           flex: 1,
           alignSelf: "center",
         }}
@@ -155,11 +148,35 @@ export class Driver extends React.Component {
 } */
 export default function (props) {
   const linkTo = useLinkTo();
+  const GET_DRIVERS = gql`
+    query {
+      allDrivers {
+        name
+        surname
+        cellphone
+        picture
+        registration
+        model
+      }
+    }
+  `;
+  const { loading, error, data } = useQuery(GET_DRIVERS, {
+    fetchPolicy: "network-only",
+  });
+  if (loading) return "Loading...";
+  if (error) return `Error! ${error.message}`;
 
   return (
     <ContextConsumer>
       {(context) => {
-        return <Driver {...props} linkTo={linkTo} context={context} />;
+        return (
+          <Driver
+            {...props}
+            linkTo={linkTo}
+            context={context}
+            DriverDetails={data && data.allDrivers}
+          />
+        );
       }}
     </ContextConsumer>
   );
@@ -177,10 +194,9 @@ const styles = StyleSheet.create({
     textAlign: "flex-start",
   },
   driverDetails: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    width: wp(80),
-    alignSelf: "center",
+    justifyContent: "space-around",
+    width: wp(50),
+    flex: 1,
   },
   heading3: {
     fontSize: RFValue(16),

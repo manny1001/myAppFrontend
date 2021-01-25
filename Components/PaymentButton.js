@@ -4,7 +4,9 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import Icon from "react-native-vector-icons/AntDesign";
-import { useMutation } from "@apollo/client";
+import { useQuery, useMutation } from "@apollo/client";
+import gql from "graphql-tag";
+import Loader from "../Components/Loader";
 import { NEW_REQUEST } from "../Queries";
 const BigButton = lazy(() => import("../Components/Buttons"));
 const PaymentButton = ({
@@ -21,15 +23,34 @@ const PaymentButton = ({
   totalAmount,
   selectedValue,
   setisVisible,
-  dispatchAddToCart,
   props,
 }) => {
+  const GET_PROFILE = gql`
+    query getProfile {
+      currentUser {
+        id
+        username
+        cellphone
+        homeaddress
+        workaddress
+      }
+    }
+  `;
+
+  const GETPROFILE = () => {
+    const { loading, data } = useQuery(GET_PROFILE, {
+      notifyOnNetworkStatusChange: true,
+    });
+    if (loading && data === undefined) return <Loader />;
+    return data;
+  };
   const FETCH = () => {
     const [addRequest] = useMutation(NEW_REQUEST);
     return addRequest;
   };
   const addRequestFunction = FETCH();
-
+  const User = GETPROFILE();
+  console.log(User);
   return (
     <BigButton
       icon={<Icon name="Safety" size={24} color="black" />}
@@ -47,9 +68,8 @@ const PaymentButton = ({
       onPress={() => {
         addRequestFunction({
           variables: {
-            CustomerName: CustomerName,
-            CustomerSurname: CustomerSurname,
-            CustomerCell: CustomerCell,
+            username: User.currentUser.username,
+            cellphone: User.currentUser.cellphone,
             CustomerLocation: CustomerLocation,
             CustomerDestination: CustomerDestination,
             CustomerTimeRequested: CustomerTimeRequested,
@@ -58,10 +78,8 @@ const PaymentButton = ({
             TripStatus: "Pending Driver Response",
           },
         }),
-          props.navigation.navigate("TrackDriver"),
-          /*  console.log(props.navigation); */
-          setisVisible,
-          dispatchAddToCart;
+          props.navigation.navigate("TrackDriver");
+        /*  console.log(props.navigation); */
       }}
     />
   );

@@ -3,6 +3,7 @@ import { View } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { YOURCARDS } from "../Components/selectBankCard";
 import { ContextConsumer } from "../Context";
+
 const PaymentButton = lazy(() => import("../Components/PaymentButton"));
 const YourBankCardsList = lazy(() => import("../Components/YourBankCardsList"));
 const SelectPaymentMethod = lazy(() =>
@@ -176,22 +177,6 @@ class TrippyPayment extends Component {
             totalAmount={this.state.totalAmount}
             addRequestFunction={() => addRequestFunction}
             setisVisible={() => this.setState({ isVisible: false })}
-            dispatchAddToCart={() =>
-              this.props.dispatch({
-                type: "ADD_TO_CART",
-                payload: {
-                  timeRequested: new Date()
-                    .toISOString()
-                    .replace(/T/, " ") // replace T with a space
-                    .replace(/\..+/, ""),
-
-                  paymentMethod: this.state.paymentMethod,
-                  tripFee: this.state.tripFee.toFixed(2),
-                  tip: this.state.tipAmount.toFixed(2),
-                  total: this.state.totalAmount.toFixed(2),
-                },
-              })
-            }
           />
         )}
         {/*       Cancel selected Card */}

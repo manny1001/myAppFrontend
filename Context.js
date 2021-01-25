@@ -26,11 +26,7 @@ class Context extends Component {
       destination: "",
       departureTime: "",
       destinationArrivalTime: "",
-      driverName: "",
-      driverCellPhone: "",
-      driverRegistration: "",
-      driverImage: "",
-      driverRegistration: "",
+      selectedDriver: {},
       departure: "37 Launceston Rd, New Redruth, Alberton, 1449, South Africa",
       timeRequested: "",
       paymentMethod: "",
@@ -46,6 +42,16 @@ class Context extends Component {
 
   dispatch = (action) => {
     switch (action.type) {
+      case "SAVE_DRIVER":
+        return this.setState(
+          (state) => ({
+            sessionArray: {
+              ...this.state.sessionArray,
+              selectedDriver: action.selectedDriver,
+            },
+          }),
+          () => storeData("selectedDriver", action.selectedDriver)
+        );
       case "AcceptedTCs":
         return this.setState((state) => ({
           sessionArray: {
@@ -62,23 +68,23 @@ class Context extends Component {
           },
         }));
       case "SAVE_EMAIL":
+        return this.setState((state) => ({
+          sessionArray: {
+            ...this.state.sessionArray,
+            email: action.payload,
+          },
+        }));
+
+      case "SAVE_CELL":
         return this.setState(
           (state) => ({
             sessionArray: {
               ...this.state.sessionArray,
-              email: action.payload,
+              clientCellNumber: action.clientCellNumber,
             },
           }),
-          console.log(action)
+          () => storeData("clientCellNumber", action.clientCellNumber)
         );
-
-      case "SAVE_CELL":
-        return this.setState((state) => ({
-          sessionArray: {
-            ...this.state.sessionArray,
-            clientCellNumber: action.cell,
-          },
-        }));
       case "SAVE_PICKUPLOCATION":
         return this.setState(
           (state) => ({

@@ -124,6 +124,8 @@ class GoogleAutoComplete extends Component {
               });
             }}
           />
+          <Text>26 mins</Text>
+          <Text>38 kms</Text>
           <Destination
             setsavedLocationVisible={() =>
               this.setState({ savedLocationVisible: true })

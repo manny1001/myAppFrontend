@@ -92,7 +92,6 @@ const ProfileStack = (props) => {
   };
 
   if (loading && data === undefined) return <Loader />;
-  const User = data.currentUser;
   return (
     <View
       style={{ flexDirection: "column", flex: 1, justifyContent: "center" }}
@@ -110,11 +109,17 @@ const ProfileStack = (props) => {
         >
           <Image
             blurRadius={5}
-            source={User.picture ? { uri: User.picture } : ""}
+            source={
+              data && data.currentUser.picture
+                ? { uri: data.currentUser.picture }
+                : ""
+            }
             style={{ width: wp(100), height: hp(15) }}
           />
           <Avatar
-            renderPlaceholderContent={User.picture && <ActivityIndicator />}
+            renderPlaceholderContent={
+              data && data.currentUser.picture && <ActivityIndicator />
+            }
             rounded
             size="xlarge"
             containerStyle={{
@@ -127,7 +132,11 @@ const ProfileStack = (props) => {
               bottom: 0,
             }}
             avatarStyle={{}}
-            source={User.picture ? { uri: User.picture } : ""}
+            source={
+              data && data.currentUserpicture
+                ? { uri: data.currentUser.picture }
+                : ""
+            }
           />
           <TouchableOpacity
             style={{ position: "absolute", right: wp(3), bottom: hp(1) }}
@@ -146,7 +155,7 @@ const ProfileStack = (props) => {
           <InputField
             style={styles.inputStyle}
             keyboardType={"default"}
-            defaultValue={User.username && User.username}
+            defaultValue={data && data.currentUser.username}
             label={"Username"}
             onChangeText={(text) => setusername(text)}
             selectionColor={"blue"}
@@ -154,28 +163,28 @@ const ProfileStack = (props) => {
           <InputField
             style={styles.inputStyle}
             keyboardType={"phone-pad"}
-            defaultValue={User.cellphone && User.cellphone}
+            defaultValue={data && data.currentUser.cellphone}
             label={"Cellphone"}
             onChangeText={(text) => setcellphone(text)}
           />
           <InputField
             style={styles.inputStyle}
             keyboardType={"email-address"}
-            defaultValue={User.email && User.email}
+            defaultValue={data && data.currentUser.email}
             label={"Email"}
             onChangeText={(text) => setemail(text)}
           />
           <InputField
             style={styles.inputStyle}
             keyboardType={"default"}
-            defaultValue={User.homeaddress && User.homeaddress}
+            defaultValue={data && data.currentUserhomeaddress}
             label={"Home address"}
             onChangeText={(text) => sethomeaddress(text)}
           />
           <InputField
             style={styles.inputStyle}
             keyboardType={"default"}
-            defaultValue={User.workaddress && User.workaddress}
+            defaultValue={data && data.currentUser.workaddress}
             label={"Work address"}
             onChangeText={(text) => setworkaddress(text)}
           />
