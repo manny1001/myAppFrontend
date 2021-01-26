@@ -26,7 +26,7 @@ import { useQuery, useMutation } from "@apollo/client";
 const GET_PROFILE = gql`
   query getProfile {
     currentUser {
-      id
+      uuid
       picture
       username
       email
@@ -38,7 +38,7 @@ const GET_PROFILE = gql`
 `;
 const UPDATE_PROFILE = gql`
   mutation updateProfile(
-    $id: String!
+    $uuid: String!
     $username: String
     $email: String
     $cellphone: String
@@ -46,7 +46,7 @@ const UPDATE_PROFILE = gql`
     $workaddress: String
   ) {
     updateProfile(
-      id: $id
+      uuid: $uuid
       username: $username
       email: $email
       cellphone: $cellphone
@@ -59,11 +59,20 @@ const UPDATE_PROFILE = gql`
 const BigButton = lazy(() => import("../Components/Buttons"));
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
+const AysncLogout = async () => {
+  try {
+    await AsyncStorage.removeItem("accessToken");
+    return true;
+  } catch (e) {
+    return false;
+  }
+};
 const ProfileStack = (props) => {
-  const [id, setID] = useState(null);
+  const [uuid, setUUID] = useState(null);
   const { loading, data, error } = useQuery(GET_PROFILE, {
     notifyOnNetworkStatusChange: true,
-    onCompleted: () => setID(data && data.currentUser && data.currentUser.id),
+    /* onCompleted: () =>
+      setUUID(data && data.currentUser && uuid), */
   });
   const [updateProfile, {}] = useMutation(UPDATE_PROFILE, {
     refetchQueries: [{ query: GET_PROFILE }],
@@ -83,9 +92,19 @@ const ProfileStack = (props) => {
     }
   };
 
-  if (loading && data === undefined) return <Loader />;
-  if (error && data === undefined) return <Text>{console.log(error)}</Text>;
-  if (data && data.currentUser !== undefined)
+  if (loading) return <Loader />;
+  if (data && data.currentUser.username === null) {
+    return (
+      <ContextConsumer>
+        {(context) => {
+          {
+            AysncLogout(), context.dispatch({ type: "SIGN_OUT" });
+          }
+        }}
+      </ContextConsumer>
+    );
+  }
+  if (data && data.currentUser)
     return (
       <View
         style={{ flexDirection: "column", flex: 1, justifyContent: "center" }}
@@ -104,7 +123,7 @@ const ProfileStack = (props) => {
             <Image
               blurRadius={5}
               source={
-                data.currentUser.picture
+                data && data.currentUser
                   ? { uri: data.currentUser.picture }
                   : ""
               }
@@ -171,7 +190,7 @@ const ProfileStack = (props) => {
             <InputField
               style={styles.inputStyle}
               keyboardType={"default"}
-              defaultValue={data.currentUserhomeaddress}
+              defaultValue={data.currentUser.homeaddress}
               label={"Home address"}
               onChangeText={(text) => sethomeaddress(text)}
             />
@@ -196,7 +215,7 @@ const ProfileStack = (props) => {
                 Keyboard.dismiss(),
                   updateProfile({
                     variables: {
-                      id: id && JSON.stringify(id),
+                      uuid: uuid && JSON.stringify(uuid),
                       username: username && username,
                       cellphone: cellphone && cellphone,
                       email: email && email,

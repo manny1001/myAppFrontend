@@ -58,8 +58,8 @@ class TrippyPayment extends Component {
   setselectedCard = (val) => {
     this.setState({ setselectedCard: val });
   };
+
   componentDidMount() {
-    console.log(this.props);
     const { tripFee, tipAmount } = this.state;
     this.setState({ totalAmount: tripFee + tipAmount });
     AsyncStorage.multiGet([
@@ -67,7 +67,7 @@ class TrippyPayment extends Component {
       "clientFirstName",
       "clientLastName",
       "timeRequested",
-      " location",
+      "location",
       "tripFee",
       "tip",
       "total",
@@ -81,6 +81,8 @@ class TrippyPayment extends Component {
   }
 
   render() {
+    const { newTripRequest, data, location, destination } = this.props;
+    const User = data;
     return (
       <View style={{ flex: 1, justifyContent: "space-evenly" }}>
         {/* Cash or Card header depending on selection */}
@@ -166,6 +168,7 @@ class TrippyPayment extends Component {
         {/* Show button for payment method CASH or CARD*/}
         {this.state.paymentMethod && this.state.selectedValue !== "Select" && (
           <PaymentButton
+            User={User}
             props={this.props}
             selectedValue={this.state.selectedValue}
             TripTotal={this.state.TripTotal}
@@ -174,6 +177,9 @@ class TrippyPayment extends Component {
             paymentMethod={this.state.paymentMethod}
             totalAmount={this.state.totalAmount}
             setisVisible={() => this.setState({ isVisible: false })}
+            newTripRequest={newTripRequest}
+            location={location}
+            destination={destination}
           />
         )}
         {/*       Cancel selected Card */}
@@ -193,26 +199,26 @@ class TrippyPayment extends Component {
 
 export default function (props) {
   const [newTripRequest] = useMutation(NEW_REQUEST);
-
-  const { loading, data } = useQuery(GET_PROFILE, {
+  const { loading, data, error } = useQuery(GET_PROFILE, {
     notifyOnNetworkStatusChange: true,
   });
-  /*  if (loading && data === undefined) return () => <Loader />; */
-  const [location, setdeparture] = useState("");
+
+  const [location, setLocation] = useState("");
   const [destination, setdestination] = useState("");
   React.useEffect(() => {
-    GetData(" location").then((location) => setdeparture(location));
+    GetData("location").then((location) => setLocation(location));
     GetData("destination").then((destination) => setdestination(destination));
   }, []);
+  if (data === undefined && error) return;
   return (
     <ContextConsumer>
       {(context) => {
         return (
           <TrippyPayment
             {...props}
+            newTripRequest={newTripRequest}
             dispatch={context.dispatch}
             state={context.state}
-            newTripRequest={newTripRequest}
             location={location}
             destination={destination}
             loading={loading}
