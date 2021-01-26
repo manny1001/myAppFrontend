@@ -79,13 +79,13 @@ export function Item({
         },
       ]}
     >
-      <ImageBackground
+      {/*  <ImageBackground
         source={require("../assets/backcardBack.jpg")}
         style={{
           flex: 1,
         }}
-      />
-      <Image
+      /> */}
+      {/* <Image
         source={require("../assets/chip.png")}
         style={{
           backgroundColor: "black",
@@ -97,7 +97,7 @@ export function Item({
           top: wp(7),
           left: wp(7),
         }}
-      />
+      /> */}
       <Text
         style={{
           position: "absolute",

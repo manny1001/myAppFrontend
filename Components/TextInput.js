@@ -14,7 +14,6 @@ export const Input = ({ containerStyle, style, label, text }) => (
     style={style}
     flat
     label={label}
-    value={text}
     onChangeText={(text) => setText(text)}
   />
 );

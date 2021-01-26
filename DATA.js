@@ -27,17 +27,17 @@ export const SlideData = [
 export const DriverDetails = [
   {
     id: 0,
-    image: require("./assets/ride.svg"),
+    image: "",
     description: "Request multiple stops",
   },
   {
     id: 1,
-    image: require("./assets/purchases.svg"),
+    image: "",
     description: "Fast, safe orders",
   },
   {
     id: 2,
-    image: require("./assets/order.svg"),
+    image: "",
     description: "Track on mobile or PC",
   },
 

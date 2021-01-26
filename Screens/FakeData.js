@@ -57,25 +57,25 @@ export const DATA2 = [
   {
     id: 1,
     Name: "Burgers",
-    Logo: require("../assets/burgers.jpg"),
+    Logo: "",
     Desrciption: "Hungry?...",
   },
   {
     id: 2,
     Name: "Drinks",
-    Logo: require("../assets/drinks.jpg"),
+    Logo: "",
     Desrciption: "Quench your thirst...",
   },
   {
     id: 3,
     Name: "Pizza",
-    Logo: require("../assets/pizza.jpg"),
+    Logo: "",
     Desrciption: "Sharing is caring,ya know...",
   },
   {
     id: 4,
     Name: "Kids",
-    Logo: require("../assets/kids.jpg"),
+    Logo: "",
     Desrciption: "Don't forget the kiddies!...",
   },
 ];

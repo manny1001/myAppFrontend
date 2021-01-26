@@ -84,14 +84,14 @@ export default function App(props) {
         console.log(e);
       }
     };
-    const storeData = async (value) => {
+    const StoreData = async (value) => {
       try {
         await AsyncStorage.setItem("accessToken", value);
       } catch (e) {
         // saving error
       }
     };
-    /* storeData(null); */
+    /* StoreData(null); */
     RestoreAsync();
   }, []);
 

@@ -18,7 +18,7 @@ const Destination = ({
   setsavedLocationVisible,
 }) => {
   const [destination, setdestination] = useState(null);
-  const getData = async (Key) => {
+  const GetData = async (Key) => {
     try {
       const value = await AsyncStorage.getItem(Key);
       if (value !== null) {
@@ -28,7 +28,7 @@ const Destination = ({
       // error reading value
     }
   };
-  getData("destination");
+  GetData("destination");
   return (
     <ContextConsumer>
       {(context) => {

@@ -8,11 +8,9 @@ import { useQuery, useMutation } from "@apollo/client";
 import gql from "graphql-tag";
 import Loader from "../Components/Loader";
 import { NEW_REQUEST } from "../Queries";
+import { GetData } from "../GFunctions";
 const BigButton = lazy(() => import("../Components/Buttons"));
 const PaymentButton = ({
-  CustomerName,
-  CustomerSurname,
-  CustomerCell,
   CustomerLocation,
   CustomerDestination,
   CustomerTimeRequested,
@@ -22,7 +20,6 @@ const PaymentButton = ({
   paymentMethod,
   totalAmount,
   selectedValue,
-  setisVisible,
   props,
 }) => {
   const GET_PROFILE = gql`
@@ -44,12 +41,13 @@ const PaymentButton = ({
     if (loading && data === undefined) return <Loader />;
     return data;
   };
+  const User = GETPROFILE();
   const FETCH = () => {
     const [addRequest] = useMutation(NEW_REQUEST);
     return addRequest;
   };
   const addRequestFunction = FETCH();
-  const User = GETPROFILE();
+
   console.log(User);
   return (
     <BigButton
@@ -68,8 +66,8 @@ const PaymentButton = ({
       onPress={() => {
         addRequestFunction({
           variables: {
-            username: User.currentUser.username,
-            cellphone: User.currentUser.cellphone,
+            customername: User.currentUser.username,
+            customercellphone: User.currentUser.cellphone,
             CustomerLocation: CustomerLocation,
             CustomerDestination: CustomerDestination,
             CustomerTimeRequested: CustomerTimeRequested,

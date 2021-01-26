@@ -1,9 +1,9 @@
 import React, { Component, lazy } from "react";
-import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import { View, Text } from "react-native";
 import { useLinkTo } from "@react-navigation/native";
 import { ContextConsumer } from "../Context";
 import Geocoder from "react-native-geocoding";
+import { StoreData } from "../GFunctions";
 import * as Location from "expo-location";
 const BigButton = lazy(() => import("../Components/Buttons"));
 const PickUpLocation = lazy(() => import("../Components/PickUpLocation"));
@@ -69,7 +69,7 @@ class GoogleAutoComplete extends Component {
         "O.R. Tambo International Airport. Private Bag X1. Kempton Park. 1627.",
     });
   };
-  getTripInfo = async () => {
+  /* getTripInfo = async () => {
     try {
       let response = await fetch(
         "https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/directions/json?origin=" +
@@ -86,7 +86,7 @@ class GoogleAutoComplete extends Component {
     } catch (error) {
       console.error(error);
     }
-  };
+  }; */
   componentDidMount() {
     this.SetPickUp();
     this.SetDestination();
@@ -146,7 +146,7 @@ class GoogleAutoComplete extends Component {
           />
           <BigButton
             onPress={() => {
-              this.getTripInfo();
+              /* this.getTripInfo(); */
               this.props.navigation.navigate("Confirm");
             }}
             title={"Request"}

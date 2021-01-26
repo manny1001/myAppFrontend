@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { gql, useQuery } from "@apollo/client";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { StoreData } from "./GFunctions";
 const { Provider, Consumer } = React.createContext();
 /* const NEW_REQUEST = gql`
   mutation($CustomerName: String) {
@@ -9,19 +10,12 @@ const { Provider, Consumer } = React.createContext();
     }
   }
 `; */
-const storeData = async (key, value) => {
-  try {
-    await AsyncStorage.setItem(key, value);
-  } catch (e) {
-    console.log(e);
-  }
-};
+
 class Context extends Component {
   state = {
     sessionArray: {
       clientCellNumber: "",
       username: "",
-      clientLastName: "",
       email: "",
       destination: "",
       departureTime: "",
@@ -50,7 +44,7 @@ class Context extends Component {
               selectedDriver: action.selectedDriver,
             },
           }),
-          () => storeData("selectedDriver", action.selectedDriver)
+          () => StoreData("selectedDriver", action.selectedDriver)
         );
       case "AcceptedTCs":
         return this.setState((state) => ({
@@ -83,7 +77,7 @@ class Context extends Component {
               clientCellNumber: action.clientCellNumber,
             },
           }),
-          () => storeData("clientCellNumber", action.clientCellNumber)
+          () => StoreData("clientCellNumber", action.clientCellNumber)
         );
       case "SAVE_PICKUPLOCATION":
         return this.setState(
@@ -93,7 +87,7 @@ class Context extends Component {
               departure: action.departure,
             },
           }),
-          () => storeData("departure", action.departure)
+          () => StoreData("departure", action.departure)
         );
       case "SAVE_DESTINATION":
         console.log(action);
@@ -104,7 +98,7 @@ class Context extends Component {
               destination: action.destination,
             },
           }),
-          () => storeData("destination", action.destination)
+          () => StoreData("destination", action.destination)
         );
       case "SIGN_IN":
         return this.setState(
@@ -115,7 +109,7 @@ class Context extends Component {
               userToken: action.userToken,
             },
           }),
-          () => storeData("accessToken", action.userToken)
+          () => StoreData("accessToken", action.userToken)
         );
       case "SIGN_OUT":
         return this.setState((state) => ({

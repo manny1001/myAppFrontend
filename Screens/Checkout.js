@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Header from "../Components/Header";
 import { RFValue } from "react-native-responsive-fontsize";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
-import { Picker } from "@react-native-community/picker";
+import { Picker } from "@react-native-picker/picker";
 import {
   Text,
   View,

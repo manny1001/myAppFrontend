@@ -5,7 +5,7 @@ const DETA = [
     menu: [
       {
         id: "1",
-        image: require("../assets/cbc.jpg"),
+        image: "",
         sizes: "S#M#L",
         title: "The Real Black Coffee",
         price: 78.0,
@@ -13,7 +13,7 @@ const DETA = [
       },
       {
         id: "2",
-        image: require("../assets/pizza.jpg"),
+        image: "",
         sizes: "S#M#L",
         title: "Pizzarona",
         price: 878.0,
@@ -21,7 +21,7 @@ const DETA = [
       },
       {
         id: "3",
-        image: require("../assets/pizza.jpg"),
+        image: "",
         sizes: "S#M#L",
         title: "Pizzamania",
         price: 33.0,

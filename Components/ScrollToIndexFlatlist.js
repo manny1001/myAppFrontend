@@ -18,7 +18,6 @@ import { useLinkTo } from "@react-navigation/native";
 import { ContextConsumer } from "../Context";
 import { gql, useQuery } from "@apollo/client";
 const windowWidth = Dimensions.get("window").width;
-import { useQuery, useMutation } from "@apollo/client";
 const Drivers = (props) => {
   const { name, surname, cellphone, picture, registration, model } = props;
   return (
@@ -40,9 +39,9 @@ const Drivers = (props) => {
         <Text style={{ fontWeight: "bold", alignSelf: "flex-start" }}>
           Cellphone
         </Text>
-        <TouchableOpacity>{cellphone}</TouchableOpacity>
+        <Text>{cellphone}</Text>
         <Text style={{ fontWeight: "bold" }}>Registration</Text>
-        <Text>{registration} </Text>
+        <Text>{registration}</Text>
         <Text style={{ fontWeight: "bold" }}>Model</Text>
         <Text>{model}</Text>
       </View>
@@ -88,9 +87,7 @@ export class Driver extends React.Component {
         horizontal={true}
         data={DriverDetails}
         renderItem={({ item }) => <Drivers {...item} />}
-        keyExtractor={(item) => {
-          item.id;
-        }}
+        keyExtractor={(item) => item.id.toString()}
         contentContainerStyle={{
           width: wp(100),
           flex: 1,
@@ -151,6 +148,7 @@ export default function (props) {
   const GET_DRIVERS = gql`
     query {
       allDriver {
+        id
         name
         surname
         cellphone
@@ -165,60 +163,27 @@ export default function (props) {
   });
   if (loading) return "Loading...";
   if (error) return `Error! ${error.message}`;
-
-  return (
-    <ContextConsumer>
-      {(context) => {
-        return (
-          <Driver
-            {...props}
-            linkTo={linkTo}
-            context={context}
-            DriverDetails={data && data.allDriver}
-          />
-        );
-      }}
-    </ContextConsumer>
-  );
+  if (!loading && !error && data && data.allDriver !== undefined)
+    return (
+      <ContextConsumer>
+        {(context) => {
+          return (
+            <Driver
+              {...props}
+              linkTo={linkTo}
+              context={context}
+              DriverDetails={data.allDriver}
+            />
+          );
+        }}
+      </ContextConsumer>
+    );
 }
 
 const styles = StyleSheet.create({
-  heading: {
-    alignSelf: "center",
-    fontSize: RFValue(12),
-    width: wp(90),
-  },
-  heading2: {
-    fontSize: RFValue(16),
-    fontWeight: "bold",
-    textAlign: "flex-start",
-  },
   driverDetails: {
     justifyContent: "space-around",
     width: wp(50),
     flex: 1,
-  },
-  heading3: {
-    fontSize: RFValue(16),
-    fontWeight: "bold",
-
-    alignSelf: "flex-start",
-    textAlign: "flex-start",
-  },
-  block: {
-    width: wp(40),
-    flexDirection: "column",
-    justifyContent: "flex-start",
-  },
-  locations: {
-    fontSize: RFValue(15),
-    fontWeight: "400",
-    textAlign: "flex-start",
-    width: wp(80),
-  },
-  locationsBlock: {
-    bottom: hp(3),
-    marginLeft: wp(1),
-    width: wp(80),
   },
 });

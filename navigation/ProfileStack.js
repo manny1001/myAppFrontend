@@ -61,27 +61,19 @@ const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 const ProfileStack = (props) => {
   const [id, setID] = useState(null);
-  const { loading, data } = useQuery(GET_PROFILE, {
+  const { loading, data, error } = useQuery(GET_PROFILE, {
     notifyOnNetworkStatusChange: true,
-    onCompleted: () => setID(data && data.currentUser.id),
+    onCompleted: () => setID(data && data.currentUser && data.currentUser.id),
   });
-  const [updateProfile, { error }] = useMutation(UPDATE_PROFILE, {
+  const [updateProfile, {}] = useMutation(UPDATE_PROFILE, {
     refetchQueries: [{ query: GET_PROFILE }],
     onCompleted: () => alert("Profile Succesfully Updated"),
   });
-  const [username, setusername] = React.useState(
-    data && data.currentUser.username
-  );
-  const [cellphone, setcellphone] = React.useState(
-    data && data.currentUser.cellphone
-  );
-  const [email, setemail] = React.useState(data && data.currentUser.email);
-  const [homeaddress, sethomeaddress] = React.useState(
-    data && data.currentUser.homeaddress
-  );
-  const [workaddress, setworkaddress] = React.useState(
-    data && data.currentUser.workaddress
-  );
+  const [username, setusername] = React.useState("");
+  const [cellphone, setcellphone] = React.useState("");
+  const [email, setemail] = React.useState("");
+  const [homeaddress, sethomeaddress] = React.useState("");
+  const [workaddress, setworkaddress] = React.useState("");
   const AysncLogout = async () => {
     try {
       await AsyncStorage.removeItem("accessToken");
@@ -92,180 +84,182 @@ const ProfileStack = (props) => {
   };
 
   if (loading && data === undefined) return <Loader />;
-  return (
-    <View
-      style={{ flexDirection: "column", flex: 1, justifyContent: "center" }}
-    >
-      <StatusBar translucent={false} style="light" />
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        style={{ width: wp(100), height: hp(100) }}
+  if (error && data === undefined) return <Text>{console.log(error)}</Text>;
+  if (data && data.currentUser !== undefined)
+    return (
+      <View
+        style={{ flexDirection: "column", flex: 1, justifyContent: "center" }}
       >
-        <View
-          style={{
-            width: wp(100),
-            height: hp(15),
-          }}
+        <StatusBar translucent={false} style="light" />
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          style={{ width: wp(100), height: hp(100) }}
         >
-          <Image
-            blurRadius={5}
-            source={
-              data && data.currentUser.picture
-                ? { uri: data.currentUser.picture }
-                : ""
-            }
-            style={{ width: wp(100), height: hp(15) }}
-          />
-          <Avatar
-            renderPlaceholderContent={
-              data && data.currentUser.picture && <ActivityIndicator />
-            }
-            rounded
-            size="xlarge"
-            containerStyle={{
-              height: hp(20),
-              width: hp(20),
-              borderRadius: hp(10),
-              position: "absolute",
-              top: hp(2),
-              marginLeft: wp(10),
-              bottom: 0,
-            }}
-            avatarStyle={{}}
-            source={
-              data && data.currentUserpicture
-                ? { uri: data.currentUser.picture }
-                : ""
-            }
-          />
-          <TouchableOpacity
-            style={{ position: "absolute", right: wp(3), bottom: hp(1) }}
-          ></TouchableOpacity>
-        </View>
-
-        <View
-          style={{
-            width: windowWidth,
-            height: windowHeight - hp(50),
-            marginTop: hp(8),
-            flexDirection: "column",
-            justifyContent: "space-around",
-          }}
-        >
-          <InputField
-            style={styles.inputStyle}
-            keyboardType={"default"}
-            defaultValue={data && data.currentUser.username}
-            label={"Username"}
-            onChangeText={(text) => setusername(text)}
-            selectionColor={"blue"}
-          />
-          <InputField
-            style={styles.inputStyle}
-            keyboardType={"phone-pad"}
-            defaultValue={data && data.currentUser.cellphone}
-            label={"Cellphone"}
-            onChangeText={(text) => setcellphone(text)}
-          />
-          <InputField
-            style={styles.inputStyle}
-            keyboardType={"email-address"}
-            defaultValue={data && data.currentUser.email}
-            label={"Email"}
-            onChangeText={(text) => setemail(text)}
-          />
-          <InputField
-            style={styles.inputStyle}
-            keyboardType={"default"}
-            defaultValue={data && data.currentUserhomeaddress}
-            label={"Home address"}
-            onChangeText={(text) => sethomeaddress(text)}
-          />
-          <InputField
-            style={styles.inputStyle}
-            keyboardType={"default"}
-            defaultValue={data && data.currentUser.workaddress}
-            label={"Work address"}
-            onChangeText={(text) => setworkaddress(text)}
-          />
-        </View>
-        <View
-          style={{
-            alignSelf: "stretch",
-            alignItems: "stretch",
-            height: hp(12),
-            justifyContent: "center",
-          }}
-        >
-          <BigButton
-            onPress={() => {
-              Keyboard.dismiss(),
-                updateProfile({
-                  variables: {
-                    id: id && JSON.stringify(id),
-                    username: username,
-                    cellphone: cellphone && cellphone,
-                    email: email && email,
-                    homeaddress: homeaddress && homeaddress,
-                    workaddress: workaddress && workaddress,
-                  },
-                });
-            }}
-            title={"Update"}
-            buttonStyle={{
-              alignSelf: "center",
-              flex: 1,
-            }}
-          />
-        </View>
-        <View
-          style={{
-            borderTopWidth: wp(0.75),
-            borderTopColor: "#6c63ff",
-            backgroundColor: "#f5f5f5",
-            width: wp(100),
-            height: hp(8),
-            justifyContent: "space-between",
-            flexDirection: "row",
-          }}
-        >
-          <Text
+          <View
             style={{
-              marginLeft: wp(5),
-              fontSize: wp(5),
-              alignSelf: "center",
+              width: wp(100),
+              height: hp(15),
             }}
           >
-            Logout
-          </Text>
-          <ContextConsumer>
-            {(context) => {
-              return (
-                <TouchableOpacity
-                  onPress={() => {
-                    {
-                      AysncLogout(), context.dispatch({ type: "SIGN_OUT" });
-                    }
-                  }}
-                  style={{
-                    justifyContent: "center",
-                    alignSelf: "center",
+            <Image
+              blurRadius={5}
+              source={
+                data.currentUser.picture
+                  ? { uri: data.currentUser.picture }
+                  : ""
+              }
+              style={{ width: wp(100), height: hp(15) }}
+            />
+            <Avatar
+              renderPlaceholderContent={
+                data.currentUser.picture && <ActivityIndicator />
+              }
+              rounded
+              size="xlarge"
+              containerStyle={{
+                height: hp(20),
+                width: hp(20),
+                borderRadius: hp(10),
+                position: "absolute",
+                top: hp(2),
+                marginLeft: wp(10),
+                bottom: 0,
+              }}
+              avatarStyle={{}}
+              source={
+                data.currentUser.picture
+                  ? { uri: data.currentUser.picture }
+                  : ""
+              }
+            />
+            <TouchableOpacity
+              style={{ position: "absolute", right: wp(3), bottom: hp(1) }}
+            ></TouchableOpacity>
+          </View>
 
-                    flexDirection: "row",
-                    width: wp(10),
-                    marginRight: wp(5),
-                    height: hp(5),
-                  }}
-                >
-                  <Text>Logout</Text>
-                </TouchableOpacity>
-              );
+          <View
+            style={{
+              width: windowWidth,
+              height: windowHeight - hp(50),
+              marginTop: hp(8),
+              flexDirection: "column",
+              justifyContent: "space-around",
             }}
-          </ContextConsumer>
-        </View>
-      </ScrollView>
-    </View>
-  );
+          >
+            <InputField
+              style={styles.inputStyle}
+              keyboardType={"default"}
+              defaultValue={data.currentUser.username}
+              label={"Username"}
+              onChangeText={(text) => setusername(text)}
+              selectionColor={"blue"}
+            />
+            <InputField
+              style={styles.inputStyle}
+              keyboardType={"phone-pad"}
+              defaultValue={data.currentUser.cellphone}
+              label={"Cellphone"}
+              onChangeText={(text) => setcellphone(text)}
+            />
+            <InputField
+              style={styles.inputStyle}
+              keyboardType={"email-address"}
+              defaultValue={data.currentUser.email}
+              label={"Email"}
+              onChangeText={(text) => setemail(text)}
+            />
+            <InputField
+              style={styles.inputStyle}
+              keyboardType={"default"}
+              defaultValue={data.currentUserhomeaddress}
+              label={"Home address"}
+              onChangeText={(text) => sethomeaddress(text)}
+            />
+            <InputField
+              style={styles.inputStyle}
+              keyboardType={"default"}
+              defaultValue={data.currentUser.workaddress}
+              label={"Work address"}
+              onChangeText={(text) => setworkaddress(text)}
+            />
+          </View>
+          <View
+            style={{
+              alignSelf: "stretch",
+              alignItems: "stretch",
+              height: hp(12),
+              justifyContent: "center",
+            }}
+          >
+            <BigButton
+              onPress={() => {
+                Keyboard.dismiss(),
+                  updateProfile({
+                    variables: {
+                      id: id && JSON.stringify(id),
+                      username: username && username,
+                      cellphone: cellphone && cellphone,
+                      email: email && email,
+                      homeaddress: homeaddress && homeaddress,
+                      workaddress: workaddress && workaddress,
+                    },
+                  });
+              }}
+              title={"Update"}
+              buttonStyle={{
+                alignSelf: "center",
+                flex: 1,
+              }}
+            />
+          </View>
+          <View
+            style={{
+              borderTopWidth: wp(0.75),
+              borderTopColor: "#6c63ff",
+              backgroundColor: "#f5f5f5",
+              width: wp(100),
+              height: hp(8),
+              justifyContent: "space-between",
+              flexDirection: "row",
+            }}
+          >
+            <Text
+              style={{
+                marginLeft: wp(5),
+                fontSize: wp(5),
+                alignSelf: "center",
+              }}
+            >
+              Logout
+            </Text>
+            <ContextConsumer>
+              {(context) => {
+                return (
+                  <TouchableOpacity
+                    onPress={() => {
+                      {
+                        AysncLogout(), context.dispatch({ type: "SIGN_OUT" });
+                      }
+                    }}
+                    style={{
+                      justifyContent: "center",
+                      alignSelf: "center",
+
+                      flexDirection: "row",
+                      width: wp(10),
+                      marginRight: wp(5),
+                      height: hp(5),
+                    }}
+                  >
+                    <Text>Logout</Text>
+                  </TouchableOpacity>
+                );
+              }}
+            </ContextConsumer>
+          </View>
+        </ScrollView>
+      </View>
+    );
 };
 
 const styles = StyleSheet.create({

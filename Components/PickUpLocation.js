@@ -14,7 +14,7 @@ const PickUpLocation = ({
   dispatchSaveLocation,
 }) => {
   const [departure, setdeparture] = useState(null);
-  const getData = async (Key) => {
+  const GetData = async (Key) => {
     try {
       const value = await AsyncStorage.getItem(Key);
       if (value !== null) {
@@ -24,7 +24,7 @@ const PickUpLocation = ({
       // error reading value
     }
   };
-  getData("pickuplocation");
+  GetData("pickuplocation");
   return (
     <ContextConsumer>
       {(context) => {
