@@ -1,9 +1,12 @@
-import React, { Component, lazy } from "react";
+import React, { Component, lazy, useState } from "react";
 import { View } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { YOURCARDS } from "../Components/selectBankCard";
 import { ContextConsumer } from "../Context";
-
+import { useQuery, useMutation } from "@apollo/client";
+import Loader from "../Components/Loader";
+import { NEW_REQUEST, GET_PROFILE } from "../Queries";
+import { GetData } from "../GFunctions";
 const PaymentButton = lazy(() => import("../Components/PaymentButton"));
 const YourBankCardsList = lazy(() => import("../Components/YourBankCardsList"));
 const SelectPaymentMethod = lazy(() =>
@@ -28,7 +31,7 @@ class TrippyPayment extends Component {
       clientCellNumber: "",
       clientFirstName: "",
       clientLastName: "",
-      departure: "",
+      location: "",
       timeRequested: "",
       destination: "",
       isVisible: true,
@@ -56,6 +59,7 @@ class TrippyPayment extends Component {
     this.setState({ setselectedCard: val });
   };
   componentDidMount() {
+    console.log(this.props);
     const { tripFee, tipAmount } = this.state;
     this.setState({ totalAmount: tripFee + tipAmount });
     AsyncStorage.multiGet([
@@ -63,7 +67,7 @@ class TrippyPayment extends Component {
       "clientFirstName",
       "clientLastName",
       "timeRequested",
-      "departure",
+      " location",
       "tripFee",
       "tip",
       "total",
@@ -71,7 +75,7 @@ class TrippyPayment extends Component {
       this.setState({ clientFirstName: response[1][1] });
       this.setState({ clientLastName: response[2][1] });
       this.setState({ clientCellNumber: response[0][1] });
-      this.setState({ departure: response[4][1] });
+      this.setState({ location: response[4][1] });
       this.setState({ timeRequested: response[3][1] });
     });
   }
@@ -116,7 +120,7 @@ class TrippyPayment extends Component {
               clientFirstName={this.state.clientFirstName}
               clientLastName={this.state.clientLastName}
               clientCellNumber={this.state.clientCellNumber}
-              departure={this.state.departure}
+              location={this.state.location}
               timeRequested={this.state.timeRequested}
             />
           </>
@@ -143,7 +147,7 @@ class TrippyPayment extends Component {
               clientFirstName={this.state.clientFirstName}
               clientLastName={this.state.clientLastName}
               clientCellNumber={this.state.clientCellNumber}
-              departure={this.state.departure}
+              location={this.state.location}
               timeRequested={this.state.timeRequested}
             />
           )}
@@ -164,18 +168,11 @@ class TrippyPayment extends Component {
           <PaymentButton
             props={this.props}
             selectedValue={this.state.selectedValue}
-            CustomerName={this.state.CustomerName}
-            CustomerSurname={this.state.CustomerSurname}
-            CustomerCell={this.state.CustomerCell}
-            CustomerLocation={this.state.CustomerLocation}
-            CustomerDestination={this.state.CustomerDestination}
-            CustomerTimeRequested={this.state.CustomerTimeRequested}
             TripTotal={this.state.TripTotal}
             TripFee={this.state.TripFee}
             setselectedCard={this.state.setselectedCard}
             paymentMethod={this.state.paymentMethod}
             totalAmount={this.state.totalAmount}
-            addRequestFunction={() => addRequestFunction}
             setisVisible={() => this.setState({ isVisible: false })}
           />
         )}
@@ -195,6 +192,18 @@ class TrippyPayment extends Component {
 }
 
 export default function (props) {
+  const [newTripRequest] = useMutation(NEW_REQUEST);
+
+  const { loading, data } = useQuery(GET_PROFILE, {
+    notifyOnNetworkStatusChange: true,
+  });
+  /*  if (loading && data === undefined) return () => <Loader />; */
+  const [location, setdeparture] = useState("");
+  const [destination, setdestination] = useState("");
+  React.useEffect(() => {
+    GetData(" location").then((location) => setdeparture(location));
+    GetData("destination").then((destination) => setdestination(destination));
+  }, []);
   return (
     <ContextConsumer>
       {(context) => {
@@ -203,6 +212,11 @@ export default function (props) {
             {...props}
             dispatch={context.dispatch}
             state={context.state}
+            newTripRequest={newTripRequest}
+            location={location}
+            destination={destination}
+            loading={loading}
+            data={data}
           />
         );
       }}

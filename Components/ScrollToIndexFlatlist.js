@@ -13,7 +13,7 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import { Avatar } from "react-native-elements";
-import { RFValue } from "react-native-responsive-fontsize";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useLinkTo } from "@react-navigation/native";
 import { ContextConsumer } from "../Context";
 import { gql, useQuery } from "@apollo/client";
@@ -144,6 +144,15 @@ export class Driver extends React.Component {
   );
 } */
 export default function (props) {
+  const AysncLogout = async () => {
+    try {
+      await AsyncStorage.removeItem("accessToken");
+      return true;
+    } catch (e) {
+      return false;
+    }
+  };
+
   const linkTo = useLinkTo();
   const GET_DRIVERS = gql`
     query {
@@ -162,7 +171,17 @@ export default function (props) {
     fetchPolicy: "network-only",
   });
   if (loading) return "Loading...";
-  if (error) return `Error! ${error.message}`;
+  if (error) {
+    return (
+      <ContextConsumer>
+        {(context) => {
+          {
+            AysncLogout(), context.dispatch({ type: "SIGN_OUT" });
+          }
+        }}
+      </ContextConsumer>
+    );
+  }
   if (!loading && !error && data && data.allDriver !== undefined)
     return (
       <ContextConsumer>

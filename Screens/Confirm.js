@@ -13,7 +13,7 @@ class Confirm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      departure: "",
+      location: "",
       destination: "",
       distance: "",
       tripAmount: 25.0,
@@ -29,8 +29,8 @@ class Confirm extends Component {
     };
   }
   componentDidMount() {
-    AsyncStorage.multiGet(["departure", "destination"]).then((response) => {
-      this.setState({ departure: response[0][1] });
+    AsyncStorage.multiGet([" location", "destination"]).then((response) => {
+      this.setState({ location: response[0][1] });
       this.setState({ destination: response[1][1] });
     });
   }
@@ -47,7 +47,7 @@ class Confirm extends Component {
         >
           <Text style={styles.heading2}>Departure</Text>
           <View style={styles.locationsBlock}>
-            <Text style={styles.locations}>{this.state.departure}</Text>
+            <Text style={styles.locations}>{this.state.location}</Text>
           </View>
 
           <Text style={styles.heading2}>Destination</Text>

@@ -11,7 +11,7 @@ const TripDetails = ({
   clientFirstName,
   clientLastName,
   clientCellNumber,
-  departure,
+  location,
   timeRequested,
 }) => {
   return (
@@ -27,8 +27,7 @@ const TripDetails = ({
       <Text>
         {clientFirstName} {clientLastName}
       </Text>
-      ``
-      <Text>{departure}</Text>
+      <Text>{location}</Text>
       <Text>{timeRequested}</Text>
       <Text>{clientCellNumber}</Text>
     </View>

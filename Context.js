@@ -21,7 +21,7 @@ class Context extends Component {
       departureTime: "",
       destinationArrivalTime: "",
       selectedDriver: {},
-      departure: "37 Launceston Rd, New Redruth, Alberton, 1449, South Africa",
+      location: "37 Launceston Rd, New Redruth, Alberton, 1449, South Africa",
       timeRequested: "",
       paymentMethod: "",
       tripFee: "",
@@ -84,10 +84,10 @@ class Context extends Component {
           (state) => ({
             sessionArray: {
               ...this.state.sessionArray,
-              departure: action.departure,
+              location: action.location,
             },
           }),
-          () => StoreData("departure", action.departure)
+          () => StoreData(" location", action.location)
         );
       case "SAVE_DESTINATION":
         console.log(action);

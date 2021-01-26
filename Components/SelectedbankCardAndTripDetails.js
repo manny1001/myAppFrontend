@@ -11,7 +11,7 @@ const SelectedbankCardAndTripDetails = ({
   clientFirstName,
   clientLastName,
   clientCellNumber,
-  departure,
+  location,
   timeRequested,
   setselectedCard,
 }) => {
@@ -32,7 +32,7 @@ const SelectedbankCardAndTripDetails = ({
         clientFirstName={clientFirstName}
         clientLastName={clientLastName}
         clientCellNumber={clientCellNumber}
-        departure={departure}
+        location={location}
         timeRequested={timeRequested}
       />
     </View>

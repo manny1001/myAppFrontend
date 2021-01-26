@@ -51,7 +51,7 @@ class GoogleAutoComplete extends Component {
         this.setState({ currentLocation: addressComponent.formatted_address });
         this.props.context.dispatch({
           type: "SAVE_PICKUPLOCATION",
-          departure: this.state.currentLocation,
+           location: this.state.currentLocation,
         });
       })
       .catch((error) => console.warn(error)); */
@@ -59,7 +59,7 @@ class GoogleAutoComplete extends Component {
   SetPickUp = async () => {
     this.props.context.dispatch({
       type: "SAVE_PICKUPLOCATION",
-      departure: "22 Allan RdGlen Austin AH, Midrand, 1685",
+      location: "22 Allan RdGlen Austin AH, Midrand, 1685",
     });
   };
   SetDestination = async () => {

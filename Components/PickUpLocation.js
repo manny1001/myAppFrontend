@@ -13,7 +13,7 @@ const PickUpLocation = ({
   setCurrentLocation,
   dispatchSaveLocation,
 }) => {
-  const [departure, setdeparture] = useState(null);
+  const [location, setdeparture] = useState(null);
   const GetData = async (Key) => {
     try {
       const value = await AsyncStorage.getItem(Key);
@@ -47,7 +47,7 @@ const PickUpLocation = ({
               }}
             >
               {isClicked === false ? (
-                context.state.departure === "" ? (
+                context.state.location === "" ? (
                   <View
                     style={{
                       justifyContent: "space-between",
@@ -71,7 +71,7 @@ const PickUpLocation = ({
                       fontSize: RFValue(14),
                     }}
                   >
-                    {departure !== null ? departure : context.state.departure}
+                    {location !== null ? location : context.state.location}
                   </Text>
                 )
               ) : (
