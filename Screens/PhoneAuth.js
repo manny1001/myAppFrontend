@@ -177,11 +177,12 @@ const PhoneAuth = (props) => {
                 onPress={() => {
                   login({ variables: { cellphone } })
                     .then(({ data }) => {
-                      data.login.token &&
-                        context.dispatch({
-                          type: "SIGN_IN",
-                          userToken: data.login.token,
-                        });
+                      console.log(data),
+                        data.login.token &&
+                          context.dispatch({
+                            type: "SIGN_IN",
+                            userToken: data.login.token,
+                          });
                       context.dispatch({
                         type: "SAVE_CELL",
                         clientCellNumber: cellphone,

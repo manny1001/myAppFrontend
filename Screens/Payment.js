@@ -1,11 +1,11 @@
 import React, { Component, lazy, useState } from "react";
-import { View } from "react-native";
+import { View, Text, Alert } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { YOURCARDS } from "../Components/selectBankCard";
 import { ContextConsumer } from "../Context";
 import { useQuery, useMutation } from "@apollo/client";
 import Loader from "../Components/Loader";
-import { NEW_REQUEST, GET_PROFILE } from "../Queries";
+import { NEW_REQUEST, GET_PROFILE, GET_DRIVER_RESPONSE } from "../Queries";
 import { GetData } from "../GFunctions";
 const PaymentButton = lazy(() => import("../Components/PaymentButton"));
 const YourBankCardsList = lazy(() => import("../Components/YourBankCardsList"));
@@ -59,7 +59,6 @@ class TrippyPayment extends Component {
     this.setState({ setselectedCard: val });
   };
   componentDidMount() {
-    console.log(this.props);
     const { tripFee, tipAmount } = this.state;
     this.setState({ totalAmount: tripFee + tipAmount });
     AsyncStorage.multiGet([
@@ -193,11 +192,24 @@ class TrippyPayment extends Component {
 
 export default function (props) {
   const [newTripRequest] = useMutation(NEW_REQUEST);
-
-  const { loading, data } = useQuery(GET_PROFILE, {
-    notifyOnNetworkStatusChange: true,
+  const [requestID, setRequestid] = useState("");
+  const { loading, data } = useQuery(GET_PROFILE);
+  const { loading: LOADING, data: DATA } = useQuery(GET_DRIVER_RESPONSE, {
+    variables: { uuidUser: "7a020722-7f6c-438b-8720-83e5e94aa91a" },
+    pollInterval: 500,
+    onCompleted: () => {
+      setRequestid(DATA.getDriverRequestResponse.id),
+        console.log(DATA.getDriverRequestResponse.id);
+    },
   });
-  /*  if (loading && data === undefined) return () => <Loader />; */
+
+  ///YOU ARE HERERERERER!!!!!!!!!!!!!!!!!!!!!!!!
+  if (requestID === null) {
+    console.log("Waiting response");
+  }
+  if (requestID !== null) {
+    console.log("pAY!");
+  }
   const [location, setdeparture] = useState("");
   const [destination, setdestination] = useState("");
   React.useEffect(() => {

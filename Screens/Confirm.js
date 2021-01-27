@@ -6,7 +6,10 @@ import {
 } from "react-native-responsive-screen";
 import { RFValue } from "react-native-responsive-fontsize";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useMutation, useQuery } from "@apollo/client";
+import { NEW_REQUEST, GET_PROFILE } from "../Queries";
 import { ContextConsumer } from "../Context";
+import { GetData } from "../GFunctions";
 const BigButton = lazy(() => import("../Components/Buttons"));
 const Driver = lazy(() => import("../Components/ScrollToIndexFlatlist"));
 class Confirm extends Component {
@@ -28,6 +31,7 @@ class Confirm extends Component {
       },
     };
   }
+
   componentDidMount() {
     AsyncStorage.multiGet([" location", "destination"]).then((response) => {
       this.setState({ location: response[0][1] });
@@ -35,6 +39,13 @@ class Confirm extends Component {
     });
   }
   render() {
+    const {
+      newTripRequest,
+      data,
+      location,
+      destination,
+      navigation,
+    } = this.props;
     return (
       <>
         <View
@@ -95,8 +106,18 @@ class Confirm extends Component {
                     "Proceed" + " " + "\n" + "R" + " " + this.state.tripAmount
                   }
                   onPress={() => {
-                    this.props.navigation.navigate("Payment"),
-                      context.dispatch({
+                    navigation.navigate("Payment"),
+                      newTripRequest({
+                        variables: {
+                          uuid: data && data.currentUser.uuid,
+                          username: data && data.currentUser.username,
+                          cellphone: data && data.currentUser.cellphone,
+                          location: location,
+                          destination: destination,
+                          paymentmethod: "Cash",
+                        },
+                      });
+                    /*  context.dispatch({
                         type: "SAVE_DRIVER",
                         selectedDriver: {
                           name: "Manny",
@@ -107,7 +128,7 @@ class Confirm extends Component {
                           registration: "VCX BVN GP",
                           model: "Polo",
                         },
-                      });
+                      }), */
                   }}
                 />
               );
@@ -118,7 +139,33 @@ class Confirm extends Component {
     );
   }
 }
-export default Confirm;
+export default function (props) {
+  const [newTripRequest] = useMutation(NEW_REQUEST);
+  const { loading, data } = useQuery(GET_PROFILE, {
+    notifyOnNetworkStatusChange: true,
+  });
+  const [location, setdeparture] = React.useState("");
+  const [destination, setdestination] = React.useState("");
+  React.useEffect(() => {
+    GetData(" location").then((location) => setdeparture(location));
+    GetData("destination").then((destination) => setdestination(destination));
+  }, []);
+  return (
+    <ContextConsumer>
+      {(context) => {
+        return (
+          <Confirm
+            {...props}
+            newTripRequest={newTripRequest}
+            data={data}
+            location={location}
+            destination={destination}
+          />
+        );
+      }}
+    </ContextConsumer>
+  );
+}
 
 const styles = StyleSheet.create({
   heading: {

@@ -63,6 +63,7 @@ const ProfileStack = (props) => {
   const [id, setID] = useState(null);
   const { loading, data, error } = useQuery(GET_PROFILE, {
     notifyOnNetworkStatusChange: true,
+
     onCompleted: () => setID(data && data.currentUser && data.currentUser.id),
   });
   const [updateProfile, {}] = useMutation(UPDATE_PROFILE, {
@@ -171,7 +172,7 @@ const ProfileStack = (props) => {
             <InputField
               style={styles.inputStyle}
               keyboardType={"default"}
-              defaultValue={data.currentUserhomeaddress}
+              defaultValue={data.currentUser.homeaddress}
               label={"Home address"}
               onChangeText={(text) => sethomeaddress(text)}
             />
