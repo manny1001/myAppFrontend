@@ -19,49 +19,60 @@ import { ContextConsumer } from "../Context";
 import { gql, useQuery } from "@apollo/client";
 const windowWidth = Dimensions.get("window").width;
 const Drivers = (props) => {
-  const { name, surname, cellphone, picture, registration, model } = props;
-  return (
-    <View
-      style={{
-        justifyContent: "space-between",
-        flex: 1,
-        flexDirection: "row",
-        width: wp(100),
-        alignSelf: "center",
-        height: hp(30),
-      }}
-    >
-      <View style={styles.driverDetails}>
-        <Text style={{ fontWeight: "bold" }}>Name</Text>
-        <Text>
-          {name} {surname}
-        </Text>
-        <Text style={{ fontWeight: "bold", alignSelf: "flex-start" }}>
-          Cellphone
-        </Text>
-        <Text>{cellphone}</Text>
-        <Text style={{ fontWeight: "bold" }}>Registration</Text>
-        <Text>{registration}</Text>
-        <Text style={{ fontWeight: "bold" }}>Model</Text>
-        <Text>{model}</Text>
+  const {
+    name,
+    surname,
+    cellphone,
+    picture,
+    registration,
+    model,
+    status,
+  } = props;
+  {
+    if (status !== "Online") return <></>;
+    return (
+      <View
+        style={{
+          justifyContent: "space-between",
+          flex: 1,
+          flexDirection: "row",
+          width: wp(100),
+          alignSelf: "center",
+          height: hp(30),
+        }}
+      >
+        <View style={styles.driverDetails}>
+          <Text style={{ fontWeight: "bold" }}>Name</Text>
+          <Text>
+            {name} {surname}
+          </Text>
+          <Text style={{ fontWeight: "bold", alignSelf: "flex-start" }}>
+            Cellphone
+          </Text>
+          <Text>{cellphone}</Text>
+          <Text style={{ fontWeight: "bold" }}>Registration</Text>
+          <Text>{registration}</Text>
+          <Text style={{ fontWeight: "bold" }}>Model</Text>
+          <Text>{model}</Text>
+        </View>
+        <View style={{ flex: 1, justifyContent: "space-around" }}>
+          <Avatar
+            renderPlaceholderContent={picture && <ActivityIndicator />}
+            rounded
+            size="xlarge"
+            containerStyle={{
+              height: hp(15),
+              width: hp(15),
+              borderRadius: hp(7.5),
+              alignSelf: "center",
+            }}
+            source={{ uri: picture }}
+          />
+          <Text style={{ alignSelf: "center" }}>7 mins away</Text>
+        </View>
       </View>
-      <View style={{ flex: 1, justifyContent: "space-around" }}>
-        <Avatar
-          renderPlaceholderContent={picture && <ActivityIndicator />}
-          rounded
-          size="xlarge"
-          containerStyle={{
-            height: hp(15),
-            width: hp(15),
-            borderRadius: hp(7.5),
-            alignSelf: "center",
-          }}
-          source={{ uri: picture }}
-        />
-        <Text style={{ alignSelf: "center" }}>7 mins away</Text>
-      </View>
-    </View>
-  );
+    );
+  }
 };
 
 export class Driver extends React.Component {
@@ -160,6 +171,7 @@ export default function (props) {
         id
         name
         surname
+        status
         cellphone
         picture
         registration

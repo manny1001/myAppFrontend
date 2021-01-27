@@ -1,11 +1,16 @@
 import React, { Component, lazy, useState } from "react";
-import { View, Text, Alert } from "react-native";
+import { View, ActivityIndicator, Alert } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { YOURCARDS } from "../Components/selectBankCard";
 import { ContextConsumer } from "../Context";
 import { useQuery, useMutation } from "@apollo/client";
 import Loader from "../Components/Loader";
-import { NEW_REQUEST, GET_PROFILE, GET_DRIVER_RESPONSE } from "../Queries";
+import {
+  NEW_REQUEST,
+  GET_PROFILE,
+  GET_DRIVER_RESPONSE,
+  PAYMENT_CONFIRMATION,
+} from "../Queries";
 import { GetData } from "../GFunctions";
 const PaymentButton = lazy(() => import("../Components/PaymentButton"));
 const YourBankCardsList = lazy(() => import("../Components/YourBankCardsList"));
@@ -38,9 +43,9 @@ class TrippyPayment extends Component {
       tipModalVisible: false,
       tipAdded: false,
       tipAmount: 0,
-      tripFee: 55.6,
+      total: 55.6,
       orderAmount: 200.6,
-      totalAmount: 0,
+      totalAmount: 23000,
       selectedValue: "Select",
       paymentMethod: null,
       value: null,
@@ -60,29 +65,26 @@ class TrippyPayment extends Component {
   };
 
   componentDidMount() {
-    const { tripFee, tipAmount } = this.state;
-    this.setState({ totalAmount: tripFee + tipAmount });
     AsyncStorage.multiGet([
       "clientCellNumber",
       "clientFirstName",
       "clientLastName",
       "timeRequested",
       "location",
-      "tripFee",
-      "tip",
       "total",
+      "tip",
     ]).then((response) => {
       this.setState({ clientFirstName: response[1][1] });
       this.setState({ clientLastName: response[2][1] });
       this.setState({ clientCellNumber: response[0][1] });
       this.setState({ location: response[4][1] });
       this.setState({ timeRequested: response[3][1] });
+      this.setState({ total: "10,000" });
     });
   }
 
   render() {
-    const { newTripRequest, data, location, destination } = this.props;
-    const User = data;
+    const { PayOrConfirm, uuidTrip, navigation } = this.props;
     return (
       <View style={{ flex: 1, justifyContent: "space-evenly" }}>
         {/* Cash or Card header depending on selection */}
@@ -168,18 +170,13 @@ class TrippyPayment extends Component {
         {/* Show button for payment method CASH or CARD*/}
         {this.state.paymentMethod && this.state.selectedValue !== "Select" && (
           <PaymentButton
-            User={User}
-            props={this.props}
+            navigation={navigation}
+            PayOrConfirm={PayOrConfirm}
             selectedValue={this.state.selectedValue}
-            TripTotal={this.state.TripTotal}
-            TripFee={this.state.TripFee}
             setselectedCard={this.state.setselectedCard}
             paymentMethod={this.state.paymentMethod}
             totalAmount={this.state.totalAmount}
-            setisVisible={() => this.setState({ isVisible: false })}
-            newTripRequest={newTripRequest}
-            location={location}
-            destination={destination}
+            uuidTrip={uuidTrip && uuidTrip}
           />
         )}
         {/*       Cancel selected Card */}
@@ -198,46 +195,34 @@ class TrippyPayment extends Component {
 }
 
 export default function (props) {
-  const [newTripRequest] = useMutation(NEW_REQUEST);
-  const [requestID, setRequestid] = useState("");
-  const { loading, data } = useQuery(GET_PROFILE);
-  const { loading: LOADING, data: DATA } = useQuery(GET_DRIVER_RESPONSE, {
-    variables: { uuidUser: "7a020722-7f6c-438b-8720-83e5e94aa91a" },
+  const [PayOrConfirm] = useMutation(PAYMENT_CONFIRMATION);
+  const [requestID, setRequestid] = useState(null);
+  const [uuidTrip, setuuidTrip] = useState(null);
+  const { data } = useQuery(GET_PROFILE);
+  const { data: DATA, stopPolling } = useQuery(GET_DRIVER_RESPONSE, {
+    variables: { uuidUser: data && data.currentUser.uuid },
     pollInterval: 500,
     onCompleted: () => {
       setRequestid(DATA.getDriverRequestResponse.id),
-        console.log(DATA.getDriverRequestResponse.id);
+        setuuidTrip(DATA.getDriverRequestResponse.uuidTrip);
     },
+    notifyOnNetworkStatusChange: true,
   });
-
-  ///YOU ARE HERERERERER!!!!!!!!!!!!!!!!!!!!!!!!
-  if (requestID === null) {
-    console.log("Waiting response");
-  }
-  if (requestID !== null) {
-    console.log("pAY!");
-  }
-
-  const [location, setLocation] = useState("");
-  const [destination, setdestination] = useState("");
+  console.log(DATA);
   React.useEffect(() => {
-    GetData("location").then((location) => setLocation(location));
-    GetData("destination").then((destination) => setdestination(destination));
-  }, []);
-  if (data === undefined && error) return;
+    stopPolling();
+  }, [requestID]);
+
+  if (requestID === null) return <ActivityIndicator />;
   return (
     <ContextConsumer>
       {(context) => {
         return (
           <TrippyPayment
             {...props}
-            newTripRequest={newTripRequest}
+            PayOrConfirm={PayOrConfirm}
             dispatch={context.dispatch}
-            state={context.state}
-            location={location}
-            destination={destination}
-            loading={loading}
-            data={data}
+            uuidTrip={uuidTrip && uuidTrip}
           />
         );
       }}

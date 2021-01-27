@@ -5,15 +5,12 @@ import { useQuery, useMutation } from "@apollo/client";
 import { NEW_REQUEST, GET_PROFILE } from "../Queries";
 const BigButton = lazy(() => import("../Components/Buttons"));
 const PaymentButton = ({
-  destination,
-  location,
-  loading,
-  data,
-  User,
+  navigation,
+  uuidTrip,
+  PayOrConfirm,
   setselectedCard,
   paymentMethod,
   totalAmount,
-  newTripRequest,
   selectedValue,
 }) => {
   return (
@@ -31,17 +28,14 @@ const PaymentButton = ({
           : "Pay" + " " + "\n" + "R" + " " + totalAmount.toFixed(2)
       }
       onPress={() => {
-        newTripRequest({
+        PayOrConfirm({
           variables: {
-            uuid: User.currentUser.uuid,
-            username: User.currentUser.username,
-            cellphone: User.currentUser.cellphone,
-            location: location,
-            destination: destination,
-            paymentmethod: paymentMethod,
+            uuidTrip: uuidTrip,
+            total: totalAmount.toString(),
+            paymentMethod: paymentMethod,
           },
         });
-        /*  props.navigation.navigate("TrackDriver"); */
+        navigation.navigate("TrackDriver");
       }}
     />
   );

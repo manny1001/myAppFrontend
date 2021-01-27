@@ -32,12 +32,6 @@ class Confirm extends Component {
     };
   }
 
-  componentDidMount() {
-    AsyncStorage.multiGet(["location", "destination"]).then((response) => {
-      this.setState({ location: response[0][1] });
-      this.setState({ destination: response[1][1] });
-    });
-  }
   render() {
     const {
       newTripRequest,
@@ -58,12 +52,12 @@ class Confirm extends Component {
         >
           <Text style={styles.heading2}>Departure</Text>
           <View style={styles.locationsBlock}>
-            <Text style={styles.locations}>{this.state.location}</Text>
+            <Text style={styles.locations}>{location}</Text>
           </View>
 
           <Text style={styles.heading2}>Destination</Text>
           <View style={styles.locationsBlock}>
-            <Text style={styles.locations}>{this.state.destination}</Text>
+            <Text style={styles.locations}>{destination}</Text>
           </View>
         </View>
 
@@ -109,12 +103,11 @@ class Confirm extends Component {
                     navigation.navigate("Payment"),
                       newTripRequest({
                         variables: {
-                          uuid: data && data.currentUser.uuid,
+                          uuidUser: data && data.currentUser.uuid,
                           username: data && data.currentUser.username,
                           cellphone: data && data.currentUser.cellphone,
                           location: location,
                           destination: destination,
-                          paymentmethod: "Cash",
                         },
                       });
                     /*  context.dispatch({

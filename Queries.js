@@ -1,20 +1,31 @@
 import { gql } from "@apollo/client";
+export const PAYMENT_CONFIRMATION = gql`
+  mutation PayOrConfirm(
+    $uuidTrip: String
+    $total: String
+    $paymentMethod: String
+  ) {
+    TripCardPaymentCashConfirmation(
+      uuidTrip: $uuidTrip
+      total: $total
+      paymentMethod: $paymentMethod
+    )
+  }
+`;
 export const NEW_REQUEST = gql`
   mutation NewRequest(
-    $uuid: String
+    $uuidUser: String
     $username: String
     $cellphone: String
     $location: String
     $destination: String
-    $paymentmethod: String
   ) {
     newTripRequest(
-      uuid: $uuid
+      uuid: $uuidUser
       username: $username
       cellphone: $cellphone
       location: $location
       destination: $destination
-      paymentmethod: $paymentmethod
     )
   }
 `;
