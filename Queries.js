@@ -22,7 +22,9 @@ export const GET_PROFILE = gql`
   query getProfile {
     currentUser {
       uuid
+      picture
       username
+      email
       cellphone
       homeaddress
       workaddress

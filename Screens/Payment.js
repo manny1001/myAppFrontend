@@ -217,9 +217,7 @@ export default function (props) {
   if (requestID !== null) {
     console.log("pAY!");
   }
-  const { loading, data, error } = useQuery(GET_PROFILE, {
-    notifyOnNetworkStatusChange: true,
-  });
+
   const [location, setLocation] = useState("");
   const [destination, setdestination] = useState("");
   React.useEffect(() => {
