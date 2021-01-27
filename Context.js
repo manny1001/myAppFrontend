@@ -87,7 +87,7 @@ class Context extends Component {
               location: action.location,
             },
           }),
-          () => StoreData(" location", action.location)
+          () => StoreData("location", action.location)
         );
       case "SAVE_DESTINATION":
         console.log(action);

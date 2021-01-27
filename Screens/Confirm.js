@@ -33,7 +33,7 @@ class Confirm extends Component {
   }
 
   componentDidMount() {
-    AsyncStorage.multiGet([" location", "destination"]).then((response) => {
+    AsyncStorage.multiGet(["location", "destination"]).then((response) => {
       this.setState({ location: response[0][1] });
       this.setState({ destination: response[1][1] });
     });

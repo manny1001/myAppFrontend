@@ -1,13 +1,19 @@
 import React, { useEffect, useState, lazy } from "react";
 import { widthPercentageToDP as wp } from "react-native-responsive-screen";
 import Icon from "react-native-vector-icons/AntDesign";
+import { useQuery, useMutation } from "@apollo/client";
+import { NEW_REQUEST, GET_PROFILE } from "../Queries";
 const BigButton = lazy(() => import("../Components/Buttons"));
 const PaymentButton = ({
+  destination,
+  location,
   loading,
   data,
+  User,
   setselectedCard,
   paymentMethod,
   totalAmount,
+  newTripRequest,
   selectedValue,
 }) => {
   return (
@@ -27,11 +33,12 @@ const PaymentButton = ({
       onPress={() => {
         newTripRequest({
           variables: {
-            username: JSON.stringify(User.currentUser.username),
-            cellphone: JSON.stringify(User.currentUser.cellphone),
-            location: JSON.stringify(location),
-            destination: JSON.stringify(destination),
-            paymentmethod: "Card",
+            uuid: User.currentUser.uuid,
+            username: User.currentUser.username,
+            cellphone: User.currentUser.cellphone,
+            location: location,
+            destination: destination,
+            paymentmethod: paymentMethod,
           },
         });
         /*  props.navigation.navigate("TrackDriver"); */
