@@ -204,11 +204,11 @@ export default function (props) {
     pollInterval: 500,
     onCompleted: () => {
       setRequestid(DATA.getDriverRequestResponse.id),
-        setuuidTrip(DATA.getDriverRequestResponse.uuidTrip);
+        setuuidTrip(DATA.getDriverRequestResponse.uuidTrip),
+        console.log(DATA);
     },
     notifyOnNetworkStatusChange: true,
   });
-  console.log(DATA);
   React.useEffect(() => {
     stopPolling();
   }, [requestID]);
