@@ -80,9 +80,17 @@ export class Driver extends React.Component {
     super(props);
     this.state = {
       isPressed: 1,
+      DriversAvailable: [],
     };
   }
-
+  /* componentDidMount() {
+    const { DriversAvailable } = this.state;
+    DriversAvailable.push(DriverDetails);
+    this.setState({
+      DriversAvailable: [DriversAvailable.push(DriverDetails)],
+    });
+    console.log(DriverDetails, DriversAvailable);
+  } */
   render() {
     const { DriverDetails } = this.props;
     return (
@@ -98,7 +106,7 @@ export class Driver extends React.Component {
         horizontal={true}
         data={DriverDetails}
         renderItem={({ item }) => <Drivers {...item} />}
-        keyExtractor={(item) => item.id.toString()}
+        keyExtractor={(item) => item.uuid}
         contentContainerStyle={{
           width: wp(100),
           flex: 1,
@@ -168,7 +176,7 @@ export default function (props) {
   const GET_DRIVERS = gql`
     query {
       allDriver {
-        id
+        uuid
         name
         surname
         status

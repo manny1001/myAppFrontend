@@ -5,13 +5,12 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import { RFValue } from "react-native-responsive-fontsize";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useMutation, useQuery } from "@apollo/client";
 import { NEW_REQUEST, GET_PROFILE } from "../Queries";
 import { ContextConsumer } from "../Context";
 import { GetData } from "../GFunctions";
 const BigButton = lazy(() => import("../Components/Buttons"));
-const Driver = lazy(() => import("../Components/ScrollToIndexFlatlist"));
+const Driver = lazy(() => import("../Components/SelectDriver"));
 class Confirm extends Component {
   constructor(props) {
     super(props);
@@ -19,16 +18,8 @@ class Confirm extends Component {
       location: "",
       destination: "",
       distance: "",
-      tripAmount: 25.0,
-      selectedDriver: {
-        name: "Manny",
-        surname: "Mann",
-        cellphone: "0722889887",
-        picture:
-          "https://firebasestorage.googleapis.com/v0/b/shop4-962e4.appspot.com/o/PicsArt_09-23-03.38.25.jpg?alt=media&token=ccd69fd1-d2bc-43f3-b788-63b7ce56d2b8",
-        registration: "VCX BVN GP",
-        model: "Polo",
-      },
+      totalAmount: "22000",
+      uuidDriver: "68978",
     };
   }
 
@@ -97,10 +88,12 @@ class Confirm extends Component {
                   }}
                   titleStyle={{ fontWeight: "bold" }}
                   title={
-                    "Proceed" + " " + "\n" + "R" + " " + this.state.tripAmount
+                    "Proceed" + " " + "\n" + "R" + " " + this.state.totalAmount
                   }
                   onPress={() => {
-                    navigation.navigate("Payment"),
+                    navigation.navigate("Payment", {
+                      totalAmount: this.state.totalAmount,
+                    }),
                       newTripRequest({
                         variables: {
                           uuidUser: data && data.currentUser.uuid,
@@ -108,20 +101,9 @@ class Confirm extends Component {
                           cellphone: data && data.currentUser.cellphone,
                           location: location,
                           destination: destination,
+                          uuidDriver: this.state.uuidDriver,
                         },
                       });
-                    /*  context.dispatch({
-                        type: "SAVE_DRIVER",
-                        selectedDriver: {
-                          name: "Manny",
-                          surname: "Mann",
-                          cellphone: "0722889887",
-                          picture:
-                            "https://firebasestorage.googleapis.com/v0/b/shop4-962e4.appspot.com/o/PicsArt_09-23-03.38.25.jpg?alt=media&token=ccd69fd1-d2bc-43f3-b788-63b7ce56d2b8",
-                          registration: "VCX BVN GP",
-                          model: "Polo",
-                        },
-                      }), */
                   }}
                 />
               );
@@ -149,6 +131,7 @@ export default function (props) {
         return (
           <Confirm
             {...props}
+            context={context}
             newTripRequest={newTripRequest}
             data={data}
             location={location}

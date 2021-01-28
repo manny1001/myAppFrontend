@@ -27,7 +27,7 @@ class Context extends Component {
       tripFee: "",
       tip: "",
       firstTimeLogin: true,
-      total: "",
+      totalAmount: "",
       isloggedIn: false,
       userToken: null,
       AcceptedTCs: false,
@@ -36,6 +36,17 @@ class Context extends Component {
 
   dispatch = (action) => {
     switch (action.type) {
+      case "SAVE_TOTALAMOUNT":
+        console.log(action);
+        return this.setState(
+          (state) => ({
+            sessionArray: {
+              ...this.state.sessionArray,
+              totalAmount: action.totalAmount,
+            },
+          }),
+          () => StoreData("totalAmount", action.totalAmount)
+        );
       case "SAVE_DRIVER":
         return this.setState(
           (state) => ({
@@ -141,7 +152,7 @@ class Context extends Component {
             cardDate: action.payload.cardDate, */
             tripFee: action.payload.tripFee,
             tip: action.payload.tip,
-            total: action.payload.total,
+            totalAmount: action.payload.totalAmount,
           },
         }));
       default:

@@ -16,12 +16,12 @@ const TrackDriver = lazy(() => import("../Screens/TrackDriver"));
 const HomeStack = () => {
   const Stack = createStackNavigator();
   return (
-    <Stack.Navigator>
-      <Stack.Screen
+    <Stack.Navigator initialRouteName={"Trip"}>
+      {/* <Stack.Screen
         name="Landing"
         component={Landing}
         options={{ headerShown: false }}
-      />
+      /> */}
       <Stack.Screen
         name="TrackDriver"
         component={TrackDriver}

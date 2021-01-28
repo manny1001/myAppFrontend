@@ -13,6 +13,7 @@ const PaymentButton = ({
   totalAmount,
   selectedValue,
 }) => {
+  console.log(totalAmount);
   return (
     <BigButton
       icon={<Icon name="Safety" size={24} color="black" />}
@@ -24,14 +25,14 @@ const PaymentButton = ({
       titleStyle={{ fontWeight: "bold" }}
       title={
         paymentMethod === "Cash"
-          ? "Confirm" + " " + "\n" + "R" + " " + totalAmount.toFixed(2)
-          : "Pay" + " " + "\n" + "R" + " " + totalAmount.toFixed(2)
+          ? "Confirm" + " " + "\n" + "R" + " " + totalAmount
+          : "Pay" + " " + "\n" + "R" + " " + totalAmount
       }
       onPress={() => {
         PayOrConfirm({
           variables: {
             uuidTrip: uuidTrip,
-            total: totalAmount.toString(),
+            totalAmount: totalAmount,
             paymentMethod: paymentMethod,
           },
         });

@@ -1,5 +1,6 @@
 import React from "react";
 import { CountdownCircleTimer } from "react-native-countdown-circle-timer";
+import { RFPercentage } from "react-native-responsive-fontsize";
 import { View, Animated, StyleSheet } from "react-native";
 import {
   widthPercentageToDP as wp,
@@ -16,7 +17,7 @@ const CountDown = () => {
       <CountdownCircleTimer
         size={160}
         isPlaying
-        duration={15}
+        duration={600}
         colors={[
           ["#004777", 0.4],
           ["#F7B801", 0.4],
@@ -34,29 +35,47 @@ const CountDown = () => {
           >
             {remainingTime > 10 && (
               <Animated.Text
-                style={{ color: animatedColor, alignSelf: "center" }}
+                style={{
+                  color: animatedColor,
+                  alignSelf: "center",
+                  fontSize: RFPercentage(3),
+                }}
               >
                 Arriving in
               </Animated.Text>
             )}
             {remainingTime <= 10 && remainingTime !== 0 && (
               <Animated.Text
-                style={{ color: animatedColor, alignSelf: "center" }}
+                style={{
+                  color: animatedColor,
+                  alignSelf: "center",
+                  fontSize: RFPercentage(3),
+                }}
               >
                 Almost there
               </Animated.Text>
             )}
             {remainingTime === 0 && (
               <Animated.Text
-                style={{ color: animatedColor, alignSelf: "center" }}
+                style={{
+                  color: animatedColor,
+                  alignSelf: "center",
+                  fontSize: RFPercentage(3),
+                }}
               >
                 Driver has arrived
               </Animated.Text>
             )}
             <Animated.Text
-              style={{ color: animatedColor, alignSelf: "center" }}
+              style={{
+                color: animatedColor,
+                alignSelf: "center",
+                fontSize: RFPercentage(4),
+                fontWeight: "bold",
+              }}
             >
-              {remainingTime}
+              {(remainingTime / 60).toFixed(2).split(".")[0]} :{" "}
+              {(remainingTime / 60).toFixed(2).split(".")[1]}
             </Animated.Text>
           </Animated.View>
         )}

@@ -17,7 +17,7 @@ const linkingApp = {
       screens: {
         HomeStack: {
           path: "home",
-          initialRouteName: "AddName",
+          initialRouteName: "Trip",
           screens: {
             Landing: { path: "Landing" },
             Restaurants: {

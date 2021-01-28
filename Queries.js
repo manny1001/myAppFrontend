@@ -2,12 +2,12 @@ import { gql } from "@apollo/client";
 export const PAYMENT_CONFIRMATION = gql`
   mutation PayOrConfirm(
     $uuidTrip: String
-    $total: String
+    $totalAmount: String
     $paymentMethod: String
   ) {
     TripCardPaymentCashConfirmation(
       uuidTrip: $uuidTrip
-      total: $total
+      totalAmount: $totalAmount
       paymentMethod: $paymentMethod
     )
   }
@@ -19,6 +19,7 @@ export const NEW_REQUEST = gql`
     $cellphone: String
     $location: String
     $destination: String
+    $uuidDriver: String
   ) {
     newTripRequest(
       uuid: $uuidUser
@@ -26,6 +27,7 @@ export const NEW_REQUEST = gql`
       cellphone: $cellphone
       location: $location
       destination: $destination
+      uuidDriver: $uuidDriver
     )
   }
 `;
@@ -53,7 +55,7 @@ export const GET_DRIVER_RESPONSE = gql`
       cellphone
       location
       destination
-      total
+      totalAmount
       tip
       paymentmethod
       status
