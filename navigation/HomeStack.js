@@ -13,6 +13,7 @@ const Confirm = lazy(() => import("../Screens/Confirm"));
 const Payment = lazy(() => import("../Screens/Payment"));
 const AddName = lazy(() => import("../Screens/AddName"));
 const TrackDriver = lazy(() => import("../Screens/TrackDriver"));
+import { ContextConsumer } from "../Context";
 const HomeStack = () => {
   const Stack = createStackNavigator();
   return (
@@ -29,7 +30,11 @@ const HomeStack = () => {
       />
       <Stack.Screen
         name="Confirm"
-        component={Confirm}
+        component={() => (
+          <ContextConsumer>
+            {(context) => <Confirm context={context} />}
+          </ContextConsumer>
+        )}
         options={{ headerShown: false }}
       />
       <Stack.Screen
@@ -75,7 +80,11 @@ const HomeStack = () => {
       />
       <Stack.Screen
         name="Payment"
-        component={Payment}
+        component={(props) => (
+          <ContextConsumer>
+            {(context) => <Payment context={context} props={props} />}
+          </ContextConsumer>
+        )}
         options={{ headerShown: false }}
       />
       <Stack.Screen

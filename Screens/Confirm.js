@@ -1,4 +1,4 @@
-import React, { lazy, Component } from "react";
+import React, { lazy, Component, useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import {
   widthPercentageToDP as wp,
@@ -19,12 +19,12 @@ class Confirm extends Component {
       destination: "",
       distance: "",
       totalAmount: "22000",
-      uuidDriver: "68978",
     };
   }
 
   render() {
     const {
+      context,
       newTripRequest,
       data,
       location,
@@ -78,45 +78,45 @@ class Confirm extends Component {
             justifyContent: "center",
           }}
         >
-          <ContextConsumer>
-            {(context) => {
-              return (
-                <BigButton
-                  buttonStyle={{
-                    width: wp(80),
-                    alignSelf: "center",
-                  }}
-                  titleStyle={{ fontWeight: "bold" }}
-                  title={
-                    "Proceed" + " " + "\n" + "R" + " " + this.state.totalAmount
-                  }
-                  onPress={() => {
-                    navigation.navigate("Payment", {
-                      totalAmount: this.state.totalAmount,
-                    }),
-                      newTripRequest({
-                        variables: {
-                          uuidUser: data && data.currentUser.uuid,
-                          username: data && data.currentUser.username,
-                          cellphone: data && data.currentUser.cellphone,
-                          location: location,
-                          destination: destination,
-                          uuidDriver: this.state.uuidDriver,
-                        },
-                      });
-                  }}
-                />
-              );
+          <BigButton
+            disabled={context.state.driveruuid === "" ? true : false}
+            buttonStyle={{
+              width: wp(80),
+              alignSelf: "center",
             }}
-          </ContextConsumer>
+            titleStyle={{ fontWeight: "bold" }}
+            title={"Proceed" + " " + "\n" + "R" + " " + this.state.totalAmount}
+            onPress={() => {
+              navigation.navigate("Payment", {
+                totalAmount: this.state.totalAmount,
+              }),
+                newTripRequest({
+                  variables: {
+                    uuidUser: data && data.currentUser.uuid,
+                    username: data && data.currentUser.username,
+                    cellphone: data && data.currentUser.cellphone,
+                    location: location,
+                    destination: destination,
+                    uuidDriver: context.state.driveruuid,
+                  },
+                });
+            }}
+          />
         </View>
       </>
     );
   }
 }
 export default function (props) {
+  console.log(props);
   const [newTripRequest] = useMutation(NEW_REQUEST);
-  const { loading, data } = useQuery(GET_PROFILE, {
+  const { data } = useQuery(GET_PROFILE, {
+    onCompleted: () => {
+      props.context.dispatch({
+        type: "SAVE_USERUUID",
+        useruuid: data.currentUser.uuid,
+      });
+    },
     notifyOnNetworkStatusChange: true,
   });
   const [location, setdeparture] = React.useState("");
@@ -126,20 +126,13 @@ export default function (props) {
     GetData("destination").then((destination) => setdestination(destination));
   }, []);
   return (
-    <ContextConsumer>
-      {(context) => {
-        return (
-          <Confirm
-            {...props}
-            context={context}
-            newTripRequest={newTripRequest}
-            data={data}
-            location={location}
-            destination={destination}
-          />
-        );
-      }}
-    </ContextConsumer>
+    <Confirm
+      context={props.context}
+      newTripRequest={newTripRequest}
+      data={data}
+      location={location}
+      destination={destination}
+    />
   );
 }
 

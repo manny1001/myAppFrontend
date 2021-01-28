@@ -6,9 +6,15 @@ import {
 } from "react-native-responsive-screen";
 import { RFValue, RFPercentage } from "react-native-responsive-fontsize";
 import { ContextConsumer } from "../Context";
+import { GET_NEW_DRIVER } from "../Queries";
+import { useMutation } from "@apollo/client";
 const Driver = lazy(() => import("../Components/SelectDriver"));
 const BigButton = lazy(() => import("../Components/Buttons"));
+
 const SelectNewDriver = ({ totalAmount }) => {
+  const [updateDriver, { error, loading }] = useMutation(GET_NEW_DRIVER);
+  console.log(updateDriver, error, loading);
+  if (loading) return <Text>Loading</Text>;
   return (
     <View style={styles.container}>
       <View
@@ -61,6 +67,7 @@ const SelectNewDriver = ({ totalAmount }) => {
           {(context) => {
             return (
               <BigButton
+                disabled={context.state.driveruuid === "" ? true : false}
                 buttonStyle={{
                   width: wp(80),
                   alignSelf: "center",
@@ -73,7 +80,8 @@ const SelectNewDriver = ({ totalAmount }) => {
                   }),
                     newTripRequest({
                       variables: {
-                        uuidDriver: "989898",
+                        uuidDriver: context.state.driveruuid,
+                        uuidUser: context.state.useruuid,
                       },
                     });
                 }}

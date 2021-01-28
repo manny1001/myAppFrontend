@@ -16,10 +16,13 @@ import { Avatar } from "react-native-elements";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useLinkTo } from "@react-navigation/native";
 import { ContextConsumer } from "../Context";
+import Confirm from "../Screens/Confirm";
 import { gql, useQuery } from "@apollo/client";
 const windowWidth = Dimensions.get("window").width;
 const Drivers = (props) => {
+  const { setClickedDriver, context } = props;
   const {
+    uuid,
     name,
     surname,
     cellphone,
@@ -27,7 +30,72 @@ const Drivers = (props) => {
     registration,
     model,
     status,
-  } = props;
+  } = props.item;
+  {
+    if (status !== "Online") return <></>;
+    return (
+      <View
+        style={{
+          justifyContent: "space-between",
+          flex: 1,
+          flexDirection: "row",
+          width: wp(100),
+          alignSelf: "center",
+          height: hp(30),
+        }}
+      >
+        <TouchableOpacity
+          onPress={() => {
+            setClickedDriver(props),
+              context.dispatch({ type: "SAVE_DRIVERUUID", driveruuid: uuid });
+          }}
+          style={{
+            justifyContent: "space-between",
+            flex: 1,
+            flexDirection: "row",
+            width: wp(80),
+            alignSelf: "center",
+            height: hp(25),
+          }}
+        >
+          <View style={styles.driverDetails}>
+            <Text style={{ fontWeight: "bold" }}>Name</Text>
+            <Text>
+              {name} {surname}
+            </Text>
+            <Text style={{ fontWeight: "bold", alignSelf: "flex-start" }}>
+              Cellphone
+            </Text>
+            <Text>{cellphone}</Text>
+            <Text style={{ fontWeight: "bold" }}>Registration</Text>
+            <Text>{registration}</Text>
+            <Text style={{ fontWeight: "bold" }}>Model</Text>
+            <Text>{model}</Text>
+          </View>
+          <View style={{ flex: 1, justifyContent: "space-around" }}>
+            <Avatar
+              renderPlaceholderContent={picture && <ActivityIndicator />}
+              rounded
+              size="xlarge"
+              containerStyle={{
+                height: hp(15),
+                width: hp(15),
+                borderRadius: hp(7.5),
+                alignSelf: "center",
+              }}
+              source={{ uri: picture }}
+            />
+            <Text style={{ alignSelf: "center" }}>7 mins away</Text>
+          </View>
+        </TouchableOpacity>
+      </View>
+    );
+  }
+};
+
+const ClickedDriver = (props) => {
+  const { name, surname, cellphone, picture, registration, model, status } =
+    props.clickedDriver && props.clickedDriver.item;
   {
     if (status !== "Online") return <></>;
     return (
@@ -75,7 +143,7 @@ const Drivers = (props) => {
   }
 };
 
-export class Driver extends React.Component {
+export class AllDrivers extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -92,7 +160,7 @@ export class Driver extends React.Component {
     console.log(DriverDetails, DriversAvailable);
   } */
   render() {
-    const { DriverDetails } = this.props;
+    const { DriverDetails, setClickedDriver, context } = this.props;
     return (
       <FlatList
         ref={(ref) => {
@@ -105,7 +173,13 @@ export class Driver extends React.Component {
         showsHorizontalScrollIndicator={false}
         horizontal={true}
         data={DriverDetails}
-        renderItem={({ item }) => <Drivers {...item} />}
+        renderItem={({ item }) => (
+          <Drivers
+            item={item}
+            setClickedDriver={setClickedDriver}
+            context={context}
+          />
+        )}
         keyExtractor={(item) => item.uuid}
         contentContainerStyle={{
           width: wp(100),
@@ -163,6 +237,7 @@ export class Driver extends React.Component {
   );
 } */
 export default function (props) {
+  const [clickedDriver, setClickedDriver] = React.useState(null);
   const AysncLogout = async () => {
     try {
       await AsyncStorage.removeItem("accessToken");
@@ -204,18 +279,35 @@ export default function (props) {
   }
   if (!loading && !error && data && data.allDriver !== undefined)
     return (
-      <ContextConsumer>
-        {(context) => {
-          return (
-            <Driver
-              {...props}
-              linkTo={linkTo}
-              context={context}
-              DriverDetails={data.allDriver}
-            />
-          );
-        }}
-      </ContextConsumer>
+      <>
+        {clickedDriver === null && (
+          <ContextConsumer>
+            {(context) => {
+              return (
+                <AllDrivers
+                  {...props}
+                  setClickedDriver={setClickedDriver}
+                  linkTo={linkTo}
+                  context={context}
+                  DriverDetails={data.allDriver}
+                />
+              );
+            }}
+          </ContextConsumer>
+        )}
+        <ContextConsumer>
+          {(context) => {
+            return (
+              <ClickedDriver
+                clickedDriver={clickedDriver !== null && clickedDriver}
+                {...props}
+                linkTo={linkTo}
+                context={context}
+              />
+            );
+          }}
+        </ContextConsumer>
+      </>
     );
 }
 

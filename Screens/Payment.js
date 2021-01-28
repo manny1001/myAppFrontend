@@ -2,7 +2,6 @@ import React, { Component, lazy, useState } from "react";
 import { View, Text } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { YOURCARDS } from "../Components/selectBankCard";
-import { ContextConsumer } from "../Context";
 import { useQuery, useMutation } from "@apollo/client";
 import Loader from "../Components/Loader";
 import {
@@ -11,7 +10,6 @@ import {
   GET_DRIVER_RESPONSE,
   PAYMENT_CONFIRMATION,
 } from "../Queries";
-import { GetData } from "../GFunctions";
 const PaymentButton = lazy(() => import("../Components/PaymentButton"));
 const YourBankCardsList = lazy(() => import("../Components/YourBankCardsList"));
 const SelectPaymentMethod = lazy(() =>
@@ -212,18 +210,13 @@ class TrippyPayment extends Component {
 }
 
 export default function (props) {
+  const totalAmount = props.props.route.params.totalAmount;
   const [PayOrConfirm] = useMutation(PAYMENT_CONFIRMATION);
   const [StopQuery, setStopQuery] = useState(false);
   const [requestID, setRequestid] = useState(null);
   const [uuidTrip, setuuidTrip] = useState(null);
   const { data } = useQuery(GET_PROFILE);
-  const [timeOutValue, setTimeoutValue] = React.useState(120);
-  /* const Value = setTimeout(() => setTimeoutValue(timeOutValue - 1), 1000); */
-
-  /*   const ClearTimeOut = () => {
-    clearTimeout(Value), setStopQuery(true);
-  }; */
-
+  const [timeOutValue, setTimeoutValue] = React.useState(0);
   const { data: DATA, stopPolling, startPolling } = useQuery(
     GET_DRIVER_RESPONSE,
     {
@@ -244,30 +237,24 @@ export default function (props) {
     if (timeOutValue === 0) {
       clearTimeout(Value);
       setStopQuery(true);
+      props.context.dispatch({ type: "SAVE_DRIVERUUID", driveruuid: "" });
     }
     StopQuery === true && stopPolling();
     StopQuery === false && startPolling();
   }, [StopQuery, timeOutValue]);
-  const totalAmount = props.route.params.totalAmount;
   if (requestID === null && uuidTrip === null && StopQuery === false)
     return <Loader />;
 
   return (
-    <ContextConsumer>
-      {(context) => {
-        return (
-          <TrippyPayment
-            {...props}
-            PayOrConfirm={PayOrConfirm}
-            dispatch={context.dispatch}
-            uuidTrip={uuidTrip && uuidTrip}
-            totalAmount={totalAmount}
-            requestID={requestID}
-            StopQuery={StopQuery}
-            setStopQuery={setStopQuery}
-          />
-        );
-      }}
-    </ContextConsumer>
+    <TrippyPayment
+      {...props}
+      PayOrConfirm={PayOrConfirm}
+      dispatch={props.context.dispatch}
+      uuidTrip={uuidTrip && uuidTrip}
+      totalAmount={totalAmount}
+      requestID={requestID}
+      StopQuery={StopQuery}
+      setStopQuery={setStopQuery}
+    />
   );
 }

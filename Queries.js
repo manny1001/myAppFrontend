@@ -71,3 +71,9 @@ export const GET_DRIVER_RESPONSE = gql`
     }
   }
 `;
+
+export const GET_NEW_DRIVER = gql`
+  mutation selectNewDriver($driveruuid: String, $useruuid: String) {
+    selectNewDriver(driveruuid: $driveruuid, useruuid: $useruuid)
+  }
+`;

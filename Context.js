@@ -31,13 +31,29 @@ class Context extends Component {
       isloggedIn: false,
       userToken: null,
       AcceptedTCs: false,
+      driveruuid: "",
+      useruuid: "",
     },
   };
 
   dispatch = (action) => {
     switch (action.type) {
-      case "SAVE_TOTALAMOUNT":
+      case "SAVE_USERUUID":
         console.log(action);
+        return this.setState((state) => ({
+          sessionArray: {
+            ...this.state.sessionArray,
+            useruuid: action.useruuid,
+          },
+        }));
+      case "SAVE_DRIVERUUID":
+        return this.setState((state) => ({
+          sessionArray: {
+            ...this.state.sessionArray,
+            driveruuid: action.driveruuid,
+          },
+        }));
+      case "SAVE_TOTALAMOUNT":
         return this.setState(
           (state) => ({
             sessionArray: {
@@ -101,7 +117,6 @@ class Context extends Component {
           () => StoreData("location", action.location)
         );
       case "SAVE_DESTINATION":
-        console.log(action);
         return this.setState(
           (state) => ({
             sessionArray: {
