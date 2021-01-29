@@ -20,7 +20,7 @@ const CountDown = ({ onPress }) => {
         }}
         size={wp(30)}
         isPlaying
-        duration={5}
+        duration={10}
         colors={[
           ["#004777", 0.4],
           ["#F7B801", 0.4],

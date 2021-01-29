@@ -111,8 +111,7 @@ export default function (props) {
   const [newTripRequest] = useMutation(NEW_REQUEST);
   const { data } = useQuery(GET_PROFILE, {
     onCompleted: () => {
-      StoreData("useruuid", data.currentUser.uuid),
-        console.log(data.currentUser.uuid);
+      StoreData("useruuid", data.currentUser.uuid);
     },
     notifyOnNetworkStatusChange: true,
   });
