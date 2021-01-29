@@ -16,7 +16,6 @@ import { Avatar } from "react-native-elements";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useLinkTo } from "@react-navigation/native";
 import { ContextConsumer } from "../Context";
-import Confirm from "../Screens/Confirm";
 import { gql, useQuery } from "@apollo/client";
 const windowWidth = Dimensions.get("window").width;
 const Drivers = (props) => {

@@ -40,12 +40,15 @@ class Context extends Component {
     switch (action.type) {
       case "SAVE_USERUUID":
         console.log(action);
-        return this.setState((state) => ({
-          sessionArray: {
-            ...this.state.sessionArray,
-            useruuid: action.useruuid,
-          },
-        }));
+        return this.setState(
+          (state) => ({
+            sessionArray: {
+              ...this.state.sessionArray,
+              useruuid: action.useruuid,
+            },
+          }),
+          () => StoreData("useruuid", action.useruuid)
+        );
       case "SAVE_DRIVERUUID":
         return this.setState((state) => ({
           sessionArray: {

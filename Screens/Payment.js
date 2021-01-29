@@ -85,16 +85,16 @@ class TrippyPayment extends Component {
     const {
       PayOrConfirm,
       uuidTrip,
-      navigation,
       totalAmount,
       requestID,
       StopQuery,
       setStopQuery,
     } = this.props;
+    const { navigation } = this.props.props;
     return (
       <>
         {requestID === null && uuidTrip === null && StopQuery === true ? (
-          <SelectNewDriver totalAmount={totalAmount} />
+          <SelectNewDriver totalAmount={totalAmount} navigation={navigation} />
         ) : (
           <View style={{ flex: 1, justifyContent: "space-evenly" }}>
             {/* Cash or Card header depending on selection */}
@@ -216,7 +216,7 @@ export default function (props) {
   const [requestID, setRequestid] = useState(null);
   const [uuidTrip, setuuidTrip] = useState(null);
   const { data } = useQuery(GET_PROFILE);
-  const [timeOutValue, setTimeoutValue] = React.useState(0);
+  const [timeOutValue, setTimeoutValue] = React.useState(120);
   const { data: DATA, stopPolling, startPolling } = useQuery(
     GET_DRIVER_RESPONSE,
     {

@@ -8,7 +8,7 @@ import { RFValue } from "react-native-responsive-fontsize";
 import { useMutation, useQuery } from "@apollo/client";
 import { NEW_REQUEST, GET_PROFILE } from "../Queries";
 import { ContextConsumer } from "../Context";
-import { GetData } from "../GFunctions";
+import { GetData, StoreData } from "../GFunctions";
 const BigButton = lazy(() => import("../Components/Buttons"));
 const Driver = lazy(() => import("../Components/SelectDriver"));
 class Confirm extends Component {
@@ -108,14 +108,11 @@ class Confirm extends Component {
   }
 }
 export default function (props) {
-  console.log(props);
   const [newTripRequest] = useMutation(NEW_REQUEST);
   const { data } = useQuery(GET_PROFILE, {
     onCompleted: () => {
-      props.context.dispatch({
-        type: "SAVE_USERUUID",
-        useruuid: data.currentUser.uuid,
-      });
+      StoreData("useruuid", data.currentUser.uuid),
+        console.log(data.currentUser.uuid);
     },
     notifyOnNetworkStatusChange: true,
   });
@@ -127,6 +124,7 @@ export default function (props) {
   }, []);
   return (
     <Confirm
+      navigation={props.navigation}
       context={props.context}
       newTripRequest={newTripRequest}
       data={data}

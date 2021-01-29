@@ -8,6 +8,7 @@ import {
 } from "react-native-responsive-screen";
 
 const BigButton = ({
+  background,
   titleStyle,
   activeOpacity,
   onPress,
@@ -25,7 +26,7 @@ const BigButton = ({
     buttonStyle={{
       ...buttonStyle,
       alignSelf: "center",
-      backgroundColor: "#6c63ff",
+      backgroundColor: background === "NONE" ? "" : "#6c63ff",
       width: wp(50),
       height: hp(10),
     }}

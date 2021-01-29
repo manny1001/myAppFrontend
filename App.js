@@ -6,6 +6,8 @@ import { ContextConsumer } from "./Context";
 import Loader from "./Components/Loader";
 import * as Linking from "expo-linking";
 const RatingScreen = lazy(() => import("./Screens/Rating"));
+const TrackDriverModal = lazy(() => import("./Components/TrackDriverModal"));
+const QuestionModal = lazy(() => import("./Components/QuestionModal"));
 const AppStack = lazy(() => import("./navigation/AppStack"));
 const AuthStack = lazy(() => import("./navigation/AuthStack"));
 const prefix = Linking.makeUrl("/");
@@ -71,7 +73,11 @@ const linkingApp = {
 };
 
 export default function App(props) {
-  const [visibleModal, setvisibleModal] = useState(false);
+  const [RatingModalVIsibile, setRatingModalVIsibile] = useState(false);
+  const [trackMyDriverModal, settrackMyDriverModal] = useState(true);
+  const [questionModal, setQuestionModal] = useState(false);
+  const [driverArrived, setDriverArrived] = useState(null);
+  const [hasDriverArrived, sethasDriverArrivedModal] = useState(true);
   React.useEffect(() => {
     const RestoreAsync = async () => {
       try {
@@ -105,8 +111,32 @@ export default function App(props) {
             ) : (
               <>
                 <Modal
-                  isVisible={visibleModal}
-                  onBackdropPress={() => setvisibleModal(false)}
+                  backgroundColor={"#f2f2f2"}
+                  isVisible={trackMyDriverModal === false}
+                  onBackdropPress={() => {}}
+                >
+                  <QuestionModal
+                    driverArrived={driverArrived}
+                    setNo={() => setDriverArrived(false)}
+                    setOkay={() => {}}
+                    setYes={() => {}}
+                  />
+                </Modal>
+                <Modal
+                  backgroundColor={"#f2f2f2"}
+                  isVisible={trackMyDriverModal}
+                  onBackdropPress={() => {}}
+                >
+                  <TrackDriverModal
+                    onPress={() => {
+                      settrackMyDriverModal(false),
+                        sethasDriverArrivedModal(true);
+                    }}
+                  />
+                </Modal>
+                <Modal
+                  isVisible={RatingModalVIsibile}
+                  onBackdropPress={() => {}}
                 >
                   <RatingScreen onPress={() => setvisibleModal(false)} />
                 </Modal>
