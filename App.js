@@ -9,6 +9,7 @@ const RatingScreen = lazy(() => import("./Screens/Rating"));
 const TrackDriverModal = lazy(() => import("./Components/TrackDriverModal"));
 const QuestionModal = lazy(() => import("./Components/QuestionModal"));
 const AppStack = lazy(() => import("./navigation/AppStack"));
+import { GetData } from "./GFunctions";
 const AuthStack = lazy(() => import("./navigation/AuthStack"));
 const prefix = Linking.makeUrl("/");
 const linkingApp = {
@@ -74,14 +75,25 @@ const linkingApp = {
 
 export default function App(props) {
   const [RatingModalVIsibile, setRatingModalVIsibile] = useState(false);
-  const [trackMyDriverModal, settrackMyDriverModal] = useState(true);
-  const [questionModal, setQuestionModal] = useState(false);
+  const [trackMyDriverModal, settrackMyDriverModal] = useState(false);
+  const [questionModal, setQuestionModal] = useState(true);
   const [driverArrived, setDriverArrived] = useState(null);
-  const [hasDriverArrived, sethasDriverArrivedModal] = useState(true);
+  const [No, setNo] = useState(null);
+
   React.useEffect(() => {
+    console.log(props.context.state.activeRequest);
     const RestoreAsync = async () => {
       try {
         const userToken = await AsyncStorage.getItem("accessToken");
+        const Active = await AsyncStorage.getItem("activeRequest");
+        console.log(Active);
+        props.context.dispatch({
+          type: "SAVE_ACTIVEREQUEST",
+          activeRequest: JSON.parse(Active),
+        });
+        if (JSON.parse(Active) === false) {
+          setQuestionModal(false);
+        }
         props.context.dispatch({
           type: "RESTORE_TOKEN",
           userToken: userToken,
@@ -99,7 +111,7 @@ export default function App(props) {
     };
     /* StoreData(null); */
     RestoreAsync();
-  }, []);
+  }, [props.context.state.activeRequest]);
 
   return (
     <NavigationContainer linking={linkingApp}>
@@ -112,25 +124,43 @@ export default function App(props) {
               <>
                 <Modal
                   backgroundColor={"#f2f2f2"}
-                  isVisible={trackMyDriverModal === false}
+                  isVisible={
+                    context.state.driverArrived === true && questionModal
+                  }
                   onBackdropPress={() => {}}
                 >
                   <QuestionModal
-                    driverArrived={driverArrived}
-                    setNo={() => setDriverArrived(false)}
-                    setOkay={() => {}}
-                    setYes={() => {}}
+                    context={context}
+                    setYes={() => {
+                      context.dispatch({
+                        type: "SAVE_DRIVERARRIVED",
+                        driverArrived: null,
+                      }),
+                        context.dispatch({
+                          type: "SAVE_ACTIVEREQUEST",
+                          activeRequest: false,
+                        }),
+                        setQuestionModal(false);
+                    }}
+                    No={No}
+                    setNo={() => setNo(false)}
+                    setQuestionModal={() => setQuestionModal(false)}
                   />
                 </Modal>
                 <Modal
                   backgroundColor={"#f2f2f2"}
-                  isVisible={trackMyDriverModal}
+                  isVisible={
+                    context.state.activeRequest === true &&
+                    context.state.driverArrived === false
+                  }
                   onBackdropPress={() => {}}
                 >
                   <TrackDriverModal
                     onPress={() => {
-                      settrackMyDriverModal(false),
-                        sethasDriverArrivedModal(true);
+                      context.dispatch({
+                        type: "SAVE_DRIVERARRIVED",
+                        driverArrived: true,
+                      });
                     }}
                   />
                 </Modal>

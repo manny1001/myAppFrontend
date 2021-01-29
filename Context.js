@@ -33,11 +33,35 @@ class Context extends Component {
       AcceptedTCs: false,
       driveruuid: "",
       useruuid: "",
+      activeRequest: false,
+      driverArrived: false,
     },
   };
 
   dispatch = (action) => {
     switch (action.type) {
+      case "SAVE_DRIVERARRIVED":
+        console.log(action);
+        return this.setState(
+          (state) => ({
+            sessionArray: {
+              ...this.state.sessionArray,
+              driverArrived: action.driverArrived,
+            },
+          }),
+          () => StoreData("driverArrived", action.driverArrived)
+        );
+      case "SAVE_ACTIVEREQUEST":
+        console.log(action);
+        return this.setState(
+          (state) => ({
+            sessionArray: {
+              ...this.state.sessionArray,
+              activeRequest: action.activeRequest,
+            },
+          }),
+          () => StoreData("activeRequest", action.activeRequest)
+        );
       case "SAVE_USERUUID":
         console.log(action);
         return this.setState(

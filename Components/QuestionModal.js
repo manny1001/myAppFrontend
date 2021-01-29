@@ -7,8 +7,16 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import { RFValue, RFPercentage } from "react-native-responsive-fontsize";
-const QuestionModal = ({ setYes, DriverArrived, setNo, setOkay }) => {
-  if (DriverArrived === false)
+const QuestionModal = ({
+  setYes,
+  driverArrived,
+  setNo,
+  setOkay,
+  setQuestionModal,
+  context,
+  No,
+}) => {
+  if (No === false)
     return (
       <View style={styles.container}>
         <Text
@@ -24,7 +32,7 @@ const QuestionModal = ({ setYes, DriverArrived, setNo, setOkay }) => {
         <BigButton
           title={"Okay"}
           onPress={() => {
-            setOkay();
+            setQuestionModal();
           }}
           titleStyle={{
             fontWeight: "bold",

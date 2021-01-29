@@ -2,7 +2,7 @@ import React, { useEffect, useState, lazy } from "react";
 import { widthPercentageToDP as wp } from "react-native-responsive-screen";
 import Icon from "react-native-vector-icons/AntDesign";
 import { useQuery, useMutation } from "@apollo/client";
-import { NEW_REQUEST, GET_PROFILE } from "../Queries";
+import { StoreData } from "../GFunctions";
 const BigButton = lazy(() => import("../Components/Buttons"));
 const PaymentButton = ({
   navigation,
@@ -12,8 +12,8 @@ const PaymentButton = ({
   paymentMethod,
   totalAmount,
   selectedValue,
+  context,
 }) => {
-  console.log(totalAmount);
   return (
     <BigButton
       icon={<Icon name="Safety" size={24} color="black" />}
@@ -35,8 +35,9 @@ const PaymentButton = ({
             totalAmount: totalAmount,
             paymentMethod: paymentMethod,
           },
-        });
-        navigation.navigate("TrackDriver");
+        }),
+          context.dispatch({ type: "SAVE_ACTIVEREQUEST", activeRequest: true });
+        navigation.navigate("Payments");
       }}
     />
   );

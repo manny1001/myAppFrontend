@@ -11,7 +11,6 @@ const DriversInfo = lazy(() => import("../Components/DriversInfo"));
 const CallDriver = lazy(() => import("../Components/CallDriver"));
 const ProfilePicture = lazy(() => import("../Components/ProfilePicture"));
 const TrackDriver = ({ onPress }) => {
-  console.log(onPress);
   const [DriverName, setDriverName] = useState("Peter");
   const [DriverRegistration, setDriverRegistration] = useState("YH KO HJ GP");
   const [DriverCarModel, setDriverCarModel] = useState("Hyundai i20");

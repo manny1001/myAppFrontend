@@ -15,9 +15,12 @@ const CountDown = ({ onPress }) => {
       ]}
     >
       <CountdownCircleTimer
+        onComplete={() => {
+          onPress();
+        }}
         size={wp(30)}
         isPlaying
-        duration={1}
+        duration={5}
         colors={[
           ["#004777", 0.4],
           ["#F7B801", 0.4],
@@ -25,7 +28,6 @@ const CountDown = ({ onPress }) => {
         ]}
       >
         {({ remainingTime, animatedColor }) => {
-          remainingTime === 0 && onPress();
           return (
             <Animated.View
               style={{

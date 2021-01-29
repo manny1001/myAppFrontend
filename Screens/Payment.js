@@ -183,6 +183,7 @@ class TrippyPayment extends Component {
             {this.state.paymentMethod &&
               this.state.selectedValue !== "Select" && (
                 <PaymentButton
+                  context={this.props.context}
                   navigation={navigation}
                   PayOrConfirm={PayOrConfirm}
                   selectedValue={this.state.selectedValue}

@@ -25,7 +25,7 @@ const AppStack = () => {
         }}
       />
       <Tabs.Screen
-        name="Manny"
+        name="Payments"
         component={PaymentsStack}
         options={{
           tabBarLabel: "Payments",
