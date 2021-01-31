@@ -177,20 +177,17 @@ const PhoneAuth = (props) => {
                 onPress={() => {
                   login({ variables: { cellphone } })
                     .then(({ data }) => {
-                      console.log(data),
-                        data.login.token &&
-                          context.dispatch({
-                            type: "SIGN_IN",
-                            userToken: data.login.token,
-                          });
+                      data.login.token &&
+                        context.dispatch({
+                          type: "SIGN_IN",
+                          userToken: data.login.token,
+                        });
                       context.dispatch({
                         type: "SAVE_CELL",
                         clientCellNumber: cellphone,
                       });
                     })
-                    .catch((e) => {
-                      // you can do something with the error here
-                    });
+                    .catch((e) => {});
                 }}
                 title={"Sign In"}
               />

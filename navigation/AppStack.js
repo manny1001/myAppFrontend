@@ -7,7 +7,7 @@ const SettingsStack = lazy(() => import("../navigation/SettingsStack"));
 const PaymentsStack = lazy(() => import("../navigation/PaymentsStack"));
 
 const Tabs = createBottomTabNavigator();
-const AppStack = () => {
+const AppStack = (props) => {
   return (
     <Tabs.Navigator
       tabBarOptions={{
@@ -26,7 +26,7 @@ const AppStack = () => {
       />
       <Tabs.Screen
         name="Payments"
-        component={PaymentsStack}
+        component={() => <PaymentsStack {...props} />}
         options={{
           tabBarLabel: "Payments",
           /*  tabBarIcon: ({ color, size }) => (

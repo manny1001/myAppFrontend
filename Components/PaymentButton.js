@@ -3,6 +3,7 @@ import { widthPercentageToDP as wp } from "react-native-responsive-screen";
 import Icon from "react-native-vector-icons/AntDesign";
 import { useQuery, useMutation } from "@apollo/client";
 import { StoreData } from "../GFunctions";
+import { StackActions } from "@react-navigation/native";
 const BigButton = lazy(() => import("../Components/Buttons"));
 const PaymentButton = ({
   navigation,
@@ -36,8 +37,9 @@ const PaymentButton = ({
             paymentMethod: paymentMethod,
           },
         }),
-          context.dispatch({ type: "SAVE_ACTIVEREQUEST", activeRequest: true });
-        navigation.navigate("Payments");
+          context.dispatch({ type: "SAVE_ACTIVEREQUEST", activeRequest: true }),
+          navigation.navigate("Payments"),
+          navigation.dispatch(StackActions.replace("Trip"));
       }}
     />
   );

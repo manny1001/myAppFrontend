@@ -13,7 +13,7 @@ import App from "./App";
 import * as Linking from "expo-linking";
 import Loader from "./Components/Loader";
 const httpLink = createHttpLink({
-  uri: "http://192.168.43.182:4000/graphql",
+  uri: "http://localhost:4000/graphql",
 });
 
 const authLink = setContext(async (_, { headers }) => {

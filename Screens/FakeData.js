@@ -941,68 +941,6 @@ export const DATA3 = [
 
 export const OrderHistory = [
   {
-    Date: "Oct 26, 2019, 10:34 AM",
-    Name: "Steers Flame Grilled",
-    ID: "OJUG",
-    Total: "568",
-    Status: "Cancelled",
-    Type: "FastFoodOrder",
-    Driver: "Thomas",
-    Description: [
-      {
-        id: "scscscvfdff",
-        Qty: 2,
-        title: "Initial Research",
-        Total: 380.0,
-        Type: "Food",
-      },
-      {
-        id: "3fvfv63",
-        Qty: 5,
-        title: "UI Design",
-        Total: 7744.0,
-        Type: "Food",
-      },
-    ],
-    paymentType: "Cash",
-    Registration: "HJ DE NO GP",
-  },
-  {
-    Date: "Jan 4, 2020, 10:34 AM",
-    Name: "Steers",
-    Type: "FastFoodOrder",
-    Driver: "Adam",
-    ID: "sscsc",
-    Total: "5000",
-    Status: "Processing",
-    paymentType: "Card",
-    Registration: "FR WW NO GP",
-    Description: [
-      {
-        id: "bd7acbea-ddvdv-3ad53abb28ba",
-        Qty: 2,
-        title: "Web design",
-        Total: 380.0,
-        Type: "Food",
-      },
-      {
-        id: "3dvvd91aa97f63",
-        Qty: 5,
-        title: "Databasses",
-        Total: 7744.0,
-        Type: "Food",
-      },
-      {
-        id: "3acdvdvvvc-c605-48d3-a4f8-fbd91aa97f63",
-        Qty: 5,
-        title: "Tch stuff",
-        Total: 7744.0,
-        Type: "Food",
-      },
-    ],
-  },
-
-  {
     Date: "Sept 16, 2019, 10:34 AM",
     Name: "Ride",
     Driver: "Manny",

@@ -31,6 +31,12 @@ export const NEW_REQUEST = gql`
     )
   }
 `;
+export const GET_NEW_DRIVER = gql`
+  mutation selectNewDriver($driveruuid: String, $useruuid: String) {
+    selectNewDriver(driveruuid: $driveruuid, useruuid: $useruuid)
+  }
+`;
+
 export const GET_PROFILE = gql`
   query getProfile {
     currentUser {
@@ -41,6 +47,29 @@ export const GET_PROFILE = gql`
       cellphone
       homeaddress
       workaddress
+    }
+  }
+`;
+
+export const GET_USER_UUID = gql`
+  query {
+    currentUser {
+      uuid
+    }
+  }
+`;
+export const GET_REQUEST_HISTORY = gql`
+  query getRequestHistory($uuidUser: String!) {
+    getRequestHistory(uuidUser: $uuidUser) {
+      tip
+      status
+      uuidTrip
+      createdAt
+      uuidTrip
+      updatedAt
+      totalAmount
+      location
+      destination
     }
   }
 `;
@@ -69,11 +98,5 @@ export const GET_DRIVER_RESPONSE = gql`
       driverarrivaltime
       drivercustomerarrivaltime
     }
-  }
-`;
-
-export const GET_NEW_DRIVER = gql`
-  mutation selectNewDriver($driveruuid: String, $useruuid: String) {
-    selectNewDriver(driveruuid: $driveruuid, useruuid: $useruuid)
   }
 `;

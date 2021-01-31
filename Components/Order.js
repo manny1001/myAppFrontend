@@ -6,20 +6,24 @@ import {
 } from "react-native-responsive-screen";
 import { RFValue } from "react-native-responsive-fontsize";
 
-const Order = ({
-  item,
-  setvisibleModal,
-  settTipModalVisible,
-  setorderObject,
-}) => {
+const Order = (props) => {
   const [isPressed, setisPressed] = useState(false);
-  const [isFocused, lostFocus] = useState(false);
-  const [hide, setHide] = useState(false);
-  const Order = item.item;
-
+  const {
+    uuidTrip,
+    createdAt,
+    location,
+    destination,
+    totalAmount,
+    status,
+    drivername,
+    driversurname,
+    driverregistration,
+    model,
+    tip,
+  } = props.item.item;
+  const { settTipModalVisible, setvisibleModal, setorderObject, item } = props;
   return (
     <TouchableOpacity
-      /*   onBlur={() => setisPressed(false)} */
       onPress={() => setisPressed(!isPressed)}
       style={{
         marginTop: hp(1),
@@ -53,25 +57,29 @@ const Order = ({
               fontSize: RFValue(12),
             }}
           >
-            {Order.Date}
+            {Date(createdAt).split("G")[0]}
           </Text>
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "center",
-            }}
-          >
+          {isPressed === false && (
             <Text
               style={{
-                color: isPressed === true ? "black" : "silver",
-                fontSize: RFValue(16),
-                marginRight: wp(4),
+                marginRight: wp(5),
+                fontSize: RFValue(14),
+                color:
+                  status === "Complete" ? (
+                    "green"
+                  ) : status === "Active" ? (
+                    "orange"
+                  ) : status === "Cancelled" ? (
+                    "red"
+                  ) : (
+                    <></>
+                  ),
+                fontWeight: "600",
               }}
             >
-              {Order.Name}
+              {status}
             </Text>
-            {/* {isPressed === false ? <OrderIcon param={Order.Status} /> : <></>} */}
-          </View>
+          )}
         </View>
         {isPressed === true && (
           <>
@@ -95,7 +103,7 @@ const Order = ({
                   ID:
                 </Text>
                 <Text style={{ color: "black", fontSize: RFValue(16) }}>
-                  {Order.ID}
+                  {uuidTrip.slice(3, 7)}
                 </Text>
               </View>
               <View
@@ -124,7 +132,7 @@ const Order = ({
                     alignSelf: "center",
                   }}
                 >
-                  R {Order.Total}
+                  R {totalAmount}
                 </Text>
               </View>
               <View
@@ -152,21 +160,19 @@ const Order = ({
                     marginRight: wp(5),
                     fontSize: RFValue(18),
                     color:
-                      Order.Status === "Completed" ? (
+                      status === "Complete" ? (
                         "green"
-                      ) : Order.Status === "Processing" ? (
+                      ) : status === "Active" ? (
                         "orange"
-                      ) : Order.Status === "Cancelled" ? (
+                      ) : status === "Cancelled" ? (
                         "red"
-                      ) : Order.Status === "Picked-Up" ? (
-                        "purple"
                       ) : (
                         <></>
                       ),
                     fontWeight: "bold",
                   }}
                 >
-                  {Order.Status}
+                  {status}
                 </Text>
               </View>
             </View>
@@ -182,7 +188,7 @@ const Order = ({
               <TouchableOpacity
                 onPress={() => {
                   {
-                    setvisibleModal(true), setorderObject(Order);
+                    setvisibleModal(true), setorderObject(item);
                   }
                 }}
                 style={{
@@ -202,31 +208,7 @@ const Order = ({
                 </Text>
               </TouchableOpacity>
 
-              {Order.Status === "Active" && (
-                <TouchableOpacity
-                  href={"https://Google.com"}
-                  accessibilityRole="link"
-                  target="_blank"
-                  style={{
-                    marginRight: wp(40),
-                    right: 0,
-                    borderRadius: wp(1),
-                    position: "absolute",
-                    width: wp(20),
-                    borderColor: "silver",
-                    borderWidth: 0.2,
-                    height: hp(4),
-                    flexDirection: "row",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  <Text style={{ alignSelf: "center", color: "silver" }}>
-                    Track
-                  </Text>
-                </TouchableOpacity>
-              )}
-              {Order.Status === "Completed" && (
+              {status === "Completed" && (
                 <TouchableOpacity
                   onPress={() => settTipModalVisible(true)}
                   style={{

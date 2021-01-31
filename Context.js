@@ -41,7 +41,6 @@ class Context extends Component {
   dispatch = (action) => {
     switch (action.type) {
       case "SAVE_DRIVERARRIVED":
-        console.log(action);
         return this.setState(
           (state) => ({
             sessionArray: {
@@ -63,7 +62,6 @@ class Context extends Component {
           () => StoreData("activeRequest", action.activeRequest)
         );
       case "SAVE_USERUUID":
-        console.log(action);
         return this.setState(
           (state) => ({
             sessionArray: {
@@ -108,7 +106,6 @@ class Context extends Component {
           },
         }));
       case "SET_FIRST_TIME":
-        /*    console.log(action); */
         return this.setState((state) => ({
           sessionArray: {
             ...this.state.sessionArray,

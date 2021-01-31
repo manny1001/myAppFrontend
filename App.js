@@ -1,4 +1,11 @@
 import React, { useState, lazy, Suspense } from "react";
+import { View, Text, StyleSheet } from "react-native";
+const BigButton = lazy(() => import("./Components/Buttons"));
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
+import { RFValue, RFPercentage } from "react-native-responsive-fontsize";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Modal from "modal-enhanced-react-native-web";
 const RatingScreen = lazy(() => import("./Screens/Rating"));
@@ -11,7 +18,8 @@ export default function App(props) {
   const [RatingModalVIsibile, setRatingModalVIsibile] = useState(false);
   const [trackMyDriverModal, settrackMyDriverModal] = useState(false);
   const [questionModal, setQuestionModal] = useState(false);
-  const [driverArrived, setDriverArrived] = useState(null);
+  const [driverArrived, setDriverArrived] = useState(false);
+
   const [No, setNo] = useState(null);
 
   React.useEffect(() => {
@@ -23,7 +31,6 @@ export default function App(props) {
           type: "SAVE_ACTIVEREQUEST",
           activeRequest: JSON.parse(Active),
         });
-        console.log(Active);
         if (JSON.parse(Active) === true) {
           setQuestionModal(true);
         }
@@ -52,52 +59,85 @@ export default function App(props) {
     <>
       <Modal
         backgroundColor={"#f2f2f2"}
-        isVisible={questionModal === true}
+        isVisible={driverArrived}
         onBackdropPress={() => {}}
       >
+        <View style={styles.container}>
+          <Text
+            style={{
+              fontSize: RFPercentage(5),
+              alignSelf: "center",
+              width: wp(75),
+            }}
+          >
+            One of our call center agents will get back to you within the next
+            15 mins
+          </Text>
+          <BigButton
+            title={"Okay"}
+            onPress={() => {
+              setDriverArrived(false);
+            }}
+            titleStyle={{
+              fontWeight: "bold",
+              fontSize: RFPercentage(3),
+            }}
+            containerStyle={{
+              top: hp(20),
+            }}
+            buttonStyle={{
+              height: hp(10),
+              width: wp(80),
+              alignSelf: "center",
+            }}
+          />
+        </View>
+      </Modal>
+
+      <Modal backgroundColor={"#f2f2f2"} isVisible={questionModal}>
         <QuestionModal
-          context={props.context}
           setYes={() => {
-            props.context.dispatch({
-              type: "SAVE_DRIVERARRIVED",
-              driverArrived: null,
-            }),
-              props.context.dispatch({
-                type: "SAVE_ACTIVEREQUEST",
-                activeRequest: false,
-              }),
-              () => setQuestionModal(false);
+            setQuestionModal(false);
           }}
-          No={No}
           setNo={() => {
-            setNo(false),
-              props.context.dispatch({
-                type: "SAVE_ACTIVEREQUEST",
-                activeRequest: false,
-              });
+            setQuestionModal(false), setDriverArrived(true);
           }}
-          setQuestionModal={() => setQuestionModal(false)}
         />
       </Modal>
       <Modal
         backgroundColor={"#f2f2f2"}
         isVisible={props.context.state.activeRequest === true}
-        onBackdropPress={() => {}}
+        onBackdropPress={() => {
+          props.context.dispatch({
+            type: "SAVE_ACTIVEREQUEST",
+            activeRequest: false,
+          });
+        }}
       >
         <TrackDriverModal
+          No={No}
           onPress={() => {
             props.context.dispatch({
               type: "SAVE_ACTIVEREQUEST",
               activeRequest: false,
             }),
-              () => setQuestionModal(true);
+              setQuestionModal(true),
+              console.log("waddduo");
           }}
         />
       </Modal>
       <Modal isVisible={RatingModalVIsibile} onBackdropPress={() => {}}>
-        <RatingScreen onPress={() => setvisibleModal(false)} />
+        <RatingScreen onPress={() => setRatingModalVIsibile(false)} />
       </Modal>
-      <AppStack />
+      <AppStack {...props} />
     </>
   );
 }
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#f2f2f2",
+  },
+});

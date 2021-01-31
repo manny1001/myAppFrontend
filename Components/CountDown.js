@@ -7,6 +7,9 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 const CountDown = ({ onPress }) => {
+  const [timerisPlaying, settimerisPlaying] = React.useState(true);
+
+  React.useState(() => {});
   return (
     <View
       style={[
@@ -16,7 +19,8 @@ const CountDown = ({ onPress }) => {
     >
       <CountdownCircleTimer
         onComplete={() => {
-          onPress();
+          // do your stuff here
+          return [true, 1500]; // repeat animation in 1.5 seconds
         }}
         size={wp(30)}
         isPlaying

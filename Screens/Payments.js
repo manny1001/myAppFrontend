@@ -1,19 +1,38 @@
 import React, { useState, lazy } from "react";
-import { FlatList, ScrollView } from "react-native";
+import {
+  FlatList,
+  ScrollView,
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+} from "react-native";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
+import { RFValue } from "react-native-responsive-fontsize";
 import { OrderHistory } from "./FakeData";
+import { useQuery } from "@apollo/client";
+import { GET_REQUEST_HISTORY, GET_USER_UUID } from "../Queries";
 import Modal from "modal-enhanced-react-native-web";
 const OrderReceipt = lazy(() => import("./OrderReceipt"));
 const SendTipModal = lazy(() => import("../Components/SendTipModal"));
 const Order = lazy(() => import("../Components/Order"));
 
-const Payments = ({ navigation: { goBack } }) => {
+const Payments = ({ navigation: { goBack }, context }) => {
+  const [currentUserUUID, setcurrentUserUUID] = useState("");
+  const { data: DATA, loading: LOADING } = useQuery(GET_USER_UUID, {
+    onCompleted: () => setcurrentUserUUID(DATA.currentUser.uuid),
+  });
+  const { data, loading, error } = useQuery(GET_REQUEST_HISTORY, {
+    variables: { uuidUser: currentUserUUID },
+  });
   const [visibleModal, setvisibleModal] = useState(false);
   const [orderObject, setorderObject] = useState({});
   const [TipModalVisible, settTipModalVisible] = useState();
+
+  if (loading) return <Text>Loading</Text>;
   return (
     <>
       <Modal
@@ -22,8 +41,7 @@ const Payments = ({ navigation: { goBack } }) => {
       >
         <OrderReceipt
           onPress={() => setvisibleModal(false)}
-          orderObject={orderObject}
-          setorderObject={setorderObject}
+          orderObject={orderObject.item}
         />
       </Modal>
       <SendTipModal
@@ -32,18 +50,33 @@ const Payments = ({ navigation: { goBack } }) => {
       />
 
       <ScrollView style={{ height: hp(100), width: wp(100), marginTop: hp(2) }}>
-        <FlatList
-          data={OrderHistory}
-          renderItem={(item) => (
-            <Order
-              item={item}
-              setvisibleModal={setvisibleModal}
-              settTipModalVisible={settTipModalVisible}
-              setorderObject={setorderObject}
-            />
-          )}
-          keyExtractor={(item) => item.ID}
-        />
+        {data && data.getRequestHistory.length === 0 ? (
+          <View
+            style={{
+              justifyContent: "center",
+              height: hp(80),
+              width: wp(100),
+            }}
+          >
+            <Text style={{ alignSelf: "center" }}>
+              Seems like you havent request a trip yet...
+            </Text>
+          </View>
+        ) : (
+          <FlatList
+            data={data.getRequestHistory}
+            renderItem={(item) => (
+              <Order
+                context={context}
+                setvisibleModal={setvisibleModal}
+                settTipModalVisible={settTipModalVisible}
+                setorderObject={setorderObject}
+                item={item}
+              />
+            )}
+            keyExtractor={(item) => item.id}
+          />
+        )}
       </ScrollView>
     </>
   );
