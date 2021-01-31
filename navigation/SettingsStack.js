@@ -6,14 +6,14 @@ const Feedback = lazy(() => import("../Screens/Feedback"));
 const About = lazy(() => import("../Screens/About"));
 const CardSettings = lazy(() => import("../Screens/CardSettings"));
 const EditBankcard = lazy(() => import("../Screens/EditBankcard"));
-const SettingsStack = () => {
+const SettingsStack = (props) => {
   const Stack = createStackNavigator();
-
+  const { context } = props;
   return (
     <Stack.Navigator>
       <Stack.Screen
         name="Settings"
-        component={Settings}
+        component={(props) => <Settings context={context} {...props} />}
         options={{ headerShown: false }}
       />
       <Stack.Screen

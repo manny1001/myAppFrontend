@@ -31,9 +31,9 @@ export default function App(props) {
           type: "SAVE_ACTIVEREQUEST",
           activeRequest: JSON.parse(Active),
         });
-        if (JSON.parse(Active) === true) {
+        /*   if (JSON.parse(Active) === true) {
           setQuestionModal(true);
-        }
+        } */
         props.context.dispatch({
           type: "RESTORE_TOKEN",
           userToken: userToken,
@@ -97,7 +97,7 @@ export default function App(props) {
       <Modal backgroundColor={"#f2f2f2"} isVisible={questionModal}>
         <QuestionModal
           setYes={() => {
-            setQuestionModal(false);
+            setQuestionModal(false), setRatingModalVIsibile(true);
           }}
           setNo={() => {
             setQuestionModal(false), setDriverArrived(true);

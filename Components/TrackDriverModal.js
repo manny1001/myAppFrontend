@@ -65,10 +65,10 @@ const TrackDriver = ({ onPress }) => {
         >
           <CountdownCircleTimer
             onComplete={() => onPress()}
-            initialRemainingTime={5}
+            initialRemainingTime={300}
             size={wp(30)}
             isPlaying={false}
-            duration={5}
+            duration={300}
             colors={[
               ["#004777", 0.4],
               ["#F7B801", 0.4],

@@ -47,14 +47,7 @@ const UPDATE_PROFILE = gql`
 const BigButton = lazy(() => import("../Components/Buttons"));
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
-const AysncLogout = async () => {
-  try {
-    await AsyncStorage.removeItem("accessToken");
-    return true;
-  } catch (e) {
-    return false;
-  }
-};
+
 const ProfileStack = (props) => {
   const [uuid, setUUID] = useState(null);
   const { loading, data, error } = useQuery(GET_PROFILE, {
@@ -219,51 +212,6 @@ const ProfileStack = (props) => {
                 flex: 1,
               }}
             />
-          </View>
-          <View
-            style={{
-              borderTopWidth: wp(0.75),
-              borderTopColor: "#6c63ff",
-              backgroundColor: "#f5f5f5",
-              width: wp(100),
-              height: hp(8),
-              justifyContent: "space-between",
-              flexDirection: "row",
-            }}
-          >
-            <Text
-              style={{
-                marginLeft: wp(5),
-                fontSize: wp(5),
-                alignSelf: "center",
-              }}
-            >
-              Logout
-            </Text>
-            <ContextConsumer>
-              {(context) => {
-                return (
-                  <TouchableOpacity
-                    onPress={() => {
-                      {
-                        AysncLogout(), context.dispatch({ type: "SIGN_OUT" });
-                      }
-                    }}
-                    style={{
-                      justifyContent: "center",
-                      alignSelf: "center",
-
-                      flexDirection: "row",
-                      width: wp(10),
-                      marginRight: wp(5),
-                      height: hp(5),
-                    }}
-                  >
-                    <Text>Logout</Text>
-                  </TouchableOpacity>
-                );
-              }}
-            </ContextConsumer>
           </View>
         </ScrollView>
       </View>

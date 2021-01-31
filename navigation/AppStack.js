@@ -8,6 +8,7 @@ const PaymentsStack = lazy(() => import("../navigation/PaymentsStack"));
 
 const Tabs = createBottomTabNavigator();
 const AppStack = (props) => {
+  const { context } = props;
   return (
     <Tabs.Navigator
       tabBarOptions={{
@@ -35,22 +36,22 @@ const AppStack = (props) => {
         }}
       />
       <Tabs.Screen
-        name="App"
-        component={SettingsStack}
-        options={{
-          tabBarLabel: "Settings",
-          /*  tabBarIcon: ({ color, size }) => (
-            <Feather name="settings" color="#333" size={wp(5)} />
-          ), */
-        }}
-      />
-      <Tabs.Screen
         name="ProfilePage"
         component={() => <ProfileStack />}
         options={{
           tabBarLabel: "Profile",
           /* tabBarIcon: ({ color, size }) => (
-            <MaterialIcons name="person-outline" color="#333" size={wp(5)} />
+              <MaterialIcons name="person-outline" color="#333" size={wp(5)} />
+            ), */
+        }}
+      />
+      <Tabs.Screen
+        name="App"
+        component={() => <SettingsStack context={context} />}
+        options={{
+          tabBarLabel: "More",
+          /*  tabBarIcon: ({ color, size }) => (
+            <Feather name="settings" color="#333" size={wp(5)} />
           ), */
         }}
       />
