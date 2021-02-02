@@ -9,13 +9,8 @@ import TextInput from "../Components/TextInput";
 import { RFValue, RFPercentage } from "react-native-responsive-fontsize";
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/client";
-const USER_LOGIN = gql`
-  mutation login($cellphone: String!) {
-    login(cellphone: $cellphone) {
-      token
-    }
-  }
-`;
+import { USER_LOGIN } from "../Queries";
+
 import { ContextConsumer } from "../Context";
 import {
   CodeField,
@@ -175,7 +170,7 @@ const PhoneAuth = (props) => {
               <BigButton
                 disabled={cellphone.length === 10 ? false : true}
                 onPress={() => {
-                  login({ variables: { cellphone } })
+                  login({ variables: { cellphone, type: "user" } })
                     .then(({ data }) => {
                       data.login.token &&
                         context.dispatch({

@@ -50,6 +50,7 @@ class Context extends Component {
           }),
           () => StoreData("driverArrived", action.driverArrived)
         );
+
       case "SAVE_ACTIVEREQUEST":
         console.log(action);
         return this.setState(

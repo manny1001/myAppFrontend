@@ -1,4 +1,11 @@
 import { gql } from "@apollo/client";
+export const USER_LOGIN = gql`
+  mutation login($cellphone: String!, $type: String!) {
+    login(cellphone: $cellphone, type: $type) {
+      token
+    }
+  }
+`;
 export const PAYMENT_CONFIRMATION = gql`
   mutation PayOrConfirm(
     $uuidTrip: String
@@ -75,8 +82,8 @@ export const GET_REQUEST_HISTORY = gql`
 `;
 
 export const GET_DRIVER_RESPONSE = gql`
-  query GETDRIVERESPONSE($uuidUser: String!) {
-    getDriverRequestResponse(uuidUser: $uuidUser) {
+  query GETDRIVERESPONSE($uuidUser: String!, $status: String!) {
+    getDriverRequestResponse(uuidUser: $uuidUser, status: $status) {
       id
       uuidTrip
       uuidUser
@@ -90,6 +97,7 @@ export const GET_DRIVER_RESPONSE = gql`
       status
       rating
       uuidDriver
+      driversLiveLocation
       drivername
       driversurname
       driverregistration
@@ -97,6 +105,15 @@ export const GET_DRIVER_RESPONSE = gql`
       driverresponsetime
       driverarrivaltime
       drivercustomerarrivaltime
+    }
+  }
+`;
+export const DRIVERS_LIVELOCATION = gql`
+  query getDriversLocation($uuidDriver: String!) {
+    getDriversLocation(uuidDriver: $uuidDriver) {
+      username
+      status
+      driversLiveLocation
     }
   }
 `;

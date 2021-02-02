@@ -266,6 +266,7 @@ export default function (props) {
   });
   if (loading) return "Loading...";
   if (error) {
+    console.log(error);
     return (
       <ContextConsumer>
         {(context) => {

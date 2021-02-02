@@ -11,11 +11,11 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import { RFValue } from "react-native-responsive-fontsize";
-import { OrderHistory } from "./FakeData";
+
 import { useQuery } from "@apollo/client";
 import { GET_REQUEST_HISTORY, GET_USER_UUID } from "../Queries";
 import Modal from "modal-enhanced-react-native-web";
+import Loader from "../Components/Loader";
 const OrderReceipt = lazy(() => import("./OrderReceipt"));
 const SendTipModal = lazy(() => import("../Components/SendTipModal"));
 const Order = lazy(() => import("../Components/Order"));
@@ -32,7 +32,7 @@ const Payments = ({ navigation: { goBack }, context }) => {
   const [orderObject, setorderObject] = useState({});
   const [TipModalVisible, settTipModalVisible] = useState();
 
-  if (loading) return <Text>Loading</Text>;
+  if (loading) return <Loader />;
   return (
     <>
       <Modal
