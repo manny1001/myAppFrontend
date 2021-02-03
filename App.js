@@ -34,9 +34,7 @@ export default function App(props) {
           type: "SAVE_ACTIVEREQUEST",
           activeRequest: JSON.parse(Active),
         });
-        /*   if (JSON.parse(Active) === true) {
-          setQuestionModal(true);
-        } */
+
         props.context.dispatch({
           type: "RESTORE_TOKEN",
           userToken: userToken,

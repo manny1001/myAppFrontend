@@ -224,7 +224,8 @@ export default function (props) {
       variables: { uuidUser: data && data.currentUser.uuid },
       pollInterval: 500,
       onCompleted: () => {
-        setRequestid(DATA.getDriverRequestResponse.id),
+        console.log(DATA),
+          setRequestid(DATA.getDriverRequestResponse.id),
           setuuidTrip(DATA.getDriverRequestResponse.uuidTrip),
           requestID !== null && uuidTrip !== null && setStopQuery(true);
       },
