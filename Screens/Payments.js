@@ -55,7 +55,8 @@ const Payments = ({ navigation: { goBack }, context }) => {
             style={{
               justifyContent: "center",
               height: hp(80),
-              width: wp(100),
+              width: wp(80),
+              alignSelf: "center",
             }}
           >
             <Text style={{ alignSelf: "center" }}>

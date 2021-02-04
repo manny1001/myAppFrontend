@@ -26,10 +26,11 @@ const Order = (props) => {
     <TouchableOpacity
       onPress={() => setisPressed(!isPressed)}
       style={{
-        marginTop: hp(1),
         flexDirection: "column",
         justifyContent: "flex-start",
         flex: 1,
+        width: wp(80),
+        alignSelf: "center",
       }}
     >
       <View

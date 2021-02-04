@@ -26,7 +26,7 @@ import { useQuery, useMutation } from "@apollo/client";
 import { GET_PROFILE } from "../Queries";
 const UPDATE_PROFILE = gql`
   mutation updateProfile(
-    $uuid: String!
+    $uuidUser: String!
     $username: String
     $email: String
     $cellphone: String
@@ -34,7 +34,7 @@ const UPDATE_PROFILE = gql`
     $workaddress: String
   ) {
     updateProfile(
-      uuid: $uuid
+      uuidUser: $uuidUser
       username: $username
       email: $email
       cellphone: $cellphone
@@ -56,7 +56,7 @@ const ProfileStack = (props) => {
     onCompleted: () =>
       setUUID(data && data.currentUser && data.currentUser.uuid),
   });
-  const [updateProfile, {}] = useMutation(UPDATE_PROFILE, {
+  const [updateProfile, { data: DATA }] = useMutation(UPDATE_PROFILE, {
     refetchQueries: [{ query: GET_PROFILE }],
     onCompleted: () => alert("Profile Succesfully Updated"),
   });
@@ -73,7 +73,6 @@ const ProfileStack = (props) => {
       return false;
     }
   };
-
   if (loading) return <Loader />;
   if (data && data.currentUser.username === null) {
     return (
@@ -195,16 +194,25 @@ const ProfileStack = (props) => {
             <BigButton
               onPress={() => {
                 Keyboard.dismiss(),
-                  updateProfile({
-                    variables: {
-                      uuid: uuid && JSON.stringify(uuid),
-                      username: username && username,
-                      cellphone: cellphone && cellphone,
-                      email: email && email,
-                      homeaddress: homeaddress && homeaddress,
-                      workaddress: workaddress && workaddress,
-                    },
-                  });
+                  console.log(
+                    uuid && uuid,
+                    username && username,
+                    cellphone && cellphone,
+                    email && email,
+                    homeaddress && homeaddress,
+                    workaddress && workaddress
+                  );
+                //IF blank do not update
+                updateProfile({
+                  variables: {
+                    uuidUser: uuid && uuid,
+                    username: username && username,
+                    cellphone: cellphone && cellphone,
+                    email: email && email,
+                    homeaddress: homeaddress && homeaddress,
+                    workaddress: workaddress && workaddress,
+                  },
+                });
               }}
               title={"Update"}
               buttonStyle={{

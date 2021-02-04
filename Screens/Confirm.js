@@ -107,7 +107,7 @@ class Confirm extends Component {
     );
   }
 }
-/*       */
+
 export default function (props) {
   const [newTripRequest] = useMutation(NEW_REQUEST);
   const { data } = useQuery(GET_PROFILE, {
@@ -121,7 +121,7 @@ export default function (props) {
   const [location, setdeparture] = React.useState("");
   const [destination, setdestination] = React.useState("");
   React.useEffect(() => {
-    GetData(" location").then((location) => setdeparture(location));
+    GetData("location").then((location) => setdeparture(location));
     GetData("destination").then((destination) => setdestination(destination));
   }, []);
   return (

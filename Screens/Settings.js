@@ -23,11 +23,11 @@ const AysncLogout = async () => {
 const Usersettings = (props) => {
   const { context } = props;
   const DATA = [
-    {
+    /* {
       id: "1",
       icon: <View style={styles.iconStyle}></View>,
       title: "Notifications",
-    },
+    }, */
     {
       id: "2",
       icon: <View style={styles.iconStyle}></View>,
@@ -40,7 +40,14 @@ const Usersettings = (props) => {
     },
   ];
   return (
-    <View style={{ flex: 1, justifyContent: "center" }}>
+    <View
+      style={{
+        width: wp(80),
+        alignSelf: "center",
+        flex: 1,
+        justifyContent: "center",
+      }}
+    >
       <FlatList
         style={{
           flex: 1,
@@ -82,10 +89,11 @@ const Usersettings = (props) => {
           borderTopWidth: 0.1,
           borderTopColor: "#d3d3d3",
           backgroundColor: "#f5f5f5",
-          width: wp(100),
+          width: wp(80),
           height: hp(8),
           justifyContent: "space-between",
           flexDirection: "row",
+          alignSelf: "center",
         }}
       >
         <Text
