@@ -24,6 +24,7 @@ import { ContextConsumer } from "../Context";
 import gql from "graphql-tag";
 import { useQuery, useMutation } from "@apollo/client";
 import { GET_PROFILE } from "../Queries";
+const AddName = lazy(() => import("../Screens/AddName"));
 const UPDATE_PROFILE = gql`
   mutation updateProfile(
     $uuidUser: String!
@@ -75,16 +76,11 @@ const ProfileStack = (props) => {
     }
   };
   if (loading) return <Loader />;
-  if (data && data.currentUser.username === null) {
-    return (
-      <ContextConsumer>
-        {(context) => {
-          {
-            AysncLogout(), context.dispatch({ type: "SIGN_OUT" });
-          }
-        }}
-      </ContextConsumer>
-    );
+  if (
+    (data && data.currentUser.username === null) ||
+    (data && data.currentUser.username === "")
+  ) {
+    return <AddName />;
   }
   if (data && data.currentUser)
     return (

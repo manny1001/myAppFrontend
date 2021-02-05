@@ -1,4 +1,9 @@
 import { gql } from "@apollo/client";
+export const UPDATE_USERNAME = gql`
+  mutation updateUserName($uuidUser: String!, $username: String) {
+    updateProfile(uuidUser: $uuidUser, username: $username)
+  }
+`;
 export const USER_LOGIN = gql`
   mutation login($cellphone: String!, $type: String!) {
     login(cellphone: $cellphone, type: $type) {

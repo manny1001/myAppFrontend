@@ -16,11 +16,10 @@ const AuthStack = lazy(() => import("./navigation/AuthStack"));
 
 export default function App(props) {
   const [RatingModalVIsibile, setRatingModalVIsibile] = useState(false);
-  const [trackMyDriverModal, settrackMyDriverModal] = useState(false);
+  const [isPlaying, setIsplaying] = useState(false);
   const [questionModal, setQuestionModal] = useState(false);
   const [driverArrived, setDriverArrived] = useState(false);
-
-  const [No, setNo] = useState(null);
+  const [No, setNoValue] = useState(false);
   React.useEffect(() => {
     const RestoreAsync = async () => {
       try {
@@ -93,10 +92,16 @@ export default function App(props) {
       <Modal backgroundColor={"#f2f2f2"} isVisible={questionModal}>
         <QuestionModal
           setYes={() => {
-            setQuestionModal(false), setRatingModalVIsibile(true);
+            setQuestionModal(false);
+            /* setTrackMtTrip(true) */
           }}
           setNo={() => {
-            setQuestionModal(false), setDriverArrived(true);
+            setQuestionModal(false),
+              props.context.dispatch({
+                type: "SAVE_ACTIVEREQUEST",
+                activeRequest: true,
+              }),
+              setNoValue(true);
           }}
         />
       </Modal>
@@ -111,21 +116,21 @@ export default function App(props) {
         }}
       >
         <TrackDriverModal
+          isPlaying={isPlaying}
           No={No}
           onPress={() => {
             props.context.dispatch({
               type: "SAVE_ACTIVEREQUEST",
               activeRequest: false,
             }),
-              setQuestionModal(true),
-              console.log("waddduo");
+              setQuestionModal(true);
           }}
         />
       </Modal>
       <Modal isVisible={RatingModalVIsibile} onBackdropPress={() => {}}>
         <RatingScreen onPress={() => setRatingModalVIsibile(false)} />
       </Modal>
-      <AppStack {...props} />
+      <AppStack {...props} setIsplaying={() => setIsplaying(true)} />
     </>
   );
 }

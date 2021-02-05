@@ -5,32 +5,24 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import TextInput from "../Components/TextInput";
-import { ContextConsumer } from "../Context";
+import { GetData } from "../GFunctions";
 import BigButton from "../Components/Buttons.js";
 import { RFPercentage } from "react-native-responsive-fontsize";
+import { useMutation } from "@apollo/client";
+import { GET_PROFILE, UPDATE_USERNAME } from "../Queries";
 const AddNames = (props) => {
+  const [useruuid, setuseruuid] = React.useState("");
   const [username, setusername] = React.useState(null);
+  const [updateProfile] = useMutation(UPDATE_USERNAME, {
+    refetchQueries: [{ query: GET_PROFILE }],
+    onCompleted: () => console.log(updateProfile),
+  });
+  React.useEffect(() => {
+    GetData("useruuid").then((value) => setuseruuid(value));
+  }, []);
 
   return (
-    <View
-      style={{
-        flex: 1,
-      }}
-    >
-      <TouchableOpacity
-        style={{ flex: 0.12, justifyContent: "center" }}
-        onPress={() => props.navigation.navigate("PhoneAuth")}
-      >
-        <Text
-          style={{
-            alignSelf: "center",
-            fontSize: RFPercentage(2.5),
-            color: "blue",
-          }}
-        >
-          Already logged in before? Skip
-        </Text>
-      </TouchableOpacity>
+    <>
       <View
         style={{
           flexDirection: "column",
@@ -38,6 +30,7 @@ const AddNames = (props) => {
           flex: 1,
         }}
       >
+        <Text style={{ alignSelf: "center" }}>Please add a Username.</Text>
         <TextInput
           style={{
             backgroundColor: "#f3f3f3",
@@ -60,26 +53,19 @@ const AddNames = (props) => {
           }}
         />
       </View>
-      <ContextConsumer>
-        {(context) => {
-          return (
-            <BigButton
-              onPress={() => {
-                context.dispatch({
-                  type: "SIGN_IN",
-                  payload: {
-                    username: username,
-                    userToken: 1,
-                  },
-                });
-              }}
-              disabled={username === null ? true : false}
-              title={"Save"}
-            />
-          );
-        }}
-      </ContextConsumer>
-    </View>
+      <BigButton
+        onPress={() =>
+          updateProfile({
+            variables: {
+              uuidUser: useruuid && useruuid,
+              username: username && username,
+            },
+          })
+        }
+        disabled={username === null ? true : false}
+        title={"Save"}
+      />
+    </>
   );
 };
 

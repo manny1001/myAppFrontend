@@ -9,6 +9,7 @@ const PaymentsStack = lazy(() => import("../navigation/PaymentsStack"));
 const Tabs = createBottomTabNavigator();
 const AppStack = (props) => {
   const { context } = props;
+  console.log(props);
   return (
     <Tabs.Navigator
       tabBarOptions={{
@@ -36,7 +37,7 @@ const AppStack = (props) => {
         }}
       />
       <Tabs.Screen
-        name="ProfilePage"
+        name="Profile"
         component={() => <ProfileStack />}
         options={{
           tabBarLabel: "Profile",

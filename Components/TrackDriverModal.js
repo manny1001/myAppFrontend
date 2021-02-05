@@ -1,5 +1,11 @@
 import React, { useState, lazy } from "react";
-import { View, StyleSheet, Animated } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Animated,
+  Text,
+  TouchableOpacity,
+} from "react-native";
 import { RFPercentage } from "react-native-responsive-fontsize";
 import {
   widthPercentageToDP as wp,
@@ -15,11 +21,29 @@ const CountDown = lazy(() => import("../Components/CountDown"));
 const DriversInfo = lazy(() => import("../Components/DriversInfo"));
 const CallDriver = lazy(() => import("../Components/CallDriver"));
 const ProfilePicture = lazy(() => import("../Components/ProfilePicture"));
-const TrackDriver = ({ onPress }) => {
-  const { loading, errror, data } = useQuery(DRIVERS_LIVELOCATION, {
-    onCompleted: () => {
-      console.log(data);
-      /* if (
+const TrackDriver = ({ onPress, context, No, isPlaying }) => {
+  const [useruuid, setuseruuid] = React.useState();
+  const [requestStatus, setRequestStatus] = useState();
+  const { loading, errror, data, stopPolling } = useQuery(
+    DRIVERS_LIVELOCATION,
+    {
+      onCompleted: () => {
+        console.log(
+          data &&
+            data.getDriversLocation &&
+            data.getDriversLocation[0] &&
+            data.getDriversLocation[0].status
+        );
+        setRequestStatus(
+          data &&
+            data.getDriversLocation &&
+            data.getDriversLocation[0] &&
+            data.getDriversLocation[0].status
+        );
+        if (context.state.activeRequest === false) {
+          stopPolling();
+        }
+        /* if (
         [undefined, "On-Route,Pickup", "Arrived", "Completed"].indexOf(
           data &&
             data.getDriversLocation &&
@@ -28,13 +52,13 @@ const TrackDriver = ({ onPress }) => {
         )
       ) {
       } */
-    },
-    variables: { uuidUser: "4600abbd-fc76-492d-9483-19bfae3ec08b" },
-    pollInterval: 1000,
-    notifyOnNetworkStatusChange: true,
-    fetchPolicy: "network-only",
-  });
-  const [useruuid, setuseruuid] = React.useState();
+      },
+      variables: { uuidUser: useruuid },
+      pollInterval: 1000,
+      notifyOnNetworkStatusChange: true,
+      fetchPolicy: "network-only",
+    }
+  );
   const [timerisPlaying, settimerisPlaying] = React.useState(true);
   const [DriverName, setDriverName] = useState("Peter");
   const [DriverRegistration, setDriverRegistration] = useState("YH KO HJ GP");
@@ -42,6 +66,8 @@ const TrackDriver = ({ onPress }) => {
   React.useEffect(() => {
     GetData("useruuid").then((value) => setuseruuid(value));
   }, []);
+
+  /* if (requestStatus === "Arrived") return <View></View>; */
   return (
     <View
       style={{
@@ -78,83 +104,113 @@ const TrackDriver = ({ onPress }) => {
           DriverCarModel={DriverCarModel}
           DriverRegistration={DriverRegistration}
         />
-
-        <View
-          style={[
-            styles.TopInfo,
-            { alignSelf: "flex-end", borderWidth: 0, backgroundColor: "" },
-          ]}
-        >
-          <CountdownCircleTimer
-            onComplete={() => onPress()}
-            initialRemainingTime={300}
-            size={wp(30)}
-            isPlaying={false}
-            duration={300}
-            colors={[
-              ["#004777", 0.4],
-              ["#F7B801", 0.4],
-              ["#A30000", 0.2],
+        {No === true && (
+          <TouchableOpacity
+            onPress={() =>
+              context.dispatch({
+                type: "SAVE_ACTIVEREQUEST",
+                activeRequest: false,
+              })
+            }
+          >
+            <Text
+              style={{
+                alignSelf: "center",
+                fontSize: RFPercentage(2.5),
+              }}
+            >
+              Exit
+            </Text>
+          </TouchableOpacity>
+        )}
+        {No === true && (
+          <Text
+            style={{
+              alignSelf: "center",
+              fontSize: RFPercentage(2.5),
+            }}
+          >
+            One of Our call centre agents will call you back shortly...you can
+            keep chatting with your driver to find out where he is...
+          </Text>
+        )}
+        {No === false && (
+          <View
+            style={[
+              styles.TopInfo,
+              { alignSelf: "flex-end", borderWidth: 0, backgroundColor: "" },
             ]}
           >
-            {({ remainingTime, animatedColor }) => {
-              return (
-                <Animated.View
-                  style={{
-                    borderRadius: wp(80),
-                    flex: 1,
-                    justifyContent: "center",
-                  }}
-                >
-                  {remainingTime > 10 && (
-                    <Animated.Text
-                      style={{
-                        color: animatedColor,
-                        alignSelf: "center",
-                        fontSize: RFPercentage(3),
-                      }}
-                    >
-                      Arriving in
-                    </Animated.Text>
-                  )}
-                  {remainingTime <= 10 && remainingTime !== 0 && (
-                    <Animated.Text
-                      style={{
-                        color: animatedColor,
-                        alignSelf: "center",
-                        fontSize: RFPercentage(3),
-                      }}
-                    >
-                      Almost there
-                    </Animated.Text>
-                  )}
-                  {remainingTime === 0 && (
-                    <Animated.Text
-                      style={{
-                        color: animatedColor,
-                        alignSelf: "center",
-                        fontSize: RFPercentage(2.5),
-                      }}
-                    >
-                      Driver has arrived
-                    </Animated.Text>
-                  )}
-                  <Animated.Text
+            <CountdownCircleTimer
+              onComplete={() => onPress()}
+              size={wp(30)}
+              isPlaying={true} /* ={isPlaying} */
+              duration={10}
+              colors={[
+                ["#004777", 0.4],
+                ["#F7B801", 0.4],
+                ["#A30000", 0.2],
+              ]}
+            >
+              {({ remainingTime, animatedColor }) => {
+                return (
+                  <Animated.View
                     style={{
-                      color: animatedColor,
-                      alignSelf: "center",
-                      fontSize: RFPercentage(4),
-                      fontWeight: "bold",
+                      borderRadius: wp(80),
+                      flex: 1,
+                      justifyContent: "center",
                     }}
                   >
-                    {(remainingTime / 60).toFixed(2).split(".")[0]} :{" "}
-                    {(remainingTime / 60).toFixed(2).split(".")[1]}
-                  </Animated.Text>
-                </Animated.View>
-              );
-            }}
-          </CountdownCircleTimer>
-        </View>
+                    {remainingTime > 10 && (
+                      <Animated.Text
+                        style={{
+                          color: animatedColor,
+                          alignSelf: "center",
+                          fontSize: RFPercentage(3),
+                        }}
+                      >
+                        Arriving in
+                      </Animated.Text>
+                    )}
+                    {remainingTime <= 10 && remainingTime !== 0 && (
+                      <Animated.Text
+                        style={{
+                          color: animatedColor,
+                          alignSelf: "center",
+                          fontSize: RFPercentage(3),
+                        }}
+                      >
+                        Almost there
+                      </Animated.Text>
+                    )}
+                    {remainingTime === 0 && (
+                      <Animated.Text
+                        style={{
+                          color: animatedColor,
+                          alignSelf: "center",
+                          fontSize: RFPercentage(2.5),
+                        }}
+                      >
+                        Driver has arrived
+                      </Animated.Text>
+                    )}
+                    <Animated.Text
+                      style={{
+                        color: animatedColor,
+                        alignSelf: "center",
+                        fontSize: RFPercentage(4),
+                        fontWeight: "bold",
+                      }}
+                    >
+                      {(remainingTime / 60).toFixed(2).split(".")[0]} :{" "}
+                      {(remainingTime / 60).toFixed(2).split(".")[1]}
+                    </Animated.Text>
+                  </Animated.View>
+                );
+              }}
+            </CountdownCircleTimer>
+          </View>
+        )}
       </View>
 
       <View
@@ -172,11 +228,18 @@ const TrackDriver = ({ onPress }) => {
   );
 };
 
-export default function ({ onPress }) {
+export default function ({ onPress, No, isPlaying }) {
   return (
     <ContextConsumer>
       {(context) => {
-        return <TrackDriver context={context} onPress={onPress} />;
+        return (
+          <TrackDriver
+            context={context}
+            onPress={onPress}
+            No={No}
+            isPlaying={isPlaying}
+          />
+        );
       }}
     </ContextConsumer>
   );

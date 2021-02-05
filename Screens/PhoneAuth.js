@@ -22,6 +22,22 @@ const BigButton = lazy(() => import("../Components/Buttons"));
 const PhoneAuthImage = lazy(() => import("../Components/PhoneAuthImage"));
 
 const PhoneAuth = (props) => {
+  /* function smsOtp(cellphone, otp) {
+    let number = "27" + cellphone.slice(1, 10);
+    console.log(number);
+    var fetchUrl = `
+  https://platform.clickatell.com/messages/http/send?apiKey=N4Yb09zfSzip6P1hS86zaQ==&to=${number}&content=Please enter this OTP to verify your cellphone number. ${otp}`;
+    fetch(fetchUrl)
+      .then(function (response) {
+        if (response.status >= 400) {
+          throw new Error("Bad request response from server");
+        }
+        return response.json();
+      })
+      .then(function (json) {
+        console.log(json);
+      });
+  } */
   const CELL_COUNT = 4;
   const [value, setValue] = useState("");
   const ref = useBlurOnFulfill({ value, cellCount: CELL_COUNT });
@@ -32,7 +48,6 @@ const PhoneAuth = (props) => {
   const [login, { data }] = useMutation(USER_LOGIN);
   const [cellphone, setcellphone] = React.useState("");
   const [visibleModal, setvisibleModal] = React.useState(false);
-  /*   React.useEffect(() => {}, []); */
   return (
     <View
       style={{

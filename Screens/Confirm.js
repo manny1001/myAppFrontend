@@ -7,7 +7,8 @@ import {
 import { RFValue } from "react-native-responsive-fontsize";
 import { useMutation, useQuery } from "@apollo/client";
 import { NEW_REQUEST, GET_PROFILE } from "../Queries";
-import { ContextConsumer } from "../Context";
+const Loader = lazy(() => import("../Components/Loader"));
+const AddName = lazy(() => import("../Screens/AddName"));
 import { GetData, StoreData } from "../GFunctions";
 const BigButton = lazy(() => import("../Components/Buttons"));
 const Driver = lazy(() => import("../Components/SelectDriver"));
@@ -109,13 +110,14 @@ class Confirm extends Component {
 }
 
 export default function (props) {
+  const [userName, setUserName] = useState("");
   const [newTripRequest] = useMutation(NEW_REQUEST);
-  const { data } = useQuery(GET_PROFILE, {
+  const { data, loading } = useQuery(GET_PROFILE, {
     onCompleted: () => {
       StoreData("useruuid", data.currentUser.uuid),
-        console.log(data.currentUser.uuid);
+        setUserName(data.currentUser.username);
     },
-
+    fetchPolicy: "network-only",
     notifyOnNetworkStatusChange: true,
   });
   const [location, setdeparture] = React.useState("");
@@ -124,6 +126,11 @@ export default function (props) {
     GetData("location").then((location) => setdeparture(location));
     GetData("destination").then((destination) => setdestination(destination));
   }, []);
+
+  if (loading) {
+    return <Loader />;
+  }
+  if (userName === "" || userName === null) return <AddName />;
   return (
     <Confirm
       navigation={props.navigation}
