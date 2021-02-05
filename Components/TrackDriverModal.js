@@ -21,13 +21,16 @@ const CountDown = lazy(() => import("../Components/CountDown"));
 const DriversInfo = lazy(() => import("../Components/DriversInfo"));
 const CallDriver = lazy(() => import("../Components/CallDriver"));
 const ProfilePicture = lazy(() => import("../Components/ProfilePicture"));
-const TrackDriver = ({ onPress, context, No, isPlaying }) => {
+const TrackDriver = ({ onPress, context, No, Isplaying }) => {
   const [useruuid, setuseruuid] = React.useState();
   const [requestStatus, setRequestStatus] = useState();
   const { loading, errror, data, stopPolling } = useQuery(
     DRIVERS_LIVELOCATION,
     {
       onCompleted: () => {
+        if (context.state.activeRequest === false) {
+          stopPolling();
+        }
         console.log(
           data &&
             data.getDriversLocation &&
@@ -40,9 +43,6 @@ const TrackDriver = ({ onPress, context, No, isPlaying }) => {
             data.getDriversLocation[0] &&
             data.getDriversLocation[0].status
         );
-        if (context.state.activeRequest === false) {
-          stopPolling();
-        }
         /* if (
         [undefined, "On-Route,Pickup", "Arrived", "Completed"].indexOf(
           data &&
@@ -144,8 +144,8 @@ const TrackDriver = ({ onPress, context, No, isPlaying }) => {
             <CountdownCircleTimer
               onComplete={() => onPress()}
               size={wp(30)}
-              isPlaying={true} /* ={isPlaying} */
-              duration={10}
+              isPlaying={JSON.parse(Isplaying)} /* ={isPlaying} */
+              duration={15}
               colors={[
                 ["#004777", 0.4],
                 ["#F7B801", 0.4],
@@ -228,7 +228,7 @@ const TrackDriver = ({ onPress, context, No, isPlaying }) => {
   );
 };
 
-export default function ({ onPress, No, isPlaying }) {
+export default function ({ onPress, No, Isplaying }) {
   return (
     <ContextConsumer>
       {(context) => {
@@ -237,7 +237,7 @@ export default function ({ onPress, No, isPlaying }) {
             context={context}
             onPress={onPress}
             No={No}
-            isPlaying={isPlaying}
+            Isplaying={Isplaying}
           />
         );
       }}

@@ -35,11 +35,23 @@ class Context extends Component {
       useruuid: "",
       activeRequest: false,
       driverArrived: false,
+      isPlaying: false,
     },
   };
 
   dispatch = (action) => {
     switch (action.type) {
+      case "SAVE_ISPLAYING":
+        console.log(action);
+        return this.setState(
+          (state) => ({
+            sessionArray: {
+              ...this.state.sessionArray,
+              isPlaying: action.isPlaying,
+            },
+          }),
+          () => StoreData("isPlaying", action.isPlaying)
+        );
       case "SAVE_DRIVERARRIVED":
         return this.setState(
           (state) => ({
