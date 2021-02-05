@@ -11,7 +11,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-
+import { StoreData } from "../GFunctions";
 import { useQuery } from "@apollo/client";
 import { GET_REQUEST_HISTORY, GET_USER_UUID } from "../Queries";
 import Modal from "modal-enhanced-react-native-web";
@@ -23,7 +23,10 @@ const Order = lazy(() => import("../Components/Order"));
 const Payments = ({ navigation: { goBack }, context }) => {
   const [currentUserUUID, setcurrentUserUUID] = useState("");
   const { data: DATA, loading: LOADING } = useQuery(GET_USER_UUID, {
-    onCompleted: () => setcurrentUserUUID(DATA.currentUser.uuid),
+    onCompleted: () => {
+      setcurrentUserUUID(DATA.currentUser.uuid),
+        StoreData("useruuid", DATA.currentUser.uuid);
+    },
   });
   const { data, loading, error } = useQuery(GET_REQUEST_HISTORY, {
     variables: { uuidUser: currentUserUUID },

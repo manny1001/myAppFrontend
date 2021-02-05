@@ -8,8 +8,6 @@ import {
 import { RFValue, RFPercentage } from "react-native-responsive-fontsize";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Modal from "modal-enhanced-react-native-web";
-import { useQuery } from "@apollo/client";
-import { DRIVERS_LIVELOCATION } from "./Queries";
 const RatingScreen = lazy(() => import("./Screens/Rating"));
 const TrackDriverModal = lazy(() => import("./Components/TrackDriverModal"));
 const QuestionModal = lazy(() => import("./Components/QuestionModal"));
@@ -17,14 +15,12 @@ const AppStack = lazy(() => import("./navigation/AppStack"));
 const AuthStack = lazy(() => import("./navigation/AuthStack"));
 
 export default function App(props) {
-  const { loading, errror, data } = useQuery(DRIVERS_LIVELOCATION, {});
   const [RatingModalVIsibile, setRatingModalVIsibile] = useState(false);
   const [trackMyDriverModal, settrackMyDriverModal] = useState(false);
   const [questionModal, setQuestionModal] = useState(false);
   const [driverArrived, setDriverArrived] = useState(false);
 
   const [No, setNo] = useState(null);
-
   React.useEffect(() => {
     const RestoreAsync = async () => {
       try {
@@ -53,7 +49,6 @@ export default function App(props) {
     /* StoreData(null); */
     RestoreAsync();
   }, []);
-
   return props.context.state.userToken === null ? (
     <AuthStack context={props.context} />
   ) : (

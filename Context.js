@@ -63,6 +63,7 @@ class Context extends Component {
           () => StoreData("activeRequest", action.activeRequest)
         );
       case "SAVE_USERUUID":
+        console.log(action);
         return this.setState(
           (state) => ({
             sessionArray: {

@@ -1,9 +1,7 @@
-import React, { useState, lazy, Suspense } from "react";
-import { Text } from "react-native";
+import React, { lazy } from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 const EnterOTP = lazy(() => import("../Screens/EnterOTP"));
 const PhoneAuth = lazy(() => import("../Screens/PhoneAuth"));
-const Onboarding = lazy(() => import("../Screens/Onboarding"));
 const AcceptTandCs = lazy(() => import("../Screens/AcceptTandCs"));
 const AuthStack = () => {
   const Stack = createStackNavigator();
@@ -11,8 +9,8 @@ const AuthStack = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="Onboarding"
-        component={(props) => <Onboarding {...props} />}
+        name="AcceptTandCs"
+        component={(props) => <AcceptTandCs {...props} />}
         options={{ headerShown: false }}
       />
       <Stack.Screen
@@ -20,13 +18,6 @@ const AuthStack = () => {
         component={(props) => <PhoneAuth {...props} />}
         options={{ headerShown: false }}
       />
-      {/* */}
-      <Stack.Screen
-        name="AcceptTandCs"
-        component={(props) => <AcceptTandCs {...props} />}
-        options={{ headerShown: false }}
-      />
-
       <Stack.Screen
         name="EnterOTP"
         component={(props) => <EnterOTP {...props} />}

@@ -53,8 +53,9 @@ const ProfileStack = (props) => {
   const { loading, data, error } = useQuery(GET_PROFILE, {
     notifyOnNetworkStatusChange: true,
 
-    onCompleted: () =>
-      setUUID(data && data.currentUser && data.currentUser.uuid),
+    onCompleted: () => {
+      setUUID(data && data.currentUser && data.currentUser.uuid);
+    },
   });
   const [updateProfile, { data: DATA }] = useMutation(UPDATE_PROFILE, {
     refetchQueries: [{ query: GET_PROFILE }],

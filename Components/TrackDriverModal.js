@@ -7,19 +7,41 @@ import {
 } from "react-native-responsive-screen";
 import { ContextConsumer } from "../Context";
 import { CountdownCircleTimer } from "react-native-countdown-circle-timer";
+import { useQuery } from "@apollo/client";
+import { DRIVERS_LIVELOCATION } from "../Queries";
+import { GetData } from "../GFunctions";
 const Chat = lazy(() => import("../Components/ChatApp"));
 const CountDown = lazy(() => import("../Components/CountDown"));
 const DriversInfo = lazy(() => import("../Components/DriversInfo"));
 const CallDriver = lazy(() => import("../Components/CallDriver"));
 const ProfilePicture = lazy(() => import("../Components/ProfilePicture"));
 const TrackDriver = ({ onPress }) => {
+  const { loading, errror, data } = useQuery(DRIVERS_LIVELOCATION, {
+    onCompleted: () => {
+      console.log(data);
+      /* if (
+        [undefined, "On-Route,Pickup", "Arrived", "Completed"].indexOf(
+          data &&
+            data.getDriversLocation &&
+            data.getDriversLocation[0] &&
+            data.getDriversLocation[0].status
+        )
+      ) {
+      } */
+    },
+    variables: { uuidUser: "4600abbd-fc76-492d-9483-19bfae3ec08b" },
+    pollInterval: 1000,
+    notifyOnNetworkStatusChange: true,
+    fetchPolicy: "network-only",
+  });
+  const [useruuid, setuseruuid] = React.useState();
   const [timerisPlaying, settimerisPlaying] = React.useState(true);
   const [DriverName, setDriverName] = useState("Peter");
   const [DriverRegistration, setDriverRegistration] = useState("YH KO HJ GP");
   const [DriverCarModel, setDriverCarModel] = useState("Hyundai i20");
   React.useEffect(() => {
-    /* console.log("staeted"); */
-  });
+    GetData("useruuid").then((value) => setuseruuid(value));
+  }, []);
   return (
     <View
       style={{

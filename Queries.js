@@ -86,34 +86,18 @@ export const GET_DRIVER_RESPONSE = gql`
     getDriverRequestResponse(uuidUser: $uuidUser) {
       id
       uuidTrip
-      uuidUser
-      username
-      cellphone
-      location
-      destination
-      totalAmount
-      tip
-      paymentmethod
-      status
-      rating
-      uuidDriver
-      driversLiveLocation
-      drivername
-      driversurname
-      driverregistration
-      model
-      driverresponsetime
-      driverarrivaltime
-      drivercustomerarrivaltime
     }
   }
 `;
 export const DRIVERS_LIVELOCATION = gql`
-  query getDriversLocation($uuidDriver: String!) {
-    getDriversLocation(uuidDriver: $uuidDriver) {
+  query getDriversLocation($uuidUser: String!) {
+    getDriversLocation(uuidUser: $uuidUser) {
       username
       status
       driversLiveLocation
+      paymentmethod
+      model
+      driverregistration
     }
   }
 `;
