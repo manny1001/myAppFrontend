@@ -5,7 +5,15 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 
-const GoogleAutoComplete = ({ placeholder, setAddress, setSelected }) => {
+const GoogleAutoComplete = ({
+  currentLocation,
+  destination,
+  getTripInfo,
+  placeholder,
+  setAddress,
+  setSelected,
+  dispatchAddress,
+}) => {
   return (
     <GooglePlacesAutocomplete
       keyboardShouldPersistTaps={true}
@@ -14,8 +22,14 @@ const GoogleAutoComplete = ({ placeholder, setAddress, setSelected }) => {
       placeholder={placeholder}
       onPress={(data) => {
         setAddress(data.description),
-          setSelected(true),
-          dispatchSaveDestination(data.description);
+          dispatchAddress(data.description),
+          setSelected(true);
+
+        {
+          currentLocation === null || destination === null
+            ? null
+            : getTripInfo();
+        }
       }}
       query={{
         key: "AIzaSyC5xUeX27_qX8nlwItKxi5IrMnP5R1j0jM",

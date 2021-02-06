@@ -21,7 +21,7 @@ class Context extends Component {
       departureTime: "",
       destinationArrivalTime: "",
       selectedDriver: {},
-      location: "37 Launceston Rd, New Redruth, Alberton, 1449, South Africa",
+      location: "",
       timeRequested: "",
       paymentMethod: "",
       tripFee: "",
@@ -133,6 +133,7 @@ class Context extends Component {
           () => StoreData("clientCellNumber", action.clientCellNumber)
         );
       case "SAVE_PICKUPLOCATION":
+        console.log(action);
         return this.setState(
           (state) => ({
             sessionArray: {
@@ -143,6 +144,7 @@ class Context extends Component {
           () => StoreData("location", action.location)
         );
       case "SAVE_DESTINATION":
+        console.log(action);
         return this.setState(
           (state) => ({
             sessionArray: {

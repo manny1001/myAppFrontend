@@ -28,12 +28,12 @@ const TrackDriver = ({ onPress, context, No, isPlaying }) => {
     DRIVERS_LIVELOCATION,
     {
       onCompleted: () => {
-        console.log(
+        /* console.log(
           data &&
             data.getDriversLocation &&
             data.getDriversLocation[0] &&
             data.getDriversLocation[0].status
-        );
+        ); */
         setRequestStatus(
           data &&
             data.getDriversLocation &&
@@ -144,7 +144,7 @@ const TrackDriver = ({ onPress, context, No, isPlaying }) => {
             <CountdownCircleTimer
               onComplete={() => onPress()}
               size={wp(30)}
-              isPlaying={true} /* ={isPlaying} */
+              isPlaying={false} /* ={isPlaying} */
               duration={10}
               colors={[
                 ["#004777", 0.4],

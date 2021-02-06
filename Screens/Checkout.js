@@ -28,7 +28,7 @@ export default function Checkout(props) {
 
   const [selectedValue, setselectedValue] = useState("Select");
   const [paymentMethod, setpaymentMethod] = useState(null);
-  const [isClicked, setisClicked] = useState(false);
+  const [locationSelected, setisClicked] = useState(false);
   const [deliveryAddress, setdeliveryAddress] = useState(
     "22 Allan Road Glen Austin Midrand"
   );
@@ -379,7 +379,7 @@ export default function Checkout(props) {
               justifyContent: "space-between",
             }}
           >
-            {isClicked === false ? (
+            {locationSelected === false ? (
               <View
                 style={{
                   flexDirection: "row",
@@ -456,10 +456,10 @@ export default function Checkout(props) {
             )}
 
             <TouchableOpacity
-              onPress={() => setisClicked(!isClicked)}
+              onPress={() => setisClicked(!locationSelected)}
               style={{ marginRight: wp(5), alignSelf: "center" }}
             >
-              {isClicked === false
+              {locationSelected === false
                 ? {
                     /* <Feather
                   name="edit"

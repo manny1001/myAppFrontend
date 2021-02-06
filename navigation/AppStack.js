@@ -9,7 +9,6 @@ const PaymentsStack = lazy(() => import("../navigation/PaymentsStack"));
 const Tabs = createBottomTabNavigator();
 const AppStack = (props) => {
   const { context } = props;
-  console.log(props);
   return (
     <Tabs.Navigator
       tabBarOptions={{

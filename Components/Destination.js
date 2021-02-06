@@ -12,23 +12,13 @@ import {
 } from "react-native-responsive-screen";
 import { PrevLocations } from "../DATA";
 const Destination = ({
+  getTripInfo,
+  destination,
   setDestination,
   DestinationSelected,
   setDestinationSelected,
   setsavedLocationVisible,
 }) => {
-  const [destination, setdestination] = useState(null);
-  const GetData = async (Key) => {
-    try {
-      const value = await AsyncStorage.getItem(Key);
-      if (value !== null) {
-        setdestination(value);
-      }
-    } catch (e) {
-      // error reading value
-    }
-  };
-  GetData("destination");
   return (
     <ContextConsumer>
       {(context) => {
@@ -55,8 +45,17 @@ const Destination = ({
               {DestinationSelected === false ? (
                 <>
                   <GoogleAutoComplete
+                    destination={destination}
                     placeholder={"where would you like to go?"}
                     setAddress={(val) => setDestination(val)}
+                    dispatchAddress={(data) => {
+                      context.dispatch({
+                        type: "SAVE_DESTINATION",
+                        destination: data,
+                      });
+                    }}
+                    setSelected={setDestinationSelected}
+                    getTripInfo={getTripInfo}
                   />
 
                   {PrevLocations.length !== 0 && (

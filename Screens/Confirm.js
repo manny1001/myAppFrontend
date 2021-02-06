@@ -32,6 +32,7 @@ class Confirm extends Component {
       destination,
       navigation,
     } = this.props;
+
     return (
       <>
         <View
@@ -120,10 +121,10 @@ export default function (props) {
     fetchPolicy: "network-only",
     notifyOnNetworkStatusChange: true,
   });
-  const [location, setdeparture] = React.useState("");
+  const [location, setlocation] = React.useState("");
   const [destination, setdestination] = React.useState("");
   React.useEffect(() => {
-    GetData("location").then((location) => setdeparture(location));
+    GetData("location").then((location) => setlocation(location));
     GetData("destination").then((destination) => setdestination(destination));
   }, []);
 

@@ -4,6 +4,10 @@ import { useLinkTo } from "@react-navigation/native";
 import { ContextConsumer } from "../Context";
 import Geocoder from "react-native-geocoding";
 import { StoreData } from "../GFunctions";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
 import * as Location from "expo-location";
 const BigButton = lazy(() => import("../Components/Buttons"));
 const PickUpLocation = lazy(() => import("../Components/PickUpLocation"));
@@ -11,31 +15,30 @@ const Destination = lazy(() => import("../Components/Destination"));
 const PreviousLocationModal = lazy(() =>
   import("../Components/PreviousLocationModal")
 );
-import { PrevLocations } from "../DATA";
 class GoogleAutoComplete extends Component {
-  static path = "feed";
   constructor(props) {
     super(props);
     this.state = {
-      destination: "",
+      currentLocation:
+        "0A 2nd Road, Halfway House Estate, Midrand, 1685, South Africa",
+      destination: null,
       errorMsg: null,
       latitude: null,
       longitude: null,
-      currentLocation: "",
-      isClicked: false,
-      distance: "",
-      time: "",
-      DestinationSelected: true,
+      locationSelected: false,
+      distance: null,
+      time: null,
+      DestinationSelected: false,
       savedLocationVisible: false, //When !!!!!!!InProduction!!!!!..Change to ===>> {savedLocationVisible: PrevLocations.length === 0 ? false : true},
       value: null,
+      isClicked: false,
     };
 
-    /*  Geocoder.init("AIzaSyD7WWrmocEDp4T9JonO47DB1GSPllLJbsk"); */
+    /* Geocoder.init("AIzaSyD7WWrmocEDp4T9JonO47DB1GSPllLJbsk"); */
   }
 
-  getlocation = async () => {
+  /* getlocation = async () => {
     let status = await Location.requestPermissionsAsync();
-    /**/
     if (status !== "granted") {
       this.setState({ errorMsg: "Permission to access location was denied" });
     }
@@ -45,31 +48,19 @@ class GoogleAutoComplete extends Component {
 
     this.setState({ latitude: location.coords.latitude });
     this.setState({ longitude: location.coords.longitude });
-    /* Geocoder.from(this.state.latitude, this.state.longitude)
+    Geocoder.from(this.state.latitude, this.state.longitude)
       .then((json) => {
         var addressComponent = json.results[0];
         this.setState({ currentLocation: addressComponent.formatted_address });
         this.props.context.dispatch({
           type: "SAVE_PICKUPLOCATION",
-           location: this.state.currentLocation,
+          location: addressComponent.formatted_address,
         });
       })
-      .catch((error) => console.warn(error)); */
-  };
-  SetPickUp = async () => {
-    this.props.context.dispatch({
-      type: "SAVE_PICKUPLOCATION",
-      location: "22 Allan RdGlen Austin AH, Midrand, 1685",
-    });
-  };
-  SetDestination = async () => {
-    this.props.context.dispatch({
-      type: "SAVE_DESTINATION",
-      destination:
-        "O.R. Tambo International Airport. Private Bag X1. Kempton Park. 1627.",
-    });
-  };
-  /* getTripInfo = async () => {
+      .catch((error) => console.warn(error));
+  }; */
+
+  getTripInfo = async () => {
     try {
       let response = await fetch(
         "https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/directions/json?origin=" +
@@ -86,10 +77,10 @@ class GoogleAutoComplete extends Component {
     } catch (error) {
       console.error(error);
     }
-  }; */
+  };
   componentDidMount() {
-    this.SetPickUp();
-    this.SetDestination();
+    /*  this.SetPickUp();
+    this.SetDestination(); */
     /* this.getlocation(); */
   }
   setCurrentLocationHandler = (val) => {
@@ -113,19 +104,39 @@ class GoogleAutoComplete extends Component {
           }}
         >
           <PickUpLocation
-            setisClicked={() => this.setState({ isClicked: false })}
+            setIsClicked={() =>
+              this.setState({ isClicked: !this.state.isClicked })
+            }
             isClicked={this.state.isClicked}
+            setLocationSelected={() =>
+              this.setState({ locationSelected: true })
+            }
+            locationSelected={this.state.locationSelected}
             currentLocation={this.state.currentLocation}
             setCurrentLocation={() => this.setCurrentLocationHandler()}
-            dispatchSaveLocation={(data) => {
-              this.props.context.dispatch({
-                type: "SAVE_PICKUPLOCATION",
-                payload: data,
-              });
-            }}
+            getTripInfo={() => this.getTripInfo()}
           />
-          <Text>26 mins</Text>
-          <Text>38 kms</Text>
+          {this.state.location !== null && this.state.destination !== null && (
+            <>
+              <View
+                style={{
+                  justifyContent: "space-between",
+                  width: wp(55),
+                  alignSelf: "center",
+                  flexDirection: "row",
+                }}
+              >
+                <Text style={{ alignSelf: "center" }}>{this.state.time}</Text>
+                <Text style={{ alignSelf: "center" }}>
+                  {this.state.distance}
+                </Text>
+              </View>
+              <Text style={{ alignSelf: "center" }}>
+                time and distance to destination
+              </Text>
+            </>
+          )}
+
           <Destination
             setsavedLocationVisible={() =>
               this.setState({ savedLocationVisible: true })
@@ -143,44 +154,21 @@ class GoogleAutoComplete extends Component {
                 payload: val,
               })
             }
+            destination={this.state.destination}
+            getTripInfo={() => this.getTripInfo()}
           />
           <BigButton
+            disabled={
+              this.state.location === null || this.state.destination === null
+                ? true
+                : false
+            }
             onPress={() => {
-              /* this.getTripInfo(); */
               this.props.navigation.navigate("Confirm");
             }}
             title={"Request"}
             titleStyle={{ fontWeight: "bold" }}
           />
-          <ContextConsumer>
-            {(context) => {
-              return (
-                <PreviousLocationModal
-                  visible={this.state.savedLocationVisible}
-                  onPress={(res) => {
-                    this.setState({
-                      value: res.key,
-                    });
-                  }}
-                  onPress2={() => {
-                    this.setState({ savedLocationVisible: false }),
-                      this.setState({ destination: "" }),
-                      this.setState({ value: null });
-                  }}
-                  onPress3={() => {
-                    this.setState({ destination: this.state.value }),
-                      this.setState({ DestinationSelected: true }),
-                      this.setState({ savedLocationVisible: false }),
-                      context.dispatch({
-                        type: "SAVE_DESTINATION",
-                        payload: this.state.value,
-                      });
-                  }}
-                  value={this.state.value}
-                />
-              );
-            }}
-          </ContextConsumer>
         </View>
       </View>
     );

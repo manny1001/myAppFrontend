@@ -23,7 +23,7 @@ import Restaurants from "./Restaurants";
 import { useLinkTo } from "@react-navigation/native";
 import { reducer, initialState } from "../Context";
 const App = (props) => {
-  const [isClicked, setisClicked] = useState(false);
+  const [locationSelected, setisClicked] = useState(false);
   const [scrollToIndex, setScrollToIndex] = useState(0);
   const [dataSourceCords, setDataSourceCords] = useState([]);
   const [ref, setRef] = useState(null);

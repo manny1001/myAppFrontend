@@ -59,7 +59,7 @@ const EditBankcard = (props) => {
   const [selectedCard, setselectedCard] = React.useState([{}]);
   const [cardName, setcardName] = React.useState("");
   const [doneEditing, setdoneEditing] = React.useState(true);
-  const [isClicked, setisClicked] = React.useState(false);
+  const [locationSelected, setisClicked] = React.useState(false);
 
   const handler = (val) => {
     setselectedCard(val);
@@ -68,7 +68,7 @@ const EditBankcard = (props) => {
 
   return (
     <View style={styles.container}>
-      {DATA && DATA.length > 0 && isClicked === false && (
+      {DATA && DATA.length > 0 && locationSelected === false && (
         <FlatList
           contentContainerStyle={{
             justifyContent: "center",
@@ -122,7 +122,7 @@ const EditBankcard = (props) => {
           your list
         </Text>
       )}
-      {isClicked === true && (
+      {locationSelected === true && (
         <View
           style={{
             justifyContent: "center",
@@ -235,10 +235,10 @@ const EditBankcard = (props) => {
           },
         ]}
       >
-        {isClicked === true && (
+        {locationSelected === true && (
           <BigButton styles={{ flex: 1 }} title={"Save Card"} />
         )}
-        {isClicked === true && (
+        {locationSelected === true && (
           <BigButton
             styles={{ flex: 1 }}
             onPress={() => {
