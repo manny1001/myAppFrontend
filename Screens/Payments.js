@@ -20,7 +20,7 @@ const OrderReceipt = lazy(() => import("./OrderReceipt"));
 const SendTipModal = lazy(() => import("../Components/SendTipModal"));
 const Order = lazy(() => import("../Components/Order"));
 
-const Payments = ({ navigation: { goBack }, context }) => {
+const Payments = () => {
   const [currentUserUUID, setcurrentUserUUID] = useState("");
   const { data: DATA, loading: LOADING } = useQuery(GET_USER_UUID, {
     onCompleted: () => {
@@ -53,7 +53,7 @@ const Payments = ({ navigation: { goBack }, context }) => {
       />
 
       <ScrollView style={{ height: hp(100), width: wp(100), marginTop: hp(2) }}>
-        {data && data.getRequestHistory.length === 0 ? (
+        {data && data.getRequestHistory.length === 0 && (
           <View
             style={{
               justifyContent: "center",
@@ -66,12 +66,12 @@ const Payments = ({ navigation: { goBack }, context }) => {
               Seems like you havent request a trip yet...
             </Text>
           </View>
-        ) : (
+        )}
+        {data && data.getRequestHistory.length !== 0 && (
           <FlatList
             data={data.getRequestHistory}
             renderItem={(item) => (
               <Order
-                context={context}
                 setvisibleModal={setvisibleModal}
                 settTipModalVisible={settTipModalVisible}
                 setorderObject={setorderObject}

@@ -1,19 +1,21 @@
 import React from "react";
-import { View, Image, StyleSheet } from "react-native";
+import { View, ActivityIndicator, StyleSheet } from "react-native";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
+import { Image } from "react-native-elements";
 const ProfilePicture = ({ source, style }) => {
   return (
-    <View
-      style={[
-        styles.TopInfo,
-        { alignSelf: "flex-start", borderWidth: 0, backgroundColor: "" },
-      ]}
-    >
-      <Image style={style} source={source} />
-    </View>
+    <Image
+      source={source}
+      style={{
+        width: wp(35),
+        height: wp(35),
+        borderRadius: wp(17.5),
+      }}
+      PlaceholderContent={<ActivityIndicator />}
+    />
   );
 };
 

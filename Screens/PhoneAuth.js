@@ -45,7 +45,7 @@ const PhoneAuth = (props) => {
     value,
     setValue,
   });
-  const [login, { data }] = useMutation(USER_LOGIN);
+  const [login, { data }] = useMutation(USER_LOGIN, {});
   const [cellphone, setcellphone] = React.useState("");
   const [visibleModal, setvisibleModal] = React.useState(false);
   return (

@@ -1,7 +1,7 @@
 import React, { useState, lazy, Suspense } from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 const Ride = lazy(() => import("../Screens/Ride.js"));
-const Landing = lazy(() => import("../Screens/Landing"));
+const TrackDriver = lazy(() => import("../Screens/TrackDriver"));
 const Food = lazy(() => import("../Screens/Menu"));
 const Restaurants = lazy(() => import("../Screens/Restaurants"));
 const Confirmationpage = lazy(() => import("../Screens/Confirmationpage"));
@@ -17,11 +17,11 @@ const HomeStack = () => {
   const Stack = createStackNavigator();
   return (
     <Stack.Navigator initialRouteName={"Trip"}>
-      {/* <Stack.Screen
-        name="Landing"
-        component={Landing}
+      <Stack.Screen
+        name="TrackDriver"
+        component={TrackDriver}
         options={{ headerShown: false }}
-      /> */}
+      />
 
       <Stack.Screen
         name="Confirm"

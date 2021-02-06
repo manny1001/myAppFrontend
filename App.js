@@ -106,7 +106,6 @@ const linkingApp = {
 };
 const App = (props) => {
   const { context } = props;
-  console.log(props);
   const [Isplaying, setIsplaying] = useState(false);
   const [RatingModalVIsibile, setRatingModalVIsibile] = useState(false);
   const [questionModal, setQuestionModal] = useState(false);

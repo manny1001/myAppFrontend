@@ -27,7 +27,7 @@ const AppStack = (props) => {
       />
       <Tabs.Screen
         name="Payments"
-        component={() => <PaymentsStack {...props} />}
+        component={PaymentsStack}
         options={{
           tabBarLabel: "Payments",
           /*  tabBarIcon: ({ color, size }) => (

@@ -31,12 +31,6 @@ const TrackDriver = ({ onPress, context, No, Isplaying }) => {
         if (context.state.activeRequest === false) {
           stopPolling();
         }
-        console.log(
-          data &&
-            data.getDriversLocation &&
-            data.getDriversLocation[0] &&
-            data.getDriversLocation[0].status
-        );
         setRequestStatus(
           data &&
             data.getDriversLocation &&

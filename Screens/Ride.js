@@ -21,15 +21,14 @@ class GoogleAutoComplete extends Component {
     this.state = {
       currentLocation:
         "0A 2nd Road, Halfway House Estate, Midrand, 1685, South Africa",
-      destination: null,
+      destination: "Carlswald Midrand, South Africa",
       errorMsg: null,
       latitude: null,
       longitude: null,
       locationSelected: false,
       distance: null,
       time: null,
-      DestinationSelected: false,
-      savedLocationVisible: false, //When !!!!!!!InProduction!!!!!..Change to ===>> {savedLocationVisible: PrevLocations.length === 0 ? false : true},
+      DestinationSelected: true,
       value: null,
       isClicked: false,
     };

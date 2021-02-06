@@ -57,31 +57,6 @@ const Destination = ({
                     setSelected={setDestinationSelected}
                     getTripInfo={getTripInfo}
                   />
-
-                  {PrevLocations.length !== 0 && (
-                    <TouchableOpacity
-                      onPress={setsavedLocationVisible}
-                      style={{
-                        justifyContent: "center",
-                        alignSelf: "center",
-                        flexDirection: "row",
-                        height: hp(5),
-                        marginBottom: hp(3),
-                        marginRight: wp(1),
-                      }}
-                    >
-                      <Text
-                        style={{
-                          alignSelf: "center",
-                          color: "blue",
-                          fontWeight: "bold",
-                          fontSize: RFValue(12),
-                        }}
-                      >
-                        Recent
-                      </Text>
-                    </TouchableOpacity>
-                  )}
                 </>
               ) : (
                 <Text
