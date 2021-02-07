@@ -101,6 +101,7 @@ export const DRIVERS_LIVELOCATION = gql`
       status
       driversLiveLocation
       driverduration
+      drivername
       driverImage
       paymentmethod
       model

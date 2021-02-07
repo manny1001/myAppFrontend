@@ -26,7 +26,7 @@ const AppStack = lazy(() => import("./navigation/AppStack"));
 const AuthStack = lazy(() => import("./navigation/AuthStack"));
 const BigButton = lazy(() => import("./Components/Buttons"));
 const httpLink = createHttpLink({
-  uri: "http://localhost:4000/graphql",
+  uri: "http://192.168.43.182:4000/graphql",
 });
 const authLink = setContext(async (_, { headers }) => {
   const token = await AsyncStorage.getItem("accessToken");

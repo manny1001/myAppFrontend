@@ -22,9 +22,11 @@ const DriversInfo = lazy(() => import("../Components/DriversInfo"));
 const CallDriver = lazy(() => import("../Components/CallDriver"));
 const ProfilePicture = lazy(() => import("../Components/ProfilePicture"));
 const TrackDriver = ({ onPress, context, No, Isplaying }) => {
-  const [firstPoll, setFirstPoll] = React.useState(null);
+  const [drivername, setdrivername] = React.useState(null);
   const [useruuid, setuseruuid] = React.useState(null);
   const [driverImage, setdriverImage] = React.useState(null);
+  const [driverRegistration, setDriverRegistration] = useState("YH KO HJ GP");
+  const [driverCarModel, setDriverCarModel] = useState("Hyundai i20");
   const { loading, errror, data, stopPolling } = useQuery(
     DRIVERS_LIVELOCATION,
     {
@@ -38,6 +40,24 @@ const TrackDriver = ({ onPress, context, No, Isplaying }) => {
             data.getDriversLocation[0] &&
             data.getDriversLocation[0].status
         ), */
+          setDriverRegistration(
+            data &&
+              data.getDriversLocation &&
+              data.getDriversLocation[0] &&
+              data.getDriversLocation[0].driverregistration
+          ),
+          setDriverCarModel(
+            data &&
+              data.getDriversLocation &&
+              data.getDriversLocation[0] &&
+              data.getDriversLocation[0].model
+          ),
+          setdrivername(
+            data &&
+              data.getDriversLocation &&
+              data.getDriversLocation[0] &&
+              data.getDriversLocation[0].drivername
+          ),
           setdriverImage(
             data &&
               data.getDriversLocation &&
@@ -63,9 +83,7 @@ const TrackDriver = ({ onPress, context, No, Isplaying }) => {
   );
 
   const [timeRemaining, settimeRemaining] = React.useState();
-  const [DriverName, setDriverName] = useState("Peter");
-  const [DriverRegistration, setDriverRegistration] = useState("YH KO HJ GP");
-  const [DriverCarModel, setDriverCarModel] = useState("Hyundai i20");
+
   React.useEffect(() => {
     GetData("useruuid").then((value) => setuseruuid(value));
   }, []);
@@ -104,9 +122,9 @@ const TrackDriver = ({ onPress, context, No, Isplaying }) => {
         />
         <CallDriver />
         <DriversInfo
-          DriverName={DriverName}
-          DriverCarModel={DriverCarModel}
-          DriverRegistration={DriverRegistration}
+          DriverName={drivername}
+          DriverCarModel={driverCarModel}
+          DriverRegistration={driverRegistration}
         />
         {No === true && (
           <TouchableOpacity

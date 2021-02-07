@@ -262,9 +262,12 @@ export default function (props) {
     }
   `;
   const { loading, error, data } = useQuery(GET_DRIVERS, {
+    onCompleted: () => {
+      console.log(data);
+    },
     fetchPolicy: "network-only",
   });
-  if (loading) return "Loading...";
+  if (loading) return <></>;
   if (error) {
     console.log(error);
     return (
