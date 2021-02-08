@@ -62,18 +62,26 @@ const ProfileStack = (props) => {
     notifyOnNetworkStatusChange: true,
 
     onCompleted: () => {
-      setUUID(data && data.currentUser && data.currentUser.uuid);
+      console.log(data), setUUID(data && data.currentUser.uuid);
     },
   });
   const [updateProfile, { data: DATA }] = useMutation(UPDATE_PROFILE, {
     refetchQueries: [{ query: GET_PROFILE }],
     onCompleted: () => alert("Profile Succesfully Updated"),
   });
-  const [username, setusername] = React.useState("");
-  const [cellphone, setcellphone] = React.useState("");
-  const [email, setemail] = React.useState("");
-  const [homeaddress, sethomeaddress] = React.useState("");
-  const [workaddress, setworkaddress] = React.useState("");
+  const [username, setusername] = React.useState(
+    data && data.currentUser.username
+  );
+  const [cellphone, setcellphone] = React.useState(
+    data && data.currentUser.cellphone
+  );
+  const [email, setemail] = React.useState(data && data.currentUser.email);
+  const [homeaddress, sethomeaddress] = React.useState(
+    data && data.currentUser.homeaddress
+  );
+  const [workaddress, setworkaddress] = React.useState(
+    data && data.currentUser.workaddress
+  );
   const AysncLogout = async () => {
     try {
       await AsyncStorage.removeItem("accessToken");

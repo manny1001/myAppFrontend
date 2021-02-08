@@ -59,7 +59,7 @@ class GoogleAutoComplete extends Component {
       .catch((error) => console.warn(error));
   }; */
 
-  getTripInfo = async () => {
+  /* getTripInfo = async () => {
     try {
       let response = await fetch(
         "https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/directions/json?origin=" +
@@ -69,18 +69,17 @@ class GoogleAutoComplete extends Component {
           "&key=AIzaSyC5xUeX27_qX8nlwItKxi5IrMnP5R1j0jM"
       );
       let json = await response.json();
-
+      console.log(json, response, "here");
       this.setState({ distance: json.routes[0].legs[0].distance.text });
       this.setState({ time: json.routes[0].legs[0].duration.text });
       return json;
     } catch (error) {
       console.error(error);
     }
-  };
+  }; */
   componentDidMount() {
-    /*  this.SetPickUp();
-    this.SetDestination(); */
-    /* this.getlocation(); */
+    /*   this.getTripInfo(); */
+    /*   this.getlocation(); */
   }
   setCurrentLocationHandler = (val) => {
     this.setState({

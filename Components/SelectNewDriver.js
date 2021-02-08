@@ -18,7 +18,6 @@ const SelectNewDriver = ({ totalAmount, navigation }) => {
   const [useruuid, setuseruuid] = React.useState("");
   React.useEffect(() => {
     GetData("useruuid").then((value) => setuseruuid(value));
-    console.log(useruuid);
   }, []);
   return (
     <View style={styles.container}>

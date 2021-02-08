@@ -1,4 +1,9 @@
 import { gql } from "@apollo/client";
+export const ALERT_EMAIL = gql`
+  mutation alertEmail($uuidTrip: String!, $message: String!, $status: String!) {
+    alertEmail(uuidTrip: $uuidTrip, message: $message, status: $status)
+  }
+`;
 export const UPDATE_USERNAME = gql`
   mutation updateUserName($uuidUser: String!, $username: String) {
     updateProfile(uuidUser: $uuidUser, username: $username)
@@ -97,16 +102,20 @@ export const GET_DRIVER_RESPONSE = gql`
 export const DRIVERS_LIVELOCATION = gql`
   query getDriversLocation($uuidUser: String!) {
     getDriversLocation(uuidUser: $uuidUser) {
+      uuidTrip
       username
+      cellphone
       status
       driversLiveLocation
       driverduration
       driverremainingtime
       drivername
       driverImage
+      driversCellphone
       paymentmethod
       model
       driverregistration
+      drivercustomerarrivaltime
     }
   }
 `;

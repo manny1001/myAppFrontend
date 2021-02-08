@@ -36,11 +36,20 @@ class Context extends Component {
       activeRequest: false,
       driverArrived: false,
       isPlaying: false,
+      totalDriversOnline: null,
     },
   };
 
   dispatch = (action) => {
     switch (action.type) {
+      case "SAVE_TOTAL_DRIVERS_ONLINE":
+        console.log(action);
+        return this.setState((state) => ({
+          sessionArray: {
+            ...this.state.sessionArray,
+            totalDriversOnline: action.totalDriversOnline,
+          },
+        }));
       case "SAVE_ISPLAYING":
         console.log(action);
         return this.setState(

@@ -15,16 +15,11 @@ import {
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 import { NavigationContainer } from "@react-navigation/native";
-import Application from "./App";
 import * as Linking from "expo-linking";
 import Loader from "./Components/Loader";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-const RatingScreen = lazy(() => import("./Screens/Rating"));
-const TrackDriverModal = lazy(() => import("./Components/TrackDriverModal"));
-const QuestionModal = lazy(() => import("./Components/QuestionModal"));
 const AppStack = lazy(() => import("./navigation/AppStack"));
 const AuthStack = lazy(() => import("./navigation/AuthStack"));
-const BigButton = lazy(() => import("./Components/Buttons"));
 const httpLink = createHttpLink({
   uri: "http://localhost:4000/graphql",
 });
@@ -106,11 +101,8 @@ const linkingApp = {
 };
 const App = (props) => {
   const { context } = props;
-  const [Isplaying, setIsplaying] = useState(false);
+  /*   const [Isplaying, setIsplaying] = useState(false); */
   const [RatingModalVIsibile, setRatingModalVIsibile] = useState(false);
-  const [questionModal, setQuestionModal] = useState(false);
-  const [driverArrived, setDriverArrived] = useState(false);
-  const [No, setNoValue] = useState(false);
 
   React.useEffect(() => {
     const RestoreAsync = async () => {
@@ -118,7 +110,7 @@ const App = (props) => {
         const userToken = await AsyncStorage.getItem("accessToken");
         const Active = await AsyncStorage.getItem("activeRequest");
         const isPlaying = await AsyncStorage.getItem("isPlaying");
-        setIsplaying(isPlaying);
+        /*         setIsplaying(isPlaying); */
         context.dispatch({
           type: "SAVE_ISPLAYING",
           isPlaying: JSON.parse(isPlaying),
@@ -151,96 +143,7 @@ const App = (props) => {
     <AuthStack context={props.context} />
   ) : (
     <>
-      <Modal
-        backgroundColor={"#f2f2f2"}
-        isVisible={driverArrived}
-        onBackdropPress={() => {}}
-      >
-        <View style={styles.container}>
-          <Text
-            style={{
-              fontSize: RFPercentage(5),
-              alignSelf: "center",
-              width: wp(75),
-            }}
-          >
-            One of our call center agents will get back to you within the next
-            15 mins
-          </Text>
-          <BigButton
-            title={"Okay"}
-            onPress={() => {
-              setDriverArrived(false);
-            }}
-            titleStyle={{
-              fontWeight: "bold",
-              fontSize: RFPercentage(3),
-            }}
-            containerStyle={{
-              top: hp(20),
-            }}
-            buttonStyle={{
-              height: hp(10),
-              width: wp(80),
-              alignSelf: "center",
-            }}
-          />
-        </View>
-      </Modal>
-
-      <Modal backgroundColor={"#f2f2f2"} isVisible={questionModal}>
-        <QuestionModal
-          setYes={() => {
-            setQuestionModal(false),
-              context.dispatch({
-                type: "SAVE_ISPLAYING",
-                isPlaying: false,
-              });
-            /* setTrackMtTrip(true) */
-          }}
-          setNo={() => {
-            setQuestionModal(false),
-              context.dispatch({
-                type: "SAVE_ACTIVEREQUEST",
-                activeRequest: true,
-              }),
-              context.dispatch({
-                type: "SAVE_ISPLAYING",
-                isPlaying: false,
-              }),
-              setNoValue(true);
-          }}
-        />
-      </Modal>
-      <Modal
-        backgroundColor={"#f2f2f2"}
-        isVisible={props.context.state.activeRequest === true}
-        onBackdropPress={() => {
-          context.dispatch({
-            type: "SAVE_ACTIVEREQUEST",
-            activeRequest: false,
-          });
-        }}
-      >
-        <TrackDriverModal
-          Isplaying={Isplaying}
-          No={No}
-          onPress={() => {
-            context.dispatch({
-              type: "SAVE_ACTIVEREQUEST",
-              activeRequest: false,
-            }),
-              context.dispatch({
-                type: "SAVE_ISPLAYING",
-                isPlaying: false,
-              }),
-              setQuestionModal(true);
-          }}
-        />
-      </Modal>
-      <Modal isVisible={RatingModalVIsibile} onBackdropPress={() => {}}>
-        <RatingScreen onPress={() => setRatingModalVIsibile(false)} />
-      </Modal>
+     
       <AppStack {...props} />
     </>
   );

@@ -28,19 +28,18 @@ const Drivers = (props) => {
     picture,
     registration,
     model,
-    status,
   } = props.item;
   {
-    if (status !== "Online") return <></>;
     return (
       <View
         style={{
           justifyContent: "space-between",
           flex: 1,
           flexDirection: "row",
-          width: wp(100),
+          width: wp(90),
           alignSelf: "center",
           height: hp(30),
+          /*  borderWidth: wp(0.25), */
         }}
       >
         <TouchableOpacity
@@ -101,11 +100,13 @@ const ClickedDriver = (props) => {
       <View
         style={{
           justifyContent: "space-between",
-          flex: 1,
           flexDirection: "row",
-          width: wp(100),
           alignSelf: "center",
           height: hp(30),
+          borderWidth: wp(0.25),
+          padding: wp(2),
+          borderRadius: wp(2),
+          width: wp(90),
         }}
       >
         <View style={styles.driverDetails}>
@@ -150,92 +151,74 @@ export class AllDrivers extends React.Component {
       DriversAvailable: [],
     };
   }
-  /* componentDidMount() {
-    const { DriversAvailable } = this.state;
-    DriversAvailable.push(DriverDetails);
-    this.setState({
-      DriversAvailable: [DriversAvailable.push(DriverDetails)],
-    });
-    console.log(DriverDetails, DriversAvailable);
-  } */
+  goIndex = () => {
+    this.flatList_Ref.scrollToIndex({ animated: true, index: 1 });
+  };
   render() {
-    const { DriverDetails, setClickedDriver, context } = this.props;
+    const {
+      DriverDetails,
+      setClickedDriver,
+      context,
+      flatListRef,
+    } = this.props;
+    if (DriverDetails.length === 0)
+      return (
+        <View style={{ width: wp(100) }}>
+          <ActivityIndicator size="large" style={{ alignSelf: "center" }} />
+          <Text style={{ alignSelf: "center" }}>Searching for drivers...</Text>
+        </View>
+      );
     return (
-      <FlatList
-        ref={(ref) => {
-          this.flatListRef = ref;
-        }}
-        snapToAlignment={"start"}
-        snapToInterval={windowWidth}
-        decelerationRate={"fast"}
-        pagingEnabled={true}
-        showsHorizontalScrollIndicator={false}
-        horizontal={true}
-        data={DriverDetails}
-        renderItem={({ item }) => (
-          <Drivers
-            item={item}
-            setClickedDriver={setClickedDriver}
-            context={context}
-          />
+      <View style={{ flexDirection: "column", justifyContent: "center" }}>
+        {DriverDetails.length !== 0 && DriverDetails.length !== 1 && (
+          <Text style={{ alignSelf: "center" }}>Swipe for more</Text>
         )}
-        keyExtractor={(item) => item.uuid}
-        contentContainerStyle={{
-          width: wp(100),
-          flex: 1,
-          alignSelf: "center",
-        }}
-      />
+        {/*  <TouchableOpacity style={{ alignSelf: "center" }}>
+          <Text style={{ alignSelf: "center" }}>{"<--"}</Text>
+        </TouchableOpacity> */}
+        <FlatList
+          /* ref={(ref) => {
+            let flatListRef = React.useRef("");
+            flatListRef = ref;
+          }} */
+          snapToAlignment={"start"}
+          snapToInterval={windowWidth}
+          decelerationRate={"fast"}
+          pagingEnabled={true}
+          showsHorizontalScrollIndicator={false}
+          horizontal={true}
+          data={DriverDetails}
+          renderItem={({ item }) => {
+            return (
+              <Drivers
+                item={item}
+                setClickedDriver={setClickedDriver}
+                context={context}
+              />
+            );
+          }}
+          keyExtractor={(item) => item.uuid}
+          contentContainerStyle={{
+            width: wp(90),
+            flex: 1,
+            alignSelf: "center",
+          }}
+        />
+        {/* <TouchableOpacity
+          onPress={() => {
+            this.goIndex();
+          }}
+          style={{ alignSelf: "center" }}
+        >
+          <Text style={{ alignSelf: "center" }}>{"-->"}</Text>
+        </TouchableOpacity> */}
+      </View>
     );
   }
 }
-/* {
-  this.state.isPressed < 3 && (
-    <>
-      <BigButton
-        onPress={() => {
-          this.setState({ isPressed: this.state.isPressed + 1 });
-          this.flatListRef.scrollToIndex({
-            animated: true,
-            index: this.state.isPressed,
-          });
-        }}
-        containerStyle={{
-          height: hp(15),
-          justifyContent: "center",
-        }}
-        title={"Next"}
-        buttonStyle={{
-          height: hp(10),
-          width: wp(80),
-          alignSelf: "center",
-          backgroundColor: "#6c63ff",
-        }}
-      />
-    </>
-  );
-}
-{
-  this.state.isPressed == 3 && (
-    <BigButton
-      onPress={() => {
-        this.props.navigation.navigate("AcceptTandCs");
-      }}
-      containerStyle={{
-        height: hp(15),
-        justifyContent: "center",
-      }}
-      title={"Start"}
-      buttonStyle={{
-        height: hp(10),
-        width: wp(80),
-        alignSelf: "center",
-        backgroundColor: "#6c63ff",
-      }}
-    />
-  );
-} */
+
 export default function (props) {
+  const { context } = props;
   const [clickedDriver, setClickedDriver] = React.useState(null);
   const AysncLogout = async () => {
     try {
@@ -250,6 +233,7 @@ export default function (props) {
   const GET_DRIVERS = gql`
     query {
       allDriver {
+        id
         uuid
         name
         surname
@@ -261,57 +245,53 @@ export default function (props) {
       }
     }
   `;
-  const { loading, error, data } = useQuery(GET_DRIVERS, {
+  const { error, data } = useQuery(GET_DRIVERS, {
     onCompleted: () => {
-      console.log(data);
+      context &&
+        context.dispatch({
+          type: "SAVE_TOTAL_DRIVERS_ONLINE",
+          totalDriversOnline: data.allDriver.length,
+        });
     },
-    fetchPolicy: "network-only",
+    fetchPolicy: "cache-and-network",
+    notifyOnNetworkStatusChange: true,
+    pollInterval: 7000,
   });
-  if (loading) return <></>;
+
   if (error) {
     console.log(error);
+  }
+
+  if (data && data.allDriver !== undefined)
     return (
       <ContextConsumer>
         {(context) => {
-          {
-            AysncLogout(), context.dispatch({ type: "SIGN_OUT" });
-          }
-        }}
-      </ContextConsumer>
-    );
-  }
-  if (!loading && !error && data && data.allDriver !== undefined)
-    return (
-      <>
-        {clickedDriver === null && (
-          <ContextConsumer>
-            {(context) => {
-              return (
+          return (
+            <>
+              {context.state.driveruuid === "" && (
                 <AllDrivers
                   {...props}
                   setClickedDriver={setClickedDriver}
                   linkTo={linkTo}
                   context={context}
                   DriverDetails={data.allDriver}
+                  /* flatListRef={flatListRef} */
                 />
-              );
-            }}
-          </ContextConsumer>
-        )}
-        <ContextConsumer>
-          {(context) => {
-            return (
-              <ClickedDriver
-                clickedDriver={clickedDriver !== null && clickedDriver}
-                {...props}
-                linkTo={linkTo}
-                context={context}
-              />
-            );
-          }}
-        </ContextConsumer>
-      </>
+              )}
+              {context.state.driveruuid !== "" && (
+                <ClickedDriver
+                  clickedDriver={clickedDriver !== null && clickedDriver}
+                  {...props}
+                  linkTo={linkTo}
+                  context={context}
+                />
+              )}
+            </>
+          );
+        }}
+      </ContextConsumer>
     );
+  return <></>;
 }
 
 const styles = StyleSheet.create({

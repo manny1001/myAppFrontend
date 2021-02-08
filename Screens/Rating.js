@@ -6,21 +6,16 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 export default function RatingScreen(props) {
+  console.log(props);
   const [visibleModal, setvisibleModal] = useState(false);
-  const [type, setType] = useState("Oder");
   return (
     <View style={styles.container}>
       <>
-        {type === "Ryde" && (
+        {/*    {type === "Ryde" && (
           <Text style={styles.paragraph}>
             Rate our delivery from Nandos {"\n"}15:00 on 12/12/2020
           </Text>
-        )}
-        {type === "Oder" && (
-          <Text style={styles.paragraph}>
-            Rate the service from your driver {"\n"}08:00 on 06/05/1996
-          </Text>
-        )}
+        )} */}
 
         <View style={{ height: hp(20), width: wp(70), alignSelf: "center" }}>
           <AirbnbRating
@@ -35,17 +30,6 @@ export default function RatingScreen(props) {
 
       {visibleModal === true && (
         <>
-          {/* <MaterialIcons
-            name="done"
-            size={50}
-            color="black"
-            style={{
-              alignSelf: "center",
-              borderWidth: 2,
-              borderRadius: 50,
-              padding: 10,
-            }}
-          /> */}
           <Text style={styles.paragraph}>Thanks for yor feedback</Text>
 
           <Button

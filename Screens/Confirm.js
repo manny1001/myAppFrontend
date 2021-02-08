@@ -1,9 +1,10 @@
 import React, { lazy, Component, useState } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
+import { RFPercentage } from "react-native-responsive-fontsize";
 import { RFValue } from "react-native-responsive-fontsize";
 import { useMutation, useQuery } from "@apollo/client";
 import { NEW_REQUEST, GET_PROFILE } from "../Queries";
@@ -59,18 +60,60 @@ class Confirm extends Component {
             flexDirection: "column",
             alignSelf: "center",
             flex: 1,
+
             justifyContent: "space-around",
           }}
         >
-          <Text
-            style={{
-              fontSize: RFValue(16),
-              fontWeight: "bold",
-            }}
-          >
-            Driver
-          </Text>
-          <Driver />
+          {null !== 0 && (
+            <View
+              style={{
+                flex: 0.5,
+                flexDirection: "row",
+                justifyContent: "space-between",
+              }}
+            >
+              <Text
+                style={{
+                  fontSize: RFValue(16),
+                  fontWeight: "bold",
+                  alignSelf: "flex-start",
+                }}
+              >
+                {context.state.driveruuid === "" ? `Available Drivers` : ""}
+              </Text>
+              {context.state.driveruuid === "" ? (
+                <Text
+                  style={{
+                    fontSize: RFPercentage(2.5),
+                    marginRight: wp(3),
+                    fontWeight: "bold",
+                  }}
+                >
+                  {context.state.totalDriversOnline}
+                </Text>
+              ) : (
+                <TouchableOpacity
+                  onPress={() => {
+                    context.dispatch({
+                      type: "SAVE_DRIVERUUID",
+                      driveruuid: "",
+                    });
+                  }}
+                >
+                  <Text
+                    style={{
+                      fontSize: RFValue(18),
+                      fontWeight: "bold",
+                    }}
+                  >
+                    Change
+                  </Text>
+                </TouchableOpacity>
+              )}
+            </View>
+          )}
+
+          <Driver context={context} />
         </View>
         <View
           style={{
