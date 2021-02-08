@@ -24,6 +24,13 @@ import { ContextConsumer } from "../Context";
 import gql from "graphql-tag";
 import { useQuery, useMutation } from "@apollo/client";
 import { GET_PROFILE } from "../Queries";
+/* const firebaseConfig = {
+  apiKey: "AIzaSyAg87r_eLnJFPhQ9TTar2KGIKKWk6DKY9E",
+  authDomain: "blobtest-36ff6.firebaseapp.com",
+  databaseURL: "https://blobtest-36ff6.firebaseio.com",
+  storageBucket: "blobtest-36ff6.appspot.com",
+  messagingSenderId: "506017999540",
+}; */
 const AddName = lazy(() => import("../Screens/AddName"));
 const UPDATE_PROFILE = gql`
   mutation updateProfile(

@@ -13,20 +13,26 @@ import {
 } from "react-native-responsive-screen";
 import { ContextConsumer } from "../Context";
 import { CountdownCircleTimer } from "react-native-countdown-circle-timer";
+import Modal from "modal-enhanced-react-native-web";
 import { useQuery } from "@apollo/client";
 import { DRIVERS_LIVELOCATION } from "../Queries";
 import { GetData } from "../GFunctions";
+const BigButton = lazy(() => import("../Components/Buttons"));
 const Chat = lazy(() => import("../Components/ChatApp"));
 const CountDown = lazy(() => import("../Components/CountDown"));
 const DriversInfo = lazy(() => import("../Components/DriversInfo"));
 const CallDriver = lazy(() => import("../Components/CallDriver"));
 const ProfilePicture = lazy(() => import("../Components/ProfilePicture"));
 const TrackDriver = ({ onPress, context, No, Isplaying }) => {
+  const [driverArrived, setDriverArrived] = React.useState(null);
+  const [modalVisible, setmodalVisible] = React.useState(false);
+  const [driverDuration, setDriverDuration] = React.useState(null);
   const [drivername, setdrivername] = React.useState(null);
   const [useruuid, setuseruuid] = React.useState(null);
   const [driverImage, setdriverImage] = React.useState(null);
-  const [driverRegistration, setDriverRegistration] = useState("YH KO HJ GP");
-  const [driverCarModel, setDriverCarModel] = useState("Hyundai i20");
+  const [driverRegistration, setDriverRegistration] = useState(null);
+  const [driverCarModel, setDriverCarModel] = useState(null);
+  const [timeRemaining, settimeRemaining] = React.useState(null);
   const { loading, errror, data, stopPolling } = useQuery(
     DRIVERS_LIVELOCATION,
     {
@@ -34,18 +40,23 @@ const TrackDriver = ({ onPress, context, No, Isplaying }) => {
         console.log(
           data && data.getDriversLocation && data.getDriversLocation[0]
         ),
-          /* setRequestStatus(
+          setDriverDuration(
+            data &&
+              data.getDriversLocation &&
+              data.getDriversLocation[0].driverduration
+          );
+        /* setRequestStatus(
           data &&
             data.getDriversLocation &&
             data.getDriversLocation[0] &&
             data.getDriversLocation[0].status
         ), */
-          setDriverRegistration(
-            data &&
-              data.getDriversLocation &&
-              data.getDriversLocation[0] &&
-              data.getDriversLocation[0].driverregistration
-          ),
+        setDriverRegistration(
+          data &&
+            data.getDriversLocation &&
+            data.getDriversLocation[0] &&
+            data.getDriversLocation[0].driverregistration
+        ),
           setDriverCarModel(
             data &&
               data.getDriversLocation &&
@@ -81,8 +92,6 @@ const TrackDriver = ({ onPress, context, No, Isplaying }) => {
       fetchPolicy: "network-only",
     }
   );
-
-  const [timeRemaining, settimeRemaining] = React.useState();
 
   React.useEffect(() => {
     GetData("useruuid").then((value) => setuseruuid(value));
@@ -126,36 +135,6 @@ const TrackDriver = ({ onPress, context, No, Isplaying }) => {
           DriverCarModel={driverCarModel}
           DriverRegistration={driverRegistration}
         />
-        {No === true && (
-          <TouchableOpacity
-            onPress={() =>
-              context.dispatch({
-                type: "SAVE_ACTIVEREQUEST",
-                activeRequest: false,
-              })
-            }
-          >
-            <Text
-              style={{
-                alignSelf: "center",
-                fontSize: RFPercentage(2.5),
-              }}
-            >
-              Exit
-            </Text>
-          </TouchableOpacity>
-        )}
-        {No === true && (
-          <Text
-            style={{
-              alignSelf: "center",
-              fontSize: RFPercentage(2.5),
-            }}
-          >
-            One of Our call centre agents will call you back shortly...you can
-            keep chatting with your driver to find out where he is...
-          </Text>
-        )}
 
         <View
           style={[
@@ -165,14 +144,22 @@ const TrackDriver = ({ onPress, context, No, Isplaying }) => {
         >
           {timeRemaining !== 0 && !loading ? (
             <CountdownCircleTimer
-              initialRemainingTime={10}
+              initialRemainingTime={
+                data &&
+                data.getDriversLocation &&
+                JSON.parse(data.getDriversLocation[0].driverremainingtime)
+              }
               styles={{ borderWidth: null }}
               onComplete={() => {
                 settimeRemaining(0);
               }}
               size={wp(30)}
               isPlaying={true}
-              duration={20}
+              duration={
+                data &&
+                data.getDriversLocation &&
+                JSON.parse(data.getDriversLocation[0].driverduration)
+              }
               colors={[
                 ["#004777", 0.4],
                 ["#F7B801", 0.4],
@@ -227,18 +214,84 @@ const TrackDriver = ({ onPress, context, No, Isplaying }) => {
               }}
             </CountdownCircleTimer>
           ) : (
-            <Text
+            <View
               style={{
-                alignSelf: "center",
-                fontSize: RFPercentage(2.5),
+                justifyContent: "center",
+                width: wp(42),
+                height: hp(20),
               }}
             >
-              Has you driver has arrived?
-            </Text>
+              <Text
+                style={{
+                  alignSelf: "center",
+                  fontSize: RFPercentage(3),
+                  flex: 1,
+                  textAlign: "center",
+                  fontWeight: "bold",
+                }}
+              >
+                Has your driver arrived?
+              </Text>
+              <View
+                style={{
+                  flexDirection: "row",
+                  flex: 1,
+                  justifyContent: "space-around",
+                  alignItems: "center",
+                }}
+              >
+                <TouchableOpacity>
+                  <Text
+                    style={{
+                      alignSelf: "center",
+                      fontSize: RFPercentage(5),
+                      flex: 1,
+                      textAlign: "center",
+                      color: "green",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    Yes
+                  </Text>
+                </TouchableOpacity>
+                {driverArrived === null && (
+                  <TouchableOpacity
+                    onPress={() => {
+                      setmodalVisible(true);
+                    }}
+                  >
+                    <Text
+                      style={{
+                        alignSelf: "center",
+                        fontSize: RFPercentage(5),
+                        flex: 1,
+                        textAlign: "center",
+                        fontWeight: "bold",
+                        color: "red",
+                      }}
+                    >
+                      No
+                    </Text>
+                  </TouchableOpacity>
+                )}
+                {driverArrived === false && (
+                  <Text
+                    style={{
+                      alignSelf: "center",
+                      fontSize: RFPercentage(1.5),
+                      flex: 1,
+                      textAlign: "center",
+                      width: wp(10),
+                    }}
+                  >
+                    Standby for a call...
+                  </Text>
+                )}
+              </View>
+            </View>
           )}
         </View>
       </View>
-
       <View
         style={{
           width: wp(85),
@@ -250,6 +303,109 @@ const TrackDriver = ({ onPress, context, No, Isplaying }) => {
       >
         <Chat />
       </View>
+      <Modal
+        backgroundColor={"#f2f2f2"}
+        isVisible={sureModal}
+        onBackdropPress={() => setmodalVisible(false)}
+      >
+        <View
+          style={{
+            flex: 1,
+            justifyContent: "center",
+            alignItems: "center",
+            backgroundColor: "#f2f2f2",
+          }}
+        >
+          <Text
+            style={{
+              fontSize: RFPercentage(5),
+              alignSelf: "center",
+              width: wp(75),
+            }}
+          >
+            Are you sure the driver has arrived?
+          </Text>
+          <BigButton
+            onPress={() => {
+              setSureModal(false), setDriverArrived(true);
+            }}
+            title={"Yes"}
+            titleStyle={{
+              fontWeight: "bold",
+              fontSize: RFPercentage(3),
+            }}
+            containerStyle={{
+              top: hp(20),
+            }}
+            buttonStyle={{
+              height: hp(10),
+              width: wp(80),
+              alignSelf: "center",
+            }}
+          />
+           <BigButton
+            onPress={() => {
+              setSureModal(false), setDriverArrived(false);
+            }}
+            title={"No"}
+            titleStyle={{
+              fontWeight: "bold",
+              fontSize: RFPercentage(3),
+            }}
+            containerStyle={{
+              top: hp(20),
+            }}
+            buttonStyle={{
+              height: hp(10),
+              width: wp(80),
+              alignSelf: "center",
+            }
+        </View>
+      </Modal>
+      <Modal
+        backgroundColor={"#f2f2f2"}
+        isVisible={modalVisible}
+        onBackdropPress={() => setmodalVisible(false)}
+      >
+        <View
+          style={{
+            flex: 1,
+            justifyContent: "center",
+            alignItems: "center",
+            backgroundColor: "#f2f2f2",
+          }}
+        >
+          <Text
+            style={{
+              fontSize: RFPercentage(5),
+              alignSelf: "center",
+              width: wp(75),
+            }}
+          >
+            One of our call center agents will get back to you within the next 5
+            mins
+          </Text>
+          <BigButton
+            onPress={() => {
+              setmodalVisible(false), setDriverArrived(false);
+            }}
+            title={"Okay"}
+            titleStyle={{
+              fontWeight: "bold",
+              fontSize: RFPercentage(3),
+            }}
+            containerStyle={{
+              top: hp(20),
+            }}
+            buttonStyle={{
+              height: hp(10),
+              width: wp(80),
+              alignSelf: "center",
+            }}
+          />
+        </View>
+      </Modal>
+      ;
     </View>
   );
 };

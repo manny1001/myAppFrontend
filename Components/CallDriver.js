@@ -11,7 +11,6 @@ const CallDriver = () => {
         styles.TopInfo,
         {
           borderWidth: wp(1),
-          width: wp(18),
           height: wp(9),
           alignSelf: "center",
           borderRadius: wp(4),
@@ -20,7 +19,7 @@ const CallDriver = () => {
         },
       ]}
     >
-      <Text style={{ alignSelf: "center" }}>Call</Text>
+      <Text style={{ alignSelf: "center" }}>Call your driver</Text>
     </TouchableOpacity>
   );
 };
