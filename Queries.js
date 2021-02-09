@@ -102,6 +102,8 @@ export const GET_DRIVER_RESPONSE = gql`
 export const DRIVERS_LIVELOCATION = gql`
   query getDriversLocation($uuidUser: String!) {
     getDriversLocation(uuidUser: $uuidUser) {
+      uuidDriver
+      uuidUser
       uuidTrip
       username
       cellphone

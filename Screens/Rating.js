@@ -6,7 +6,6 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 export default function RatingScreen(props) {
-  console.log(props);
   const [visibleModal, setvisibleModal] = useState(false);
   return (
     <View style={styles.container}>

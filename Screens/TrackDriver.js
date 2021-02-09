@@ -25,6 +25,7 @@ const CallDriver = lazy(() => import("../Components/CallDriver"));
 const ProfilePicture = lazy(() => import("../Components/ProfilePicture"));
 const RatingScreen = lazy(() => import("../Screens/Rating"));
 const TrackDriver = ({ navigation }) => {
+  const [uuidUser, setuuidUser] = React.useState(null);
   const [driversImage, setdriversImage] = React.useState(null);
   const [driversCellphone, setdriversCellphone] = React.useState(null);
   const [cellphone, setcellphone] = React.useState(null);
@@ -356,7 +357,12 @@ const TrackDriver = ({ navigation }) => {
           justifyContent: "center",
         }}
       >
-        {driverArrived === false && <Chat />}
+        {driverArrived === false && (
+          <Chat
+            userUUID={data && data.getDriversLocation[0].uuidUser}
+            driverUUID={data && data.getDriversLocation[0].uuidDriver}
+          />
+        )}
         {driverArrived === true && (
           <View style={{ flex: 1, baclgroundColor: "pink" }}>
             <CountdownCircleTimer

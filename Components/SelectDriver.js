@@ -245,13 +245,16 @@ export default function (props) {
       }
     }
   `;
-  const { error, data } = useQuery(GET_DRIVERS, {
+  const { error, data, stopPolling } = useQuery(GET_DRIVERS, {
     onCompleted: () => {
       context &&
         context.dispatch({
           type: "SAVE_TOTAL_DRIVERS_ONLINE",
           totalDriversOnline: data.allDriver.length,
         });
+      if (context.state.driveruuid !== "") {
+        stopPolling();
+      }
     },
     fetchPolicy: "cache-and-network",
     notifyOnNetworkStatusChange: true,
