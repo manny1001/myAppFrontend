@@ -8,6 +8,8 @@ import {
   SystemMessage,
   Message,
 } from "react-native-gifted-chat";
+import { useQuery } from "@apollo/client";
+import { GET_MESSAGES } from "../Queries";
 import { RFPercentage } from "react-native-responsive-fontsize";
 import { Text, View } from "react-native";
 import {
@@ -15,33 +17,15 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 function Chat({ userUUID, driverUUID }) {
-  console.log(userUUID, driverUUID);
   const [messages, setMessages] = useState([]);
-
-  useEffect(() => {
-    setMessages([
-      {
-        _id: 1,
-        text: "Hello developer",
-        createdAt: new Date(),
-        user: {
-          _id: userUUID,
-          name: "React Native",
-          avatar: "https://placeimg.com/140/140/any",
-        },
-      },
-      {
-        _id: 2,
-        text: "Hello vsvsvs developer",
-        createdAt: new Date(),
-        user: {
-          _id: driverUUID,
-          name: "React Native",
-          avatar: "https://placeimg.com/140/140/any",
-        },
-      },
-    ]);
-  }, []);
+  const { data, loading, error } = useQuery(GET_MESSAGES, {
+    variables: { uuidtrip: "123", uuid: "456" },
+    pollInterval: 500,
+    notifyOnNetworkStatusChange: true,
+    onCompleted: () => {
+      setMessages(data.messages);
+    },
+  });
 
   const onSend = useCallback((messages = []) => {
     setMessages((previousMessages) =>
@@ -194,11 +178,6 @@ function Chat({ userUUID, driverUUID }) {
       }}
       messages={messages}
       onSend={(messages) => onSend(messages)}
-      scrollToBottomStyle={() => {
-        <View
-          style={{ backgroundColor: "red", width: wp(100), height: hp(5) }}
-        ></View>;
-      }}
     />
   );
 }

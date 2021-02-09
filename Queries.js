@@ -53,7 +53,17 @@ export const GET_NEW_DRIVER = gql`
     selectNewDriver(driveruuid: $driveruuid, useruuid: $useruuid)
   }
 `;
-
+export const GET_MESSAGES = gql`
+  query messages($uuidtrip: String!, $uuid: String!) {
+    messages(uuidtrip: $uuidtrip, uuid: $uuid) {
+      text
+      _id
+      user {
+        username
+      }
+    }
+  }
+`;
 export const GET_PROFILE = gql`
   query getProfile {
     currentUser {
