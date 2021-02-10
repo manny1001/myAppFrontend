@@ -12,7 +12,7 @@ import { useMutation } from "@apollo/client";
 import { GET_PROFILE, UPDATE_USERNAME } from "../Queries";
 const AddNames = (props) => {
   const [useruuid, setuseruuid] = React.useState("");
-  const [username, setusername] = React.useState(null);
+  const [name, setusername] = React.useState(null);
   const [updateProfile] = useMutation(UPDATE_USERNAME, {
     refetchQueries: [{ query: GET_PROFILE }],
     onCompleted: () => console.log(updateProfile),
@@ -41,7 +41,7 @@ const AddNames = (props) => {
           }}
           keyboardType={"default"}
           label={"Username"}
-          text={username}
+          text={name}
           onChangeText={(text) => {
             {
               text === "" && setusername(null);
@@ -58,11 +58,11 @@ const AddNames = (props) => {
           updateProfile({
             variables: {
               uuidUser: useruuid && useruuid,
-              username: username && username,
+              name: name && name,
             },
           })
         }
-        disabled={username === null ? true : false}
+        disabled={name === null ? true : false}
         title={"Save"}
       />
     </>

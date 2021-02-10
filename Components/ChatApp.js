@@ -19,14 +19,17 @@ import {
 function Chat({ userUUID, driverUUID, uuidTrip }) {
   const [messages, setMessages] = useState([]);
   const { data, loading, error } = useQuery(GET_MESSAGES, {
-    variables: { uuidtrip: "123", uuid: "456" },
+    variables: {
+      uuidtrip: uuidTrip,
+      uuid: userUUID,
+    },
     pollInterval: 500,
     notifyOnNetworkStatusChange: true,
     onCompleted: () => {
-      console.log(data), setMessages(data.messages);
+      setMessages(data.messages);
     },
   });
-  /* Tue Feb 09 2021 19:20:45 GMT+0200 (South Africa Standard Time) */
+  console.log(data && data.messages);
   const onSend = useCallback((messages = []) => {
     setMessages((previousMessages) =>
       GiftedChat.append(previousMessages, messages)
@@ -82,9 +85,7 @@ function Chat({ userUUID, driverUUID, uuidTrip }) {
           textStyle={{ color: "crimson", fontWeight: "900" }}
         />
       )} */
-      user={{
-        _id: 47,
-      }}
+      user={{ _id: 47 }}
       renderAvatar={(props) => (
         <Avatar
           {...props}

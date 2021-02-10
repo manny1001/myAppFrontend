@@ -233,7 +233,7 @@ export default function (props) {
   const GET_DRIVERS = gql`
     query {
       allDriver {
-        id
+        _id
         uuid
         name
         surname
@@ -260,10 +260,6 @@ export default function (props) {
     notifyOnNetworkStatusChange: true,
     pollInterval: 7000,
   });
-
-  if (error) {
-    console.log(error);
-  }
 
   if (data && data.allDriver !== undefined)
     return (

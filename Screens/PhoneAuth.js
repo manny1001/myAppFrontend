@@ -46,6 +46,7 @@ const PhoneAuth = (props) => {
     setValue,
   });
   const [login, { data }] = useMutation(USER_LOGIN, {});
+
   const [cellphone, setcellphone] = React.useState("");
   const [visibleModal, setvisibleModal] = React.useState(false);
   return (
@@ -187,6 +188,7 @@ const PhoneAuth = (props) => {
                 onPress={() => {
                   login({ variables: { cellphone, type: "user" } })
                     .then(({ data }) => {
+                      console.log(data);
                       data.login.token &&
                         context.dispatch({
                           type: "SIGN_IN",

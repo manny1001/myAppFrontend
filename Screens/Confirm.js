@@ -132,13 +132,21 @@ class Confirm extends Component {
             titleStyle={{ fontWeight: "bold" }}
             title={"Proceed" + " " + "\n" + "R" + " " + this.state.totalAmount}
             onPress={() => {
-              navigation.navigate("Payment", {
-                totalAmount: this.state.totalAmount,
-              }),
+              console.log(
+                data && data.currentUser.uuid,
+                data && data.currentUser.name,
+                data && data.currentUser.cellphone,
+                location,
+                destination,
+                context.state.driveruuid
+              ),
+                navigation.navigate("Payment", {
+                  totalAmount: this.state.totalAmount,
+                }),
                 newTripRequest({
                   variables: {
                     uuidUser: data && data.currentUser.uuid,
-                    username: data && data.currentUser.username,
+                    name: data && data.currentUser.name,
                     cellphone: data && data.currentUser.cellphone,
                     location: location,
                     destination: destination,
@@ -159,7 +167,7 @@ export default function (props) {
   const { data, loading } = useQuery(GET_PROFILE, {
     onCompleted: () => {
       StoreData("useruuid", data.currentUser.uuid),
-        setUserName(data.currentUser.username);
+        setUserName(data.currentUser.name);
     },
     fetchPolicy: "network-only",
     notifyOnNetworkStatusChange: true,
@@ -170,7 +178,7 @@ export default function (props) {
     GetData("location").then((location) => setlocation(location));
     GetData("destination").then((destination) => setdestination(destination));
   }, []);
-
+  console.log(data, location, destination);
   if (loading) {
     return <Loader />;
   }

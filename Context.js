@@ -15,7 +15,7 @@ class Context extends Component {
   state = {
     sessionArray: {
       clientCellNumber: "",
-      username: "",
+      name: "",
       email: "",
       destination: "",
       departureTime: "",

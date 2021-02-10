@@ -35,7 +35,7 @@ const AddName = lazy(() => import("../Screens/AddName"));
 const UPDATE_PROFILE = gql`
   mutation updateProfile(
     $uuidUser: String!
-    $username: String
+    $name: String
     $email: String
     $cellphone: String
     $homeaddress: String
@@ -43,7 +43,7 @@ const UPDATE_PROFILE = gql`
   ) {
     updateProfile(
       uuidUser: $uuidUser
-      username: $username
+      name: $name
       email: $email
       cellphone: $cellphone
       homeaddress: $homeaddress
@@ -64,13 +64,12 @@ const ProfileStack = (props) => {
       setUUID(data && data.currentUser.uuid);
     },
   });
+  console.log(data);
   const [updateProfile, { data: DATA }] = useMutation(UPDATE_PROFILE, {
     refetchQueries: [{ query: GET_PROFILE }],
     onCompleted: () => alert("Profile Succesfully Updated"),
   });
-  const [username, setusername] = React.useState(
-    data && data.currentUser.username
-  );
+  const [name, setusername] = React.useState(data && data.currentUser.name);
   const [cellphone, setcellphone] = React.useState(
     data && data.currentUser.cellphone
   );
@@ -89,10 +88,13 @@ const ProfileStack = (props) => {
       return false;
     }
   };
+  if (error) {
+    console.log(error);
+  }
   if (loading) return <Loader />;
   if (
-    (data && data.currentUser.username === null) ||
-    (data && data.currentUser.username === "")
+    (data && data.currentUser.name === null) ||
+    (data && data.currentUser.name === "")
   ) {
     return <AddName />;
   }
@@ -160,7 +162,7 @@ const ProfileStack = (props) => {
             <InputField
               style={styles.inputStyle}
               keyboardType={"default"}
-              defaultValue={data.currentUser.username}
+              defaultValue={data.currentUser.name}
               label={"Username"}
               onChangeText={(text) => setusername(text)}
               selectionColor={"blue"}
@@ -208,7 +210,7 @@ const ProfileStack = (props) => {
                   updateProfile({
                     variables: {
                       uuidUser: uuid && uuid,
-                      username: username && username,
+                      name: name && name,
                       cellphone: cellphone && cellphone,
                       email: email && email,
                       homeaddress: homeaddress && homeaddress,

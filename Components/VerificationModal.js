@@ -25,7 +25,7 @@ const VerificationModal = ({
       login(cellphone: $cellphone, otp: $otp) {
         token
         user {
-          username
+          name
         }
       }
     }

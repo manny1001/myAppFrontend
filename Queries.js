@@ -5,8 +5,8 @@ export const ALERT_EMAIL = gql`
   }
 `;
 export const UPDATE_USERNAME = gql`
-  mutation updateUserName($uuidUser: String!, $username: String) {
-    updateProfile(uuidUser: $uuidUser, username: $username)
+  mutation updateUserName($uuidUser: String!, $name: String) {
+    updateProfile(uuidUser: $uuidUser, name: $name)
   }
 `;
 export const USER_LOGIN = gql`
@@ -32,15 +32,15 @@ export const PAYMENT_CONFIRMATION = gql`
 export const NEW_REQUEST = gql`
   mutation NewRequest(
     $uuidUser: String
-    $username: String
+    $name: String
     $cellphone: String
     $location: String
     $destination: String
     $uuidDriver: String
   ) {
     newTripRequest(
-      uuid: $uuidUser
-      username: $username
+      uuidUser: $uuidUser
+      name: $name
       cellphone: $cellphone
       location: $location
       destination: $destination
@@ -54,17 +54,13 @@ export const GET_NEW_DRIVER = gql`
   }
 `;
 export const GET_MESSAGES = gql`
-  query messages($uuidtrip: String!, $uuidUser: String!, $uuidDriver: String!) {
-    messages(
-      uuidtrip: $uuidtrip
-      uuidUser: $uuidUser
-      uuidDriver: $uuidDriver
-    ) {
-      text
+  query messages($uuidtrip: String!, $uuid: String!) {
+    messages(uuidtrip: $uuidtrip, uuid: $uuid) {
       _id
+      text
       user {
-        username
         _id
+        name
       }
     }
   }
@@ -74,7 +70,7 @@ export const GET_PROFILE = gql`
     currentUser {
       uuid
       picture
-      username
+      name
       email
       cellphone
       homeaddress
@@ -120,7 +116,7 @@ export const DRIVERS_LIVELOCATION = gql`
       uuidDriver
       uuidUser
       uuidTrip
-      username
+      name
       cellphone
       status
       driversLiveLocation

@@ -29,7 +29,7 @@ const TrackDriver = ({ navigation }) => {
   const [driversImage, setdriversImage] = React.useState(null);
   const [driversCellphone, setdriversCellphone] = React.useState(null);
   const [cellphone, setcellphone] = React.useState(null);
-  const [username, setusername] = React.useState(null);
+  const [name, setusername] = React.useState(null);
   const [uuidTrip, setuuidTrip] = React.useState(null);
   const [RatingModalVIsibile, setRatingModalVIsibile] = useState(false);
   const [destinationArrived, setdestinationArrived] = React.useState(false);
@@ -55,16 +55,15 @@ const TrackDriver = ({ navigation }) => {
     DRIVERS_LIVELOCATION,
     {
       onCompleted: () => {
-        console.log(data && data.getDriversLocation[0]),
-          setdriversCellphone(
-            data && data.getDriversLocation[0].driversCellphone
-          );
+        setdriversCellphone(
+          data && data.getDriversLocation[0].driversCellphone
+        );
         setdriverremainingtime(
           JSON.parse(data.getDriversLocation[0].driverremainingtime)
         ),
           setdriversImage(data && data.getDriversLocation[0].driverImage);
         setcellphone(data && data.getDriversLocation[0].cellphone),
-          setusername(data && data.getDriversLocation[0].username),
+          setusername(data && data.getDriversLocation[0].name),
           setuuidTrip(data && data.getDriversLocation[0].uuidTrip),
           setTimeTillArrival(
             data && data.getDriversLocation[0].drivercustomerarrivaltime
@@ -156,7 +155,7 @@ const TrackDriver = ({ navigation }) => {
                 EmergencyAlert({
                   variables: {
                     uuidTrip: uuidTrip,
-                    message: `${username} , ${cellphone} , Emergency!!! Somethng is wrong please help me , DriverName : ${drivername} , DriverCellphone : ${driversCellphone} ,DriversImage : ${driversImage}, TripUUID : `,
+                    message: `${name} , ${cellphone} , Emergency!!! Somethng is wrong please help me , DriverName : ${drivername} , DriverCellphone : ${driversCellphone} ,DriversImage : ${driversImage}, TripUUID : `,
                     status: RequestStatus,
                   },
                 });
@@ -307,7 +306,7 @@ const TrackDriver = ({ navigation }) => {
                             EmergencyAlert({
                               variables: {
                                 uuidTrip: uuidTrip,
-                                message: `${username} , ${cellphone} , Driver Not yet arrived , DriverName : ${drivername} , DriverCellphone : ${driversCellphone} ,DriversImage : ${driversImage}, TripUUID : `,
+                                message: `${name} , ${cellphone} , Driver Not yet arrived , DriverName : ${drivername} , DriverCellphone : ${driversCellphone} ,DriversImage : ${driversImage}, TripUUID : `,
                                 status: RequestStatus,
                               },
                             });
@@ -480,7 +479,7 @@ const TrackDriver = ({ navigation }) => {
               EmergencyAlert({
                 variables: {
                   uuidTrip: uuidTrip,
-                  message: `${username} , ${cellphone} , I did not arrive safely , please help , DriverName : ${drivername} , DriverCellphone : ${driversCellphone} ,DriversImage : ${driversImage}, TripUUID : `,
+                  message: `${name} , ${cellphone} , I did not arrive safely , please help , DriverName : ${drivername} , DriverCellphone : ${driversCellphone} ,DriversImage : ${driversImage}, TripUUID : `,
                   status: RequestStatus,
                 },
               });
@@ -594,7 +593,7 @@ const TrackDriver = ({ navigation }) => {
               EmergencyAlert({
                 variables: {
                   uuidTrip: uuidTrip,
-                  message: `${username} , ${cellphone} , Driver has not yet arrived , second time I am contacting you , please assist... , DriverName : ${drivername} , DriverCellphone : ${driversCellphone} ,DriversImage : ${driversImage}, TripUUID : `,
+                  message: `${name} , ${cellphone} , Driver has not yet arrived , second time I am contacting you , please assist... , DriverName : ${drivername} , DriverCellphone : ${driversCellphone} ,DriversImage : ${driversImage}, TripUUID : `,
                   status: RequestStatus,
                 },
               });

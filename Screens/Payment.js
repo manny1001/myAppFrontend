@@ -217,6 +217,7 @@ export default function (props) {
   const [requestID, setRequestid] = useState(null);
   const [uuidTrip, setuuidTrip] = useState(null);
   const { data } = useQuery(GET_PROFILE);
+ 
   const [timeOutValue, setTimeoutValue] = React.useState(120);
   const { data: DATA, stopPolling, startPolling } = useQuery(
     GET_DRIVER_RESPONSE,
@@ -233,17 +234,17 @@ export default function (props) {
       fetchPolicy: "network-only",
     }
   );
-
-  React.useEffect(() => {
-    const Value = setTimeout(() => setTimeoutValue(timeOutValue - 1), 1000);
-    if (timeOutValue === 0) {
-      clearTimeout(Value);
-      setStopQuery(true);
-      props.context.dispatch({ type: "SAVE_DRIVERUUID", driveruuid: "" });
-    }
-    StopQuery === true && stopPolling();
-    StopQuery === false && startPolling();
-  }, [StopQuery, timeOutValue]);
+  console.log(DATA),
+    React.useEffect(() => {
+      const Value = setTimeout(() => setTimeoutValue(timeOutValue - 1), 1000);
+      if (timeOutValue === 0) {
+        clearTimeout(Value);
+        setStopQuery(true);
+        props.context.dispatch({ type: "SAVE_DRIVERUUID", driveruuid: "" });
+      }
+      StopQuery === true && stopPolling();
+      StopQuery === false && startPolling();
+    }, [StopQuery, timeOutValue]);
   if (requestID === null && uuidTrip === null && StopQuery === false)
     return <Loader />;
 
