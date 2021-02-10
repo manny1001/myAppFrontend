@@ -53,6 +53,11 @@ export const GET_NEW_DRIVER = gql`
     selectNewDriver(driveruuid: $driveruuid, useruuid: $useruuid)
   }
 `;
+export const POST_MESSAGE = gql`
+  mutation postNewMessage($text: String, $uuid: String, $uuidtrip: String) {
+    postMessage(text: $text, uuid: $uuid, uuidtrip: $uuidtrip)
+  }
+`;
 export const GET_MESSAGES = gql`
   query messages($uuidtrip: String!, $uuid: String!) {
     messages(uuidtrip: $uuidtrip, uuid: $uuid) {

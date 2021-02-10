@@ -8,8 +8,8 @@ import {
   SystemMessage,
   Message,
 } from "react-native-gifted-chat";
-import { useQuery } from "@apollo/client";
-import { GET_MESSAGES } from "../Queries";
+import { useQuery, useMutation } from "@apollo/client";
+import { GET_MESSAGES, POST_MESSAGE } from "../Queries";
 import { RFPercentage } from "react-native-responsive-fontsize";
 import { Text, View } from "react-native";
 import {
@@ -17,6 +17,10 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 function Chat({ userUUID, driverUUID, uuidTrip }) {
+  const [PostMessage] = useMutation(POST_MESSAGE, {
+    refetchQueries: [{ query: GET_MESSAGES }],
+  });
+  const [postmessageID, setPostmessageID] = useState(null);
   const [messages, setMessages] = useState([]);
   const { data, loading, error } = useQuery(GET_MESSAGES, {
     variables: {
@@ -168,7 +172,6 @@ function Chat({ userUUID, driverUUID, uuidTrip }) {
         );
       }}
       renderAvatarOnTop
-      alwaysShowSend
       placeholder={"Chat with driver..."}
       isTyping={true}
       containerStyle={{
@@ -179,7 +182,15 @@ function Chat({ userUUID, driverUUID, uuidTrip }) {
         backgroundColor: "#f2f2f2",
       }}
       messages={messages}
-      onSend={(messages) => onSend(messages)}
+      onSend={() =>
+        postMessage({
+          variables: {
+            text: "dvdvdvdv",
+            uuid: "456",
+            uuidtrip: "d8ff0a1b-72da-4cd5-a8fe-a1aa50f33560",
+          },
+        })
+      }
     />
   );
 }
