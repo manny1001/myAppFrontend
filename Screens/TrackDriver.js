@@ -40,6 +40,7 @@ const TrackDriver = ({ navigation }) => {
   const [driverNotArrived, setdriverNotArrived] = React.useState(null);
   const [modalVisible, setmodalVisible] = React.useState(false);
   const [driverDuration, setDriverDuration] = React.useState(null);
+  const [driverremainingtime, setdriverremainingtime] = React.useState(null);
   const [drivername, setdrivername] = React.useState(null);
   const [useruuid, setuseruuid] = React.useState(null);
   const [driverImage, setdriverImage] = React.useState(null);
@@ -58,7 +59,10 @@ const TrackDriver = ({ navigation }) => {
           setdriversCellphone(
             data && data.getDriversLocation[0].driversCellphone
           );
-        setdriversImage(data && data.getDriversLocation[0].driverImage);
+        setdriverremainingtime(
+          JSON.parse(data.getDriversLocation[0].driverremainingtime)
+        ),
+          setdriversImage(data && data.getDriversLocation[0].driverImage);
         setcellphone(data && data.getDriversLocation[0].cellphone),
           setusername(data && data.getDriversLocation[0].username),
           setuuidTrip(data && data.getDriversLocation[0].uuidTrip),
@@ -188,11 +192,7 @@ const TrackDriver = ({ navigation }) => {
           >
             {timeRemaining !== 0 && !loading ? (
               <CountdownCircleTimer
-                initialRemainingTime={
-                  data &&
-                  data.getDriversLocation &&
-                  JSON.parse(data.getDriversLocation[0].driverremainingtime)
-                }
+                initialRemainingTime={driverremainingtime}
                 styles={{ borderWidth: null }}
                 onComplete={() => {
                   settimeRemaining(0);
@@ -359,6 +359,7 @@ const TrackDriver = ({ navigation }) => {
       >
         {driverArrived === false && (
           <Chat
+            uuidTrip={data && data.getDriversLocation[0].uuidTrip}
             userUUID={data && data.getDriversLocation[0].uuidUser}
             driverUUID={data && data.getDriversLocation[0].uuidDriver}
           />

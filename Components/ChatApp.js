@@ -16,17 +16,17 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-function Chat({ userUUID, driverUUID }) {
+function Chat({ userUUID, driverUUID, uuidTrip }) {
   const [messages, setMessages] = useState([]);
   const { data, loading, error } = useQuery(GET_MESSAGES, {
     variables: { uuidtrip: "123", uuid: "456" },
     pollInterval: 500,
     notifyOnNetworkStatusChange: true,
     onCompleted: () => {
-      setMessages(data.messages);
+      console.log(data), setMessages(data.messages);
     },
   });
-
+  /* Tue Feb 09 2021 19:20:45 GMT+0200 (South Africa Standard Time) */
   const onSend = useCallback((messages = []) => {
     setMessages((previousMessages) =>
       GiftedChat.append(previousMessages, messages)
@@ -35,6 +35,7 @@ function Chat({ userUUID, driverUUID }) {
 
   return (
     <GiftedChat
+      inverted={false}
       renderMessage={(props) => (
         <Message
           {...props}
@@ -82,7 +83,7 @@ function Chat({ userUUID, driverUUID }) {
         />
       )} */
       user={{
-        _id: userUUID,
+        _id: 47,
       }}
       renderAvatar={(props) => (
         <Avatar

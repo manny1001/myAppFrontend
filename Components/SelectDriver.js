@@ -252,7 +252,7 @@ export default function (props) {
           type: "SAVE_TOTAL_DRIVERS_ONLINE",
           totalDriversOnline: data.allDriver.length,
         });
-      if (context.state.driveruuid !== "") {
+      if (context && context.state.driveruuid !== "") {
         stopPolling();
       }
     },

@@ -60,9 +60,8 @@ const ProfileStack = (props) => {
   const [uuid, setUUID] = useState(null);
   const { loading, data, error } = useQuery(GET_PROFILE, {
     notifyOnNetworkStatusChange: true,
-
     onCompleted: () => {
-      console.log(data), setUUID(data && data.currentUser.uuid);
+      setUUID(data && data.currentUser.uuid);
     },
   });
   const [updateProfile, { data: DATA }] = useMutation(UPDATE_PROFILE, {
@@ -206,25 +205,16 @@ const ProfileStack = (props) => {
             <BigButton
               onPress={() => {
                 Keyboard.dismiss(),
-                  console.log(
-                    uuid && uuid,
-                    username && username,
-                    cellphone && cellphone,
-                    email && email,
-                    homeaddress && homeaddress,
-                    workaddress && workaddress
-                  );
-                //IF blank do not update
-                updateProfile({
-                  variables: {
-                    uuidUser: uuid && uuid,
-                    username: username && username,
-                    cellphone: cellphone && cellphone,
-                    email: email && email,
-                    homeaddress: homeaddress && homeaddress,
-                    workaddress: workaddress && workaddress,
-                  },
-                });
+                  updateProfile({
+                    variables: {
+                      uuidUser: uuid && uuid,
+                      username: username && username,
+                      cellphone: cellphone && cellphone,
+                      email: email && email,
+                      homeaddress: homeaddress && homeaddress,
+                      workaddress: workaddress && workaddress,
+                    },
+                  });
               }}
               title={"Update"}
               buttonStyle={{

@@ -54,12 +54,17 @@ export const GET_NEW_DRIVER = gql`
   }
 `;
 export const GET_MESSAGES = gql`
-  query messages($uuidtrip: String!, $uuid: String!) {
-    messages(uuidtrip: $uuidtrip, uuid: $uuid) {
+  query messages($uuidtrip: String!, $uuidUser: String!, $uuidDriver: String!) {
+    messages(
+      uuidtrip: $uuidtrip
+      uuidUser: $uuidUser
+      uuidDriver: $uuidDriver
+    ) {
       text
       _id
       user {
         username
+        _id
       }
     }
   }
@@ -110,7 +115,7 @@ export const GET_DRIVER_RESPONSE = gql`
   }
 `;
 export const DRIVERS_LIVELOCATION = gql`
-  query getDriversLocation($uuidUser: String!) {
+  query getDriversLocation($uuidUser: String) {
     getDriversLocation(uuidUser: $uuidUser) {
       uuidDriver
       uuidUser

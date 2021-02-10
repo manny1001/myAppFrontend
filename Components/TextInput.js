@@ -12,7 +12,7 @@ export const Input = ({ containerStyle, style, label, text }) => (
       marginRight: wp(10),
     }}
     style={style}
-    flat
+    /* flat */
     label={label}
     onChangeText={(text) => setText(text)}
   />
