@@ -10,6 +10,7 @@ import {
 } from "react-native-gifted-chat";
 import { useQuery, useMutation } from "@apollo/client";
 import { GET_MESSAGES, POST_MESSAGE } from "../Queries";
+import { GetData } from "../GFunctions";
 import { RFPercentage } from "react-native-responsive-fontsize";
 import { Text, View } from "react-native";
 import {
@@ -17,29 +18,33 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 function Chat({ userUUID, driverUUID, uuidTrip }) {
-  const [PostMessage] = useMutation(POST_MESSAGE, {
-    refetchQueries: [{ query: GET_MESSAGES }],
-  });
-  const [postmessageID, setPostmessageID] = useState(null);
+  const [userID, setUserID] = useState(null);
+
+  const [
+    PostMessage,
+    { called, error: ERROR, loading: LOADING, data: DATA },
+  ] = useMutation(POST_MESSAGE, {});
   const [messages, setMessages] = useState([]);
   const { data, loading, error } = useQuery(GET_MESSAGES, {
     variables: {
       uuidtrip: uuidTrip,
       uuid: userUUID,
     },
-    pollInterval: 500,
+    pollInterval: 10000,
     notifyOnNetworkStatusChange: true,
     onCompleted: () => {
       setMessages(data.messages);
     },
   });
-  console.log(data && data.messages);
+  console.log(ERROR, called);
   const onSend = useCallback((messages = []) => {
     setMessages((previousMessages) =>
       GiftedChat.append(previousMessages, messages)
     );
   }, []);
-
+  React.useEffect(() => {
+    GetData("userID").then((value) => setUserID(JSON.parse(value)));
+  });
   return (
     <GiftedChat
       inverted={false}
@@ -89,7 +94,7 @@ function Chat({ userUUID, driverUUID, uuidTrip }) {
           textStyle={{ color: "crimson", fontWeight: "900" }}
         />
       )} */
-      user={{ _id: 47 }}
+      user={{ _id: userID }}
       renderAvatar={(props) => (
         <Avatar
           {...props}
@@ -182,15 +187,15 @@ function Chat({ userUUID, driverUUID, uuidTrip }) {
         backgroundColor: "#f2f2f2",
       }}
       messages={messages}
-      onSend={() =>
-        postMessage({
+      onSend={(messages) => {
+        PostMessage({
           variables: {
-            text: "dvdvdvdv",
-            uuid: "456",
-            uuidtrip: "d8ff0a1b-72da-4cd5-a8fe-a1aa50f33560",
+            text: "Babbba",
+            uuid: "5c09d94a-e7fa-4250-8bb8-833c67060256",
+            uuidtrip: "4c7a2b18-d99f-45a0-87d3-98f4e49efb2f",
           },
-        })
-      }
+        });
+      }}
     />
   );
 }

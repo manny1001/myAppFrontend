@@ -25,7 +25,6 @@ const CallDriver = lazy(() => import("../Components/CallDriver"));
 const ProfilePicture = lazy(() => import("../Components/ProfilePicture"));
 const RatingScreen = lazy(() => import("../Screens/Rating"));
 const TrackDriver = ({ navigation }) => {
-  const [uuidUser, setuuidUser] = React.useState(null);
   const [driversImage, setdriversImage] = React.useState(null);
   const [driversCellphone, setdriversCellphone] = React.useState(null);
   const [cellphone, setcellphone] = React.useState(null);
@@ -48,9 +47,7 @@ const TrackDriver = ({ navigation }) => {
   const [driverCarModel, setDriverCarModel] = useState(null);
   const [timeRemaining, settimeRemaining] = React.useState(null);
   const [RequestStatus, setRequestStatus] = React.useState(null);
-  const [EmergencyAlert] = useMutation(ALERT_EMAIL, {
-    onCompleted: () => console.log("Done"),
-  });
+  const [EmergencyAlert] = useMutation(ALERT_EMAIL);
   const { loading, errror, data, stopPolling } = useQuery(
     DRIVERS_LIVELOCATION,
     {
@@ -97,7 +94,7 @@ const TrackDriver = ({ navigation }) => {
   React.useEffect(() => {
     GetData("useruuid").then((value) => setuseruuid(value));
   }, []);
-
+  console.log(data);
   return (
     <View
       style={{

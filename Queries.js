@@ -54,8 +54,8 @@ export const GET_NEW_DRIVER = gql`
   }
 `;
 export const POST_MESSAGE = gql`
-  mutation postNewMessage($text: String, $uuid: String, $uuidtrip: String) {
-    postMessage(text: $text, uuid: $uuid, uuidtrip: $uuidtrip)
+  mutation PostMessage($text: String!, $uuid: String, $uuidtrip: String!) {
+    PostMessage(text: $text, uuid: $uuid, uuidtrip: $uuidtrip)
   }
 `;
 export const GET_MESSAGES = gql`
@@ -73,6 +73,7 @@ export const GET_MESSAGES = gql`
 export const GET_PROFILE = gql`
   query getProfile {
     currentUser {
+      _id
       uuid
       picture
       name
@@ -87,6 +88,7 @@ export const GET_PROFILE = gql`
 export const GET_USER_UUID = gql`
   query {
     currentUser {
+      _id
       uuid
     }
   }

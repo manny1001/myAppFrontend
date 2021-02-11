@@ -2,6 +2,7 @@ import React, { Component, lazy, useState } from "react";
 import { View, Text } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { YOURCARDS } from "../Components/selectBankCard";
+import { GetData, StoreData } from "../GFunctions";
 import { useQuery, useMutation } from "@apollo/client";
 import Loader from "../Components/Loader";
 import {
@@ -88,7 +89,6 @@ class TrippyPayment extends Component {
       totalAmount,
       requestID,
       StopQuery,
-      setStopQuery,
     } = this.props;
     const { navigation } = this.props.props;
     return (
@@ -217,7 +217,7 @@ export default function (props) {
   const [requestID, setRequestid] = useState(null);
   const [uuidTrip, setuuidTrip] = useState(null);
   const { data } = useQuery(GET_PROFILE);
- 
+
   const [timeOutValue, setTimeoutValue] = React.useState(120);
   const { data: DATA, stopPolling, startPolling } = useQuery(
     GET_DRIVER_RESPONSE,
@@ -234,17 +234,17 @@ export default function (props) {
       fetchPolicy: "network-only",
     }
   );
-  console.log(DATA),
-    React.useEffect(() => {
-      const Value = setTimeout(() => setTimeoutValue(timeOutValue - 1), 1000);
-      if (timeOutValue === 0) {
-        clearTimeout(Value);
-        setStopQuery(true);
-        props.context.dispatch({ type: "SAVE_DRIVERUUID", driveruuid: "" });
-      }
-      StopQuery === true && stopPolling();
-      StopQuery === false && startPolling();
-    }, [StopQuery, timeOutValue]);
+
+  React.useEffect(() => {
+    const Value = setTimeout(() => setTimeoutValue(timeOutValue - 1), 1000);
+    if (timeOutValue === 0) {
+      clearTimeout(Value);
+      setStopQuery(true);
+      props.context.dispatch({ type: "SAVE_DRIVERUUID", driveruuid: "" });
+    }
+    StopQuery === true && stopPolling();
+    StopQuery === false && startPolling();
+  }, [StopQuery, timeOutValue]);
   if (requestID === null && uuidTrip === null && StopQuery === false)
     return <Loader />;
 

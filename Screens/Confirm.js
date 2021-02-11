@@ -8,9 +8,9 @@ import { RFPercentage } from "react-native-responsive-fontsize";
 import { RFValue } from "react-native-responsive-fontsize";
 import { useMutation, useQuery } from "@apollo/client";
 import { NEW_REQUEST, GET_PROFILE } from "../Queries";
+import { GetData, StoreData } from "../GFunctions";
 const Loader = lazy(() => import("../Components/Loader"));
 const AddName = lazy(() => import("../Screens/AddName"));
-import { GetData, StoreData } from "../GFunctions";
 const BigButton = lazy(() => import("../Components/Buttons"));
 const Driver = lazy(() => import("../Components/SelectDriver"));
 class Confirm extends Component {
@@ -32,6 +32,7 @@ class Confirm extends Component {
       location,
       destination,
       navigation,
+      userID,
     } = this.props;
 
     return (
@@ -166,6 +167,7 @@ export default function (props) {
   const [newTripRequest] = useMutation(NEW_REQUEST);
   const { data, loading } = useQuery(GET_PROFILE, {
     onCompleted: () => {
+      StoreData("userID", data.currentUser._id);
       StoreData("useruuid", data.currentUser.uuid),
         setUserName(data.currentUser.name);
     },
@@ -178,7 +180,7 @@ export default function (props) {
     GetData("location").then((location) => setlocation(location));
     GetData("destination").then((destination) => setdestination(destination));
   }, []);
-  console.log(data, location, destination);
+
   if (loading) {
     return <Loader />;
   }
@@ -191,6 +193,7 @@ export default function (props) {
       data={data}
       location={location}
       destination={destination}
+      userID={data.currentUser._id}
     />
   );
 }
