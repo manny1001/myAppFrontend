@@ -18,6 +18,7 @@ import { useQuery, useMutation } from "@apollo/client";
 import { DRIVERS_LIVELOCATION, ALERT_EMAIL } from "../Queries";
 import { GetData } from "../GFunctions";
 import { StackActions } from "@react-navigation/native";
+import { LinearGradient } from "expo-linear-gradient";
 const BigButton = lazy(() => import("../Components/Buttons"));
 const Chat = lazy(() => import("../Components/ChatApp"));
 const DriversInfo = lazy(() => import("../Components/DriversInfo"));
@@ -343,6 +344,7 @@ const TrackDriver = ({ navigation }) => {
           </View>
         )}
       </View>
+
       <View
         style={{
           width: driverArrived === true ? wp(50) : wp(85),
@@ -353,6 +355,7 @@ const TrackDriver = ({ navigation }) => {
           justifyContent: "center",
         }}
       >
+        <LinearGradient colors={["white", "#ffffff00"]} />
         {driverArrived === false && (
           <Chat
             uuidTrip={data && data.getDriversLocation[0].uuidTrip}
