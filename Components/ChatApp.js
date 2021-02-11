@@ -36,7 +36,6 @@ function Chat({ userUUID, driverUUID, uuidTrip }) {
       setMessages(data.messages);
     },
   });
-  console.log(ERROR, called);
   const onSend = useCallback((messages = []) => {
     setMessages((previousMessages) =>
       GiftedChat.append(previousMessages, messages)

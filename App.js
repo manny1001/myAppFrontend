@@ -21,7 +21,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 const AppStack = lazy(() => import("./navigation/AppStack"));
 const AuthStack = lazy(() => import("./navigation/AuthStack"));
 const httpLink = createHttpLink({
-  uri: "http://localhost:4000/graphql",
+  uri: "http://192.168.43.21:4000/graphql",
 });
 const authLink = setContext(async (_, { headers }) => {
   const token = await AsyncStorage.getItem("accessToken");
@@ -45,131 +45,70 @@ const linkingApp = {
     AppStack: {
       path: "AppStack",
       screens: {
-        HomeStack: {
-          path: "home",
+        Home: {
+          path: "Home",
           initialRouteName: "Trip",
           screens: {
-            Landing: { path: "Landing" },
-            Restaurants: {
-              path: "Restaurants",
-            },
-            Food: {
-              path: "Food/:item",
-              parse: {
-                item: (item) => {
-                  item;
-                },
-              },
-            },
-            Trip: { path: "Trip" },
-            Cart: { path: "Cart" },
-            Confirmationpage: { path: "Confirmationpage" },
-            Checkout: { path: "Checkout" },
+            TrackDriver: { path: "TrackDriver" },
             Confirm: { path: "Confirm" },
-            ProductItem: { path: "ProductItem" },
+            RatingScreen: { path: "RatingScreen" },
+            Confirmationpage: { path: "Confirmationpage" },
+            Trip: { path: "Trip" },
             Payment: { path: "Payment" },
             AddName: { path: "AddName" },
-            AddEmail: { path: "AddEmail" },
-            TrackDriver: { path: "TrackDriver" },
           },
         },
         Profile: { path: "Profile" },
-        SettingsStack: {
+        Settings: {
           path: "Settings",
           screens: {
+            Settings: "Settings",
+            About: "About",
             AddBankCard: "AddBankCard",
             Feedback: "Feedback",
-            About: "About",
             CardSettings: "CardSettings",
             EditBankcard: "EditBankcard",
           },
         },
-        PaymentsStack: { path: "payments", screens: { Orders: "Orders" } },
+        Payments: {
+          path: "Payments",
+          screens: { Payments: "Payments" },
+        },
       },
     },
     AuthStack: {
       path: "AuthStack",
       Screens: {
-        Onboarding: "Onboarding",
-        PhoneAuth: "PhoneAuth",
-        AddName: "AddName",
-        EnterOTP: "EnterOTP",
         AcceptTandCs: "AcceptTandCs",
+        PhoneAuth: "PhoneAuth",
+        EnterOTP: "EnterOTP",
       },
     },
   },
 };
-const App = (props) => {
-  const { context } = props;
-  /*   const [Isplaying, setIsplaying] = useState(false); */
-  const [RatingModalVIsibile, setRatingModalVIsibile] = useState(false);
 
-  React.useEffect(() => {
-    const RestoreAsync = async () => {
-      try {
-        const userToken = await AsyncStorage.getItem("accessToken");
-        const Active = await AsyncStorage.getItem("activeRequest");
-        const isPlaying = await AsyncStorage.getItem("isPlaying");
-        /*         setIsplaying(isPlaying); */
-        context.dispatch({
-          type: "SAVE_ISPLAYING",
-          isPlaying: JSON.parse(isPlaying),
-        });
-        context.dispatch({
-          type: "SAVE_ACTIVEREQUEST",
-          activeRequest: JSON.parse(Active),
-        });
-
-        context.dispatch({
-          type: "RESTORE_TOKEN",
-          userToken: userToken,
-        });
-      } catch (e) {
-        console.log(e);
-      }
-    };
-    const StoreData = async (value) => {
-      try {
-        await AsyncStorage.setItem("accessToken", value);
-      } catch (e) {
-        // saving error
-      }
-    };
-    /* StoreData(null); */
-    RestoreAsync();
-  }, []);
-
-  return context.state.userToken === null ? (
-    <AuthStack context={props.context} />
-  ) : (
-    <>
-      <AppStack {...props} />
-    </>
-  );
-};
-const MainApp = () => {
+const App = () => {
   return (
-    <NavigationContainer linking={linkingApp}>
+    <NavigationContainer
+      linking={linkingApp}
+      onReady={() => {
+        console.log("I, ready!!!");
+      }}
+    >
       <Suspense fallback={Loader()}>
         <ApolloProvider client={client}>
-          <Context>
-            <ContextConsumer>
-              {(context) => {
-                return <App context={context} />;
-              }}
-            </ContextConsumer>
-          </Context>
+          <ContextConsumer>
+            {(context) => {
+              return context.state.userToken === null ? (
+                <AuthStack context={context} />
+              ) : (
+                <AppStack context={context} />
+              );
+            }}
+          </ContextConsumer>
         </ApolloProvider>
       </Suspense>
     </NavigationContainer>
   );
 };
-export default MainApp;
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#f2f2f2",
-  },
-});
+export default App;

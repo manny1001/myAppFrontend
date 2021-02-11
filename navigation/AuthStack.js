@@ -2,28 +2,41 @@ import React, { lazy } from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 const EnterOTP = lazy(() => import("../Screens/EnterOTP"));
 const PhoneAuth = lazy(() => import("../Screens/PhoneAuth"));
+import { ContextConsumer } from "../Context";
 const AcceptTandCs = lazy(() => import("../Screens/AcceptTandCs"));
-const AuthStack = () => {
-  const Stack = createStackNavigator();
+const AuthenticationStack = ({ setAppLoading }) => {
+  const AuthStack = createStackNavigator();
 
   return (
-    <Stack.Navigator>
-      <Stack.Screen
+    <AuthStack.Navigator>
+      <AuthStack.Screen
         name="AcceptTandCs"
         component={(props) => <AcceptTandCs {...props} />}
         options={{ headerShown: false }}
       />
-      <Stack.Screen
+      <AuthStack.Screen
         name="PhoneAuth"
-        component={(props) => <PhoneAuth {...props} />}
+        component={(props) => (
+          <ContextConsumer>
+            {(context) => {
+              return (
+                <PhoneAuth
+                  {...props}
+                  context={context}
+                  setAppLOading={setAppLoading}
+                />
+              );
+            }}
+          </ContextConsumer>
+        )}
         options={{ headerShown: false }}
       />
-      <Stack.Screen
+      <AuthStack.Screen
         name="EnterOTP"
         component={(props) => <EnterOTP {...props} />}
         options={{ headerShown: false }}
       />
-    </Stack.Navigator>
+    </AuthStack.Navigator>
   );
 };
-export default AuthStack;
+export default AuthenticationStack;

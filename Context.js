@@ -39,6 +39,38 @@ class Context extends Component {
       totalDriversOnline: null,
     },
   };
+  componentDidMount() {
+    const RestoreAsync = async () => {
+      try {
+        const userToken = await AsyncStorage.getItem("accessToken");
+        const Active = await AsyncStorage.getItem("activeRequest");
+        const isPlaying = await AsyncStorage.getItem("isPlaying");
+        /*         setIsplaying(isPlaying); */
+        /* context.dispatch({
+        type: "SAVE_ISPLAYING",
+        isPlaying: JSON.parse(isPlaying),
+      });
+      context.dispatch({
+        type: "SAVE_ACTIVEREQUEST",
+        activeRequest: JSON.parse(Active),
+      });
+ */ this.dispatch(
+          { type: "RESTORE_TOKEN", userToken: userToken }
+        );
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    const StoreData = async (value) => {
+      try {
+        await AsyncStorage.setItem("accessToken", value);
+      } catch (e) {
+        // saving error
+      }
+    };
+    /* StoreData(null); */
+    RestoreAsync();
+  }
 
   dispatch = (action) => {
     switch (action.type) {
@@ -176,6 +208,7 @@ class Context extends Component {
           () => StoreData("destination", action.destination)
         );
       case "SIGN_IN":
+        console.log(action);
         return this.setState(
           (state) => ({
             sessionArray: {
@@ -195,6 +228,7 @@ class Context extends Component {
           },
         }));
       case "RESTORE_TOKEN":
+        console.log(action);
         return this.setState((state) => ({
           sessionArray: {
             ...this.state.sessionArray,

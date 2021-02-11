@@ -22,7 +22,6 @@ const HomeStack = () => {
         component={TrackDriver}
         options={{ headerShown: false }}
       />
-
       <Stack.Screen
         name="Confirm"
         component={(props) => (
@@ -38,39 +37,13 @@ const HomeStack = () => {
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="ProductItem"
-        component={ProductItem}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
         name="Confirmationpage"
         component={Confirmationpage}
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="Restaurants"
-        component={Restaurants}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="Checkout"
-        component={Checkout}
-        options={{ headerShown: false }}
-      />
-
-      <Stack.Screen
-        name="Cart"
-        component={Cart}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
         name="Trip"
         component={Ride}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="Food"
-        component={Food}
         options={{ headerShown: false }}
       />
       <Stack.Screen

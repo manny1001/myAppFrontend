@@ -10,7 +10,7 @@ import { RFValue, RFPercentage } from "react-native-responsive-fontsize";
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/client";
 import { USER_LOGIN } from "../Queries";
-
+import { GetData, StoreData } from "../GFunctions";
 import { ContextConsumer } from "../Context";
 import {
   CodeField,
@@ -21,7 +21,7 @@ import {
 const BigButton = lazy(() => import("../Components/Buttons"));
 const PhoneAuthImage = lazy(() => import("../Components/PhoneAuthImage"));
 
-const PhoneAuth = (props) => {
+const PhoneAuth = ({ context }) => {
   /* function smsOtp(cellphone, otp) {
     let number = "27" + cellphone.slice(1, 10);
     console.log(number);
@@ -38,6 +38,7 @@ const PhoneAuth = (props) => {
         console.log(json);
       });
   } */
+  const [cellphone, setcellphone] = React.useState("");
   const CELL_COUNT = 4;
   const [value, setValue] = useState("");
   const ref = useBlurOnFulfill({ value, cellCount: CELL_COUNT });
@@ -45,9 +46,20 @@ const PhoneAuth = (props) => {
     value,
     setValue,
   });
-  const [login, { data }] = useMutation(USER_LOGIN, {});
+  const [login, { data, loading, error, called }] = useMutation(USER_LOGIN);
+  const [TOKEN, setTOKEN] = useState(null);
+  if (value === "4545") {
+    context.dispatch({
+      type: "SIGN_IN",
+      userToken: TOKEN,
+    });
+  }
+  React.useEffect(() => {
+    GetData("accessToken").then((token) => {
+      setTOKEN(token);
+    });
+  }, []);
 
-  const [cellphone, setcellphone] = React.useState("");
   const [visibleModal, setvisibleModal] = React.useState(false);
   return (
     <View
@@ -179,34 +191,32 @@ const PhoneAuth = (props) => {
         text={cellphone}
         onChangeText={(text) => setcellphone(text)}
       />
-      <Suspense fallback={<Text>Loading Buddy</Text>}>
-        <ContextConsumer>
-          {(context) => {
-            return (
-              <BigButton
-                disabled={cellphone.length === 10 ? false : true}
-                onPress={() => {
-                  login({ variables: { cellphone, type: "user" } })
-                    .then(({ data }) => {
-                      console.log(data);
-                      data.login.token &&
-                        context.dispatch({
-                          type: "SIGN_IN",
-                          userToken: data.login.token,
-                        });
-                      context.dispatch({
-                        type: "SAVE_CELL",
-                        clientCellNumber: cellphone,
-                      });
-                    })
-                    .catch((e) => {});
-                }}
-                title={"Sign In"}
-              />
-            );
-          }}
-        </ContextConsumer>
-      </Suspense>
+      <ContextConsumer>
+        {(context) => {
+          return (
+            <BigButton
+              disabled={
+                cellphone.length !== 10 || called === true ? true : false
+              }
+              onPress={() => {
+                StoreData("clientCellNumber", cellphone);
+                login({ variables: { cellphone, type: "user" } })
+                  .then(({ data }) => {
+                    StoreData("accessToken", data.login.token),
+                      setvisibleModal(true);
+                  })
+                  .catch((e) => {});
+                /* login({ variables: { cellphone, type: "user" } });
+                  context.dispatch({
+                    type: "SIGN_IN",
+                    userToken: data && data.login && data.login.userToken,
+                  }); */
+              }}
+              title={"Sign In"}
+            />
+          );
+        }}
+      </ContextConsumer>
     </View>
   );
 };

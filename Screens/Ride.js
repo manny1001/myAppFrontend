@@ -174,14 +174,13 @@ class GoogleAutoComplete extends Component {
 }
 
 export default function (props) {
-  const linkTo = useLinkTo();
-
+  React.useEffect(() => {
+    console.log(props);
+  }, []);
   return (
     <>
       <ContextConsumer>
-        {(context) => (
-          <GoogleAutoComplete {...props} linkTo={linkTo} context={context} />
-        )}
+        {(context) => <GoogleAutoComplete {...props} context={context} />}
       </ContextConsumer>
     </>
   );
