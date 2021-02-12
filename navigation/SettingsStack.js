@@ -8,12 +8,12 @@ const CardSettings = lazy(() => import("../Screens/CardSettings"));
 const EditBankcard = lazy(() => import("../Screens/EditBankcard"));
 const SettingsStack = (props) => {
   const Stack = createStackNavigator();
-  const { context } = props;
+
   return (
     <Stack.Navigator>
       <Stack.Screen
         name="Settings"
-        component={(props) => <Settings context={context} {...props} />}
+        component={(props) => <Settings {...props} />}
         options={{ headerShown: false }}
       />
       <Stack.Screen

@@ -5,9 +5,14 @@ const Profile = lazy(() => import("../navigation/ProfileStack"));
 const Home = lazy(() => import("../navigation/HomeStack"));
 const Settings = lazy(() => import("../navigation/SettingsStack"));
 const Payments = lazy(() => import("../navigation/PaymentsStack"));
-
+import { useIsFocused } from "@react-navigation/native";
 const Tabs = createBottomTabNavigator();
 const AppStack = ({ context }) => {
+  const isFocused = useIsFocused();
+  React.useEffect(() => {
+    /* Geocoder.init("AIzaSyD7WWrmocEDp4T9JonO47DB1GSPllLJbsk"); */
+    console.log(isFocused);
+  }, [isFocused]);
   return (
     <Tabs.Navigator
       tabBarOptions={{
@@ -45,8 +50,8 @@ const AppStack = ({ context }) => {
         }}
       />
       <Tabs.Screen
-        name="App"
-        component={() => <Settings context={context} />}
+        name="Settings"
+        component={Settings}
         options={{
           tabBarLabel: "More",
           /*  tabBarIcon: ({ color, size }) => (

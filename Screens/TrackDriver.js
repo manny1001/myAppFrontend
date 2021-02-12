@@ -12,6 +12,7 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import { ContextConsumer } from "../Context";
+import Loader from "../Components/Loader";
 import { CountdownCircleTimer } from "react-native-countdown-circle-timer";
 import Modal from "modal-enhanced-react-native-web";
 import { useQuery, useMutation } from "@apollo/client";
@@ -53,18 +54,25 @@ const TrackDriver = ({ navigation }) => {
     DRIVERS_LIVELOCATION,
     {
       onCompleted: () => {
+        console.log(data);
         setdriversCellphone(
           data && data.getDriversLocation[0].driversCellphone
         );
         setdriverremainingtime(
-          JSON.parse(data.getDriversLocation[0].driverremainingtime)
+          JSON.parse(
+            data &&
+              data.getDriversLocation[0] &&
+              data.getDriversLocation[0].driverremainingtime
+          )
         ),
           setdriversImage(data && data.getDriversLocation[0].driverImage);
         setcellphone(data && data.getDriversLocation[0].cellphone),
           setusername(data && data.getDriversLocation[0].name),
           setuuidTrip(data && data.getDriversLocation[0].uuidTrip),
           setTimeTillArrival(
-            data && data.getDriversLocation[0].drivercustomerarrivaltime
+            data &&
+              data.getDriversLocation[0] &&
+              data.getDriversLocation[0].drivercustomerarrivaltime
           ),
           setDriverDuration(data && data.getDriversLocation[0].driverduration);
         setRequestStatus(data && data.getDriversLocation[0].status),
@@ -104,6 +112,9 @@ const TrackDriver = ({ navigation }) => {
         backgroundColor: "#f2f2f2",
       }}
     >
+      {data &&
+        data.getDriversLocation[0] &&
+        data.getDriversLocation[0].driversLiveLocation === null && <Loader />}
       <View
         style={{
           width: wp(100),
@@ -189,7 +200,9 @@ const TrackDriver = ({ navigation }) => {
           >
             {timeRemaining !== 0 && !loading ? (
               <CountdownCircleTimer
-                initialRemainingTime={driverremainingtime}
+                initialRemainingTime={
+                  driverremainingtime && driverremainingtime
+                }
                 styles={{ borderWidth: null }}
                 onComplete={() => {
                   settimeRemaining(0);
@@ -199,6 +212,7 @@ const TrackDriver = ({ navigation }) => {
                 duration={
                   data &&
                   data.getDriversLocation &&
+                  data.getDriversLocation[0] &&
                   JSON.parse(data.getDriversLocation[0].driverduration)
                 }
                 colors={[
@@ -358,9 +372,21 @@ const TrackDriver = ({ navigation }) => {
         <LinearGradient colors={["white", "#ffffff00"]} />
         {driverArrived === false && (
           <Chat
-            uuidTrip={data && data.getDriversLocation[0].uuidTrip}
-            userUUID={data && data.getDriversLocation[0].uuidUser}
-            driverUUID={data && data.getDriversLocation[0].uuidDriver}
+            uuidTrip={
+              data &&
+              data.getDriversLocation[0] &&
+              data.getDriversLocation[0].uuidTrip
+            }
+            userUUID={
+              data &&
+              data.getDriversLocation[0] &&
+              data.getDriversLocation[0].uuidUser
+            }
+            driverUUID={
+              data &&
+              data.getDriversLocation[0] &&
+              data.getDriversLocation[0].uuidDriver
+            }
           />
         )}
         {driverArrived === true && (
@@ -375,7 +401,7 @@ const TrackDriver = ({ navigation }) => {
               onComplete={() => {}}
               size={wp(50)}
               isPlaying={true}
-              duration={timeTillArrival}
+              duration={timeTillArrival && timeTillArrival}
               colors={[
                 ["#004777", 0.4],
                 ["#F7B801", 0.4],

@@ -14,14 +14,15 @@ import {
   createHttpLink,
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
-import { NavigationContainer } from "@react-navigation/native";
+import { NavigationContainer, useIsFocused } from "@react-navigation/native";
 import * as Linking from "expo-linking";
 import Loader from "./Components/Loader";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { createStackNavigator } from "@react-navigation/stack";
 const AppStack = lazy(() => import("./navigation/AppStack"));
 const AuthStack = lazy(() => import("./navigation/AuthStack"));
 const httpLink = createHttpLink({
-  uri: "http://192.168.43.21:4000/graphql",
+  uri: "http://localhost:4000/graphql",
 });
 const authLink = setContext(async (_, { headers }) => {
   const token = await AsyncStorage.getItem("accessToken");
@@ -42,12 +43,11 @@ const prefix = Linking.makeUrl("/");
 const linkingApp = {
   prefixes: [prefix],
   config: {
-    AppStack: {
-      path: "AppStack",
+    Main: {
+      path: "Main",
       screens: {
-        Home: {
-          path: "Home",
-          initialRouteName: "Trip",
+        HomeStack: {
+          path: "HomeStack",
           screens: {
             TrackDriver: { path: "TrackDriver" },
             Confirm: { path: "Confirm" },
@@ -57,6 +57,10 @@ const linkingApp = {
             Payment: { path: "Payment" },
             AddName: { path: "AddName" },
           },
+        },
+        Payments: {
+          path: "Payments",
+          screens: { Payments: "Payments" },
         },
         Profile: { path: "Profile" },
         Settings: {
@@ -69,10 +73,6 @@ const linkingApp = {
             CardSettings: "CardSettings",
             EditBankcard: "EditBankcard",
           },
-        },
-        Payments: {
-          path: "Payments",
-          screens: { Payments: "Payments" },
         },
       },
     },
@@ -88,27 +88,40 @@ const linkingApp = {
 };
 
 const App = () => {
+  const Stack = createStackNavigator();
   return (
-    <NavigationContainer
-      linking={linkingApp}
-      onReady={() => {
-        console.log("I, ready!!!");
-      }}
-    >
-      <Suspense fallback={Loader()}>
-        <ApolloProvider client={client}>
+    <NavigationContainer linking={linkingApp}>
+      <ApolloProvider client={client}>
+        <Context>
           <ContextConsumer>
             {(context) => {
-              return context.state.userToken === null ? (
-                <AuthStack context={context} />
-              ) : (
-                <AppStack context={context} />
+              return (
+                <Suspense fallback={Loader()}>
+                  {context.state.userToken == null ? (
+                    <Stack.Navigator>
+                      <Stack.Screen
+                        name="Auth"
+                        component={AuthStack}
+                        options={{ headerShown: false }}
+                      />
+                    </Stack.Navigator>
+                  ) : (
+                    <Stack.Navigator>
+                      <Stack.Screen
+                        name="Main"
+                        component={AppStack}
+                        options={{ headerShown: false }}
+                      />
+                    </Stack.Navigator>
+                  )}
+                </Suspense>
               );
             }}
           </ContextConsumer>
-        </ApolloProvider>
-      </Suspense>
+        </Context>
+      </ApolloProvider>
     </NavigationContainer>
   );
 };
+
 export default App;

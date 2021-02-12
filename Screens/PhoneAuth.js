@@ -48,18 +48,7 @@ const PhoneAuth = ({ context }) => {
   });
   const [login, { data, loading, error, called }] = useMutation(USER_LOGIN);
   const [TOKEN, setTOKEN] = useState(null);
-  if (value === "4545") {
-    context.dispatch({
-      type: "SIGN_IN",
-      userToken: TOKEN,
-    });
-  }
-  React.useEffect(() => {
-    GetData("accessToken").then((token) => {
-      setTOKEN(token);
-    });
-  }, []);
-
+  console.log(login);
   const [visibleModal, setvisibleModal] = React.useState(false);
   return (
     <View
@@ -199,18 +188,17 @@ const PhoneAuth = ({ context }) => {
                 cellphone.length !== 10 || called === true ? true : false
               }
               onPress={() => {
-                StoreData("clientCellNumber", cellphone);
+                StoreData("clientCellNumber", cellphone),
+                  console.log("HUJhkhkj");
                 login({ variables: { cellphone, type: "user" } })
                   .then(({ data }) => {
-                    StoreData("accessToken", data.login.token),
-                      setvisibleModal(true);
+                    console.log(data);
+                    context.dispatch({
+                      type: "SIGN_IN",
+                      userToken: data.login.token,
+                    });
                   })
                   .catch((e) => {});
-                /* login({ variables: { cellphone, type: "user" } });
-                  context.dispatch({
-                    type: "SIGN_IN",
-                    userToken: data && data.login && data.login.userToken,
-                  }); */
               }}
               title={"Sign In"}
             />

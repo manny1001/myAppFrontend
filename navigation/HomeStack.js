@@ -13,7 +13,7 @@ const Confirm = lazy(() => import("../Screens/Confirm"));
 const Payment = lazy(() => import("../Screens/Payment"));
 const AddName = lazy(() => import("../Screens/AddName"));
 import { ContextConsumer } from "../Context";
-const HomeStack = () => {
+const HomeStack = (props) => {
   const Stack = createStackNavigator();
   return (
     <Stack.Navigator initialRouteName={"Trip"}>
@@ -43,7 +43,7 @@ const HomeStack = () => {
       />
       <Stack.Screen
         name="Trip"
-        component={Ride}
+        component={() => <Ride {...props} />}
         options={{ headerShown: false }}
       />
       <Stack.Screen

@@ -11,6 +11,7 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { ContextConsumer } from "../Context";
 import { RFValue } from "react-native-responsive-fontsize";
 const AysncLogout = async () => {
   try {
@@ -21,7 +22,6 @@ const AysncLogout = async () => {
   }
 };
 const Usersettings = (props) => {
-  const { context } = props;
   const DATA = [
     /* {
       id: "1",
@@ -105,25 +105,31 @@ const Usersettings = (props) => {
         >
           Logout
         </Text>
+        <ContextConsumer>
+          {(context) => {
+            console.log(context);
+            return (
+              <TouchableOpacity
+                onPress={() => {
+                  {
+                    AysncLogout(), context.dispatch({ type: "SIGN_OUT" });
+                  }
+                }}
+                style={{
+                  justifyContent: "center",
+                  alignSelf: "center",
 
-        <TouchableOpacity
-          onPress={() => {
-            {
-              AysncLogout(), context.dispatch({ type: "SIGN_OUT" });
-            }
+                  flexDirection: "row",
+                  width: wp(10),
+                  marginRight: wp(5),
+                  height: hp(5),
+                }}
+              >
+                <Text>Logout</Text>
+              </TouchableOpacity>
+            );
           }}
-          style={{
-            justifyContent: "center",
-            alignSelf: "center",
-
-            flexDirection: "row",
-            width: wp(10),
-            marginRight: wp(5),
-            height: hp(5),
-          }}
-        >
-          <Text>Logout</Text>
-        </TouchableOpacity>
+        </ContextConsumer>
       </View>
     </View>
   );

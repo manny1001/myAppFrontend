@@ -64,7 +64,6 @@ const ProfileStack = (props) => {
       setUUID(data && data.currentUser.uuid);
     },
   });
-  console.log(data);
   const [updateProfile, { data: DATA }] = useMutation(UPDATE_PROFILE, {
     refetchQueries: [{ query: GET_PROFILE }],
     onCompleted: () => alert("Profile Succesfully Updated"),
