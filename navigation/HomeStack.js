@@ -16,10 +16,10 @@ import { ContextConsumer } from "../Context";
 const HomeStack = (props) => {
   const Stack = createStackNavigator();
   return (
-    <Stack.Navigator initialRouteName={"Trip"}>
+    <Stack.Navigator>
       <Stack.Screen
-        name="TrackDriver"
-        component={TrackDriver}
+        name="Ride"
+        component={() => <Ride {...props} />}
         options={{ headerShown: false }}
       />
       <Stack.Screen
@@ -32,7 +32,7 @@ const HomeStack = (props) => {
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="RatingScreen"
+        name="Rating"
         component={Rating}
         options={{ headerShown: false }}
       />
@@ -41,11 +41,7 @@ const HomeStack = (props) => {
         component={Confirmationpage}
         options={{ headerShown: false }}
       />
-      <Stack.Screen
-        name="Trip"
-        component={() => <Ride {...props} />}
-        options={{ headerShown: false }}
-      />
+
       <Stack.Screen
         name="Payment"
         component={(props) => (
@@ -58,6 +54,11 @@ const HomeStack = (props) => {
       <Stack.Screen
         name="AddName"
         component={AddName}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="TrackDriver"
+        component={TrackDriver}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

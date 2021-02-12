@@ -7,7 +7,6 @@ import {
 
 import { RFValue } from "react-native-responsive-fontsize";
 import Header from "../Components/Header";
-import { reducer, initialState } from "../Context";
 import BigButton from "../Components/Buttons.js";
 class ProductItem extends React.Component {
   constructor(props) {
@@ -236,10 +235,6 @@ class ProductItem extends React.Component {
   }
 }
 export default function (props) {
-  const [{ restaurant, cart, isloggedIn }, dispatch] = React.useReducer(
-    reducer,
-    initialState
-  );
   const linkTo = useLinkTo();
   return (
     <ProductItem

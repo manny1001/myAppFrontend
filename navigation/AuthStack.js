@@ -6,7 +6,6 @@ import { ContextConsumer } from "../Context";
 const AcceptTandCs = lazy(() => import("../Screens/AcceptTandCs"));
 const AuthenticationStack = ({ setAppLoading }) => {
   const AuthStack = createStackNavigator();
-
   return (
     <AuthStack.Navigator>
       <AuthStack.Screen

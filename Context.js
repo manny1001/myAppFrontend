@@ -228,7 +228,6 @@ class Context extends Component {
           },
         }));
       case "RESTORE_TOKEN":
-        console.log(action);
         return this.setState((state) => ({
           sessionArray: {
             ...this.state.sessionArray,

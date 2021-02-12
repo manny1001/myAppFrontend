@@ -18,14 +18,8 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import SelectBankCard from "../Components/selectBankCard";
-import { reducer, initialState } from "../Context";
 import BigButton from "../Components/Buttons.js";
 export default function Checkout(props) {
-  const [{ cart, isloggedIn }, dispatch] = React.useReducer(
-    reducer,
-    initialState
-  );
-
   const [selectedValue, setselectedValue] = useState("Select");
   const [paymentMethod, setpaymentMethod] = useState(null);
   const [locationSelected, setisClicked] = useState(false);

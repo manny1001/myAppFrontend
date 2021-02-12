@@ -19,24 +19,32 @@ import {
 } from "react-native-responsive-screen";
 function Chat({ userUUID, driverUUID, uuidTrip }) {
   const [userID, setUserID] = useState(null);
-
-  const [
-    PostMessage,
-    { called, error: ERROR, loading: LOADING, data: DATA },
-  ] = useMutation(POST_MESSAGE, {});
-  const [messages, setMessages] = useState([]);
   const { data, loading, error } = useQuery(GET_MESSAGES, {
     variables: {
       uuidtrip: uuidTrip,
       uuid: userUUID,
     },
-    pollInterval: 10000,
+    pollInterval: 500,
     notifyOnNetworkStatusChange: true,
     onCompleted: () => {
       setMessages(data.messages);
     },
   });
+  const [
+    PostMessage,
+    { called, error: ERROR, loading: LOADING, data: DATA },
+  ] = useMutation(POST_MESSAGE, { refetchQueries: { GET_MESSAGES } });
+  const [messages, setMessages] = useState([]);
   const onSend = useCallback((messages = []) => {
+    console.log(messages[0].text, userUUID, uuidTrip);
+
+    PostMessage({
+      variables: {
+        text: messages[0].text,
+        uuid: userUUID,
+        uuidtrip: uuidTrip,
+      },
+    });
     setMessages((previousMessages) =>
       GiftedChat.append(previousMessages, messages)
     );
@@ -187,13 +195,8 @@ function Chat({ userUUID, driverUUID, uuidTrip }) {
       }}
       messages={messages}
       onSend={(messages) => {
-        PostMessage({
-          variables: {
-            text: "Babbba",
-            uuid: "5c09d94a-e7fa-4250-8bb8-833c67060256",
-            uuidtrip: "4c7a2b18-d99f-45a0-87d3-98f4e49efb2f",
-          },
-        });
+        onSend(messages);
+        /*  */
       }}
     />
   );

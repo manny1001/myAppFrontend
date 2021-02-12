@@ -1,11 +1,4 @@
 import React, { useState, lazy, Suspense } from "react";
-import { View, Text, StyleSheet } from "react-native";
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from "react-native-responsive-screen";
-import { RFPercentage } from "react-native-responsive-fontsize";
-import Modal from "modal-enhanced-react-native-web";
 import { Context, ContextConsumer } from "./Context";
 import {
   ApolloClient,
@@ -19,7 +12,12 @@ import * as Linking from "expo-linking";
 import Loader from "./Components/Loader";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { createStackNavigator } from "@react-navigation/stack";
-const AppStack = lazy(() => import("./navigation/AppStack"));
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+const Profile = lazy(() => import("./navigation/ProfileStack"));
+const Home = lazy(() => import("./navigation/HomeStack"));
+const Settings = lazy(() => import("./navigation/SettingsStack"));
+const Payments = lazy(() => import("./navigation/PaymentsStack"));
+const AppStack = createBottomTabNavigator();
 const AuthStack = lazy(() => import("./navigation/AuthStack"));
 const httpLink = createHttpLink({
   uri: "http://localhost:4000/graphql",
@@ -43,45 +41,60 @@ const prefix = Linking.makeUrl("/");
 const linkingApp = {
   prefixes: [prefix],
   config: {
-    Main: {
-      path: "Main",
+    AppStack: {
+      path: "AppStack",
       screens: {
         HomeStack: {
-          path: "HomeStack",
+          path: "home",
+          initialRouteName: "AddName",
           screens: {
-            TrackDriver: { path: "TrackDriver" },
-            Confirm: { path: "Confirm" },
-            RatingScreen: { path: "RatingScreen" },
+            Landing: { path: "Landing" },
+            Restaurants: {
+              path: "Restaurants",
+            },
+            Food: {
+              path: "Food/:item",
+              parse: {
+                item: (item) => {
+                  item;
+                },
+              },
+            },
+            getaride: { path: "getaride" },
+            Cart: { path: "Cart" },
             Confirmationpage: { path: "Confirmationpage" },
-            Trip: { path: "Trip" },
-            Payment: { path: "Payment" },
+            Checkout: { path: "Checkout" },
+            ConfirmRide: { path: "ConfirmRide" },
+            ProductItem: { path: "ProductItem" },
+            TripPayment: { path: "TripPayment" },
             AddName: { path: "AddName" },
+            AddEmail: { path: "AddEmail" },
+            TrackDriver: { path: "TrackDriver" },
           },
         },
-        Payments: {
-          path: "Payments",
-          screens: { Payments: "Payments" },
-        },
         Profile: { path: "Profile" },
-        Settings: {
+        SettingsStack: {
           path: "Settings",
           screens: {
-            Settings: "Settings",
-            About: "About",
             AddBankCard: "AddBankCard",
             Feedback: "Feedback",
+            About: "About",
             CardSettings: "CardSettings",
             EditBankcard: "EditBankcard",
           },
         },
+        PaymentsStack: { path: "payments", screens: { Orders: "Orders" } },
       },
     },
     AuthStack: {
       path: "AuthStack",
       Screens: {
-        AcceptTandCs: "AcceptTandCs",
+        Onboarding: "Onboarding",
         PhoneAuth: "PhoneAuth",
+        AddEmail: "AddEmail",
+        AddName: "AddName",
         EnterOTP: "EnterOTP",
+        AcceptTandCs: "AcceptTandCs",
       },
     },
   },
@@ -106,13 +119,52 @@ const App = () => {
                       />
                     </Stack.Navigator>
                   ) : (
-                    <Stack.Navigator>
-                      <Stack.Screen
-                        name="Main"
-                        component={AppStack}
-                        options={{ headerShown: false }}
+                    <AppStack.Navigator
+                      tabBarOptions={{
+                        keyboardHidesTabBar: true,
+                      }}
+                    >
+                      <AppStack.Screen
+                        name="Home"
+                        component={Home}
+                        options={{
+                          tabBarLabel: "Home",
+                          /* tabBarIcon: ({ color, size }) => (
+                          <Octicons name="home" color="black" size={wp(5)} />
+                        ), */
+                        }}
                       />
-                    </Stack.Navigator>
+                      <AppStack.Screen
+                        name="Payments"
+                        component={Payments}
+                        options={{
+                          tabBarLabel: "Payments",
+                          /*  tabBarIcon: ({ color, size }) => (
+                          <MaterialIcons name="attach-money" size={wp(5)} color="black" />
+                        ), */
+                        }}
+                      />
+                      <AppStack.Screen
+                        name="Profile"
+                        component={Profile}
+                        options={{
+                          tabBarLabel: "Profile",
+                          /* tabBarIcon: ({ color, size }) => (
+                            <MaterialIcons name="person-outline" color="#333" size={wp(5)} />
+                          ), */
+                        }}
+                      />
+                      <AppStack.Screen
+                        name="Settings"
+                        component={Settings}
+                        options={{
+                          tabBarLabel: "More",
+                          /*  tabBarIcon: ({ color, size }) => (
+                          <Feather name="settings" color="#333" size={wp(5)} />
+                        ), */
+                        }}
+                      />
+                    </AppStack.Navigator>
                   )}
                 </Suspense>
               );

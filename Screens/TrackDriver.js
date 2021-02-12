@@ -112,9 +112,9 @@ const TrackDriver = ({ navigation }) => {
         backgroundColor: "#f2f2f2",
       }}
     >
-      {data &&
+      {/* {data &&
         data.getDriversLocation[0] &&
-        data.getDriversLocation[0].driversLiveLocation === null && <Loader />}
+        data.getDriversLocation[0].driversLiveLocation === null && <Loader />} */}
       <View
         style={{
           width: wp(100),

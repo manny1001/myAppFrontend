@@ -113,15 +113,13 @@ const ProfileStack = (props) => {
               height: hp(15),
             }}
           >
-            <Image
-              blurRadius={5}
-              source={
-                data && data.currentUser
-                  ? { uri: data.currentUser.picture }
-                  : ""
-              }
-              style={{ width: wp(100), height: hp(15) }}
-            />
+            {data.currentUser.picture && (
+              <Image
+                blurRadius={5}
+                source={{ uri: data.currentUser.picture }}
+                style={{ width: wp(100), height: hp(15) }}
+              />
+            )}
             <Avatar
               renderPlaceholderContent={
                 data.currentUser.picture && <ActivityIndicator />

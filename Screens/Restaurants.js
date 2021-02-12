@@ -5,13 +5,13 @@ import { RESTAURANTLIST } from "../Components/Carousel";
 import { DATA3 } from "./FakeData";
 import Header from "../Components/Header";
 import { RFValue } from "react-native-responsive-fontsize";
-import { reducer, initialState } from "../Context";
+/* import { reducer, initialState } from "../Context"; */
 const Restaurants = (props) => {
   const [CategoriesArray, setCategoriesArray] = useState([]);
-  const [{ restaurant, cart, isloggedIn }, dispatch] = React.useReducer(
+  /* const [{ restaurant, cart, isloggedIn }, dispatch] = React.useReducer(
     reducer,
     initialState
-  );
+  ); */
   /* 
   const FETCHDATA = async () =>
     await fetch("http://192.168.43.182:3003/category", {

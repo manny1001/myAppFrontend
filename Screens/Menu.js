@@ -21,7 +21,6 @@ import DETA, { BIGDATA } from "./DETA";
 import { RFValue } from "react-native-responsive-fontsize";
 import Restaurants from "./Restaurants";
 import { useLinkTo } from "@react-navigation/native";
-import { reducer, initialState } from "../Context";
 const App = (props) => {
   const [locationSelected, setisClicked] = useState(false);
   const [scrollToIndex, setScrollToIndex] = useState(0);
@@ -33,10 +32,6 @@ const App = (props) => {
     "22 Allan Road Glen Austin Midrand"
   );
   const Restaurant = props.route.params.RestaurantInfo;
-  const [{ restaurant, cart, isloggedIn }, dispatch] = React.useReducer(
-    reducer,
-    initialState
-  );
 
   const ItemView = (item, key) => {
     return (
