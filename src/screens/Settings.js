@@ -107,7 +107,6 @@ const Usersettings = (props) => {
         </Text>
         <ContextConsumer>
           {(context) => {
-            console.log(context);
             return (
               <TouchableOpacity
                 onPress={() => {

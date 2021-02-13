@@ -18,11 +18,7 @@ const HomeStack = (props) => {
       />
       <Stack.Screen
         name="Confirm"
-        component={(props) => (
-          <ContextConsumer>
-            {(context) => <Confirm context={context} {...props} />}
-          </ContextConsumer>
-        )}
+        component={Confirm}
         options={{ headerShown: false }}
       />
       <Stack.Screen

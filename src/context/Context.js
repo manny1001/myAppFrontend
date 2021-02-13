@@ -6,7 +6,7 @@ const { Provider, Consumer } = React.createContext();
 class Context extends Component {
   state = {
     sessionArray: {
-      clientCellNumber: "",
+      cellphone: "",
       name: "",
       email: "",
       destination: "",
@@ -67,7 +67,6 @@ class Context extends Component {
   dispatch = (action) => {
     switch (action.type) {
       case "SAVE_TOTAL_DRIVERS_ONLINE":
-        console.log(action);
         return this.setState((state) => ({
           sessionArray: {
             ...this.state.sessionArray,
@@ -75,7 +74,6 @@ class Context extends Component {
           },
         }));
       case "SAVE_ISPLAYING":
-        console.log(action);
         return this.setState(
           (state) => ({
             sessionArray: {
@@ -97,7 +95,6 @@ class Context extends Component {
         );
 
       case "SAVE_ACTIVEREQUEST":
-        console.log(action);
         return this.setState(
           (state) => ({
             sessionArray: {
@@ -108,7 +105,6 @@ class Context extends Component {
           () => StoreData("activeRequest", action.activeRequest)
         );
       case "SAVE_USERUUID":
-        console.log(action);
         return this.setState(
           (state) => ({
             sessionArray: {
@@ -172,13 +168,12 @@ class Context extends Component {
           (state) => ({
             sessionArray: {
               ...this.state.sessionArray,
-              clientCellNumber: action.clientCellNumber,
+              cellphone: action.cellphone,
             },
           }),
-          () => StoreData("clientCellNumber", action.clientCellNumber)
+          () => StoreData("cellphone", action.cellphone)
         );
       case "SAVE_PICKUPLOCATION":
-        console.log(action);
         return this.setState(
           (state) => ({
             sessionArray: {
@@ -189,7 +184,6 @@ class Context extends Component {
           () => StoreData("location", action.location)
         );
       case "SAVE_DESTINATION":
-        console.log(action);
         return this.setState(
           (state) => ({
             sessionArray: {
@@ -200,7 +194,6 @@ class Context extends Component {
           () => StoreData("destination", action.destination)
         );
       case "SIGN_IN":
-        console.log(action);
         return this.setState(
           (state) => ({
             sessionArray: {

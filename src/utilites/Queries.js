@@ -16,6 +16,25 @@ export const USER_LOGIN = gql`
     }
   }
 `;
+export const UPDATE_PROFILE = gql`
+  mutation updateProfile(
+    $uuidUser: String!
+    $name: String
+    $email: String
+    $cellphone: String
+    $homeaddress: String
+    $workaddress: String
+  ) {
+    updateProfile(
+      uuidUser: $uuidUser
+      name: $name
+      email: $email
+      cellphone: $cellphone
+      homeaddress: $homeaddress
+      workaddress: $workaddress
+    )
+  }
+`;
 export const PAYMENT_CONFIRMATION = gql`
   mutation PayOrConfirm(
     $uuidTrip: String

@@ -1,6 +1,5 @@
 //import liraries
 import React, { Component, useState } from "react";
-import { View, Text, StyleSheet } from "react-native";
 import { Button, ThemeProvider } from "react-native-elements";
 import {
   widthPercentageToDP as wp,

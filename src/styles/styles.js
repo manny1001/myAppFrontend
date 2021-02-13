@@ -1,10 +1,47 @@
 import { RFValue } from "react-native-responsive-fontsize";
+import { windowWidth, windowHeight } from "../api/constants/index";
 import { StyleSheet } from "react-native";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 const styles = StyleSheet.create({
+  heading2: {
+    fontSize: RFValue(16),
+    fontWeight: "bold",
+    textAlign: "flex-start",
+  },
+  locations: {
+    fontSize: RFValue(15),
+    fontWeight: "400",
+    textAlign: "flex-start",
+    width: wp(80),
+  },
+  locationsBlock: {
+    bottom: hp(3),
+    marginLeft: wp(1),
+    width: wp(80),
+  },
+  timeAndDistanceContainer: {
+    justifyContent: "space-between",
+    width: wp(55),
+    alignSelf: "center",
+    flexDirection: "row",
+  },
+  profileAvatarContainer: {
+    height: hp(20),
+    width: hp(20),
+    borderRadius: hp(10),
+    position: "absolute",
+    top: hp(2),
+    marginLeft: wp(10),
+    bottom: 0,
+  },
+  profileImage: {
+    width: wp(100),
+    height: hp(20),
+    alignSelf: "flex-start",
+  },
   modal: {
     flex: 1,
     justifyContent: "center",

@@ -3,6 +3,7 @@ import { View, Text } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useQuery, useMutation } from "@apollo/client";
 import Loader from "../../src/components/Loader";
+import { GetData, StoreData } from "../../src/utilites/GFunctions";
 import {
   GET_PROFILE,
   GET_DRIVER_RESPONSE,
@@ -20,7 +21,8 @@ const TripDetails = lazy(() => import("../components/TripDetails"));
 
 const SelectNewDriver = lazy(() => import("../components/SelectNewDriver"));
 export default function (props) {
-  const [clientCellNumber, setclientCellNumber] = React.useState("");
+  const [userUUID, setUSERUUID] = React.useState("");
+  const [cellphone, setclientCellNumber] = React.useState("");
   const [name, setname] = React.useState("");
   const [location, setlocation] = React.useState("");
   const [timeRequested, settimeRequested] = React.useState("");
@@ -42,26 +44,20 @@ export default function (props) {
   const [doneEditing, setdoneEditing] = React.useState("");
   const [selectedcard, setselectedCard] = React.useState(null);
   const [cardselected, setcardselected] = React.useState(false);
-  const [totalAmount, settotalAmount] = React.useState(null);
-
+  const [totalAmount, settotalAmount] = React.useState("88 000");
   const [PayOrConfirm] = useMutation(PAYMENT_CONFIRMATION);
   const [StopQuery, setStopQuery] = useState(false);
   const [requestID, setRequestid] = useState(null);
   const [uuidTrip, setuuidTrip] = useState(null);
   const [timeOutValue, setTimeoutValue] = React.useState(120);
-  /*  const setselectedCard = (val) => {
-    this.setState({ setselectedCard: val });
-  }; */
 
-  const { data } = useQuery(GET_PROFILE);
   const { data: DATA, stopPolling, startPolling } = useQuery(
     GET_DRIVER_RESPONSE,
     {
-      variables: { uuidUser: data && data.currentUser.uuid },
-      /*  pollInterval: 500, */
+      variables: { uuidUser: userUUID },
+      pollInterval: 500,
       onCompleted: () => {
-        console.log(DATA),
-          setRequestid(DATA.getDriverRequestResponse.id),
+        setRequestid(DATA.getDriverRequestResponse.id),
           setuuidTrip(DATA.getDriverRequestResponse.uuidTrip),
           requestID !== null && uuidTrip !== null && setStopQuery(true);
       },
@@ -71,17 +67,19 @@ export default function (props) {
   );
   React.useEffect(() => {
     AsyncStorage.multiGet([
-      "clientCellNumber",
+      "cellphone",
       "clientFirstName",
       "location",
       "timeRequested",
       "totalAmount",
+      "useruuid",
     ]).then((response) => {
       setclientCellNumber(response[0][1]);
       setname(response[1][1]);
       setlocation(response[2][1]);
       settimeRequested(response[3][1]);
       settotalAmount(response[4][1]);
+      setUSERUUID(response[5][1]);
     });
   }, []);
   React.useEffect(() => {
@@ -134,7 +132,7 @@ export default function (props) {
                 selectedValue={selectedValue}
                 name={name}
                 clientLastName={""}
-                clientCellNumber={clientCellNumber}
+                cellphone={cellphone}
                 location={location}
                 timeRequested={timeRequested}
               />

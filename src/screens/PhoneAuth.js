@@ -1,4 +1,4 @@
-import React, { useState, lazy, Suspense } from "react";
+import React, { lazy } from "react";
 import { View } from "react-native";
 import Modal from "modal-enhanced-react-native-web";
 import TextInput from "../../src/components/TextInput";
@@ -7,6 +7,7 @@ import { USER_LOGIN } from "../../src/utilites/Queries";
 import EnterOTP from "../components/EnterOTP";
 import { StoreData } from "../../src/utilites/GFunctions";
 import styles from "../../src/styles/styles";
+import Loader from "../components/Loader";
 const BigButton = lazy(() => import("../../src/components/Buttons"));
 const PhoneAuthImage = lazy(() =>
   import("../../src/components/PhoneAuthImage")
@@ -29,8 +30,11 @@ const PhoneAuth = ({ context }) => {
       });
   } */
   const [cellphone, setcellphone] = React.useState("");
-  const [login, { data, loading, error, called }] = useMutation(USER_LOGIN);
+  const [login, { loading, error, called }] = useMutation(USER_LOGIN);
   const [visibleModal, setvisibleModal] = React.useState(false);
+  if (loading) return <Loader />;
+  if (error) alert(error);
+
   return (
     <View style={styles.container}>
       <Modal style={styles.modal} isVisible={visibleModal}></Modal>
@@ -47,7 +51,7 @@ const PhoneAuth = ({ context }) => {
       <BigButton
         disabled={cellphone.length !== 10 || called === true ? true : false}
         onPress={() => {
-          StoreData("clientCellNumber", cellphone),
+          StoreData("cellphone", cellphone),
             login({ variables: { cellphone, type: "user" } })
               .then(({ data }) => {
                 context.dispatch({

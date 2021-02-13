@@ -10,7 +10,7 @@ const TripDetails = ({
   selectedValue,
   name,
   clientLastName,
-  clientCellNumber,
+  cellphone,
   location,
   timeRequested,
 }) => {
@@ -29,7 +29,7 @@ const TripDetails = ({
       </Text>
       <Text>{location}</Text>
       <Text>{timeRequested}</Text>
-      <Text>{clientCellNumber}</Text>
+      <Text>{cellphone}</Text>
     </View>
   );
 };
