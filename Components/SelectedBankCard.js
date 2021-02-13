@@ -5,7 +5,8 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import { Item } from "../Components/selectBankCard";
-const SelectedBankCard = ({ setselectedCard }) => {
+const SelectedBankCard = ({ selectedcard }) => {
+  console.log(selectedcard);
   return (
     <View
       style={{
@@ -15,12 +16,12 @@ const SelectedBankCard = ({ setselectedCard }) => {
         justifyContent: "space-evenly",
       }}
     >
-      {setselectedCard !== null && (
+      {selectedcard !== null && (
         <Text style={{ fontWeight: "bold", alignSelf: "center" }}>
           You chose to pay with
         </Text>
       )}
-      <Item
+      {/* <Item
         touchable={false}
         height={hp(17)}
         title={setselectedCard.title}
@@ -28,7 +29,7 @@ const SelectedBankCard = ({ setselectedCard }) => {
         cvv={setselectedCard.cvv}
         cardNumber={setselectedCard.cardNumber}
         cardName={setselectedCard.cardName}
-      />
+      /> */}
     </View>
   );
 };

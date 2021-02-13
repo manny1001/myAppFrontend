@@ -258,7 +258,7 @@ export default function (props) {
     },
     fetchPolicy: "cache-and-network",
     notifyOnNetworkStatusChange: true,
-    pollInterval: 7000,
+    /* pollInterval: 7000, */
   });
 
   if (data && data.allDriver !== undefined)

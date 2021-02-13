@@ -48,7 +48,7 @@ const TrackDriver = ({ onPress, context, No, Isplaying }) => {
       } */
       },
       variables: { uuidUser: useruuid },
-      pollInterval: 1000,
+      /*  pollInterval: 1000, */
       notifyOnNetworkStatusChange: true,
       fetchPolicy: "network-only",
     }

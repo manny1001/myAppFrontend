@@ -1,15 +1,7 @@
 import React, { Component } from "react";
-import { gql, useQuery } from "@apollo/client";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { StoreData } from "./GFunctions";
 const { Provider, Consumer } = React.createContext();
-/* const NEW_REQUEST = gql`
-  mutation($CustomerName: String) {
-    newRequest(CustomerName: $CustomerName) {
-      value
-    }
-  }
-`; */
 
 class Context extends Component {
   state = {

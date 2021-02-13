@@ -63,11 +63,10 @@ export function Item({
         touchable === false
           ? null
           : () => {
-              const selectedCard = item;
               const withoutSelected = NewDATA.filter((item) => item.id !== id);
-              setselectedCard(item),
-                setnewnewDATA(withoutSelected),
-                setcardselected(true);
+              setselectedCard(item);
+              /*   setnewnewDATA(withoutSelected),
+                setcardselected(true); */
             }
       }
       style={[
@@ -152,7 +151,9 @@ export default function SelectBankCard({
   title,
   setcardselected,
   setselectedCard,
+  selectedcard,
 }) {
+  console.log(selectedcard);
   const [selected, setSelected] = React.useState(new Map());
   const [NewDATA, setNewDATA] = React.useState(YOURCARDS);
   const newSelected = new Map(selected);

@@ -8,7 +8,7 @@ import {
 import { RFValue } from "react-native-responsive-fontsize";
 const TripDetails = ({
   selectedValue,
-  clientFirstName,
+  name,
   clientLastName,
   clientCellNumber,
   location,
@@ -25,7 +25,7 @@ const TripDetails = ({
     >
       <Text style={{ fontSize: RFValue(24), fontWeight: "600" }}>Details</Text>
       <Text>
-        {clientFirstName} {clientLastName}
+        {name} {clientLastName}
       </Text>
       <Text>{location}</Text>
       <Text>{timeRequested}</Text>

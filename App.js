@@ -1,4 +1,4 @@
-import React, { useState, lazy, Suspense } from "react";
+import React, { lazy, Suspense } from "react";
 import { Context, ContextConsumer } from "./Context";
 import {
   ApolloClient,
@@ -7,18 +7,19 @@ import {
   createHttpLink,
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
-import { NavigationContainer, useIsFocused } from "@react-navigation/native";
+import { NavigationContainer } from "@react-navigation/native";
 import * as Linking from "expo-linking";
 import Loader from "./Components/Loader";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-const Profile = lazy(() => import("./navigation/ProfileStack"));
-const Home = lazy(() => import("./navigation/HomeStack"));
-const Settings = lazy(() => import("./navigation/SettingsStack"));
-const Payments = lazy(() => import("./navigation/PaymentsStack"));
+import * as Network from "expo-network";
+const Profile = lazy(() => import("./src/./navigation/Profile"));
+const Home = lazy(() => import("./src/navigation/Home"));
+const Settings = lazy(() => import("./src/./navigation/More"));
+const Payments = lazy(() => import("./src/./navigation/Payments"));
 const AppStack = createBottomTabNavigator();
-const AuthStack = lazy(() => import("./navigation/AuthStack"));
+const AuthStack = lazy(() => import("./src/navigation/Auth"));
 const httpLink = createHttpLink({
   uri: "http://localhost:4000/graphql",
 });
@@ -46,21 +47,9 @@ const linkingApp = {
       screens: {
         HomeStack: {
           path: "home",
-          initialRouteName: "AddName",
+          initialRouteName: "Ride",
           screens: {
-            Landing: { path: "Landing" },
-            Restaurants: {
-              path: "Restaurants",
-            },
-            Food: {
-              path: "Food/:item",
-              parse: {
-                item: (item) => {
-                  item;
-                },
-              },
-            },
-            getaride: { path: "getaride" },
+            Ride: { path: "Ride" },
             Cart: { path: "Cart" },
             Confirmationpage: { path: "Confirmationpage" },
             Checkout: { path: "Checkout" },
@@ -86,21 +75,24 @@ const linkingApp = {
         PaymentsStack: { path: "payments", screens: { Orders: "Orders" } },
       },
     },
-    AuthStack: {
-      path: "AuthStack",
+    Auth: {
+      path: "Auth",
       Screens: {
-        Onboarding: "Onboarding",
-        PhoneAuth: "PhoneAuth",
-        AddEmail: "AddEmail",
-        AddName: "AddName",
-        EnterOTP: "EnterOTP",
         AcceptTandCs: "AcceptTandCs",
+        PhoneAuth: "PhoneAuth",
       },
     },
   },
 };
 
 const App = () => {
+  React.useEffect(() => {
+    const Value = async () => {
+      const v = await Network.getNetworkStateAsync();
+      console.log(v.isConnected);
+    };
+    Value();
+  });
   const Stack = createStackNavigator();
   return (
     <NavigationContainer linking={linkingApp}>
@@ -129,9 +121,6 @@ const App = () => {
                         component={Home}
                         options={{
                           tabBarLabel: "Home",
-                          /* tabBarIcon: ({ color, size }) => (
-                          <Octicons name="home" color="black" size={wp(5)} />
-                        ), */
                         }}
                       />
                       <AppStack.Screen
@@ -139,9 +128,6 @@ const App = () => {
                         component={Payments}
                         options={{
                           tabBarLabel: "Payments",
-                          /*  tabBarIcon: ({ color, size }) => (
-                          <MaterialIcons name="attach-money" size={wp(5)} color="black" />
-                        ), */
                         }}
                       />
                       <AppStack.Screen
@@ -149,9 +135,6 @@ const App = () => {
                         component={Profile}
                         options={{
                           tabBarLabel: "Profile",
-                          /* tabBarIcon: ({ color, size }) => (
-                            <MaterialIcons name="person-outline" color="#333" size={wp(5)} />
-                          ), */
                         }}
                       />
                       <AppStack.Screen
@@ -159,9 +142,6 @@ const App = () => {
                         component={Settings}
                         options={{
                           tabBarLabel: "More",
-                          /*  tabBarIcon: ({ color, size }) => (
-                          <Feather name="settings" color="#333" size={wp(5)} />
-                        ), */
                         }}
                       />
                     </AppStack.Navigator>

@@ -14,16 +14,18 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
+const AddName = lazy(() => import("../../Screens/AddName"));
 import { StatusBar } from "expo-status-bar";
 import { RFValue } from "react-native-responsive-fontsize";
 import { Avatar, Image } from "react-native-elements";
-import Loader from "../Components/Loader";
-import InputField from "../Components/TextInput";
+import Loader from "../../Components/Loader";
+import InputField from "../../Components/TextInput";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { ContextConsumer } from "../Context";
 import gql from "graphql-tag";
+import styles from "../../styles";
 import { useQuery, useMutation } from "@apollo/client";
-import { GET_PROFILE } from "../Queries";
+import { GET_PROFILE } from "../../Queries";
+const BigButton = lazy(() => import("../../components/Buttons"));
 /* const firebaseConfig = {
   apiKey: "AIzaSyAg87r_eLnJFPhQ9TTar2KGIKKWk6DKY9E",
   authDomain: "blobtest-36ff6.firebaseapp.com",
@@ -31,7 +33,6 @@ import { GET_PROFILE } from "../Queries";
   storageBucket: "blobtest-36ff6.appspot.com",
   messagingSenderId: "506017999540",
 }; */
-const AddName = lazy(() => import("../Screens/AddName"));
 const UPDATE_PROFILE = gql`
   mutation updateProfile(
     $uuidUser: String!
@@ -52,7 +53,6 @@ const UPDATE_PROFILE = gql`
   }
 `;
 
-const BigButton = lazy(() => import("../Components/Buttons"));
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
@@ -226,15 +226,5 @@ const ProfileStack = (props) => {
       </View>
     );
 };
-
-const styles = StyleSheet.create({
-  inputStyle: {
-    backgroundColor: "#f3f3f3",
-    alignSelf: "center",
-    width: wp(80),
-    height: hp(6),
-    fontSize: RFValue(13),
-  },
-});
 
 export default ProfileStack;

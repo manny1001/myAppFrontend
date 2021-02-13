@@ -8,7 +8,7 @@ const SelectedBankCard = lazy(() => import("../Components/SelectedBankCard"));
 const TripDetails = lazy(() => import("../Components/TripDetails"));
 const SelectedbankCardAndTripDetails = ({
   selectedValue,
-  clientFirstName,
+  name,
   clientLastName,
   clientCellNumber,
   location,
@@ -29,7 +29,7 @@ const SelectedbankCardAndTripDetails = ({
 
       <TripDetails
         selectedValue={selectedValue}
-        clientFirstName={clientFirstName}
+        name={name}
         clientLastName={clientLastName}
         clientCellNumber={clientCellNumber}
         location={location}

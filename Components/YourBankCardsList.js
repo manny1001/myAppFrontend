@@ -3,11 +3,13 @@ import React, { Component } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import SelectBankCard, { YOURCARDS } from "../Components/selectBankCard";
 const YourBankCardsList = ({
+  selectedcard,
   setcardselected,
   setselectedCard,
   closeModal,
   props,
 }) => {
+  console.log(selectedcard, "SJDHKJ");
   return (
     <SelectBankCard
       style={{
@@ -18,6 +20,7 @@ const YourBankCardsList = ({
       setselectedCard={setselectedCard}
       props={props}
       closeModal={closeModal}
+      selectedcard={selectedcard}
     />
   );
 };

@@ -1,35 +1,25 @@
-import React, { useState } from "react";
-import { Text, View } from "react-native";
+//import liraries
+import React, { Component } from "react";
+import { View, Text, StyleSheet } from "react-native";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
 import {
   CodeField,
   Cursor,
   useBlurOnFulfill,
   useClearByFocusCell,
 } from "react-native-confirmation-code-field";
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from "react-native-responsive-screen";
-import { RFPercentage } from "react-native-responsive-fontsize";
-const CELL_COUNT = 4;
-const EnterOTP = ({ props, OTP, onPress, OTPHandler, CellNumber }) => {
+import { RFValue, RFPercentage } from "react-native-responsive-fontsize";
+const EnterOTP = () => {
+  const CELL_COUNT = 4;
   const [value, setValue] = useState("");
   const ref = useBlurOnFulfill({ value, cellCount: CELL_COUNT });
   const [cellOnLayout, getCellOnLayoutHandler] = useClearByFocusCell({
     value,
     setValue,
   });
-  const DelayedFunction = ({ handler, OTP, onPress, value }) => {
-    {
-      OTP === value ? onPress() : handler(false);
-    }
-    return null;
-  };
-  const handler = (val) => {
-    setisEqual(val);
-  };
-  const [isEqual, setisEqual] = useState(true);
-  OTPHandler(isEqual);
   return (
     <View
       style={{
@@ -56,7 +46,7 @@ const EnterOTP = ({ props, OTP, onPress, OTPHandler, CellNumber }) => {
           fontSize: RFPercentage(1.5),
         }}
       >
-        Enter the OTP sent to the mobile number {CellNumber}
+        Enter the OTP sent to the mobile number *******7765
       </Text>
       <CodeField
         ref={ref}
@@ -103,15 +93,29 @@ const EnterOTP = ({ props, OTP, onPress, OTPHandler, CellNumber }) => {
           </View>
         )}
       />
-      {value.length === 4 && (
-        <DelayedFunction
-          onPress={onPress}
-          OTP={OTP}
-          props={props}
-          value={value}
-          handler={handler}
-        />
-      )}
+
+      {/* <View
+          style={{
+            height: hp(20),
+            width: wp(80),
+            justifyContent: "center",
+            position: "absolute",
+            bottom: hp(10),
+            alignSelf: "center",
+          }}
+        >
+          <Text
+            style={{
+              alignSelf: "center",
+              color: "black",
+              fontWeight: "800",
+              fontSize: RFPercentage(2),
+              marginTop: hp(5),
+            }}
+          >
+            Incorrect otp,Please try again.
+          </Text>
+        </View> */}
     </View>
   );
 };

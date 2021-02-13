@@ -19,12 +19,12 @@ import {
 } from "react-native-responsive-screen";
 function Chat({ userUUID, driverUUID, uuidTrip }) {
   const [userID, setUserID] = useState(null);
-  const { data, loading, error } = useQuery(GET_MESSAGES, {
+  const { data, loading, error, stopPolling } = useQuery(GET_MESSAGES, {
     variables: {
       uuidtrip: uuidTrip,
       uuid: userUUID,
     },
-    pollInterval: 500,
+    /*  pollInterval: 500, */
     notifyOnNetworkStatusChange: true,
     onCompleted: () => {
       setMessages(data.messages);
@@ -51,10 +51,15 @@ function Chat({ userUUID, driverUUID, uuidTrip }) {
   }, []);
   React.useEffect(() => {
     GetData("userID").then((value) => setUserID(JSON.parse(value)));
+  }, []);
+  React.useEffect(() => {
+    return () => {
+      stopPolling();
+    };
   });
   return (
     <GiftedChat
-      inverted={false}
+      inverted={true}
       renderMessage={(props) => (
         <Message
           {...props}

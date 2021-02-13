@@ -1,22 +1,17 @@
 import React, { useState, lazy, Suspense } from "react";
 import { createStackNavigator } from "@react-navigation/stack";
-const Ride = lazy(() => import("../Screens/Ride.js"));
-const TrackDriver = lazy(() => import("../Screens/TrackDriver"));
-const Food = lazy(() => import("../Screens/Menu"));
-const Restaurants = lazy(() => import("../Screens/Restaurants"));
-const Confirmationpage = lazy(() => import("../Screens/Confirmationpage"));
-const Cart = lazy(() => import("../Screens/Cart"));
-const Checkout = lazy(() => import("../Screens/Checkout"));
-const Rating = lazy(() => import("../Screens/Rating"));
-const ProductItem = lazy(() => import("../Screens/ProductItem"));
-const Confirm = lazy(() => import("../Screens/Confirm"));
-const Payment = lazy(() => import("../Screens/Payment"));
-const AddName = lazy(() => import("../Screens/AddName"));
-import { ContextConsumer } from "../Context";
+const Ride = lazy(() => import("../screens/StartRide"));
+const TrackDriver = lazy(() => import("../../Screens/TrackDriver"));
+const Confirmationpage = lazy(() => import("../../Screens/Confirmationpage"));
+const Rating = lazy(() => import("../../Screens/Rating"));
+const Confirm = lazy(() => import("../screens/Confirm"));
+const Payment = lazy(() => import("../screens/PaymentProcess"));
+const AddName = lazy(() => import("../../Screens/AddName"));
+import { ContextConsumer } from "../../Context";
 const HomeStack = (props) => {
   const Stack = createStackNavigator();
   return (
-    <Stack.Navigator>
+    <Stack.Navigator initialRouteName="Ride">
       <Stack.Screen
         name="Ride"
         component={() => <Ride {...props} />}

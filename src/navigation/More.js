@@ -1,11 +1,11 @@
 import React, { useState, lazy, Suspense } from "react";
 import { createStackNavigator } from "@react-navigation/stack";
-const Settings = lazy(() => import("../Screens/Settings"));
-const AddBankCard = lazy(() => import("../Screens/AddBankCard"));
-const Feedback = lazy(() => import("../Screens/Feedback"));
-const About = lazy(() => import("../Screens/About"));
-const CardSettings = lazy(() => import("../Screens/CardSettings"));
-const EditBankcard = lazy(() => import("../Screens/EditBankcard"));
+const Settings = lazy(() => import("../../Screens/Settings"));
+const AddBankCard = lazy(() => import("../../Screens/AddBankCard"));
+const Feedback = lazy(() => import("../../Screens/Feedback"));
+const About = lazy(() => import("../../Screens/About"));
+const CardSettings = lazy(() => import("../../Screens/CardSettings"));
+const EditBankcard = lazy(() => import("../../Screens/EditBankcard"));
 const SettingsStack = (props) => {
   const Stack = createStackNavigator();
 
