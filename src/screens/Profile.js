@@ -8,7 +8,7 @@ const AddName = lazy(() => import("../../src/screens/AddName"));
 import { Avatar, Image } from "react-native-elements";
 import Loader from "../components/Loader";
 import InputField from "../../src/components/TextInput";
-import { styles } from "../styles/styles";
+import styles from "../styles/styles";
 import { useQuery, useMutation } from "@apollo/client";
 import { GET_PROFILE, UPDATE_PROFILE } from "../../src/utilites/Queries";
 const BigButton = lazy(() => import("../components/Buttons"));

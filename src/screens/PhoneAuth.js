@@ -6,7 +6,7 @@ import { useMutation } from "@apollo/client";
 import { USER_LOGIN } from "../../src/utilites/Queries";
 import EnterOTP from "../components/EnterOTP";
 import { StoreData } from "../../src/utilites/GFunctions";
-import { styles } from "../../src/styles/styles";
+import styles from "../../src/styles/styles";
 import Loader from "../components/Loader";
 const BigButton = lazy(() => import("../../src/components/Buttons"));
 const PhoneAuthImage = lazy(() =>

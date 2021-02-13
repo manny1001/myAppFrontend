@@ -20,7 +20,7 @@ import { DRIVERS_LIVELOCATION, ALERT_EMAIL } from "../../src/utilites/Queries";
 import { GetData } from "../../src/utilites/GFunctions";
 import { StackActions } from "@react-navigation/native";
 import { LinearGradient } from "expo-linear-gradient";
-import { styles } from "../styles/styles";
+import styles from "../styles/styles";
 const BigButton = lazy(() => import("../components/Buttons"));
 const Chat = lazy(() => import("../components/ChatApp"));
 const DriversInfo = lazy(() => import("../../src/components/DriversInfo"));

@@ -15,6 +15,7 @@ import * as Linking from "expo-linking";
 import Loader from "./src/components/Loader";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { GetData } from "./src/utilites/GFunctions";
+import { createDrawerNavigator } from "@react-navigation/drawer";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { StoreData } from "./src/utilites/GFunctions";
@@ -83,43 +84,25 @@ const linkingApp = {
     },
   },
 };
-const dispatchDimensions = () => {};
-const App = ({ context }) => {
-  const [windowWidth, setWindowWidth] = React.useState(null);
-  const [windowHeight, setWindowHeight] = React.useState(null);
-  React.useEffect(() => {
-    GetData("windowWidth").then((data) => {
-      setWindowWidth(data);
-    });
-    GetData("windowHeight").then((data) => {
-      setWindowHeight(data);
-    });
-    dispatchDimensions();
-  });
 
+const App = (props) => {
+  const windowWidth = Dimensions.get("window").width;
+  const windowHeight = Dimensions.get("window").height;
   const [isConnected, setIsConnected] = React.useState(false);
   React.useEffect(() => {
     const windowWidth = Dimensions.get("window").width;
     StoreData("windowWidth", windowWidth);
     const windowHeight = Dimensions.get("window").height;
     StoreData("windowHeight", windowHeight);
-    context.dispatch({
-      type: "WINDOW_WIDTH",
-      windowWidth: JSON.parse(windowWidth),
-    }),
-      context.dispatch({
-        type: "WINDOW_HEIGHT",
-        windowHeight: JSON.parse(windowHeight),
-      });
     NetInfo.addEventListener((state) => {
       setIsConnected(state.isConnected);
       /*       console.log("Connection type", state.type);
       console.log("Is connected?", state.isConnected); */
     });
   }, []);
-
   const Stack = createStackNavigator();
   const AppStack = createBottomTabNavigator();
+  const Drawer = createDrawerNavigator();
   if (isConnected === false)
     return (
       <Modal
@@ -140,71 +123,87 @@ const App = ({ context }) => {
   return (
     <NavigationContainer linking={linkingApp}>
       <ApolloProvider client={client}>
-        <ContextConsumer>
-          {(context) => {
-            return (
-              <Suspense fallback={Loader()}>
-                {context.state.userToken == null ? (
-                  <Stack.Navigator>
-                    <Stack.Screen
-                      name="Auth"
-                      component={AuthStack}
-                      options={{ headerShown: false }}
-                    />
-                  </Stack.Navigator>
-                ) : (
-                  <AppStack.Navigator
-                    tabBarOptions={{
-                      keyboardHidesTabBar: true,
-                    }}
-                  >
-                    <AppStack.Screen
-                      name="Home"
-                      component={Home}
-                      options={{
-                        tabBarLabel: "Home",
+        <Context>
+          <ContextConsumer>
+            {(context) => {
+              return (
+                <Suspense fallback={Loader()}>
+                  {context.state.userToken == null ? (
+                    <Stack.Navigator>
+                      <Stack.Screen
+                        name="Auth"
+                        component={AuthStack}
+                        options={{ headerShown: false }}
+                      />
+                    </Stack.Navigator>
+                  ) : windowWidth > 470 ? (
+                    <Drawer.Navigator
+                      gestureEnabled={true}
+                      initialRouteName="Home"
+                    >
+                      <Drawer.Screen
+                        name="Home"
+                        component={(props) => (
+                          <Home windowWidth={windowWidth} {...props} />
+                        )}
+                      />
+                      <Drawer.Screen
+                        name="Payments"
+                        component={(props) => <Payments {...props} />}
+                      />
+                      <Drawer.Screen
+                        name="Profile"
+                        component={(props) => <Profile {...props} />}
+                      />
+                      <Drawer.Screen
+                        name="Settings"
+                        component={(props) => <Settings {...props} />}
+                      />
+                    </Drawer.Navigator>
+                  ) : (
+                    <AppStack.Navigator
+                      tabBarOptions={{
+                        keyboardHidesTabBar: true,
                       }}
-                    />
-                    <AppStack.Screen
-                      name="Payments"
-                      component={Payments}
-                      options={{
-                        tabBarLabel: "Payments",
-                      }}
-                    />
-                    <AppStack.Screen
-                      name="Profile"
-                      component={Profile}
-                      options={{
-                        tabBarLabel: "Profile",
-                      }}
-                    />
-                    <AppStack.Screen
-                      name="Settings"
-                      component={Settings}
-                      options={{
-                        tabBarLabel: "More",
-                      }}
-                    />
-                  </AppStack.Navigator>
-                )}
-              </Suspense>
-            );
-          }}
-        </ContextConsumer>
+                    >
+                      <AppStack.Screen
+                        name="Home"
+                        component={Home}
+                        options={{
+                          tabBarLabel: "Home",
+                        }}
+                      />
+                      <AppStack.Screen
+                        name="Payments"
+                        component={Payments}
+                        options={{
+                          tabBarLabel: "Payments",
+                        }}
+                      />
+                      <AppStack.Screen
+                        name="Profile"
+                        component={Profile}
+                        options={{
+                          tabBarLabel: "Profile",
+                        }}
+                      />
+                      <AppStack.Screen
+                        name="Settings"
+                        component={Settings}
+                        options={{
+                          tabBarLabel: "More",
+                        }}
+                      />
+                    </AppStack.Navigator>
+                  )}
+                </Suspense>
+              );
+            }}
+          </ContextConsumer>
+        </Context>
       </ApolloProvider>
     </NavigationContainer>
   );
 };
-const DrippyDriver = () => {
-  return (
-    <Context>
-      <ContextConsumer>
-        {(context) => {
-          return <App context={context} />;
-        }}
-      </ContextConsumer>
-    </Context>
-  );
-};
-export default DrippyDriver;
+
+export default App;
