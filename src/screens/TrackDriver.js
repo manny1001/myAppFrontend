@@ -94,7 +94,7 @@ const TrackDriver = ({ navigation }) => {
       } */
       },
       variables: { uuidUser: useruuid },
-      /*  pollInterval: 10000, */
+      pollInterval: 10000,
       notifyOnNetworkStatusChange: true,
       fetchPolicy: "network-only",
     }

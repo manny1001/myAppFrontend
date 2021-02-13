@@ -18,10 +18,9 @@ const Profile = lazy(() => import("./src/screens/Profile"));
 const Home = lazy(() => import("./src/navigation/Home"));
 const Settings = lazy(() => import("./src/./navigation/More"));
 const Payments = lazy(() => import("./src/./navigation/Payments"));
-const AppStack = createBottomTabNavigator();
 const AuthStack = lazy(() => import("./src/navigation/Auth"));
 const httpLink = createHttpLink({
-  uri: "http://localhost:4000/graphql",
+  uri: "http://192.168.43.182:4000/graphql",
 });
 const authLink = setContext(async (_, { headers }) => {
   const token = await AsyncStorage.getItem("accessToken");
@@ -90,6 +89,7 @@ const App = () => {
     Value();
   });
   const Stack = createStackNavigator();
+  const AppStack = createBottomTabNavigator();
   return (
     <NavigationContainer linking={linkingApp}>
       <ApolloProvider client={client}>

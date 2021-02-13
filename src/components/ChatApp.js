@@ -24,7 +24,7 @@ function Chat({ userUUID, driverUUID, uuidTrip }) {
       uuidtrip: uuidTrip,
       uuid: userUUID,
     },
-    /*  pollInterval: 500, */
+    pollInterval: 500,
     notifyOnNetworkStatusChange: true,
     onCompleted: () => {
       setMessages(data.messages);
@@ -52,14 +52,14 @@ function Chat({ userUUID, driverUUID, uuidTrip }) {
   React.useEffect(() => {
     GetData("userID").then((value) => setUserID(JSON.parse(value)));
   }, []);
-  React.useEffect(() => {
+  /* React.useEffect(() => {
     return () => {
       stopPolling();
     };
-  });
+  }); */
   return (
     <GiftedChat
-      inverted={true}
+      inverted={false}
       renderMessage={(props) => (
         <Message
           {...props}
