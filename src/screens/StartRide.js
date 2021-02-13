@@ -3,7 +3,7 @@ import { View, Text } from "react-native";
 /* import { getTripInfo, getlocation } from "../../src/utilites/utilities"; */
 import { ContextConsumer } from "../../src/context/Context";
 import Geocoder from "react-native-geocoding";
-import styles from "../styles/styles";
+import { styles } from "../styles/styles";
 import { StoreData } from "../utilites/GFunctions";
 import {
   widthPercentageToDP as wp,

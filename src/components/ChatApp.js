@@ -1,4 +1,5 @@
 import React, { useState, useCallback, useEffect } from "react";
+import { ActivityIndicator } from "react-native";
 import {
   GiftedChat,
   Send,
@@ -59,6 +60,11 @@ function Chat({ userUUID, driverUUID, uuidTrip }) {
   }); */
   return (
     <GiftedChat
+      keyboardShouldPersistTaps={true}
+      onLoadEarlier={() => {
+        <ActivityIndicator />;
+      }}
+      isKeyboardInternallyHandled={true}
       inverted={false}
       renderMessage={(props) => (
         <Message
@@ -198,10 +204,10 @@ function Chat({ userUUID, driverUUID, uuidTrip }) {
         borderTopColor: "#6c63ff",
         backgroundColor: "#f2f2f2",
       }}
+      style={{ backgrondColor: "green" }}
       messages={messages}
       onSend={(messages) => {
         onSend(messages);
-        /*  */
       }}
     />
   );

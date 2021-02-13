@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 const windowWidth = Dimensions.get("window").width;
-import styles from "../styles/styles";
+import { styles } from "../styles/styles";
 import { Avatar } from "react-native-elements";
 import {
   widthPercentageToDP as wp,

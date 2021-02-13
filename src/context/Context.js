@@ -29,6 +29,8 @@ class Context extends Component {
       driverArrived: false,
       isPlaying: false,
       totalDriversOnline: null,
+      windowWidth: null,
+      windowHeight: null,
     },
   };
   componentDidMount() {
@@ -66,6 +68,22 @@ class Context extends Component {
 
   dispatch = (action) => {
     switch (action.type) {
+      case "WINDOW_HEIGHT":
+        console.log(action);
+        return this.setState((state) => ({
+          sessionArray: {
+            ...this.state.sessionArray,
+            windowHeight: action.windowHeight,
+          },
+        }));
+      case "WINDOW_WIDTH":
+        console.log(action);
+        return this.setState((state) => ({
+          sessionArray: {
+            ...this.state.sessionArray,
+            windowWidth: action.windowWidth,
+          },
+        }));
       case "SAVE_TOTAL_DRIVERS_ONLINE":
         return this.setState((state) => ({
           sessionArray: {

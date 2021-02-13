@@ -11,7 +11,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import { StoreData } from "../../src/utilites/GFunctions";
+import { StoreData, GetData } from "../../src/utilites/GFunctions";
 import { useQuery } from "@apollo/client";
 import { GET_REQUEST_HISTORY, GET_USER_UUID } from "../../src/utilites/Queries";
 import Modal from "modal-enhanced-react-native-web";
@@ -34,7 +34,7 @@ const Payments = () => {
   const [visibleModal, setvisibleModal] = useState(false);
   const [orderObject, setorderObject] = useState({});
   const [TipModalVisible, settTipModalVisible] = useState();
-
+  if (error) return <Text>{error.message}</Text>;
   if (loading) return <Loader />;
   return (
     <>

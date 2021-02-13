@@ -11,7 +11,7 @@ import { useMutation, useQuery } from "@apollo/client";
 import { NEW_REQUEST, GET_PROFILE } from "../../src/utilites/Queries";
 import { GetData, StoreData } from "../../src/utilites/GFunctions";
 import Loader from "../../src/components/Loader";
-import styles from "../styles/styles";
+import { styles } from "../styles/styles";
 const AddName = lazy(() => import("../../src/screens/AddName"));
 const BigButton = lazy(() => import("../../src/components/Buttons"));
 const Driver = lazy(() => import("../components/SelectDriver"));

@@ -106,7 +106,7 @@ export default function (props) {
     notifyOnNetworkStatusChange: true,
     pollInterval: 7000,
   });
-  if (error) return <Text>Error</Text>;
+  if (error) return <Text>{error.message}</Text>;
   if (data && data.allDriver !== undefined)
     return (
       <ContextConsumer>

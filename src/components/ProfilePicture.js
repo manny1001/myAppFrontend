@@ -9,11 +9,7 @@ const ProfilePicture = ({ source, style }) => {
   return (
     <Image
       source={source}
-      style={{
-        width: wp(35),
-        height: wp(35),
-        borderRadius: wp(17.5),
-      }}
+      style={style}
       PlaceholderContent={<ActivityIndicator />}
     />
   );

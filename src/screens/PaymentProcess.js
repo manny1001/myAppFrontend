@@ -97,7 +97,10 @@ export default function (props) {
   return (
     <>
       {requestID === null && uuidTrip === null && StopQuery === true ? (
-        <SelectNewDriver totalAmount={totalAmount} navigation={navigation} />
+        <SelectNewDriver
+          totalAmount={totalAmount}
+          navigation={props.navigation}
+        />
       ) : (
         <View style={{ flex: 1, justifyContent: "space-evenly" }}>
           {/* Cash or Card header depending on selection */}

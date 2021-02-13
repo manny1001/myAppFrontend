@@ -20,6 +20,7 @@ import { DRIVERS_LIVELOCATION, ALERT_EMAIL } from "../../src/utilites/Queries";
 import { GetData } from "../../src/utilites/GFunctions";
 import { StackActions } from "@react-navigation/native";
 import { LinearGradient } from "expo-linear-gradient";
+import { styles } from "../styles/styles";
 const BigButton = lazy(() => import("../components/Buttons"));
 const Chat = lazy(() => import("../components/ChatApp"));
 const DriversInfo = lazy(() => import("../../src/components/DriversInfo"));
@@ -27,74 +28,35 @@ const CallDriver = lazy(() => import("../components/CallDriver"));
 const ProfilePicture = lazy(() => import("../components/ProfilePicture"));
 const RatingScreen = lazy(() => import("./Rating"));
 const TrackDriver = ({ navigation }) => {
-  const [driversImage, setdriversImage] = React.useState(null);
-  const [driversCellphone, setdriversCellphone] = React.useState(null);
-  const [cellphone, setcellphone] = React.useState(null);
-  const [name, setusername] = React.useState(null);
-  const [uuidTrip, setuuidTrip] = React.useState(null);
   const [RatingModalVIsibile, setRatingModalVIsibile] = useState(false);
   const [destinationArrived, setdestinationArrived] = React.useState(false);
-  const [timeTillArrival, setTimeTillArrival] = React.useState(null);
   const [clickCount, setClickCount] = React.useState(1);
   const [sureModalVisible, setsureModalVisible] = React.useState(false);
   const [driverArrived, setDriverArrived] = React.useState(false);
   const [driverNotArrived, setdriverNotArrived] = React.useState(null);
   const [modalVisible, setmodalVisible] = React.useState(false);
-  const [driverDuration, setDriverDuration] = React.useState(null);
-  const [driverremainingtime, setdriverremainingtime] = React.useState(null);
-  const [drivername, setdrivername] = React.useState(null);
+
   const [useruuid, setuseruuid] = React.useState(null);
-  const [driverImage, setdriverImage] = React.useState(null);
+
   const [driverRegistration, setDriverRegistration] = useState(null);
-  const [driverCarModel, setDriverCarModel] = useState(null);
+
   const [timeRemaining, settimeRemaining] = React.useState(null);
-  const [RequestStatus, setRequestStatus] = React.useState(null);
   const [EmergencyAlert] = useMutation(ALERT_EMAIL);
   const { loading, errror, data, stopPolling } = useQuery(
     DRIVERS_LIVELOCATION,
     {
       onCompleted: () => {
         console.log(data);
-        setdriversCellphone(
-          data && data.getDriversLocation[0].driversCellphone
-        );
-        setdriverremainingtime(
-          JSON.parse(
-            data &&
-              data.getDriversLocation[0] &&
-              data.getDriversLocation[0].driverremainingtime
-          )
-        ),
-          setdriversImage(data && data.getDriversLocation[0].driverImage);
-        setcellphone(data && data.getDriversLocation[0].cellphone),
-          setusername(data && data.getDriversLocation[0].name),
-          setuuidTrip(data && data.getDriversLocation[0].uuidTrip),
-          setTimeTillArrival(
-            data &&
-              data.getDriversLocation[0] &&
-              data.getDriversLocation[0].drivercustomerarrivaltime
-          ),
-          setDriverDuration(data && data.getDriversLocation[0].driverduration);
-        setRequestStatus(data && data.getDriversLocation[0].status),
-          setDriverRegistration(
-            data && data.getDriversLocation[0].driverregistration
-          ),
-          setDriverCarModel(data && data.getDriversLocation[0].model),
-          setdrivername(data && data.getDriversLocation[0].drivername),
-          setdriverImage(data && data.getDriversLocation[0].driverImage);
-
         /* if (
-        [undefined, "On-Route,Pickup", "Arrived", "Completed"].indexOf(
           data &&
-           
-     
-            data.getDriversLocation[0].status
-        )
-      ) {
-      } */
+          data.getDriversLocation[0] &&
+          data.getDriversLocation[0].driverremainingtime === "0"
+        ) {
+          stopPolling();
+        } */
       },
       variables: { uuidUser: useruuid },
-      pollInterval: 10000,
+      pollInterval: 5000,
       notifyOnNetworkStatusChange: true,
       fetchPolicy: "network-only",
     }
@@ -102,33 +64,26 @@ const TrackDriver = ({ navigation }) => {
 
   React.useEffect(() => {
     GetData("useruuid").then((value) => setuseruuid(value));
-  }, []);
-  console.log(data);
+  });
   return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: "flex-start",
-        backgroundColor: "#f2f2f2",
-      }}
-    >
+    <View style={styles.container}>
       {/* {data &&
         data.getDriversLocation[0] &&
         data.getDriversLocation[0].driversLiveLocation === null && <Loader />} */}
       <View
         style={{
           width: wp(100),
-          flex: 1,
+          flex: 0.9,
           alignSelf: "center",
           flexDirection: "row",
           flexWrap: "wrap",
-          justifyContent: "space-around",
-          padding: wp(8),
+          justifyContent: "space-evenly",
+          padding: wp(5),
         }}
       >
         <ProfilePicture
           source={{
-            uri: driverImage,
+            uri: data && data.getDriversLocation[0].driverImage,
           }}
           style={{
             width: wp(28),
@@ -142,9 +97,11 @@ const TrackDriver = ({ navigation }) => {
         {driverArrived === false && <CallDriver />}
 
         <DriversInfo
-          DriverName={drivername}
-          DriverCarModel={driverCarModel}
-          DriverRegistration={driverRegistration}
+          DriverName={data && data.getDriversLocation[0].drivername}
+          DriverCarModel={data && data.getDriversLocation[0].model}
+          DriverRegistration={
+            data && data.getDriversLocation[0].driverregistration
+          }
         />
         {driverArrived === true && (
           <View
@@ -163,9 +120,19 @@ const TrackDriver = ({ navigation }) => {
               onPress={() => {
                 EmergencyAlert({
                   variables: {
-                    uuidTrip: uuidTrip,
-                    message: `${name} , ${cellphone} , Emergency!!! Somethng is wrong please help me , DriverName : ${drivername} , DriverCellphone : ${driversCellphone} ,DriversImage : ${driversImage}, TripUUID : `,
-                    status: RequestStatus,
+                    uuidTrip: data && data.getDriversLocation[0].uuidTrip,
+                    message: `${data && data.getDriversLocation[0].name} , ${
+                      data && data.getDriversLocation[0].cellphone
+                    } , Emergency!!! Somethng is wrong please help me , DriverName : ${
+                      data && data.getDriversLocation[0].drivername
+                    } , DriverCellphone : ${
+                      data && data.getDriversLocation[0].driversCellphone
+                    } ,DriversImage : ${
+                      data &&
+                      data.getDriversLocation[0].data &&
+                      data.getDriversLocation[0].driverImage
+                    }, TripUUID : `,
+                    status: data && data.getDriversLocation[0].status,
                   },
                 });
               }}
@@ -191,185 +158,218 @@ const TrackDriver = ({ navigation }) => {
             </TouchableOpacity>
           </View>
         )}
+
         {driverArrived === false && (
           <View
             style={[
               styles.TopInfo,
-              { alignSelf: "flex-end", borderWidth: null, backgroundColor: "" },
+              { alignSelf: "center", borderWidth: null, backgroundColor: "" },
             ]}
           >
-            {timeRemaining !== 0 && !loading ? (
-              <CountdownCircleTimer
-                initialRemainingTime={
-                  driverremainingtime && driverremainingtime
-                }
-                styles={{ borderWidth: null }}
-                onComplete={() => {
-                  settimeRemaining(0);
-                }}
-                size={wp(40)}
-                isPlaying={true}
-                duration={
-                  data &&
-                  data.getDriversLocation &&
-                  data.getDriversLocation[0] &&
-                  JSON.parse(data.getDriversLocation[0].driverduration)
-                }
-                colors={[
-                  ["#004777", 0.4],
-                  ["#F7B801", 0.4],
-                  ["#A30000", 0.2],
-                ]}
-              >
-                {({ remainingTime, animatedColor }) => {
-                  return (
-                    <Animated.View
-                      style={{
-                        borderWidth: null,
-                        borderRadius: wp(0),
-                        flex: 1,
-                        justifyContent: "center",
-                      }}
-                    >
-                      {remainingTime > 10 && (
-                        <Animated.Text
-                          style={{
-                            color: animatedColor,
-                            alignSelf: "center",
-                            fontSize: RFPercentage(3),
-                          }}
-                        >
-                          Arriving in
-                        </Animated.Text>
-                      )}
-                      {remainingTime <= 10 && remainingTime !== 0 && (
-                        <Animated.Text
-                          style={{
-                            color: animatedColor,
-                            alignSelf: "center",
-                            fontSize: RFPercentage(3),
-                          }}
-                        >
-                          Almost there
-                        </Animated.Text>
-                      )}
-
-                      <Animated.Text
+            {data &&
+              data.getDriversLocation[0] &&
+              data.getDriversLocation[0].driverremainingtime !== "0" &&
+              !loading && (
+                <CountdownCircleTimer
+                  initialRemainingTime={
+                    data &&
+                    data.getDriversLocation[0] &&
+                    data.getDriversLocation[0].driverremainingtime
+                  }
+                  styles={{ borderWidth: null }}
+                  onComplete={() => {
+                    settimeRemaining(0);
+                  }}
+                  size={wp(34)}
+                  isPlaying={true}
+                  duration={
+                    data &&
+                    data.getDriversLocation &&
+                    data.getDriversLocation[0] &&
+                    JSON.parse(data.getDriversLocation[0].driverduration)
+                  }
+                  colors={[
+                    ["#004777", 0.4],
+                    ["#F7B801", 0.4],
+                    ["#A30000", 0.2],
+                  ]}
+                >
+                  {({ remainingTime, animatedColor }) => {
+                    return (
+                      <Animated.View
                         style={{
-                          color: animatedColor,
-                          alignSelf: "center",
-                          fontSize: RFPercentage(3),
-                          fontWeight: "bold",
+                          borderWidth: null,
+                          borderRadius: wp(0),
+                          flex: 1,
+                          justifyContent: "center",
                         }}
                       >
-                        {(remainingTime / 60).toFixed(2).split(".")[0]} mins
-                      </Animated.Text>
-                    </Animated.View>
-                  );
-                }}
-              </CountdownCircleTimer>
-            ) : (
-              <View
-                style={{
-                  justifyContent: "center",
-                  width: wp(42),
-                  height: hp(20),
-                }}
-              >
-                <Text
-                  style={{
-                    alignSelf: "center",
-                    fontSize: RFPercentage(3),
-                    flex: 1,
-                    textAlign: "center",
-                    fontWeight: "bold",
+                        {remainingTime > 10 && (
+                          <Animated.Text
+                            style={{
+                              color: animatedColor,
+                              alignSelf: "center",
+                              fontSize: RFPercentage(3),
+                            }}
+                          >
+                            Arriving in
+                          </Animated.Text>
+                        )}
+                        {remainingTime <= 10 && remainingTime !== 0 && (
+                          <Animated.Text
+                            style={{
+                              color: animatedColor,
+                              alignSelf: "center",
+                              fontSize: RFPercentage(3),
+                            }}
+                          >
+                            Almost there
+                          </Animated.Text>
+                        )}
+
+                        <Animated.Text
+                          style={{
+                            color: animatedColor,
+                            alignSelf: "center",
+                            fontSize: RFPercentage(3),
+                            fontWeight: "bold",
+                          }}
+                        >
+                          {(remainingTime / 60).toFixed(2).split(".")[0]} mins
+                        </Animated.Text>
+                      </Animated.View>
+                    );
                   }}
-                >
-                  Has your driver arrived?
-                </Text>
+                </CountdownCircleTimer>
+              )}
+            {data &&
+              data.getDriversLocation[0] &&
+              data.getDriversLocation[0].driverremainingtime === "0" && (
                 <View
                   style={{
-                    flexDirection: "row",
-                    flex: 1,
-                    justifyContent: "space-around",
-                    alignItems: "center",
+                    justifyContent: "center",
+                    width: wp(42),
+                    height: hp(20),
                   }}
                 >
-                  <TouchableOpacity onPress={() => setsureModalVisible(true)}>
-                    <Text
-                      style={{
-                        alignSelf: "center",
-                        fontSize: RFPercentage(5),
-                        flex: 1,
-                        textAlign: "center",
-                        color: "green",
-                        fontWeight: "bold",
-                      }}
-                    >
-                      Yes
-                    </Text>
-                  </TouchableOpacity>
-                  {driverNotArrived === null && (
-                    <TouchableOpacity
-                      onPress={() => {
-                        {
-                          setdriverNotArrived(true),
-                            setmodalVisible(true),
-                            EmergencyAlert({
-                              variables: {
-                                uuidTrip: uuidTrip,
-                                message: `${name} , ${cellphone} , Driver Not yet arrived , DriverName : ${drivername} , DriverCellphone : ${driversCellphone} ,DriversImage : ${driversImage}, TripUUID : `,
-                                status: RequestStatus,
-                              },
-                            });
-                        }
-                      }}
-                    >
+                  <Text
+                    style={{
+                      alignSelf: "center",
+                      fontSize: RFPercentage(3),
+                      flex: 1,
+                      textAlign: "center",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    Has your driver arrived?
+                  </Text>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      flex: 1,
+                      justifyContent: "space-around",
+                      alignItems: "center",
+                    }}
+                  >
+                    <TouchableOpacity onPress={() => setsureModalVisible(true)}>
                       <Text
                         style={{
                           alignSelf: "center",
                           fontSize: RFPercentage(5),
                           flex: 1,
                           textAlign: "center",
+                          color: "green",
                           fontWeight: "bold",
-                          color: "red",
                         }}
                       >
-                        No
+                        Yes
                       </Text>
                     </TouchableOpacity>
-                  )}
-                  {driverNotArrived === true && (
-                    <Text
-                      style={{
-                        alignSelf: "center",
-                        fontSize: RFPercentage(1.5),
-                        flex: 1,
-                        textAlign: "center",
-                        width: wp(10),
-                      }}
-                    >
-                      Standby for a call...
-                    </Text>
-                  )}
+                    {driverNotArrived === null && (
+                      <TouchableOpacity
+                        onPress={() => {
+                          {
+                            setdriverNotArrived(true),
+                              setmodalVisible(true),
+                              EmergencyAlert({
+                                variables: {
+                                  uuidTrip:
+                                    data && data.getDriversLocation[0].uuidTrip,
+                                  message: `${
+                                    data && data.getDriversLocation[0].name
+                                  } , ${
+                                    data && data.getDriversLocation[0].cellphone
+                                  } , Driver Not yet arrived , DriverName : ${
+                                    data &&
+                                    data.getDriversLocation[0].drivername
+                                  } , DriverCellphone : ${
+                                    data &&
+                                    data.getDriversLocation[0].driversCellphone
+                                  } ,DriversImage : ${
+                                    data &&
+                                    data.getDriversLocation[0].data &&
+                                    data.getDriversLocation[0].driverImage
+                                  }, TripUUID : `,
+                                  status:
+                                    data && data.getDriversLocation[0].status,
+                                },
+                              });
+                          }
+                        }}
+                      >
+                        <Text
+                          style={{
+                            alignSelf: "center",
+                            fontSize: RFPercentage(5),
+                            flex: 1,
+                            textAlign: "center",
+                            fontWeight: "bold",
+                            color: "red",
+                          }}
+                        >
+                          No
+                        </Text>
+                      </TouchableOpacity>
+                    )}
+                    {driverNotArrived === true && (
+                      <Text
+                        style={{
+                          alignSelf: "center",
+                          fontSize: RFPercentage(1.5),
+                          flex: 1,
+                          textAlign: "center",
+                          width: wp(10),
+                        }}
+                      >
+                        Standby for a call...
+                      </Text>
+                    )}
+                  </View>
                 </View>
-              </View>
-            )}
+              )}
           </View>
         )}
       </View>
+      {/* <LinearGradient
+        // Background Linear Gradient
+        colors={["#f2f2f2", "transparent"]}
+        style={{
+          left: 0,
+          right: 0,
 
+          height: hp(10),
+          zIndex: 100,
+        }}
+      /> */}
       <View
         style={{
           width: driverArrived === true ? wp(50) : wp(85),
           flex: 1,
           alignSelf: "center",
-          marginBottom: hp(1),
-          borderRadius: wp(3),
+
           justifyContent: "center",
         }}
       >
-        <LinearGradient colors={["white", "#ffffff00"]} />
         {driverArrived === false && (
           <Chat
             uuidTrip={
@@ -401,7 +401,11 @@ const TrackDriver = ({ navigation }) => {
               onComplete={() => {}}
               size={wp(50)}
               isPlaying={true}
-              duration={timeTillArrival && timeTillArrival}
+              duration={
+                data &&
+                data.getDriversLocation[0] &&
+                data.getDriversLocation[0].drivercustomerarrivaltime
+              }
               colors={[
                 ["#004777", 0.4],
                 ["#F7B801", 0.4],
@@ -504,9 +508,19 @@ const TrackDriver = ({ navigation }) => {
               setsureModalVisible(false);
               EmergencyAlert({
                 variables: {
-                  uuidTrip: uuidTrip,
-                  message: `${name} , ${cellphone} , I did not arrive safely , please help , DriverName : ${drivername} , DriverCellphone : ${driversCellphone} ,DriversImage : ${driversImage}, TripUUID : `,
-                  status: RequestStatus,
+                  uuidTrip: data && data.getDriversLocation[0].uuidTrip,
+                  message: `${data && data.getDriversLocation[0].name} , ${
+                    data && data.getDriversLocation[0].cellphone
+                  } , I did not arrive safely , please help , DriverName : ${
+                    data && data.getDriversLocation[0].drivername
+                  } , DriverCellphone : ${
+                    data && data.getDriversLocation[0].driversCellphone
+                  } ,DriversImage : ${
+                    data &&
+                    data.getDriversLocation[0].data &&
+                    data.getDriversLocation[0].driverImage
+                  }, TripUUID : `,
+                  status: data && data.getDriversLocation[0].status,
                 },
               });
             }}
@@ -618,9 +632,19 @@ const TrackDriver = ({ navigation }) => {
               setsureModalVisible(false), setDriverArrived(false);
               EmergencyAlert({
                 variables: {
-                  uuidTrip: uuidTrip,
-                  message: `${name} , ${cellphone} , Driver has not yet arrived , second time I am contacting you , please assist... , DriverName : ${drivername} , DriverCellphone : ${driversCellphone} ,DriversImage : ${driversImage}, TripUUID : `,
-                  status: RequestStatus,
+                  uuidTrip: data && data.getDriversLocation[0].uuidTrip,
+                  message: `${data && data.getDriversLocation[0].name} , ${
+                    data && data.getDriversLocation[0].cellphone
+                  } , Driver has not yet arrived , second time I am contacting you , please assist... , DriverName : ${
+                    data && data.getDriversLocation[0].drivername
+                  } , DriverCellphone : ${
+                    data && data.getDriversLocation[0].driversCellphone
+                  } ,DriversImage : ${
+                    data &&
+                    data.getDriversLocation[0].data &&
+                    data.getDriversLocation[0].driverImage
+                  }, TripUUID : `,
+                  status: data && data.getDriversLocation[0].status,
                 },
               });
             }}
@@ -653,16 +677,3 @@ export default function ({ navigation }) {
     </ContextConsumer>
   );
 }
-const styles = StyleSheet.create({
-  TopInfo: {
-    width: wp(32),
-    height: wp(32),
-    alignSelf: "center",
-    borderRadius: wp(16),
-    flexDirection: "column",
-    justifyContent: "center",
-    borderColor: "red",
-    borderWidth: wp(1),
-    backgroundColor: "white",
-  },
-});

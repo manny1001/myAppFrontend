@@ -14,7 +14,7 @@ const BigButton = lazy(() => import("./Buttons"));
 
 const SelectNewDriver = ({ totalAmount, navigation }) => {
   const [updateDriver, { loading, error }] = useMutation(GET_NEW_DRIVER);
-  if (error) console.log(error);
+  if (error) return <Text>{error.message}</Text>;
   const [useruuid, setuseruuid] = React.useState("");
   React.useEffect(() => {
     GetData("useruuid").then((value) => setuseruuid(value));
