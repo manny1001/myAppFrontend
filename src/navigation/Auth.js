@@ -2,7 +2,7 @@ import React, { lazy } from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 
 const PhoneAuth = lazy(() => import("../screens/PhoneAuth"));
-import { Context, ContextConsumer } from "../../Context";
+import { Context, ContextConsumer } from "../../src/context/Context";
 const AcceptTandCs = lazy(() => import("../screens/TermsAndConditions"));
 const AuthenticationStack = ({ setAppLoading }) => {
   const AuthStack = createStackNavigator();

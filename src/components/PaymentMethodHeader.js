@@ -1,8 +1,8 @@
 //import liraries
 import React, { lazy } from "react";
 import { View, Text, StyleSheet } from "react-native";
-const HeadingText = lazy(() => import("../Components/HeadingText"));
-const MethodPicker = lazy(() => import("../Components/MethodPicker"));
+const HeadingText = lazy(() => import("../../src/components/HeadingText"));
+const MethodPicker = lazy(() => import("./MethodPicker"));
 const PaymentMethodHeader = ({ selectedValue, onValueChange }) => {
   return (
     <View

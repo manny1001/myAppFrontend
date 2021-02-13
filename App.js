@@ -1,5 +1,5 @@
 import React, { lazy, Suspense } from "react";
-import { Context, ContextConsumer } from "./Context";
+import { Context, ContextConsumer } from "./src/context/Context";
 import {
   ApolloClient,
   InMemoryCache,
@@ -9,12 +9,12 @@ import {
 import { setContext } from "@apollo/client/link/context";
 import { NavigationContainer } from "@react-navigation/native";
 import * as Linking from "expo-linking";
-import Loader from "./Components/Loader";
+import Loader from "./src/components/Loader";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import * as Network from "expo-network";
-const Profile = lazy(() => import("./src/./navigation/Profile"));
+const Profile = lazy(() => import("./src/screens/Profile"));
 const Home = lazy(() => import("./src/navigation/Home"));
 const Settings = lazy(() => import("./src/./navigation/More"));
 const Payments = lazy(() => import("./src/./navigation/Payments"));
@@ -51,7 +51,6 @@ const linkingApp = {
           screens: {
             Ride: { path: "Ride" },
             Cart: { path: "Cart" },
-            Confirmationpage: { path: "Confirmationpage" },
             Checkout: { path: "Checkout" },
             ConfirmRide: { path: "ConfirmRide" },
             ProductItem: { path: "ProductItem" },
@@ -65,11 +64,8 @@ const linkingApp = {
         SettingsStack: {
           path: "Settings",
           screens: {
-            AddBankCard: "AddBankCard",
             Feedback: "Feedback",
             About: "About",
-            CardSettings: "CardSettings",
-            EditBankcard: "EditBankcard",
           },
         },
         PaymentsStack: { path: "payments", screens: { Orders: "Orders" } },

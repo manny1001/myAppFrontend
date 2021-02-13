@@ -9,8 +9,8 @@ import {
   Message,
 } from "react-native-gifted-chat";
 import { useQuery, useMutation } from "@apollo/client";
-import { GET_MESSAGES, POST_MESSAGE } from "../Queries";
-import { GetData } from "../GFunctions";
+import { GET_MESSAGES, POST_MESSAGE } from "../../src/utilites/Queries";
+import { GetData } from "../utilites/GFunctions";
 import { RFPercentage } from "react-native-responsive-fontsize";
 import { Text, View } from "react-native";
 import {

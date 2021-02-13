@@ -14,18 +14,18 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-const AddName = lazy(() => import("../../Screens/AddName"));
+const AddName = lazy(() => import("../../src/screens/AddName"));
 import { StatusBar } from "expo-status-bar";
 import { RFValue } from "react-native-responsive-fontsize";
 import { Avatar, Image } from "react-native-elements";
-import Loader from "../../Components/Loader";
-import InputField from "../../Components/TextInput";
+import Loader from "../components/Loader";
+import InputField from "../../src/components/TextInput";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import gql from "graphql-tag";
-import styles from "../../styles";
+import styles from "../styles/styles";
 import { useQuery, useMutation } from "@apollo/client";
-import { GET_PROFILE } from "../../Queries";
-const BigButton = lazy(() => import("../../components/Buttons"));
+import { GET_PROFILE } from "../../src/utilites/Queries";
+const BigButton = lazy(() => import("../components/Buttons"));
 /* const firebaseConfig = {
   apiKey: "AIzaSyAg87r_eLnJFPhQ9TTar2KGIKKWk6DKY9E",
   authDomain: "blobtest-36ff6.firebaseapp.com",

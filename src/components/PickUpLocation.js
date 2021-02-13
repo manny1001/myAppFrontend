@@ -1,22 +1,16 @@
-import React, { lazy, useState } from "react";
-import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
+import React, { lazy } from "react";
 import { View, Text, ActivityIndicator, TouchableOpacity } from "react-native";
-import { ContextConsumer } from "../Context";
-import { RFValue, RFPercentage } from "react-native-responsive-fontsize";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { RFPercentage } from "react-native-responsive-fontsize";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import { ValuesOfCorrectTypeRule } from "graphql";
-const GoogleAutoComplete = lazy(() =>
-  import("../Components/GoogleAutoComplete")
-);
+const GoogleAutoComplete = lazy(() => import("./GoogleAutoComplete"));
+import { ContextConsumer } from "../../src/context/Context";
 const PickUpLocation = ({
   isClicked,
   setLocationSelected,
   currentLocation,
-  locationSelected,
   setIsClicked,
   setCurrentLocation,
   getTripInfo,

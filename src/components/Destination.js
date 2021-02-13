@@ -1,23 +1,19 @@
 //import liraries
-import React, { lazy, useState } from "react";
+import React, { lazy } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import { ContextConsumer } from "../Context";
 import { RFValue, RFPercentage } from "react-native-responsive-fontsize";
-const GoogleAutoComplete = lazy(() =>
-  import("../Components/GoogleAutoComplete")
-);
+const GoogleAutoComplete = lazy(() => import("./GoogleAutoComplete"));
+import { ContextConsumer } from "../../src/context/Context";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import { PrevLocations } from "../DATA";
 const Destination = ({
   getTripInfo,
   destination,
   setDestination,
   DestinationSelected,
   setDestinationSelected,
-  setsavedLocationVisible,
 }) => {
   return (
     <ContextConsumer>

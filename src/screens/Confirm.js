@@ -7,12 +7,12 @@ import {
 import { RFPercentage } from "react-native-responsive-fontsize";
 import { RFValue } from "react-native-responsive-fontsize";
 import { useMutation, useQuery } from "@apollo/client";
-import { NEW_REQUEST, GET_PROFILE } from "../../Queries";
-import { GetData, StoreData } from "../../GFunctions";
-import Loader from "../../Components/Loader";
-const AddName = lazy(() => import("../../Screens/AddName"));
-const BigButton = lazy(() => import("../../Components/Buttons"));
-const Driver = lazy(() => import("../../Components/SelectDriver"));
+import { NEW_REQUEST, GET_PROFILE } from "../../src/utilites/Queries";
+import { GetData, StoreData } from "../../src/utilites/GFunctions";
+import Loader from "../../src/components/Loader";
+const AddName = lazy(() => import("../../src/screens/AddName"));
+const BigButton = lazy(() => import("../../src/components/Buttons"));
+const Driver = lazy(() => import("../components/SelectDriver"));
 class Confirm extends Component {
   constructor(props) {
     super(props);

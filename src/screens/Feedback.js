@@ -6,12 +6,10 @@ import {
   TextInput,
   Text,
 } from "react-native";
-import Header from "../Components/Header";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import { RFValue } from "react-native-responsive-fontsize";
 const Feedback = (props) => {
   const [feedback, setfeedBack] = useState("");
 

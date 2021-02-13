@@ -1,87 +1,24 @@
-import React, { Component, lazy, useState } from "react";
+import React, { lazy, useState } from "react";
 import { View, Text } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { YOURCARDS } from "../../Components/selectBankCard";
-import { GetData, StoreData } from "../../GFunctions";
 import { useQuery, useMutation } from "@apollo/client";
-import Loader from "../../Components/Loader";
+import Loader from "../../src/components/Loader";
 import {
   GET_PROFILE,
   GET_DRIVER_RESPONSE,
   PAYMENT_CONFIRMATION,
-} from "../../Queries";
-const PaymentButton = lazy(() => import("../../Components/PaymentButton"));
-const YourBankCardsList = lazy(() =>
-  import("../../Components/YourBankCardsList")
-);
+} from "../../src/utilites/Queries";
+const PaymentButton = lazy(() => import("../../src/components/PaymentButton"));
 const SelectPaymentMethod = lazy(() =>
-  import("../../Components/SelectPaymentMethod")
+  import("../components/SelectPaymentMethod")
 );
 const PaymentMethodHeader = lazy(() =>
-  import("../../Components/PaymentMethodHeader")
+  import("../components/PaymentMethodHeader")
 );
-const CashSelectedText = lazy(() =>
-  import("../../Components/CashSelectedText")
-);
-const TripDetails = lazy(() => import("../../Components/TripDetails"));
-const CancelSelectedCard = lazy(() =>
-  import("../../Components/CancelSelectedCard")
-);
-const SelectedbankCardAndTripDetails = lazy(() =>
-  import("../../Components/SelectedbankCardAndTripDetails")
-);
-const AddACard = lazy(() => import("../../Components/AddACard"));
-const SelectNewDriver = lazy(() => import("../../Components/SelectNewDriver"));
-/* class TrippyPayment extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      clientCellNumber: "",
-      name: "",
-      clientLastName: "",
-      location: "",
-      timeRequested: "",
-      destination: "",
-      isVisible: true,
-      tipModalVisible: false,
-      tipAdded: false,
-      tipAmount: 0,
-      totalAmount: null,
-      orderAmount: 200.6,
-      selectedValue: "Select",
-      paymentMethod: null,
-      value: null,
-      methodSelected: true,
-      cardName: "",
-      cardNumber: "",
-      months: "",
-      year: "",
-      cvv: "",
-      doneEditing: "",
-      setselectedCard: null,
-      cardselected: false,
-    };
-  }
-  setselectedCard = (val) => {
-    this.setState({ setselectedCard: val });
-  };
+const CashSelectedText = lazy(() => import("../components/CashSelectedText"));
+const TripDetails = lazy(() => import("../components/TripDetails"));
 
-  componentDidMount() {
-   
-  }
-
-  render() {
-    const {
-      PayOrConfirm,
-      uuidTrip,
-      totalAmount,
-      requestID,
-      StopQuery,
-    } = this.props;
-    const { navigation } = this.props.props;
-  }
-} */
-
+const SelectNewDriver = lazy(() => import("../components/SelectNewDriver"));
 export default function (props) {
   const [clientCellNumber, setclientCellNumber] = React.useState("");
   const [name, setname] = React.useState("");
@@ -203,43 +140,7 @@ export default function (props) {
               />
             </>
           )}
-          {/* Payment Card and Card NOT Selected */}
-          {/*  {selectedValue === "Card" && cardselected === false && (
-            <YourBankCardsList
-              selectedCard={selectedcard}
-              setcardselected={() => setcardselected(true)}
-              setselectedCard={(val) => setselectedCard(val)}
-              props={props}
-              closeModal={() => (
-                props.navigation.navigate("Settings"),
-                this.setState({ isVisible: false })
-              )}
-            />
-          )} */}
-          {/* Payment Card and Card Selected */}
-          {/* {paymentMethod === "Card" && cardselected === true && (
-            <SelectedbankCardAndTripDetails
-              selectedCard={selectedcard}
-              selectedValue={selectedValue}
-              name={name}
-              clientLastName={""}
-              clientCellNumber={clientCellNumber}
-              location={location}
-              timeRequested={timeRequested}
-            />
-          )} */}
-          {/* No saved Cards, Add a Card*/}
-          {/* {YOURCARDS.length === 0 && paymentMethod === "Card" && (
-            <AddACard
-              logos={"none"}
-              cardName={cardName}
-              cardNumber={cardNumber}
-              months={months}
-              year={year}
-              cvv={cvv}
-              doneEditing={doneEditing}
-            />
-          )} */}
+
           {/* Show button for payment method CASH or CARD*/}
           {paymentMethod && selectedValue !== "Select" && (
             <PaymentButton
@@ -265,16 +166,4 @@ export default function (props) {
       )}
     </>
   );
-  /* return (
-    <TrippyPayment
-      {...props}
-      PayOrConfirm={PayOrConfirm}
-      dispatch={props.context.dispatch}
-      uuidTrip={uuidTrip && uuidTrip}
-      totalAmount={totalAmount}
-      requestID={requestID}
-      StopQuery={StopQuery}
-      setStopQuery={setStopQuery}
-    />
-  ); */
 }

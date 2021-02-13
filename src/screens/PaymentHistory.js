@@ -11,14 +11,14 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import { StoreData } from "../GFunctions";
+import { StoreData } from "../../src/utilites/GFunctions";
 import { useQuery } from "@apollo/client";
-import { GET_REQUEST_HISTORY, GET_USER_UUID } from "../Queries";
+import { GET_REQUEST_HISTORY, GET_USER_UUID } from "../../src/utilites/Queries";
 import Modal from "modal-enhanced-react-native-web";
-import Loader from "../Components/Loader";
-const OrderReceipt = lazy(() => import("./OrderReceipt"));
-const SendTipModal = lazy(() => import("../Components/SendTipModal"));
-const Order = lazy(() => import("../Components/Order"));
+import Loader from "../components/Loader";
+const OrderReceipt = lazy(() => import("../../src/screens/OrderReceipt.js"));
+const SendTipModal = lazy(() => import("../../src/components/SendTipModal"));
+const Order = lazy(() => import("../../src/components/Order"));
 
 const Payments = () => {
   const [currentUserUUID, setcurrentUserUUID] = useState("");

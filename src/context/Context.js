@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { StoreData } from "./GFunctions";
+import { StoreData } from "../utilites/GFunctions";
 const { Provider, Consumer } = React.createContext();
 
 class Context extends Component {

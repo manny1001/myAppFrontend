@@ -12,7 +12,7 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import { RFValue, RFPercentage } from "react-native-responsive-fontsize";
-import BigButton from "../Components/Buttons.js";
+import BigButton from "../components/Buttons.js";
 export default function App(props) {
   const { onPress, orderObject } = props;
   /*  const {

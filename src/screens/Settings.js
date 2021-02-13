@@ -11,7 +11,7 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { ContextConsumer } from "../Context";
+import { ContextConsumer } from "../../src/context/Context";
 import { RFValue } from "react-native-responsive-fontsize";
 const AysncLogout = async () => {
   try {

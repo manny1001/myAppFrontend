@@ -11,21 +11,21 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import { ContextConsumer } from "../Context";
-import Loader from "../Components/Loader";
+import { ContextConsumer } from "../../src/context/Context";
+import Loader from "../components/Loader";
 import { CountdownCircleTimer } from "react-native-countdown-circle-timer";
 import Modal from "modal-enhanced-react-native-web";
 import { useQuery, useMutation } from "@apollo/client";
-import { DRIVERS_LIVELOCATION, ALERT_EMAIL } from "../Queries";
-import { GetData } from "../GFunctions";
+import { DRIVERS_LIVELOCATION, ALERT_EMAIL } from "../../src/utilites/Queries";
+import { GetData } from "../../src/utilites/GFunctions";
 import { StackActions } from "@react-navigation/native";
 import { LinearGradient } from "expo-linear-gradient";
-const BigButton = lazy(() => import("../Components/Buttons"));
-const Chat = lazy(() => import("../Components/ChatApp"));
-const DriversInfo = lazy(() => import("../Components/DriversInfo"));
-const CallDriver = lazy(() => import("../Components/CallDriver"));
-const ProfilePicture = lazy(() => import("../Components/ProfilePicture"));
-const RatingScreen = lazy(() => import("../Screens/Rating"));
+const BigButton = lazy(() => import("../components/Buttons"));
+const Chat = lazy(() => import("../components/ChatApp"));
+const DriversInfo = lazy(() => import("../../src/components/DriversInfo"));
+const CallDriver = lazy(() => import("../components/CallDriver"));
+const ProfilePicture = lazy(() => import("../components/ProfilePicture"));
+const RatingScreen = lazy(() => import("./Rating"));
 const TrackDriver = ({ navigation }) => {
   const [driversImage, setdriversImage] = React.useState(null);
   const [driversCellphone, setdriversCellphone] = React.useState(null);

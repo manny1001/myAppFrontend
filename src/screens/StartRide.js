@@ -1,19 +1,20 @@
 import React, { Component, lazy } from "react";
 import { View, Text } from "react-native";
 /* import { getTripInfo, getlocation } from "../../src/utilites/utilities"; */
-import { ContextConsumer } from "../../Context";
+import { ContextConsumer } from "../../src/context/Context";
 import Geocoder from "react-native-geocoding";
-import { useIsFocused } from "@react-navigation/native";
-import styles from "../../styles";
-import { StoreData } from "../../GFunctions";
+import styles from "../styles/styles";
+import { StoreData } from "../utilites/GFunctions";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import * as Location from "expo-location";
-const BigButton = lazy(() => import("../../Components/Buttons"));
-const PickUpLocation = lazy(() => import("../../Components/PickUpLocation"));
-const Destination = lazy(() => import("../../Components/Destination"));
+const BigButton = lazy(() => import("../../src/Components/Buttons"));
+const PickUpLocation = lazy(() =>
+  import("../../src/components/PickUpLocation")
+);
+const Destination = lazy(() => import("../../src/components/Destination"));
 
 export default function (props) {
   const [currentLocation, setcurrentLocation] = React.useState(
@@ -47,7 +48,7 @@ export default function (props) {
               }}
             >
               <PickUpLocation
-                setIsClicked={() => setIsClicked(!isClicked)}
+                setIsClicked={() => setisClicked(!isClicked)}
                 isClicked={isClicked}
                 setLocationSelected={() => setlocationSelected(true)}
                 locationSelected={locationSelected}

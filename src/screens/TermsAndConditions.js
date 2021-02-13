@@ -4,14 +4,12 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-const BigButton = lazy(() => import("../../Components/Buttons"));
-import styles from "../../styles";
+const BigButton = lazy(() => import("../../src/components/Buttons"));
+import styles from "../styles/styles";
 const AcceptTermsButton = lazy(() =>
-  import("../../Components/AcceptTermsButton")
+  import("../../src/components/AcceptTermsButton")
 );
-const AcceptTermsImage = lazy(() =>
-  import("../../Components/AcceptTermsImage")
-);
+const AcceptTermsImage = lazy(() => import("../components/AcceptTermsImage"));
 class AcceptTandCs extends Component {
   constructor(props) {
     super(props);

@@ -1,14 +1,16 @@
 import React, { useState, lazy, Suspense } from "react";
 import { View } from "react-native";
 import Modal from "modal-enhanced-react-native-web";
-import TextInput from "../../Components/TextInput";
+import TextInput from "../../src/components/TextInput";
 import { useMutation } from "@apollo/client";
-import { USER_LOGIN } from "../../Queries";
+import { USER_LOGIN } from "../../src/utilites/Queries";
 import EnterOTP from "../components/EnterOTP";
-import { StoreData } from "../../GFunctions";
-import styles from "../../styles";
-const BigButton = lazy(() => import("../../Components/Buttons"));
-const PhoneAuthImage = lazy(() => import("../../Components/PhoneAuthImage"));
+import { StoreData } from "../../src/utilites/GFunctions";
+import styles from "../../src/styles/styles";
+const BigButton = lazy(() => import("../../src/components/Buttons"));
+const PhoneAuthImage = lazy(() =>
+  import("../../src/components/PhoneAuthImage")
+);
 const PhoneAuth = ({ context }) => {
   /* function smsOtp(cellphone, otp) {
     let number = "27" + cellphone.slice(1, 10);

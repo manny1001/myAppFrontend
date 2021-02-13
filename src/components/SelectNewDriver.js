@@ -5,12 +5,12 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import { RFValue, RFPercentage } from "react-native-responsive-fontsize";
-import { ContextConsumer } from "../Context";
-import { GET_NEW_DRIVER } from "../Queries";
+import { ContextConsumer } from "../../src/context/Context";
+import { GET_NEW_DRIVER } from "../../src/utilites/Queries";
 import { useMutation } from "@apollo/client";
-import { GetData } from "../GFunctions";
-const Driver = lazy(() => import("../Components/SelectDriver"));
-const BigButton = lazy(() => import("../Components/Buttons"));
+import { GetData } from "../../src/utilites/GFunctions";
+const Driver = lazy(() => import("../../src/components/SelectDriver.js"));
+const BigButton = lazy(() => import("./Buttons"));
 
 const SelectNewDriver = ({ totalAmount, navigation }) => {
   const [updateDriver, { loading, error }] = useMutation(GET_NEW_DRIVER);
