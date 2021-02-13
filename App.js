@@ -137,7 +137,26 @@ const App = (props) => {
                       />
                     </Stack.Navigator>
                   ) : windowWidth > 470 ? (
-                    <Drawer.Navigator
+                    <Stack.Navigator>
+                      <Stack.Screen
+                        name="Auth"
+                        component={() => {
+                          return (
+                            <View style={{ justifyContent: "center", flex: 1 }}>
+                              <Text
+                                style={{ alignSelf: "center", fontSize: 50 }}
+                              >
+                                Still Under Construction , use a smaller screen
+                                device
+                              </Text>
+                            </View>
+                          );
+                        }}
+                        options={{ headerShown: false }}
+                      />
+                    </Stack.Navigator>
+                  ) : (
+                    /* <Drawer.Navigator
                       gestureEnabled={true}
                       initialRouteName="Home"
                     >
@@ -159,8 +178,8 @@ const App = (props) => {
                         name="Settings"
                         component={(props) => <Settings {...props} />}
                       />
-                    </Drawer.Navigator>
-                  ) : (
+                    </Drawer.Navigator> */
+
                     <AppStack.Navigator
                       tabBarOptions={{
                         keyboardHidesTabBar: true,
