@@ -8,7 +8,8 @@ import { Avatar } from "react-native-elements";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useLinkTo } from "@react-navigation/native";
 import { ContextConsumer } from "../../src/context/Context";
-import { gql, useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
+import { GET_DRIVERS } from "../utilites/Queries";
 import { AllDrivers } from "../components/AllDrivers";
 
 const ClickedDriver = (props) => {
@@ -76,21 +77,7 @@ export default function (props) {
   };
 
   const linkTo = useLinkTo();
-  const GET_DRIVERS = gql`
-    query {
-      allDriver {
-        _id
-        uuid
-        name
-        surname
-        status
-        cellphone
-        picture
-        registration
-        model
-      }
-    }
-  `;
+
   const { error, data, stopPolling } = useQuery(GET_DRIVERS, {
     onCompleted: () => {
       context &&
