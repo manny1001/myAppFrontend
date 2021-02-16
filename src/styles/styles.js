@@ -90,7 +90,6 @@ const stylesBigScreen = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: "yellow",
     justifyContent: "space-evenly",
   },
   TopInfo: {

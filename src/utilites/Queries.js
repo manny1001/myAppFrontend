@@ -157,6 +157,7 @@ export const GET_MESSAGES = gql`
     messages(uuidtrip: $uuidtrip, uuid: $uuid) {
       _id
       text
+      createdAt
       user {
         _id
         name
@@ -166,8 +167,8 @@ export const GET_MESSAGES = gql`
 `;
 
 export const POST_MESSAGE = gql`
-  mutation PostMessage($text: String!, $uuid: String, $uuidtrip: String!) {
-    PostMessage(text: $text, uuid: $uuid, uuidtrip: $uuidtrip)
+  mutation postMessage($text: String!, $uuid: String, $uuidtrip: String!) {
+    postMessage(text: $text, uuid: $uuid, uuidtrip: $uuidtrip)
   }
 `;
 

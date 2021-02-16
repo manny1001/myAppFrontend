@@ -28,18 +28,17 @@ function Chat({ userUUID, driverUUID, uuidTrip }) {
     pollInterval: 500,
     notifyOnNetworkStatusChange: true,
     onCompleted: () => {
+      console.log(data);
       setMessages(data.messages);
     },
   });
   const [
-    PostMessage,
+    postMessage,
     { called, error: ERROR, loading: LOADING, data: DATA },
   ] = useMutation(POST_MESSAGE, { refetchQueries: { GET_MESSAGES } });
   const [messages, setMessages] = useState([]);
   const onSend = useCallback((messages = []) => {
-    console.log(messages[0].text, userUUID, uuidTrip);
-
-    PostMessage({
+    postMessage({
       variables: {
         text: messages[0].text,
         uuid: userUUID,
@@ -53,11 +52,7 @@ function Chat({ userUUID, driverUUID, uuidTrip }) {
   React.useEffect(() => {
     GetData("userID").then((value) => setUserID(JSON.parse(value)));
   }, []);
-  /* React.useEffect(() => {
-    return () => {
-      stopPolling();
-    };
-  }); */
+
   return (
     <GiftedChat
       keyboardShouldPersistTaps={true}
@@ -66,44 +61,48 @@ function Chat({ userUUID, driverUUID, uuidTrip }) {
       }}
       isKeyboardInternallyHandled={true}
       inverted={false}
+      /* renderCustomView={() => (
+        <View style={{ backgroundColor: "red" }}>
+          <Text>Custom View Right here</Text>
+        </View>
+      )} */
       renderMessage={(props) => (
         <Message
           {...props}
-          // renderDay={() => <Text>Date</Text>}
           containerStyle={{
-            left: { backgroundColor: "lime", marginBottom: hp(5) },
-            right: { backgroundColor: "gold", marginBottom: hp(5) },
+            left: {},
+            right: {},
           }}
         />
       )}
-      /* renderMessageText={(props) => (
+      renderMessageText={(props) => (
         <MessageText
           {...props}
           containerStyle={{
-            left: { backgroundColor: "yellow" },
-            right: { backgroundColor: "purple" },
+            left: {
+              backgroundColor: "green",
+              alignItems: "flex-start",
+              width: wp(40),
+            },
+            right: {
+              backgroundColor: "red",
+              alignItems: "flex-end",
+              width: wp(40),
+            },
           }}
           textStyle={{
-            left: { color: "red" },
-            right: { color: "green" },
+            left: { color: "black" },
+            right: { color: "#6c63ff" },
           }}
           linkStyle={{
             left: { color: "orange" },
             right: { color: "orange" },
           }}
-          customTextStyle={{ fontSize: RFPercentage(3), lineHeight: wp(1) }}
-        />
-      )} */
-      /* renderAccessory={() => (
-        <View
-          style={{
-            flex: 1,
-            backgroundColor: "red",
-            borderRadius: wp(20),
-            top: hp(2),
+          customTextStyle={{
+            fontSize: RFPercentage(2),
           }}
-        ></View>
-      )} */
+        />
+      )}
       /* renderSystemMessage={(props) => (
         <SystemMessage
           {...props}
@@ -117,11 +116,11 @@ function Chat({ userUUID, driverUUID, uuidTrip }) {
         <Avatar
           {...props}
           containerStyle={{
-            left: { borderWidth: 3, borderColor: "red" },
+            left: {},
             right: {},
           }}
           imageStyle={{
-            left: { borderWidth: 3, borderColor: "blue" },
+            left: {},
             right: {},
           }}
         />
@@ -129,41 +128,38 @@ function Chat({ userUUID, driverUUID, uuidTrip }) {
       renderBubble={(props) => (
         <Bubble
           {...props}
-          // renderTime={() => <Text>Time</Text>}
+          renderTime={() => (
+            <Text
+              style={{
+                fontSize: RFPercentage(1.5),
+                color: "gray",
+              }}
+            >
+              {props.currentMessage.createdAt.split(" ")[1].split(":")[0]} :{" "}
+              {props.currentMessage.createdAt.split(" ")[1].split(":")[1]}
+            </Text>
+          )}
           // renderTicks={() => <Text>Ticks</Text>}
           containerStyle={{
-            left: {
-              borderColor: "red",
-              borderWidth: wp(1.5),
-            },
-            right: {
-              borderColor: "blue",
-              borderWidth: wp(1.5),
-            },
+            left: {},
+            right: {},
           }}
           wrapperStyle={{
-            left: {
-              borderColor: "tomato",
-              borderWidth: 4,
-            },
-            right: {
-              borderColor: "tomato",
-              borderWidth: 4,
-              backgroundColor: "transparent",
-            },
+            left: {},
+            right: { backgroundColor: "#f2f2f2" },
           }}
           bottomContainerStyle={{
-            left: { borderColor: "purple", borderWidth: 4 },
+            left: {},
             right: {},
           }}
           tickStyle={{}}
           usernameStyle={{ color: "tomato", fontWeight: "100" }}
           containerToNextStyle={{
-            left: { borderColor: "navy", borderWidth: 4 },
+            left: { borderColor: "navy" },
             right: {},
           }}
           containerToPreviousStyle={{
-            left: { borderColor: "mediumorchid", borderWidth: 4 },
+            left: {},
             right: {},
           }}
         />
@@ -200,11 +196,12 @@ function Chat({ userUUID, driverUUID, uuidTrip }) {
       containerStyle={{
         borderRadius: wp(20),
         borderColor: "#6c63ff",
-        borderWidth: wp(2),
+        borderWidth: wp(0.5),
         borderTopColor: "#6c63ff",
         backgroundColor: "#f2f2f2",
+        height: hp(6),
+        /* marginBottom: hp(0.5), */
       }}
-      style={{ backgrondColor: "green" }}
       messages={messages}
       onSend={(messages) => {
         onSend(messages);

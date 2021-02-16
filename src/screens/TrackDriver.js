@@ -359,23 +359,7 @@ const TrackDriver = ({ navigation }) => {
         }}
       >
         {driverArrived === false && (
-          <Chat
-            uuidTrip={
-              data &&
-              data.driversLocation[0] &&
-              data.driversLocation[0].uuidTrip
-            }
-            userUUID={
-              data &&
-              data.driversLocation[0] &&
-              data.driversLocation[0].uuidUser
-            }
-            driverUUID={
-              data &&
-              data.driversLocation[0] &&
-              data.driversLocation[0].uuidDriver
-            }
-          />
+          <Chat uuidTrip={uuidTrip} userUUID={useruuid} />
         )}
         {driverArrived === true && (
           <View style={{ flex: 1, baclgroundColor: "pink" }}>

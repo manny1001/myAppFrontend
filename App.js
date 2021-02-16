@@ -136,7 +136,7 @@ const App = (props) => {
                         options={{ headerShown: false }}
                       />
                     </Stack.Navigator>
-                  ) : windowWidth > 472 ? (
+                  ) : windowWidth > 780 ? (
                     <Stack.Navigator>
                       <Stack.Screen
                         name="Auth"

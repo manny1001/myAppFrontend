@@ -37,6 +37,7 @@ export default function (props) {
   const [selectedcard, setselectedCard] = React.useState(null);
   const [driverName, setDriverName] = React.useState(null);
   const [driverSurname, setDriverSurName] = React.useState(null);
+  const [cardselected, setcardselected] = React.useState(false);
   const [driverduration, setdriverduration] = React.useState(null);
   const [model, setModel] = React.useState(null);
   const [driverRegistration, setdriverregistration] = React.useState(null);
