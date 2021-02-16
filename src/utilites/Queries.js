@@ -70,7 +70,7 @@ export const GET_DRIVERS = gql`
 `;
 export const NEW_REQUEST = gql`
   mutation NewRequest(
-    $uuidUser: String
+    $uuid: String
     $name: String
     $cellphone: String
     $location: String
@@ -78,7 +78,7 @@ export const NEW_REQUEST = gql`
     $uuidDriver: String
   ) {
     newTripRequest(
-      uuidUser: $uuidUser
+      uuid: $uuid
       name: $name
       cellphone: $cellphone
       location: $location
@@ -114,8 +114,8 @@ export const PAYMENT_CONFIRMATION = gql`
   }
 `;
 export const DRIVERS_LIVELOCATION = gql`
-  query getDriversLocation($uuidUser: String) {
-    getDriversLocation(uuidUser: $uuidUser) {
+  query getDriversLocation($uuidUser: String!, $uuidTrip: String!) {
+    getDriversLocation(uuidUser: $uuidUser, uuidTrip: $uuidTrip) {
       uuidDriver
       uuidUser
       uuidTrip

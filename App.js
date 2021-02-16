@@ -25,14 +25,14 @@ const Settings = lazy(() => import("./src/./navigation/More"));
 const Payments = lazy(() => import("./src/./navigation/Payments"));
 const AuthStack = lazy(() => import("./src/navigation/Auth"));
 const httpLink = createHttpLink({
-  uri: "http://192.168.43.182:4000/graphql",
+  uri: "http://localhost:4000/graphql",
 });
 const authLink = setContext(async (_, { headers }) => {
   const token = await AsyncStorage.getItem("accessToken");
   return {
     headers: {
       ...headers,
-      authorization: token ? `Bearer ${token}` : "",
+      Authorization: token ? `Bearer ${token}` : "",
     },
   };
 });
@@ -136,7 +136,7 @@ const App = (props) => {
                         options={{ headerShown: false }}
                       />
                     </Stack.Navigator>
-                  ) : windowWidth > 470 ? (
+                  ) : windowWidth > 472 ? (
                     <Stack.Navigator>
                       <Stack.Screen
                         name="Auth"

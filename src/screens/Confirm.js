@@ -139,7 +139,7 @@ export default function (props) {
                   }),
                     newTripRequest({
                       variables: {
-                        uuidUser: data && data.currentUser.uuid,
+                        uuid: data && data.currentUser.uuid,
                         name: data && data.currentUser.name,
                         cellphone: data && data.currentUser.cellphone,
                         location: location,

@@ -49,7 +49,7 @@ export default function (props) {
   const [StopQuery, setStopQuery] = useState(false);
   const [requestID, setRequestid] = useState(null);
   const [uuidTrip, setuuidTrip] = useState(null);
-  const [timeOutValue, setTimeoutValue] = React.useState(120);
+  const [timeOutValue, setTimeoutValue] = React.useState(500);
 
   const { data: DATA, stopPolling, startPolling } = useQuery(
     GET_DRIVER_RESPONSE,
@@ -59,7 +59,8 @@ export default function (props) {
       onCompleted: () => {
         setRequestid(DATA.getDriverRequestResponse.id),
           setuuidTrip(DATA.getDriverRequestResponse.uuidTrip),
-          requestID !== null && uuidTrip !== null && setStopQuery(true);
+          StoreData("uuidTrip", DATA.getDriverRequestResponse.uuidTrip);
+        requestID !== null && uuidTrip !== null && setStopQuery(true);
       },
       notifyOnNetworkStatusChange: true,
       fetchPolicy: "network-only",

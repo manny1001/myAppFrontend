@@ -15,6 +15,7 @@ import { StoreData, GetData } from "../../src/utilites/GFunctions";
 import { useQuery } from "@apollo/client";
 import { GET_REQUEST_HISTORY, GET_USER_UUID } from "../../src/utilites/Queries";
 import Modal from "modal-enhanced-react-native-web";
+import styles from "../styles/styles";
 import Loader from "../components/Loader";
 const OrderReceipt = lazy(() => import("../../src/screens/OrderReceipt.js"));
 const SendTipModal = lazy(() => import("../../src/components/SendTipModal"));
@@ -52,17 +53,10 @@ const Payments = () => {
         settTipModalVisible={() => settTipModalVisible(false)}
       />
 
-      <ScrollView style={{ height: hp(100), width: wp(100), marginTop: hp(2) }}>
+      <View style={{ flex: 1 }}>
         {data && data.getRequestHistory.length === 0 && (
-          <View
-            style={{
-              justifyContent: "center",
-              height: hp(80),
-              width: wp(80),
-              alignSelf: "center",
-            }}
-          >
-            <Text style={{ alignSelf: "center" }}>
+          <View style={styles.container}>
+            <Text style={{ alignSelf: "center", flexWrap: "wrap" }}>
               Seems like you havent request a trip yet...
             </Text>
           </View>
@@ -81,7 +75,7 @@ const Payments = () => {
             keyExtractor={(item) => item.id}
           />
         )}
-      </ScrollView>
+      </View>
     </>
   );
 };

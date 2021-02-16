@@ -26,8 +26,8 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "scheme": "myapp"
-    
+    "scheme": "myapp",
+    "start_url": "/"
     
     
   }

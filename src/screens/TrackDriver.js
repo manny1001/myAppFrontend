@@ -35,11 +35,9 @@ const TrackDriver = ({ navigation }) => {
   const [driverArrived, setDriverArrived] = React.useState(false);
   const [driverNotArrived, setdriverNotArrived] = React.useState(null);
   const [modalVisible, setmodalVisible] = React.useState(false);
-
   const [useruuid, setuseruuid] = React.useState(null);
-
+  const [uuidTrip, setuuidTrip] = React.useState(null);
   const [driverRegistration, setDriverRegistration] = useState(null);
-
   const [timeRemaining, settimeRemaining] = React.useState(null);
   const [EmergencyAlert] = useMutation(ALERT_EMAIL);
   const { loading, errror, data, stopPolling } = useQuery(
@@ -55,7 +53,7 @@ const TrackDriver = ({ navigation }) => {
           stopPolling();
         } */
       },
-      variables: { uuidUser: useruuid },
+      variables: { uuidUser: useruuid, uuidTrip },
       pollInterval: 5000,
       notifyOnNetworkStatusChange: true,
       fetchPolicy: "network-only",
@@ -64,6 +62,7 @@ const TrackDriver = ({ navigation }) => {
 
   React.useEffect(() => {
     GetData("useruuid").then((value) => setuseruuid(value));
+    GetData("uuidTrip").then((value) => setuuidTrip(value));
   });
   return (
     <View style={styles.container}>

@@ -13,7 +13,6 @@ import { Header } from "react-native-elements";
 import { ContextConsumer } from "../../src/context/Context";
 const HomeStack = (props) => {
   const windowWidth = Dimensions.get("window").width;
-  console.log(props.navigation);
   const Stack = createStackNavigator();
   return (
     <Stack.Navigator initialRouteName="Ride">

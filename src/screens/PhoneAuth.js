@@ -1,5 +1,5 @@
 import React, { lazy } from "react";
-import { View } from "react-native";
+import { View, Text } from "react-native";
 import Modal from "modal-enhanced-react-native-web";
 import TextInput from "../../src/components/TextInput";
 import { useMutation } from "@apollo/client";
@@ -34,7 +34,6 @@ const PhoneAuth = ({ context }) => {
   const [visibleModal, setvisibleModal] = React.useState(false);
   if (loading) return <Loader />;
   if (error) return <Text>{error.message}</Text>;
-
   return (
     <View style={styles.container}>
       <Modal style={styles.modal} isVisible={visibleModal}></Modal>
@@ -54,6 +53,7 @@ const PhoneAuth = ({ context }) => {
           StoreData("cellphone", cellphone),
             login({ variables: { cellphone, type: "user" } })
               .then(({ data }) => {
+                console.log(data);
                 context.dispatch({
                   type: "SIGN_IN",
                   userToken: data.login.token,

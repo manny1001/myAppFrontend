@@ -8,7 +8,6 @@ import {
 } from "react-native-responsive-screen";
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
-console.log(windowWidth, windowHeight);
 const stylesSmallScreen = StyleSheet.create({
   TopInfo: {
     width: wp(32),
@@ -55,7 +54,8 @@ const stylesSmallScreen = StyleSheet.create({
   profileImage: {
     width: wp(100),
     height: hp(20),
-    alignSelf: "flex-start",
+    /*  flex: 1, */
+    backgroundColor: "red",
   },
   modal: {
     flex: 1,
@@ -167,4 +167,4 @@ const stylesBigScreen = StyleSheet.create({
     fontSize: RFValue(13),
   },
 });
-export default windowWidth < 768 ? stylesSmallScreen : stylesBigScreen;
+export default windowWidth < 472 ? stylesSmallScreen : stylesBigScreen;
