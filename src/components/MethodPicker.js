@@ -16,8 +16,8 @@ const MethodPicker = ({ onValueChange, selectedValue }) => {
         borderRadius: wp(3),
         borderWidth: wp(0.3),
         justifyContent: "center",
-        marginLeft: wp(5),
-        marginTop: hp(0.5),
+        marginLeft: wp(2),
+        marginTop: hp(0.75),
         backgroundColor: "#f5f5f5",
       }}
       onValueChange={onValueChange}

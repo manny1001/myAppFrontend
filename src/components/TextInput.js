@@ -6,13 +6,8 @@ import {
 } from "react-native-responsive-screen";
 export const Input = ({ containerStyle, style, label, text }) => (
   <TextInput
-    containerStyle={{
-      flexDirection: "row",
-      marginLeft: wp(10),
-      marginRight: wp(10),
-    }}
+    containerStyle={containerStyle}
     style={style}
-    /* flat */
     label={label}
     onChangeText={(text) => setText(text)}
   />

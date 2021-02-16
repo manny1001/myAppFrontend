@@ -5,10 +5,10 @@ import { useQuery, useMutation } from "@apollo/client";
 import Loader from "../../src/components/Loader";
 import { GetData, StoreData } from "../../src/utilites/GFunctions";
 import {
-  GET_PROFILE,
   GET_DRIVER_RESPONSE,
   PAYMENT_CONFIRMATION,
 } from "../../src/utilites/Queries";
+import styles from "../styles/styles";
 const PaymentButton = lazy(() => import("../../src/components/PaymentButton"));
 const SelectPaymentMethod = lazy(() =>
   import("../components/SelectPaymentMethod")
@@ -27,39 +27,43 @@ export default function (props) {
   const [location, setlocation] = React.useState("");
   const [timeRequested, settimeRequested] = React.useState("");
   const [destination, setdestination] = React.useState("");
-  const [isVisible, setisVisible] = React.useState(true);
-  const [tipModalVisible, settipModalVisible] = React.useState(false);
-  const [tipAdded, settipAdded] = React.useState(false);
-  const [tipAmount, settipAmount] = React.useState(0);
-  const [orderAmount, setorderAmount] = React.useState("");
   const [selectedValue, setselectedValue] = React.useState("Select");
   const [paymentMethod, setpaymentMethod] = React.useState(null);
-  const [value, setvalue] = React.useState(null);
-  const [methodSelected, setmethodSelected] = React.useState(true);
-  const [cardName, setcardName] = React.useState("");
-  const [cardNumber, setcardNumber] = React.useState("");
-  const [months, setmonths] = React.useState("");
-  const [year, setyear] = React.useState("");
-  const [cvv, setcvv] = React.useState("");
-  const [doneEditing, setdoneEditing] = React.useState("");
-  const [selectedcard, setselectedCard] = React.useState(null);
-  const [cardselected, setcardselected] = React.useState(false);
   const [totalAmount, settotalAmount] = React.useState("88 000");
-  const [PayOrConfirm] = useMutation(PAYMENT_CONFIRMATION);
   const [StopQuery, setStopQuery] = useState(false);
   const [requestID, setRequestid] = useState(null);
   const [uuidTrip, setuuidTrip] = useState(null);
   const [timeOutValue, setTimeoutValue] = React.useState(500);
-
+  const [selectedcard, setselectedCard] = React.useState(null);
+  const [driverName, setDriverName] = React.useState(null);
+  const [driverSurname, setDriverSurName] = React.useState(null);
+  const [driverduration, setdriverduration] = React.useState(null);
+  const [model, setModel] = React.useState(null);
+  const [driverRegistration, setdriverregistration] = React.useState(null);
+  const [PayOrConfirm] = useMutation(PAYMENT_CONFIRMATION);
   const { data: DATA, stopPolling, startPolling } = useQuery(
     GET_DRIVER_RESPONSE,
     {
       variables: { uuidUser: userUUID },
       pollInterval: 500,
       onCompleted: () => {
+        console.log(DATA);
         setRequestid(DATA.getDriverRequestResponse.id),
           setuuidTrip(DATA.getDriverRequestResponse.uuidTrip),
-          StoreData("uuidTrip", DATA.getDriverRequestResponse.uuidTrip);
+          DATA.getDriverRequestResponse.uuidTrip &&
+            StoreData("uuidTrip", DATA.getDriverRequestResponse.uuidTrip);
+        DATA.getDriverRequestResponse.driverduration &&
+          setdriverduration(DATA.getDriverRequestResponse.driverduration);
+        DATA.getDriverRequestResponse.drivername &&
+          setDriverName(DATA.getDriverRequestResponse.drivername);
+        DATA.getDriverRequestResponse.drivername &&
+          setDriverSurName(DATA.getDriverRequestResponse.driversurname);
+        DATA.getDriverRequestResponse.driverregistration &&
+          setdriverregistration(
+            DATA.getDriverRequestResponse.driverregistration
+          );
+        DATA.getDriverRequestResponse.model &&
+          setModel(DATA.getDriverRequestResponse.model);
         requestID !== null && uuidTrip !== null && setStopQuery(true);
       },
       notifyOnNetworkStatusChange: true,
@@ -69,11 +73,12 @@ export default function (props) {
   React.useEffect(() => {
     AsyncStorage.multiGet([
       "cellphone",
-      "clientFirstName",
+      "name",
       "location",
       "timeRequested",
       "totalAmount",
       "useruuid",
+      "destination",
     ]).then((response) => {
       setclientCellNumber(response[0][1]);
       setname(response[1][1]);
@@ -81,6 +86,7 @@ export default function (props) {
       settimeRequested(response[3][1]);
       settotalAmount(response[4][1]);
       setUSERUUID(response[5][1]);
+      setdestination(response[6][1]);
     });
   }, []);
   React.useEffect(() => {
@@ -90,6 +96,7 @@ export default function (props) {
       setStopQuery(true);
       props.context.dispatch({ type: "SAVE_DRIVERUUID", driveruuid: "" });
     }
+
     StopQuery === true && stopPolling();
     StopQuery === false && startPolling();
   }, [StopQuery, timeOutValue]);
@@ -103,7 +110,7 @@ export default function (props) {
           navigation={props.navigation}
         />
       ) : (
-        <View style={{ flex: 1, justifyContent: "space-evenly" }}>
+        <View style={styles.container}>
           {/* Cash or Card header depending on selection */}
           <PaymentMethodHeader
             selectedValue={selectedValue}
@@ -133,6 +140,12 @@ export default function (props) {
                 }
               />
               <TripDetails
+                destination={destination}
+                driverduration={driverduration}
+                driverName={driverName}
+                driverSurName={driverSurname}
+                model={model}
+                registration={driverRegistration}
                 selectedValue={selectedValue}
                 name={name}
                 clientLastName={""}

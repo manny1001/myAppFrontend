@@ -25,9 +25,9 @@ const ClickedDriver = (props) => {
           alignSelf: "center",
           height: hp(30),
           borderWidth: wp(0.25),
-          padding: wp(2),
           borderRadius: wp(2),
-          width: wp(90),
+          padding: wp(3),
+          width: wp(80),
         }}
       >
         <View style={styles.driverDetails}>
@@ -49,7 +49,7 @@ const ClickedDriver = (props) => {
             renderPlaceholderContent={picture && <ActivityIndicator />}
             rounded
             size="xlarge"
-            containerStyle={{
+            style={{
               height: hp(15),
               width: hp(15),
               borderRadius: hp(7.5),
@@ -67,14 +67,6 @@ const ClickedDriver = (props) => {
 export default function (props) {
   const { context } = props;
   const [clickedDriver, setClickedDriver] = React.useState(null);
-  const AysncLogout = async () => {
-    try {
-      await AsyncStorage.removeItem("accessToken");
-      return true;
-    } catch (e) {
-      return false;
-    }
-  };
 
   const linkTo = useLinkTo();
 
@@ -124,11 +116,9 @@ export default function (props) {
     );
   return <></>;
 }
-
 const styles = StyleSheet.create({
   driverDetails: {
     justifyContent: "space-around",
-    width: wp(50),
     flex: 1,
   },
 });

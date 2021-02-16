@@ -58,7 +58,7 @@ const ProfileStack = (props) => {
         <Image
           blurRadius={5}
           source={{ uri: data.currentUser.picture }}
-          style={styles.profileImage}
+          containerStyle={styles.profileImage}
         />
         <Avatar
           renderPlaceholderContent={

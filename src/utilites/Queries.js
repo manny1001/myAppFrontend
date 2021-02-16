@@ -96,7 +96,23 @@ export const GET_DRIVER_RESPONSE = gql`
   query GETDRIVERESPONSE($uuidUser: String!) {
     getDriverRequestResponse(uuidUser: $uuidUser) {
       id
+      uuidDriver
+      uuidUser
       uuidTrip
+      name
+      cellphone
+      status
+      driversLiveLocation
+      driverduration
+      driverremainingtime
+      drivername
+      driversurname
+      driverImage
+      driversCellphone
+      paymentmethod
+      model
+      driverregistration
+      drivercustomerarrivaltime
     }
   }
 `;
@@ -114,8 +130,8 @@ export const PAYMENT_CONFIRMATION = gql`
   }
 `;
 export const DRIVERS_LIVELOCATION = gql`
-  query getDriversLocation($uuidUser: String!, $uuidTrip: String!) {
-    getDriversLocation(uuidUser: $uuidUser, uuidTrip: $uuidTrip) {
+  query driversLocation($uuidUser: String, $uuidTrip: String) {
+    driversLocation(uuidUser: $uuidUser, uuidTrip: $uuidTrip) {
       uuidDriver
       uuidUser
       uuidTrip
@@ -126,6 +142,7 @@ export const DRIVERS_LIVELOCATION = gql`
       driverduration
       driverremainingtime
       drivername
+      driversurname
       driverImage
       driversCellphone
       paymentmethod

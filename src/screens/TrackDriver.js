@@ -44,16 +44,18 @@ const TrackDriver = ({ navigation }) => {
     DRIVERS_LIVELOCATION,
     {
       onCompleted: () => {
-        console.log(data);
         /* if (
           data &&
-          data.getDriversLocation[0] &&
-          data.getDriversLocation[0].driverremainingtime === "0"
+          data.driversLocation[0] &&
+          data.driversLocation[0].driverremainingtime === "0"
         ) {
           stopPolling();
         } */
       },
-      variables: { uuidUser: useruuid, uuidTrip },
+      variables: {
+        uuidUser: useruuid,
+        uuidTrip: uuidTrip,
+      },
       pollInterval: 5000,
       notifyOnNetworkStatusChange: true,
       fetchPolicy: "network-only",
@@ -64,11 +66,9 @@ const TrackDriver = ({ navigation }) => {
     GetData("useruuid").then((value) => setuseruuid(value));
     GetData("uuidTrip").then((value) => setuuidTrip(value));
   });
+
   return (
     <View style={styles.container}>
-      {/* {data &&
-        data.getDriversLocation[0] &&
-        data.getDriversLocation[0].driversLiveLocation === null && <Loader />} */}
       <View
         style={{
           width: wp(100),
@@ -82,7 +82,7 @@ const TrackDriver = ({ navigation }) => {
       >
         <ProfilePicture
           source={{
-            uri: data && data.getDriversLocation[0].driverImage,
+            uri: data && data.driversLocation[0].driverImage,
           }}
           style={{
             width: wp(28),
@@ -96,10 +96,10 @@ const TrackDriver = ({ navigation }) => {
         {driverArrived === false && <CallDriver />}
 
         <DriversInfo
-          DriverName={data && data.getDriversLocation[0].drivername}
-          DriverCarModel={data && data.getDriversLocation[0].model}
+          DriverName={data && data.driversLocation[0].drivername}
+          DriverCarModel={data && data.driversLocation[0].model}
           DriverRegistration={
-            data && data.getDriversLocation[0].driverregistration
+            data && data.driversLocation[0].driverregistration
           }
         />
         {driverArrived === true && (
@@ -119,19 +119,19 @@ const TrackDriver = ({ navigation }) => {
               onPress={() => {
                 EmergencyAlert({
                   variables: {
-                    uuidTrip: data && data.getDriversLocation[0].uuidTrip,
-                    message: `${data && data.getDriversLocation[0].name} , ${
-                      data && data.getDriversLocation[0].cellphone
+                    uuidTrip: data && data.driversLocation[0].uuidTrip,
+                    message: `${data && data.driversLocation[0].name} , ${
+                      data && data.driversLocation[0].cellphone
                     } , Emergency!!! Somethng is wrong please help me , DriverName : ${
-                      data && data.getDriversLocation[0].drivername
+                      data && data.driversLocation[0].drivername
                     } , DriverCellphone : ${
-                      data && data.getDriversLocation[0].driversCellphone
+                      data && data.driversLocation[0].driversCellphone
                     } ,DriversImage : ${
                       data &&
-                      data.getDriversLocation[0].data &&
-                      data.getDriversLocation[0].driverImage
+                      data.driversLocation[0].data &&
+                      data.driversLocation[0].driverImage
                     }, TripUUID : `,
-                    status: data && data.getDriversLocation[0].status,
+                    status: data && data.driversLocation[0].status,
                   },
                 });
               }}
@@ -166,14 +166,14 @@ const TrackDriver = ({ navigation }) => {
             ]}
           >
             {data &&
-              data.getDriversLocation[0] &&
-              data.getDriversLocation[0].driverremainingtime !== "0" &&
+              data.driversLocation[0] &&
+              data.driversLocation[0].driverremainingtime !== "0" &&
               !loading && (
                 <CountdownCircleTimer
                   initialRemainingTime={
                     data &&
-                    data.getDriversLocation[0] &&
-                    data.getDriversLocation[0].driverremainingtime
+                    data.driversLocation[0] &&
+                    data.driversLocation[0].driverremainingtime
                   }
                   styles={{ borderWidth: null }}
                   onComplete={() => {
@@ -183,9 +183,9 @@ const TrackDriver = ({ navigation }) => {
                   isPlaying={true}
                   duration={
                     data &&
-                    data.getDriversLocation &&
-                    data.getDriversLocation[0] &&
-                    JSON.parse(data.getDriversLocation[0].driverduration)
+                    data.driversLocation &&
+                    data.driversLocation[0] &&
+                    JSON.parse(data.driversLocation[0].driverduration)
                   }
                   colors={[
                     ["#004777", 0.4],
@@ -242,8 +242,8 @@ const TrackDriver = ({ navigation }) => {
                 </CountdownCircleTimer>
               )}
             {data &&
-              data.getDriversLocation[0] &&
-              data.getDriversLocation[0].driverremainingtime === "0" && (
+              data.driversLocation[0] &&
+              data.driversLocation[0].driverremainingtime === "0" && (
                 <View
                   style={{
                     justifyContent: "center",
@@ -293,24 +293,23 @@ const TrackDriver = ({ navigation }) => {
                               EmergencyAlert({
                                 variables: {
                                   uuidTrip:
-                                    data && data.getDriversLocation[0].uuidTrip,
+                                    data && data.driversLocation[0].uuidTrip,
                                   message: `${
-                                    data && data.getDriversLocation[0].name
+                                    data && data.driversLocation[0].name
                                   } , ${
-                                    data && data.getDriversLocation[0].cellphone
+                                    data && data.driversLocation[0].cellphone
                                   } , Driver Not yet arrived , DriverName : ${
-                                    data &&
-                                    data.getDriversLocation[0].drivername
+                                    data && data.driversLocation[0].drivername
                                   } , DriverCellphone : ${
                                     data &&
-                                    data.getDriversLocation[0].driversCellphone
+                                    data.driversLocation[0].driversCellphone
                                   } ,DriversImage : ${
                                     data &&
-                                    data.getDriversLocation[0].data &&
-                                    data.getDriversLocation[0].driverImage
+                                    data.driversLocation[0].data &&
+                                    data.driversLocation[0].driverImage
                                   }, TripUUID : `,
                                   status:
-                                    data && data.getDriversLocation[0].status,
+                                    data && data.driversLocation[0].status,
                                 },
                               });
                           }
@@ -349,17 +348,7 @@ const TrackDriver = ({ navigation }) => {
           </View>
         )}
       </View>
-      {/* <LinearGradient
-        // Background Linear Gradient
-        colors={["#f2f2f2", "transparent"]}
-        style={{
-          left: 0,
-          right: 0,
 
-          height: hp(10),
-          zIndex: 100,
-        }}
-      /> */}
       <View
         style={{
           width: driverArrived === true ? wp(50) : wp(85),
@@ -373,18 +362,18 @@ const TrackDriver = ({ navigation }) => {
           <Chat
             uuidTrip={
               data &&
-              data.getDriversLocation[0] &&
-              data.getDriversLocation[0].uuidTrip
+              data.driversLocation[0] &&
+              data.driversLocation[0].uuidTrip
             }
             userUUID={
               data &&
-              data.getDriversLocation[0] &&
-              data.getDriversLocation[0].uuidUser
+              data.driversLocation[0] &&
+              data.driversLocation[0].uuidUser
             }
             driverUUID={
               data &&
-              data.getDriversLocation[0] &&
-              data.getDriversLocation[0].uuidDriver
+              data.driversLocation[0] &&
+              data.driversLocation[0].uuidDriver
             }
           />
         )}
@@ -402,8 +391,8 @@ const TrackDriver = ({ navigation }) => {
               isPlaying={true}
               duration={
                 data &&
-                data.getDriversLocation[0] &&
-                data.getDriversLocation[0].drivercustomerarrivaltime
+                data.driversLocation[0] &&
+                data.driversLocation[0].drivercustomerarrivaltime
               }
               colors={[
                 ["#004777", 0.4],
@@ -507,19 +496,19 @@ const TrackDriver = ({ navigation }) => {
               setsureModalVisible(false);
               EmergencyAlert({
                 variables: {
-                  uuidTrip: data && data.getDriversLocation[0].uuidTrip,
-                  message: `${data && data.getDriversLocation[0].name} , ${
-                    data && data.getDriversLocation[0].cellphone
+                  uuidTrip: data && data.driversLocation[0].uuidTrip,
+                  message: `${data && data.driversLocation[0].name} , ${
+                    data && data.driversLocation[0].cellphone
                   } , I did not arrive safely , please help , DriverName : ${
-                    data && data.getDriversLocation[0].drivername
+                    data && data.driversLocation[0].drivername
                   } , DriverCellphone : ${
-                    data && data.getDriversLocation[0].driversCellphone
+                    data && data.driversLocation[0].driversCellphone
                   } ,DriversImage : ${
                     data &&
-                    data.getDriversLocation[0].data &&
-                    data.getDriversLocation[0].driverImage
+                    data.driversLocation[0].data &&
+                    data.driversLocation[0].driverImage
                   }, TripUUID : `,
-                  status: data && data.getDriversLocation[0].status,
+                  status: data && data.driversLocation[0].status,
                 },
               });
             }}
@@ -631,19 +620,19 @@ const TrackDriver = ({ navigation }) => {
               setsureModalVisible(false), setDriverArrived(false);
               EmergencyAlert({
                 variables: {
-                  uuidTrip: data && data.getDriversLocation[0].uuidTrip,
-                  message: `${data && data.getDriversLocation[0].name} , ${
-                    data && data.getDriversLocation[0].cellphone
+                  uuidTrip: data && data.driversLocation[0].uuidTrip,
+                  message: `${data && data.driversLocation[0].name} , ${
+                    data && data.driversLocation[0].cellphone
                   } , Driver has not yet arrived , second time I am contacting you , please assist... , DriverName : ${
-                    data && data.getDriversLocation[0].drivername
+                    data && data.driversLocation[0].drivername
                   } , DriverCellphone : ${
-                    data && data.getDriversLocation[0].driversCellphone
+                    data && data.driversLocation[0].driversCellphone
                   } ,DriversImage : ${
                     data &&
-                    data.getDriversLocation[0].data &&
-                    data.getDriversLocation[0].driverImage
+                    data.driversLocation[0].data &&
+                    data.driversLocation[0].driverImage
                   }, TripUUID : `,
-                  status: data && data.getDriversLocation[0].status,
+                  status: data && data.driversLocation[0].status,
                 },
               });
             }}

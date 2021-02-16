@@ -33,10 +33,10 @@ const PaymentButton = ({
             totalAmount: totalAmount,
             paymentMethod: paymentMethod,
           },
-        }),
-          /* context.dispatch({ type: "SAVE_ISPLAYING", isPlaying: true }),
+        });
+        /* context.dispatch({ type: "SAVE_ISPLAYING", isPlaying: true }),
           context.dispatch({ type: "SAVE_ACTIVEREQUEST", activeRequest: true }), */
-          navigation.navigate("TrackDriver");
+        navigation.navigate("TrackDriver");
       }}
     />
   );

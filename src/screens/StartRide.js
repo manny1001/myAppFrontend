@@ -82,7 +82,7 @@ export default function (props) {
               onPress={() => {
                 props.navigation.navigate("Confirm");
               }}
-              title={"Request"}
+              title={"Next"}
               titleStyle={{ fontWeight: "bold" }}
             />
           </View>

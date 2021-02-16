@@ -9,6 +9,10 @@ import {
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 const stylesSmallScreen = StyleSheet.create({
+  iconStyle: {
+    flex: 0.16,
+    justifyContent: "center",
+  },
   TopInfo: {
     width: wp(32),
     height: wp(32),
@@ -23,18 +27,10 @@ const stylesSmallScreen = StyleSheet.create({
   heading2: {
     fontSize: RFValue(16),
     fontWeight: "bold",
-    textAlign: "flex-start",
   },
   locations: {
     fontSize: RFValue(15),
     fontWeight: "400",
-    textAlign: "flex-start",
-    width: wp(80),
-  },
-  locationsBlock: {
-    bottom: hp(3),
-    marginLeft: wp(1),
-    width: wp(80),
   },
   timeAndDistanceContainer: {
     justifyContent: "space-between",
@@ -52,10 +48,7 @@ const stylesSmallScreen = StyleSheet.create({
     bottom: 0,
   },
   profileImage: {
-    width: wp(100),
     height: hp(20),
-    /*  flex: 1, */
-    backgroundColor: "red",
   },
   modal: {
     flex: 1,
@@ -77,18 +70,24 @@ const stylesSmallScreen = StyleSheet.create({
   },
   container: {
     flex: 1,
-    justifyContent: "space-evenly",
+    justifyContent: "space-between",
     backgroundColor: "#f2f2f2",
+    padding: wp(10),
+  },
+  inputContainerStyle: {
+    backgroundColor: "#f3f3f3",
+    fontSize: RFValue(13),
   },
   inputStyle: {
     backgroundColor: "#f3f3f3",
-    alignSelf: "center",
-    width: wp(80),
     height: hp(6),
-    fontSize: RFValue(13),
   },
 });
 const stylesBigScreen = StyleSheet.create({
+  iconStyle: {
+    flex: 0.16,
+    justifyContent: "center",
+  },
   container: {
     flex: 1,
     backgroundColor: "yellow",
@@ -108,13 +107,10 @@ const stylesBigScreen = StyleSheet.create({
   heading2: {
     fontSize: RFValue(16),
     fontWeight: "bold",
-    textAlign: "flex-start",
   },
   locations: {
     fontSize: RFValue(15),
     fontWeight: "400",
-    textAlign: "flex-start",
-    width: wp(80),
   },
   locationsBlock: {
     bottom: hp(3),

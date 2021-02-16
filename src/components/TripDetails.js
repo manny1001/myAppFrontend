@@ -7,30 +7,36 @@ import {
 } from "react-native-responsive-screen";
 import { RFValue } from "react-native-responsive-fontsize";
 const TripDetails = ({
-  selectedValue,
   name,
   clientLastName,
   cellphone,
   location,
+  destination,
+  driverduration,
+  driverName,
+  driverSurName,
+  model,
+  registration,
   timeRequested,
 }) => {
+  console.log(driverduration);
   return (
-    <View
-      style={{
-        flex: selectedValue === "Cash" ? 0.5 : 1,
-        width: wp(90),
-        alignSelf: "center",
-        justifyContent: "space-evenly",
-      }}
-    >
+    <>
       <Text style={{ fontSize: RFValue(24), fontWeight: "600" }}>Details</Text>
       <Text>
         {name} {clientLastName}
       </Text>
       <Text>{location}</Text>
+      <Text>{destination}</Text>
+      <Text>{(driverduration / 60).toFixed(0)} mins away</Text>
+      <Text>
+        {driverName} {driverSurName}
+      </Text>
+      <Text>{model}</Text>
+      <Text>{registration}</Text>
       <Text>{timeRequested}</Text>
       <Text>{cellphone}</Text>
-    </View>
+    </>
   );
 };
 

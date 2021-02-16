@@ -13,6 +13,7 @@ import {
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ContextConsumer } from "../../src/context/Context";
 import { RFValue } from "react-native-responsive-fontsize";
+import styles from "../styles/styles";
 const AysncLogout = async () => {
   try {
     await AsyncStorage.removeItem("accessToken");
@@ -40,18 +41,13 @@ const Usersettings = (props) => {
     },
   ];
   return (
-    <View
-      style={{
-        width: wp(80),
-        alignSelf: "center",
-        flex: 1,
-        justifyContent: "center",
-      }}
-    >
+    <View style={styles.container}>
       <FlatList
-        style={{
+        containerStyle={{
           flex: 1,
+          alignSelf: "center",
         }}
+        style={{}}
         data={DATA}
         renderItem={({ item }) => (
           <TouchableOpacity
@@ -60,22 +56,19 @@ const Usersettings = (props) => {
               item.id === "3" && props.navigation.navigate("About");
             }}
             style={{
-              padding: 20,
-              marginVertical: hp(1),
-              width: wp(100),
               borderBottomWidth: 0.1,
               borderBottomColor: "#d3d3d3",
-              height: hp(4),
-              justifyContent: "flex-start",
               flexDirection: "row",
+              flex: 1,
+              height: hp(8),
+              padding: 20,
             }}
           >
             {item.icon}
             <Text
               style={{
                 fontSize: RFValue(18),
-                alignSelf: "center",
-                fontWeight: "300",
+                fontWeight: "400",
               }}
             >
               {item.title}
@@ -88,17 +81,14 @@ const Usersettings = (props) => {
         style={{
           borderTopWidth: 0.1,
           borderTopColor: "#d3d3d3",
-          backgroundColor: "#f5f5f5",
-          width: wp(80),
           height: hp(8),
           justifyContent: "space-between",
           flexDirection: "row",
-          alignSelf: "center",
+          alignSelf: "stretch",
         }}
       >
         <Text
           style={{
-            marginLeft: wp(5),
             fontSize: wp(5),
             alignSelf: "center",
           }}
@@ -115,13 +105,7 @@ const Usersettings = (props) => {
                   }
                 }}
                 style={{
-                  justifyContent: "center",
                   alignSelf: "center",
-
-                  flexDirection: "row",
-                  width: wp(10),
-                  marginRight: wp(5),
-                  height: hp(5),
                 }}
               >
                 <Text>Logout</Text>
@@ -134,12 +118,4 @@ const Usersettings = (props) => {
   );
 };
 
-const styles = StyleSheet.create({
-  iconStyle: {
-    flex: 0.16,
-    justifyContent: "center",
-  },
-});
-
 export default Usersettings;
-/*  */

@@ -6,20 +6,18 @@ import {
   TextInput,
   Text,
 } from "react-native";
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from "react-native-responsive-screen";
+import styles from "../styles/styles";
 const Feedback = (props) => {
   const [feedback, setfeedBack] = useState("");
 
   return (
     <View style={styles.container}>
       <TextInput
+        containerStyle={{ flex: 1 }}
         style={{
           flex: 1,
-          width: wp(100),
-          alignSelf: "center",
+
+          alignSelf: "stretch",
           borderColor: "gray",
           placeholderTextColor: "gray",
         }}
@@ -35,11 +33,10 @@ const Feedback = (props) => {
 
       <View
         style={{
-          width: wp(100),
           flex: 0.25,
           alignSelf: "center",
           justifyContent: "space-around",
-          flexDirection: "row",
+          flexDirection: "column",
         }}
       >
         <TouchableOpacity
@@ -59,11 +56,5 @@ const Feedback = (props) => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});
 
 export default Feedback;

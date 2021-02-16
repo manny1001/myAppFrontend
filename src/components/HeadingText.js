@@ -12,7 +12,6 @@ const HeadingText = ({ selectedValue }) => {
         <Text
           style={{
             alignSelf: "center",
-            marginLeft: wp(7),
             fontSize: RFValue(24),
             fontWeight: "600",
           }}
@@ -20,38 +19,12 @@ const HeadingText = ({ selectedValue }) => {
           Method
         </Text>
       );
-    case "Cash":
-      return (
-        <Text
-          style={{
-            alignSelf: "center",
-            marginLeft: wp(7),
-            fontSize: RFValue(24),
-            fontWeight: "600",
-          }}
-        >
-          Cash Payment
-        </Text>
-      );
-    case "Card":
-      return (
-        <Text
-          style={{
-            alignSelf: "center",
-            marginLeft: wp(7),
-            fontSize: RFValue(24),
-            fontWeight: "600",
-          }}
-        >
-          Card Payment
-        </Text>
-      );
+
     default:
       return (
         <Text
           style={{
             alignSelf: "center",
-            marginLeft: wp(7),
             fontSize: RFValue(24),
             fontWeight: "600",
           }}
