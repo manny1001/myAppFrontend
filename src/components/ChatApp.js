@@ -85,7 +85,7 @@ function Chat({ userUUID, driverUUID, uuidTrip }) {
               width: wp(40),
             },
             right: {
-              backgroundColor: "red",
+              /* backgroundColor: "red", */
               alignItems: "flex-end",
               width: wp(40),
             },
@@ -128,7 +128,7 @@ function Chat({ userUUID, driverUUID, uuidTrip }) {
       renderBubble={(props) => (
         <Bubble
           {...props}
-          renderTime={() => (
+          /* renderTime={() => (
             <Text
               style={{
                 fontSize: RFPercentage(1.5),
@@ -138,7 +138,7 @@ function Chat({ userUUID, driverUUID, uuidTrip }) {
               {props.currentMessage.createdAt.split(" ")[1].split(":")[0]} :{" "}
               {props.currentMessage.createdAt.split(" ")[1].split(":")[1]}
             </Text>
-          )}
+          )} */
           // renderTicks={() => <Text>Ticks</Text>}
           containerStyle={{
             left: {},
@@ -169,12 +169,15 @@ function Chat({ userUUID, driverUUID, uuidTrip }) {
           <Send
             {...props}
             containerStyle={{
-              margin: wp(0.5),
+              height: hp(5),
               borderWidth: null,
               flex: 0.5,
               borderRadius: wp(20),
               justifyContent: "center",
               backgroundColor: "#6c63ff",
+              alignSelf: "center",
+              marginBottom: hp(1),
+              marginRight: wp(1),
             }}
           >
             <Text

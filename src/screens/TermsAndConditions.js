@@ -18,31 +18,23 @@ class AcceptTandCs extends Component {
   render() {
     return (
       <View style={styles.container}>
+        <AcceptTermsImage />
         <View
           style={{
-            flexDirection: "column",
-            flex: 1,
+            width: wp(60),
+            flexDirection: "row",
             justifyContent: "space-around",
+            alignSelf: "center",
           }}
         >
-          <AcceptTermsImage />
-          <View
-            style={{
-              width: wp(60),
-              flexDirection: "row",
-              justifyContent: "space-around",
-              alignSelf: "center",
+          <AcceptTermsButton
+            onPress={() => {
+              this.setState({ isAccepted: !this.state.isAccepted });
             }}
-          >
-            <AcceptTermsButton
-              onPress={() => {
-                this.setState({ isAccepted: !this.state.isAccepted });
-              }}
-            />
-            <TouchableOpacity style={{ alignSelf: "center" }}>
-              <Text style={styles.heading5}>Accept Terms and Conditions</Text>
-            </TouchableOpacity>
-          </View>
+          />
+          <TouchableOpacity style={{ alignSelf: "center" }}>
+            <Text style={styles.heading5}>Accept Terms and Conditions</Text>
+          </TouchableOpacity>
         </View>
 
         <BigButton

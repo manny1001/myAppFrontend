@@ -8,9 +8,8 @@ const AcceptTermsButton = ({ onPress }) => {
   return (
     <View
       style={{
-        height: wp(90),
         width: wp(90),
-        top: 0,
+
         alignSelf: "center",
       }}
     />

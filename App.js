@@ -18,6 +18,7 @@ import { GetData } from "./src/utilites/GFunctions";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+
 import { StoreData } from "./src/utilites/GFunctions";
 const Profile = lazy(() => import("./src/screens/Profile"));
 const Home = lazy(() => import("./src/navigation/Home"));
@@ -25,7 +26,7 @@ const Settings = lazy(() => import("./src/./navigation/More"));
 const Payments = lazy(() => import("./src/./navigation/Payments"));
 const AuthStack = lazy(() => import("./src/navigation/Auth"));
 const httpLink = createHttpLink({
-  uri: "http://192.168.8.122:4000/graphql",
+  uri: "http://localhost:4000/graphql",
 });
 const authLink = setContext(async (_, { headers }) => {
   const token = await AsyncStorage.getItem("accessToken");
@@ -86,20 +87,33 @@ const linkingApp = {
 };
 
 const App = (props) => {
-  const windowWidth = Dimensions.get("window").width;
-  const windowHeight = Dimensions.get("window").height;
+  const useScreenDimensions = () => {
+    const [screenData, setScreenData] = React.useState(
+      Dimensions.get("screen")
+    );
+
+    return { screenData, setScreenData };
+  };
+  const { screenData, setScreenData } = useScreenDimensions();
+  const [windowWidth, setwindowWidth] = React.useState(null);
+  const [windowHeight, setwindowHeight] = React.useState(null);
   const [isConnected, setIsConnected] = React.useState(false);
   React.useEffect(() => {
-    const windowWidth = Dimensions.get("window").width;
-    StoreData("windowWidth", windowWidth);
-    const windowHeight = Dimensions.get("window").height;
-    StoreData("windowHeight", windowHeight);
+    const onChange = (result) => {
+      setScreenData(result.screen);
+    };
+
+    Dimensions.addEventListener("change", onChange);
+
+    setwindowWidth(screenData.width);
+    setwindowHeight(screenData.height);
     NetInfo.addEventListener((state) => {
       setIsConnected(state.isConnected);
       /*       console.log("Connection type", state.type);
       console.log("Is connected?", state.isConnected); */
     });
-  }, []);
+    return () => Dimensions.removeEventListener("change", onChange);
+  }, [screenData]);
   const Stack = createStackNavigator();
   const AppStack = createBottomTabNavigator();
   const Drawer = createDrawerNavigator();
@@ -119,7 +133,6 @@ const App = (props) => {
         }
       </Modal>
     );
-
   return (
     <NavigationContainer linking={linkingApp}>
       <ApolloProvider client={client}>
@@ -136,7 +149,7 @@ const App = (props) => {
                         options={{ headerShown: false }}
                       />
                     </Stack.Navigator>
-                  ) : windowWidth > 780 ? (
+                  ) : windowWidth > 1024 ? (
                     <Stack.Navigator>
                       <Stack.Screen
                         name="Auth"
@@ -155,10 +168,12 @@ const App = (props) => {
                         options={{ headerShown: false }}
                       />
                     </Stack.Navigator>
-                  ) : (
-                    /* <Drawer.Navigator
+                  ) : windowWidth > 700 ? (
+                    {
+                      /* <Drawer.Navigator
                       gestureEnabled={true}
                       initialRouteName="Home"
+                      drawerType={"permanent"}
                     >
                       <Drawer.Screen
                         name="Home"
@@ -179,7 +194,8 @@ const App = (props) => {
                         component={(props) => <Settings {...props} />}
                       />
                     </Drawer.Navigator> */
-
+                    }
+                  ) : (
                     <AppStack.Navigator
                       tabBarOptions={{
                         keyboardHidesTabBar: true,
@@ -187,6 +203,7 @@ const App = (props) => {
                     >
                       <AppStack.Screen
                         name="Home"
+                        /* component={() => <Home windowWidth={windowWidth} />} */
                         component={Home}
                         options={{
                           tabBarLabel: "Home",

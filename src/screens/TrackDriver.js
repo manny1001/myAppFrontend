@@ -82,7 +82,10 @@ const TrackDriver = ({ navigation }) => {
       >
         <ProfilePicture
           source={{
-            uri: data && data.driversLocation[0].driverImage,
+            uri:
+              data &&
+              data.driversLocation &&
+              data.driversLocation[0].driverImage,
           }}
           style={{
             width: wp(28),
