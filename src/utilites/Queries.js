@@ -116,6 +116,7 @@ export const GET_DRIVER_RESPONSE = gql`
     }
   }
 `;
+
 export const PAYMENT_CONFIRMATION = gql`
   mutation PayOrConfirm(
     $uuidTrip: String
@@ -187,7 +188,23 @@ export const GET_REQUEST_HISTORY = gql`
     }
   }
 `;
-
+export const GET_CARD_PAYMENT_RESULT = gql`
+  query getCardPaymentResult(
+    $uuidTrip: String!
+    $totalAmount: String!
+    $paymentMethod: String!
+  ) {
+    getCardPaymentResult(
+      uuidTrip: $uuidTrip
+      totalAmount: $totalAmount
+      paymentMethod: $paymentMethod
+    ) {
+      uuidUser
+      name
+      totalAmount
+    }
+  }
+`;
 export const ALERT_EMAIL = gql`
   mutation alertEmail($uuidTrip: String!, $message: String!, $status: String!) {
     alertEmail(uuidTrip: $uuidTrip, message: $message, status: $status)

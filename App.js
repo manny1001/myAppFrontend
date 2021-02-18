@@ -26,7 +26,7 @@ const Settings = lazy(() => import("./src/./navigation/More"));
 const Payments = lazy(() => import("./src/./navigation/Payments"));
 const AuthStack = lazy(() => import("./src/navigation/Auth"));
 const httpLink = createHttpLink({
-  uri: "http://localhost:4000/graphql",
+  uri: "http://192.168.8.125:4000/graphql",
 });
 const authLink = setContext(async (_, { headers }) => {
   const token = await AsyncStorage.getItem("accessToken");
@@ -98,6 +98,18 @@ const App = (props) => {
   const [windowWidth, setwindowWidth] = React.useState(null);
   const [windowHeight, setwindowHeight] = React.useState(null);
   const [isConnected, setIsConnected] = React.useState(false);
+
+  React.useEffect(() => {
+    /* const addListener = async () => {
+      try {
+        let url = await Linking.getInitialURL();
+        this._handleRedirect({ url });
+      } catch (error) {
+        console.log("error: ", error);
+      }
+    }; */
+  }, []);
+
   React.useEffect(() => {
     const onChange = (result) => {
       setScreenData(result.screen);
@@ -112,7 +124,9 @@ const App = (props) => {
       /*       console.log("Connection type", state.type);
       console.log("Is connected?", state.isConnected); */
     });
-    return () => Dimensions.removeEventListener("change", onChange);
+    return () => {
+      Dimensions.removeEventListener("change", onChange);
+    };
   }, [screenData]);
   const Stack = createStackNavigator();
   const AppStack = createBottomTabNavigator();

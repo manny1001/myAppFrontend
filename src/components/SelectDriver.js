@@ -83,7 +83,7 @@ export default function (props) {
     },
     fetchPolicy: "cache-and-network",
     notifyOnNetworkStatusChange: true,
-    pollInterval: 7000,
+    pollInterval: 3000,
   });
   if (error) return <Text>{error.message}</Text>;
   if (data && data.allDriver !== undefined)

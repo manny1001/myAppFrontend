@@ -40,33 +40,50 @@ const TrackDriver = ({ navigation }) => {
   const [driverRegistration, setDriverRegistration] = useState(null);
   const [timeRemaining, settimeRemaining] = React.useState(null);
   const [EmergencyAlert] = useMutation(ALERT_EMAIL);
-  const { loading, errror, data, stopPolling } = useQuery(
-    DRIVERS_LIVELOCATION,
-    {
-      onCompleted: () => {
-        /* if (
+  const { loading, error, data, stopPolling } = useQuery(DRIVERS_LIVELOCATION, {
+    onCompleted: () => {
+      /* if (
           data &&
           data.driversLocation[0] &&
           data.driversLocation[0].driverremainingtime === "0"
         ) {
           stopPolling();
         } */
-      },
-      variables: {
-        uuidUser: useruuid,
-        uuidTrip: uuidTrip,
-      },
-      pollInterval: 5000,
-      notifyOnNetworkStatusChange: true,
-      fetchPolicy: "network-only",
-    }
-  );
+      if (
+        data &&
+        data.driversLocation[0] &&
+        JSON.parse(data.driversLocation[0].driverremainingtime) !==
+          timeRemaining
+      ) {
+        settimeRemaining(
+          data &&
+            data.driversLocation[0] &&
+            JSON.parse(data.driversLocation[0].driverremainingtime)
+        );
+      }
+      console.log(data);
+    },
+    variables: {
+      uuidUser: useruuid,
+      uuidTrip: uuidTrip,
+    },
+    pollInterval: 3000,
+    notifyOnNetworkStatusChange: true,
+    fetchPolicy: "network-only",
+  });
 
   React.useEffect(() => {
     GetData("useruuid").then((value) => setuseruuid(value));
     GetData("uuidTrip").then((value) => setuuidTrip(value));
   });
-
+  if (
+    data &&
+    data.driversLocation[0] &&
+    data.driversLocation[0].driverremainingtime === null
+  ) {
+    return <Loader />;
+  }
+  if (error) return <Text>Error</Text>;
   return (
     <View style={styles.container}>
       <View
@@ -173,11 +190,7 @@ const TrackDriver = ({ navigation }) => {
               data.driversLocation[0].driverremainingtime !== "0" &&
               !loading && (
                 <CountdownCircleTimer
-                  initialRemainingTime={
-                    data &&
-                    data.driversLocation[0] &&
-                    data.driversLocation[0].driverremainingtime
-                  }
+                  initialRemainingTime={timeRemaining}
                   styles={{ borderWidth: null }}
                   onComplete={() => {
                     settimeRemaining(0);
@@ -188,7 +201,7 @@ const TrackDriver = ({ navigation }) => {
                     data &&
                     data.driversLocation &&
                     data.driversLocation[0] &&
-                    JSON.parse(data.driversLocation[0].driverduration)
+                    data.driversLocation[0].driverduration
                   }
                   colors={[
                     ["#004777", 0.4],

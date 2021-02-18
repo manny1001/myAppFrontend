@@ -4,10 +4,14 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useQuery, useMutation } from "@apollo/client";
 import Loader from "../../src/components/Loader";
 import { GetData, StoreData } from "../../src/utilites/GFunctions";
+import * as WebBrowser from "expo-web-browser";
 import {
   GET_DRIVER_RESPONSE,
   PAYMENT_CONFIRMATION,
+  GET_CARD_PAYMENT_RESULT,
+  PAYMENT_REQUEST,
 } from "../../src/utilites/Queries";
+import * as Linking from "expo-linking";
 import styles from "../styles/styles";
 const PaymentButton = lazy(() => import("../../src/components/PaymentButton"));
 const SelectPaymentMethod = lazy(() =>
@@ -28,8 +32,8 @@ export default function (props) {
   const [timeRequested, settimeRequested] = React.useState("");
   const [destination, setdestination] = React.useState("");
   const [selectedValue, setselectedValue] = React.useState("Select");
-  const [paymentMethod, setpaymentMethod] = React.useState(null);
-  const [totalAmount, settotalAmount] = React.useState("88 000");
+  const [paymentMethod, setpaymentMethod] = React.useState("");
+  const [totalAmount, settotalAmount] = React.useState("88000");
   const [StopQuery, setStopQuery] = useState(false);
   const [requestID, setRequestid] = useState(null);
   const [uuidTrip, setuuidTrip] = useState(null);
@@ -41,12 +45,14 @@ export default function (props) {
   const [driverduration, setdriverduration] = React.useState(null);
   const [model, setModel] = React.useState(null);
   const [driverRegistration, setdriverregistration] = React.useState(null);
+  const [token, settoken] = useState(null);
   const [PayOrConfirm] = useMutation(PAYMENT_CONFIRMATION);
+  const [StopFetch, setStopFetch] = React.useState(false);
   const { data: DATA, stopPolling, startPolling } = useQuery(
     GET_DRIVER_RESPONSE,
     {
       variables: { uuidUser: userUUID },
-      pollInterval: 500,
+      pollInterval: 100,
       onCompleted: () => {
         console.log(DATA);
         setRequestid(DATA.getDriverRequestResponse.id),
@@ -71,7 +77,33 @@ export default function (props) {
       fetchPolicy: "network-only",
     }
   );
+  const {
+    data,
+    error,
+    loading,
+    refetch,
+    stopPolling: StopPolling,
+    startPolling: StartPolling,
+  } = useQuery(GET_CARD_PAYMENT_RESULT, {
+    onCompleted: () => {
+      console.log(data);
+      if (paymentMethod !== "Card") {
+        StopPolling();
+      }
+    },
+    variables: {
+      uuidTrip: "5a458d58-5967-4b62-b021-b8daaaf9046f",
+      totalAmount: "88000",
+      paymentMethod: "Card",
+    },
+    pollInterval: 500,
+    notifyOnNetworkStatusChange: true,
+    fetchPolicy: "network-only",
+  });
+
   React.useEffect(() => {
+    console.log(paymentMethod === "Card");
+    paymentMethod === "Card" && StartPolling(500);
     AsyncStorage.multiGet([
       "cellphone",
       "name",
@@ -80,29 +112,45 @@ export default function (props) {
       "totalAmount",
       "useruuid",
       "destination",
+      "accessToken",
     ]).then((response) => {
       setclientCellNumber(response[0][1]);
       setname(response[1][1]);
       setlocation(response[2][1]);
       settimeRequested(response[3][1]);
-      settotalAmount(response[4][1]);
+      /* settotalAmount(response[4][1]); */
       setUSERUUID(response[5][1]);
       setdestination(response[6][1]);
+      settoken(response[7][1]);
     });
-  }, []);
+  }, [paymentMethod]);
+  console.log(paymentMethod);
   React.useEffect(() => {
-    const Value = setTimeout(() => setTimeoutValue(timeOutValue - 1), 1000);
+    /* const Value = setTimeout(() => setTimeoutValue(timeOutValue - 1), 1000);
     if (timeOutValue === 0) {
       clearTimeout(Value);
       setStopQuery(true);
       props.context.dispatch({ type: "SAVE_DRIVERUUID", driveruuid: "" });
-    }
+    } */
 
     StopQuery === true && stopPolling();
     StopQuery === false && startPolling();
   }, [StopQuery, timeOutValue]);
-  if (requestID === null && uuidTrip === null && StopQuery === false)
+  if (data && data.getCardPaymentResult[0]) {
+    props.props.navigation.navigate("TrackDriver");
+  }
+  if (requestID === null) return <Text>Waiting...</Text>;
+  if (paymentMethod === "Card" && !data.getCardPaymentResult[0]) {
     return <Loader />;
+  }
+
+  const handleCardPayment = async () => {
+    setpaymentMethod("Card");
+    await WebBrowser.openBrowserAsync(
+      `http://192.168.8.125:3000?${token}?${totalAmount}?${uuidTrip}`
+    );
+  };
+
   return (
     <>
       {requestID === null && uuidTrip === null && StopQuery === true ? (
@@ -116,17 +164,13 @@ export default function (props) {
           <PaymentMethodHeader
             selectedValue={selectedValue}
             onValueChange={(val) => {
-              setcardselected(false),
-                setselectedValue(val),
-                setpaymentMethod(val);
+              setcardselected(false), setselectedValue(val);
             }}
           />
           {/*Select you payment method */}
           {selectedValue === "Select" && (
             <SelectPaymentMethod
-              onCardPress={() => {
-                alert("Working on this method,Please choose cash for now");
-              }}
+              onCardPress={() => handleCardPayment()}
               onCashPress={() => {
                 setpaymentMethod("Cash"), setselectedValue("Cash");
               }}

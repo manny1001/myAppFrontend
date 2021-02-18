@@ -25,10 +25,10 @@ function Chat({ userUUID, driverUUID, uuidTrip }) {
       uuidtrip: uuidTrip,
       uuid: userUUID,
     },
-    pollInterval: 500,
+    pollInterval: 10000000,
     notifyOnNetworkStatusChange: true,
     onCompleted: () => {
-      console.log(data);
+      /*       console.log(data); */
       setMessages(data.messages);
     },
   });
