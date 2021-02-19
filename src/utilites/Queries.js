@@ -202,6 +202,7 @@ export const GET_CARD_PAYMENT_RESULT = gql`
       uuidUser
       name
       totalAmount
+      status
     }
   }
 `;

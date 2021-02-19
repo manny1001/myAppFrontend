@@ -1,5 +1,7 @@
+import "@expo/match-media";
 import React, { lazy, Suspense } from "react";
 import { Context, ContextConsumer } from "./src/context/Context";
+import { useMediaQuery } from "react-responsive";
 import { View, Text, Dimensions } from "react-native";
 import {
   ApolloClient,
@@ -182,9 +184,46 @@ const App = (props) => {
                         options={{ headerShown: false }}
                       />
                     </Stack.Navigator>
-                  ) : windowWidth > 700 ? (
-                    {
-                      /* <Drawer.Navigator
+                  ) : windowWidth > 800 ? (
+                    <Stack.Navigator>
+                      <Stack.Screen
+                        name="ScreenTooBig"
+                        component={() => {
+                          return (
+                            <Stack.Navigator>
+                              <Stack.Screen
+                                name="Auth"
+                                component={() => {
+                                  return (
+                                    <View
+                                      style={{
+                                        justifyContent: "center",
+                                        flex: 1,
+                                      }}
+                                    >
+                                      <Text
+                                        style={{
+                                          alignSelf: "center",
+                                          fontSize: 50,
+                                        }}
+                                      >
+                                        Drawer Navigator goes here.. Still Under
+                                        Construction , use a smaller screen
+                                        device.
+                                      </Text>
+                                    </View>
+                                  );
+                                }}
+                                options={{ headerShown: false }}
+                              />
+                            </Stack.Navigator>
+                          );
+                        }}
+                        options={{ headerShown: false }}
+                      />
+                    </Stack.Navigator>
+                  ) : (
+                    /* <Drawer.Navigator
                       gestureEnabled={true}
                       initialRouteName="Home"
                       drawerType={"permanent"}
@@ -208,8 +247,7 @@ const App = (props) => {
                         component={(props) => <Settings {...props} />}
                       />
                     </Drawer.Navigator> */
-                    }
-                  ) : (
+
                     <AppStack.Navigator
                       tabBarOptions={{
                         keyboardHidesTabBar: true,

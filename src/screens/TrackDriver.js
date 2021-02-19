@@ -61,13 +61,13 @@ const TrackDriver = ({ navigation }) => {
             JSON.parse(data.driversLocation[0].driverremainingtime)
         );
       }
-      console.log(data);
+      /* console.log(data); */
     },
     variables: {
       uuidUser: useruuid,
       uuidTrip: uuidTrip,
     },
-    pollInterval: 3000,
+    pollInterval: 2800,
     notifyOnNetworkStatusChange: true,
     fetchPolicy: "network-only",
   });
@@ -190,7 +190,7 @@ const TrackDriver = ({ navigation }) => {
               data.driversLocation[0].driverremainingtime !== "0" &&
               !loading && (
                 <CountdownCircleTimer
-                  initialRemainingTime={timeRemaining}
+                  /*   initialRemainingTime={timeRemaining} */
                   styles={{ borderWidth: null }}
                   onComplete={() => {
                     settimeRemaining(0);

@@ -1,5 +1,5 @@
 import React, { lazy, useState } from "react";
-import { View, Text } from "react-native";
+import { View, Text, Button } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useQuery, useMutation } from "@apollo/client";
 import Loader from "../../src/components/Loader";
@@ -47,14 +47,13 @@ export default function (props) {
   const [driverRegistration, setdriverregistration] = React.useState(null);
   const [token, settoken] = useState(null);
   const [PayOrConfirm] = useMutation(PAYMENT_CONFIRMATION);
-  const [StopFetch, setStopFetch] = React.useState(false);
+  const [visibleModal, setvisibleModal] = React.useState(false);
   const { data: DATA, stopPolling, startPolling } = useQuery(
     GET_DRIVER_RESPONSE,
     {
       variables: { uuidUser: userUUID },
       pollInterval: 100,
       onCompleted: () => {
-        console.log(DATA);
         setRequestid(DATA.getDriverRequestResponse.id),
           setuuidTrip(DATA.getDriverRequestResponse.uuidTrip),
           DATA.getDriverRequestResponse.uuidTrip &&
@@ -86,13 +85,12 @@ export default function (props) {
     startPolling: StartPolling,
   } = useQuery(GET_CARD_PAYMENT_RESULT, {
     onCompleted: () => {
-      console.log(data);
-      if (paymentMethod !== "Card") {
+      /* if (paymentMethod !== "Card") {
         StopPolling();
-      }
+      } */
     },
     variables: {
-      uuidTrip: "5a458d58-5967-4b62-b021-b8daaaf9046f",
+      uuidTrip: "d80602cd-87fc-40d6-aca7-25fe02388107",
       totalAmount: "88000",
       paymentMethod: "Card",
     },
@@ -102,7 +100,6 @@ export default function (props) {
   });
 
   React.useEffect(() => {
-    console.log(paymentMethod === "Card");
     paymentMethod === "Card" && StartPolling(500);
     AsyncStorage.multiGet([
       "cellphone",
@@ -124,7 +121,6 @@ export default function (props) {
       settoken(response[7][1]);
     });
   }, [paymentMethod]);
-  console.log(paymentMethod);
   React.useEffect(() => {
     /* const Value = setTimeout(() => setTimeoutValue(timeOutValue - 1), 1000);
     if (timeOutValue === 0) {
@@ -137,7 +133,35 @@ export default function (props) {
     StopQuery === false && startPolling();
   }, [StopQuery, timeOutValue]);
   if (data && data.getCardPaymentResult[0]) {
-    props.props.navigation.navigate("TrackDriver");
+    /* setvisibleModal(true); */
+    if (data && data.getCardPaymentResult[0].status === "Paid,WaitingDriver")
+      return (
+        <View
+          style={[
+            styles.container,
+            {
+              flex: 1,
+              width: 400,
+              alignSelf: "center",
+              justifyContent: "center",
+            },
+          ]}
+        >
+          <Text style={{ marginBottom: 100, fontSize: 18, fontWeight: "600" }}>
+            Payment successful, please proceeed to track your driver...
+          </Text>
+          <Button
+            onPress={() => {
+              stopPolling(),
+                StopPolling(),
+                props.props.navigation.navigate("TrackDriver");
+            }}
+            title={"Next"}
+          />
+        </View>
+      );
+
+    /*   */
   }
   if (requestID === null) return <Text>Waiting...</Text>;
   if (paymentMethod === "Card" && !data.getCardPaymentResult[0]) {

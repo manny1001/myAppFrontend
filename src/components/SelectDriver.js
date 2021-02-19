@@ -8,8 +8,7 @@ import { Avatar } from "react-native-elements";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useLinkTo } from "@react-navigation/native";
 import { ContextConsumer } from "../../src/context/Context";
-import { useQuery } from "@apollo/client";
-import { GET_DRIVERS } from "../utilites/Queries";
+
 import { AllDrivers } from "../components/AllDrivers";
 
 const ClickedDriver = (props) => {
@@ -65,26 +64,11 @@ const ClickedDriver = (props) => {
 };
 
 export default function (props) {
-  const { context } = props;
+  const { context, stopPoll, error, data } = props;
   const [clickedDriver, setClickedDriver] = React.useState(null);
 
   const linkTo = useLinkTo();
 
-  const { error, data, stopPolling } = useQuery(GET_DRIVERS, {
-    onCompleted: () => {
-      context &&
-        context.dispatch({
-          type: "SAVE_TOTAL_DRIVERS_ONLINE",
-          totalDriversOnline: data.allDriver.length,
-        });
-      if (context && context.state.driveruuid !== "") {
-        stopPolling();
-      }
-    },
-    fetchPolicy: "cache-and-network",
-    notifyOnNetworkStatusChange: true,
-    pollInterval: 3000,
-  });
   if (error) return <Text>{error.message}</Text>;
   if (data && data.allDriver !== undefined)
     return (

@@ -1,6 +1,7 @@
 //import liraries
 import React, { Component, useState } from "react";
 import { Button, ThemeProvider } from "react-native-elements";
+import { RFPercentage } from "react-native-responsive-fontsize";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -17,19 +18,20 @@ const BigButton = ({
   disabled,
 }) => (
   <Button
+    type={"solid"}
     activeOpacity={activeOpacity}
     disabled={disabled}
     onPress={onPress}
     containerStyle={[containerStyle, { justifyContent: "center" }]}
     title={title}
+    titleStyle={{ fontSize: RFPercentage(2) }}
     buttonStyle={{
       ...buttonStyle,
       alignSelf: "center",
-      backgroundColor: background === "NONE" ? "" : "#6c63ff",
+      backgroundColor: background === "NONE" ? "" : "#84cfd1",
       width: wp(50),
       height: hp(10),
     }}
-    titleStyle={titleStyle}
   />
 );
 export default BigButton;

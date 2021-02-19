@@ -6,9 +6,8 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-const windowWidth = Dimensions.get("window").width;
-const windowHeight = Dimensions.get("window").height;
-const stylesSmallScreen = StyleSheet.create({
+
+const styles = StyleSheet.create({
   iconStyle: {
     flex: 0.16,
     justifyContent: "center",
@@ -66,7 +65,7 @@ const stylesSmallScreen = StyleSheet.create({
   heading5: {
     alignSelf: "center",
     fontSize: RFValue(14),
-    color: "#6c63ff",
+    color: "#84cfd1",
   },
   container: {
     flex: 1,
@@ -83,83 +82,5 @@ const stylesSmallScreen = StyleSheet.create({
     height: hp(6),
   },
 });
-const stylesBigScreen = StyleSheet.create({
-  iconStyle: {
-    flex: 0.16,
-    justifyContent: "center",
-  },
-  container: {
-    flex: 1,
-    justifyContent: "space-evenly",
-  },
-  TopInfo: {
-    width: wp(32),
-    height: wp(32),
-    alignSelf: "center",
-    borderRadius: wp(16),
-    flexDirection: "column",
-    justifyContent: "center",
-    borderColor: "red",
-    borderWidth: wp(1),
-    backgroundColor: "white",
-  },
-  heading2: {
-    fontSize: RFValue(16),
-    fontWeight: "bold",
-  },
-  locations: {
-    fontSize: RFValue(15),
-    fontWeight: "400",
-  },
-  locationsBlock: {
-    bottom: hp(3),
-    marginLeft: wp(1),
-    width: wp(80),
-  },
-  timeAndDistanceContainer: {
-    justifyContent: "space-between",
-    width: wp(55),
-    alignSelf: "center",
-    flexDirection: "row",
-  },
-  profileAvatarContainer: {
-    height: hp(20),
-    width: hp(20),
-    borderRadius: hp(10),
-    position: "absolute",
-    top: hp(2),
-    marginLeft: wp(10),
-    bottom: 0,
-  },
-  profileImage: {
-    width: wp(100),
-    height: hp(20),
-    alignSelf: "flex-start",
-  },
-  modal: {
-    flex: 1,
-    justifyContent: "center",
-    alignSelf: "center",
-    alignContent: "center",
-  },
-  cellphoneTextInput: {
-    backgroundColor: "#f3f3f3",
-    alignSelf: "center",
-    width: wp(60),
-    height: hp(6),
-    fontSize: RFValue(14),
-  },
-  heading5: {
-    alignSelf: "center",
-    fontSize: RFValue(14),
-    color: "#6c63ff",
-  },
-  inputStyle: {
-    backgroundColor: "#f3f3f3",
-    alignSelf: "center",
-    width: wp(80),
-    height: hp(6),
-    fontSize: RFValue(13),
-  },
-});
-export default windowWidth < 472 ? stylesSmallScreen : stylesBigScreen;
+
+export default styles;

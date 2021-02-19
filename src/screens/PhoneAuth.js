@@ -65,6 +65,7 @@ const PhoneAuth = ({ context }) => {
               });
         }}
         title={"Sign In"}
+        titleStyle={{ fontSize: 50 }}
       />
     </View>
   );

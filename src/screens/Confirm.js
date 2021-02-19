@@ -8,7 +8,11 @@ import { RFPercentage } from "react-native-responsive-fontsize";
 import { ContextConsumer } from "..//context/Context";
 import { RFValue } from "react-native-responsive-fontsize";
 import { useMutation, useQuery } from "@apollo/client";
-import { NEW_REQUEST, GET_PROFILE } from "../../src/utilites/Queries";
+import {
+  NEW_REQUEST,
+  GET_PROFILE,
+  GET_DRIVERS,
+} from "../../src/utilites/Queries";
 import { GetData, StoreData } from "../../src/utilites/GFunctions";
 import Loader from "../../src/components/Loader";
 import styles from "../styles/styles";
@@ -23,8 +27,10 @@ export default function (props) {
   const [destination, setdestination] = React.useState("");
   const [userName, setUserName] = useState("");
   const [newTripRequest] = useMutation(NEW_REQUEST);
-  const { data, loading } = useQuery(GET_PROFILE, {
+  const [loading, setLoading] = useState(false);
+  const { data, loading: Loading } = useQuery(GET_PROFILE, {
     onCompleted: () => {
+      setLoading(Loading);
       StoreData("userID", data.currentUser._id);
       StoreData("useruuid", data.currentUser.uuid),
         StoreData("name", data.currentUser.name),
@@ -34,12 +40,20 @@ export default function (props) {
     notifyOnNetworkStatusChange: true,
   });
 
+  const { error, data: DATA, stopPolling, startPolling } = useQuery(
+    GET_DRIVERS,
+    {
+      fetchPolicy: "network-only",
+      notifyOnNetworkStatusChange: true,
+      pollInterval: 200,
+    }
+  );
   React.useEffect(() => {
     GetData("location").then((location) => setlocation(location));
     GetData("destination").then((destination) => setdestination(destination));
-  }, []);
+  }, [DATA && DATA.allDriver]);
 
-  if (loading) {
+  if (Loading || loading) {
     return <Loader />;
   }
   if (userName === "" || userName === null) return <AddName />;
@@ -96,7 +110,7 @@ export default function (props) {
             )}
 
             <View style={{ height: hp(30) }}>
-              <Driver context={context} />
+              <Driver context={context} error={error} data={DATA} />
             </View>
 
             <BigButton
@@ -108,9 +122,8 @@ export default function (props) {
               titleStyle={{ fontWeight: "bold" }}
               title={"Next" + " " + "\n" + "R" + " " + totalAmount}
               onPress={() => {
-                props.navigation.navigate("Payment", {
-                  totalAmount: totalAmount,
-                }),
+                setLoading(true),
+                  stopPolling(),
                   newTripRequest({
                     variables: {
                       uuid: data && data.currentUser.uuid,
@@ -121,6 +134,8 @@ export default function (props) {
                       uuidDriver: context.state.driveruuid,
                     },
                   });
+                setLoading(false);
+                props.navigation.navigate("Payment");
               }}
             />
           </View>
