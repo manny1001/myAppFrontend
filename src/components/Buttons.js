@@ -22,15 +22,26 @@ const BigButton = ({
     activeOpacity={activeOpacity}
     disabled={disabled}
     onPress={onPress}
-    containerStyle={[containerStyle, { justifyContent: "center" }]}
+    containerStyle={[
+      containerStyle,
+      { justifyContent: "center", elevation: 15 },
+    ]}
     title={title}
-    titleStyle={{ fontSize: RFPercentage(2) }}
+    titleStyle={{ fontSize: RFPercentage(2.25), fontWeight: "600" }}
     buttonStyle={{
       ...buttonStyle,
       alignSelf: "center",
       backgroundColor: background === "NONE" ? "" : "#84cfd1",
-      width: wp(50),
-      height: hp(10),
+      width: wp(80),
+      height: hp(7),
+      borderRadius: wp(20),
+
+      /* 
+      shadowColor: "rgba(0, 0, 0, 0.5)",
+      shadowOpacity: 0.8,
+      elevation: 6,
+      shadowRadius: 50,
+      shadowOffset: { width: 1, height: 13 }, */
     }}
   />
 );

@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { RFPercentage } from "react-native-responsive-fontsize";
+import * as Animatable from "react-native-animatable";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -71,13 +72,29 @@ const TrackDriver = ({ navigation }) => {
     notifyOnNetworkStatusChange: true,
     fetchPolicy: "network-only",
   });
-
+  const zoomOut3 = {
+    0: { opacity: 0, scale: 0.0 },
+    0.5: {
+      opacity: 0.2,
+      scale: 0.0,
+    },
+    1: {
+      opacity: 0,
+      scale: 0.5,
+    },
+  };
   React.useEffect(() => {
     GetData("useruuid").then((value) => setuseruuid(value));
     GetData("uuidTrip").then((value) => setuuidTrip(value));
   });
   if (
+    (data && data.driversLocation === undefined) ||
+    (data && data.driversLocation[0] === undefined)
+  )
+    return <Loader />;
+  if (
     data &&
+    data.driversLocation &&
     data.driversLocation[0] &&
     data.driversLocation[0].driverremainingtime === null
   ) {
@@ -102,6 +119,7 @@ const TrackDriver = ({ navigation }) => {
             uri:
               data &&
               data.driversLocation &&
+              data.driversLocation[0] &&
               data.driversLocation[0].driverImage,
           }}
           style={{
@@ -116,10 +134,16 @@ const TrackDriver = ({ navigation }) => {
         {driverArrived === false && <CallDriver />}
 
         <DriversInfo
-          DriverName={data && data.driversLocation[0].drivername}
-          DriverCarModel={data && data.driversLocation[0].model}
+          DriverName={
+            data && data.driversLocation && data.driversLocation[0].drivername
+          }
+          DriverCarModel={
+            data && data.driversLocation && data.driversLocation[0].model
+          }
           DriverRegistration={
-            data && data.driversLocation[0].driverregistration
+            data &&
+            data.driversLocation &&
+            data.driversLocation[0].driverregistration
           }
         />
         {driverArrived === true && (
@@ -219,6 +243,21 @@ const TrackDriver = ({ navigation }) => {
                           justifyContent: "center",
                         }}
                       >
+                        {/* <Animatable.View
+                          iterationDelay={700}
+                          animation={zoomOut3}
+                          easing="ease-out"
+                          iterationCount="infinite"
+                          style={{
+                            borderWidth: wp(2.5),
+                            height: wp(100),
+                            width: wp(100),
+                            borderRadius: wp(50),
+                            borderColor: "red",
+                            position: "absolute",
+                            left: wp(-40.5),
+                          }}
+                        ></Animatable.View> */}
                         {remainingTime > 10 && (
                           <Animated.Text
                             style={{
@@ -258,6 +297,7 @@ const TrackDriver = ({ navigation }) => {
                 </CountdownCircleTimer>
               )}
             {data &&
+              data.driversLocation &&
               data.driversLocation[0] &&
               data.driversLocation[0].driverremainingtime === "0" && (
                 <View

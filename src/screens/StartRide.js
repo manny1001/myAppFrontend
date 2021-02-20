@@ -1,10 +1,11 @@
 import React, { Component, lazy } from "react";
-import { View, Text } from "react-native";
+import { View, Text, TouchableWithoutFeedback } from "react-native";
 /* import { getTripInfo, getlocation } from "../../src/utilites/utilities"; */
 import { ContextConsumer } from "../../src/context/Context";
 import Geocoder from "react-native-geocoding";
 import styles from "../styles/styles";
 import { StoreData } from "../utilites/GFunctions";
+
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -33,6 +34,28 @@ export default function (props) {
 
   const setCurrentLocationHandler = (val) => {
     setcurrentLocation(val);
+  };
+  const zoomOut1 = {
+    0: { opacity: 0.2, scale: 0 },
+    0.5: {
+      opacity: 0.4,
+      scale: 0.2,
+    },
+    1: {
+      opacity: 0.5,
+      scale: 0.5,
+    },
+  };
+  const zoomOut2 = {
+    0: { opacity: 0, scale: 0.2 },
+    0.5: {
+      opacity: 0.2,
+      scale: 0.4,
+    },
+    1: {
+      opacity: 1,
+      scale: 1.2,
+    },
   };
 
   return (
@@ -75,6 +98,7 @@ export default function (props) {
               destination={destination}
               getTripInfo={() => getTripInfo()}
             />
+
             <BigButton
               disabled={
                 location === null || destination === null ? true : false

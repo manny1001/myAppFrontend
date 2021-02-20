@@ -1,5 +1,5 @@
 import React, { lazy, useState } from "react";
-import { View, Text, Button } from "react-native";
+import { View, Text, Button, TouchableOpacity } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useQuery, useMutation } from "@apollo/client";
 import Loader from "../../src/components/Loader";
@@ -163,9 +163,32 @@ export default function (props) {
 
     /*   */
   }
-  if (requestID === null) return <Text>Waiting...</Text>;
+  if (requestID === null) return <Loader />;
   if (paymentMethod === "Card" && !data.getCardPaymentResult[0]) {
-    return <Loader />;
+    return (
+      <View style={{ flex: 1 }}>
+        <TouchableOpacity
+          style={{
+            marginTop: 20,
+            borderWidth: 2,
+            borderRadius: 20,
+          }}
+          onPress={() => {
+            setpaymentMethod(""), StopPolling();
+          }}
+        >
+          <Text
+            style={{
+              alignSelf: "center",
+            }}
+          >
+            Switch to cash payment
+          </Text>
+        </TouchableOpacity>
+
+        <Loader />
+      </View>
+    );
   }
 
   const handleCardPayment = async () => {
