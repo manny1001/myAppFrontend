@@ -12,6 +12,7 @@ import {
 } from "react-native-responsive-screen";
 import * as Location from "expo-location";
 const BigButton = lazy(() => import("../../src/components/Buttons"));
+import { ShadowButton } from "../components/Buttons";
 const PickUpLocation = lazy(() =>
   import("../../src/components/PickUpLocation")
 );
@@ -75,10 +76,29 @@ export default function (props) {
             {location !== null && destination !== null && (
               <>
                 <View style={styles.timeAndDistanceContainer}>
-                  <Text style={{ alignSelf: "center" }}>{time}</Text>
-                  <Text style={{ alignSelf: "center" }}>{distance}</Text>
+                  <Text
+                    style={{
+                      fontFamily: "Gotham_Medium_Regular",
+                      alignSelf: "center",
+                    }}
+                  >
+                    {time}
+                  </Text>
+                  <Text
+                    style={{
+                      fontFamily: "Gotham_Medium_Regular",
+                      alignSelf: "center",
+                    }}
+                  >
+                    {distance}
+                  </Text>
                 </View>
-                <Text style={{ alignSelf: "center" }}>
+                <Text
+                  style={{
+                    fontFamily: "Gotham_Medium_Regular",
+                    alignSelf: "center",
+                  }}
+                >
                   time and distance to destination
                 </Text>
               </>
@@ -109,6 +129,7 @@ export default function (props) {
               title={"Next"}
               titleStyle={{ fontWeight: "bold" }}
             />
+            {/*        <ShadowButton title="Next" /> */}
           </View>
         );
       }}

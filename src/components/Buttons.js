@@ -1,6 +1,7 @@
 //import liraries
 import React, { Component, useState } from "react";
 import { Button, ThemeProvider } from "react-native-elements";
+import { TouchableOpacity, Text } from "react-native";
 import { RFPercentage } from "react-native-responsive-fontsize";
 import {
   widthPercentageToDP as wp,
@@ -17,32 +18,38 @@ const BigButton = ({
   buttonStyle,
   disabled,
 }) => (
-  <Button
-    type={"solid"}
-    activeOpacity={activeOpacity}
+  <TouchableOpacity
     disabled={disabled}
+    containerStyle={[containerStyle, { justifyContent: "center" }]}
+    activeOpacity={activeOpacity}
     onPress={onPress}
-    containerStyle={[
-      containerStyle,
-      { justifyContent: "center", elevation: 15 },
-    ]}
-    title={title}
-    titleStyle={{ fontSize: RFPercentage(2.25), fontWeight: "600" }}
-    buttonStyle={{
-      ...buttonStyle,
-      alignSelf: "center",
+    style={{
+      shadowColor: "rgba(0,0,0, .4)", // IOS
+      shadowOffset: { height: 3, width: 3 }, // IOS
+      shadowOpacity: 0.5, // IOS
+      shadowRadius: 1, //IOS
       backgroundColor: background === "NONE" ? "" : "#84cfd1",
+      elevation: 3, // Android
       width: wp(80),
       height: hp(7),
+      justifyContent: "center",
       borderRadius: wp(20),
-
-      /* 
-      shadowColor: "rgba(0, 0, 0, 0.5)",
-      shadowOpacity: 0.8,
-      elevation: 6,
-      shadowRadius: 50,
-      shadowOffset: { width: 1, height: 13 }, */
+      alignItems: "center",
+      flexDirection: "row",
+      alignSelf: "center",
     }}
-  />
+  >
+    <Text
+      style={{
+        fontWeight: "bold",
+        alignSelf: "center",
+        color: "white",
+        fontSize: wp(5),
+      }}
+    >
+      {title}
+    </Text>
+  </TouchableOpacity>
 );
+
 export default BigButton;

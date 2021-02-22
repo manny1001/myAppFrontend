@@ -26,10 +26,13 @@ const styles = StyleSheet.create({
   heading2: {
     fontSize: RFValue(16),
     fontWeight: "bold",
+
+    fontFamily: "Gotham_Medium_Regular",
   },
   locations: {
     fontSize: RFValue(15),
-    fontWeight: "400",
+    fontFamily: "Gotham_Medium_Regular",
+    fontWeight: "300",
   },
   timeAndDistanceContainer: {
     justifyContent: "space-between",

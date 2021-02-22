@@ -10,6 +10,8 @@ import {
   createHttpLink,
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
+import * as Font from "expo-font";
+import { useFonts } from "expo-font";
 import Modal from "modal-enhanced-react-native-web";
 import NetInfo from "@react-native-community/netinfo";
 import { NavigationContainer } from "@react-navigation/native";
@@ -103,7 +105,9 @@ const App = (props) => {
   const [windowWidth, setwindowWidth] = React.useState(null);
   const [windowHeight, setwindowHeight] = React.useState(null);
   const [isConnected, setIsConnected] = React.useState(false);
-
+  const [loaded] = useFonts({
+    Gotham_Medium_Regular: require("./assets/fonts/Gotham_Medium_Regular.ttf"),
+  });
   React.useEffect(() => {
     /* const addListener = async () => {
       try {
@@ -145,13 +149,20 @@ const App = (props) => {
       >
         {
           <View style={{}}>
-            <Text style={{ color: "white" }}>
+            <Text
+              style={{ fontFamily: "Gotham_Medium_Regular", color: "white" }}
+            >
               No internet connection. Please enable your network connection.
             </Text>
           </View>
         }
       </Modal>
     );
+
+  if (!loaded) {
+    return null;
+  }
+
   return (
     <NavigationContainer linking={linkingApp}>
       <ApolloProvider client={client}>
@@ -176,10 +187,14 @@ const App = (props) => {
                           return (
                             <View style={{ justifyContent: "center", flex: 1 }}>
                               <Text
-                                style={{ alignSelf: "center", fontSize: 50 }}
+                                style={{
+                                  alignSelf: "center",
+                                  fontSize: 50,
+                                  fontFamily: "Gotham_Medium_Regular",
+                                }}
                               >
-                                Still Under Construction , use a smaller screen
-                                device
+                                Under construction, please use a smaller screen
+                                device.
                               </Text>
                             </View>
                           );

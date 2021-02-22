@@ -73,6 +73,7 @@ export default function (props) {
                   style={{
                     fontSize: RFValue(16),
                     fontWeight: "bold",
+                    fontFamily: "Gotham_Medium_Regular",
                   }}
                 >
                   {context.state.driveruuid === "" ? `Available Drivers` : ""}
@@ -83,6 +84,7 @@ export default function (props) {
                       fontSize: RFPercentage(2.5),
                       marginLeft: wp(5),
                       fontWeight: "bold",
+                      fontFamily: "Gotham_Medium_Regular",
                     }}
                   >
                     {context.state.totalDriversOnline}
@@ -100,6 +102,7 @@ export default function (props) {
                       style={{
                         fontSize: RFValue(18),
                         fontWeight: "bold",
+                        fontFamily: "Gotham_Medium_Regular",
                       }}
                     >
                       Change
@@ -115,11 +118,6 @@ export default function (props) {
 
             <BigButton
               disabled={context.state.driveruuid === "" ? true : false}
-              buttonStyle={{
-                width: wp(80),
-                alignSelf: "center",
-              }}
-              titleStyle={{ fontWeight: "bold" }}
               title={"Next" + " " + "\n" + "R" + " " + totalAmount}
               onPress={() => {
                 setLoading(true),

@@ -28,7 +28,14 @@ const Destination = ({
               alignSelf: "stretch",
             }}
           >
-            <Text style={{ fontSize: RFPercentage(3) }}>Destination</Text>
+            <Text
+              style={{
+                fontFamily: "Gotham_Medium_Regular",
+                fontSize: RFPercentage(3),
+              }}
+            >
+              Destination
+            </Text>
 
             <View
               style={{

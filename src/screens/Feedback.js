@@ -43,13 +43,24 @@ const Feedback = (props) => {
           onPress={() => props.navigation.goBack()}
           style={{ flexDirection: "column", alignSelf: "center" }}
         >
-          <Text style={{ alignSelf: "center" }}>Cancel</Text>
+          <Text
+            style={{ fontFamily: "Gotham_Medium_Regular", alignSelf: "center" }}
+          >
+            Cancel
+          </Text>
         </TouchableOpacity>
         {feedback !== "" && (
           <TouchableOpacity
             style={{ flexDirection: "column", alignSelf: "center" }}
           >
-            <Text style={{ alignSelf: "center" }}>Send</Text>
+            <Text
+              style={{
+                fontFamily: "Gotham_Medium_Regular",
+                alignSelf: "center",
+              }}
+            >
+              Send
+            </Text>
           </TouchableOpacity>
         )}
       </View>

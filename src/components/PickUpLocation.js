@@ -28,7 +28,14 @@ const PickUpLocation = ({
               alignSelf: "stretch",
             }}
           >
-            <Text style={{ fontSize: RFPercentage(3) }}>Pickup</Text>
+            <Text
+              style={{
+                fontFamily: "Gotham_Medium_Regular",
+                fontSize: RFPercentage(3),
+              }}
+            >
+              Pickup
+            </Text>
             <View
               style={{
                 height: hp(10),
@@ -44,7 +51,12 @@ const PickUpLocation = ({
                       justifyContent: "space-between",
                     }}
                   >
-                    <Text style={{ alignSelf: "center" }}>
+                    <Text
+                      style={{
+                        fontFamily: "Gotham_Medium_Regular",
+                        alignSelf: "center",
+                      }}
+                    >
                       Getting Location
                     </Text>
                     <ActivityIndicator
@@ -77,7 +89,8 @@ const PickUpLocation = ({
                     justifyContent: "space-between",
                   }}
                 >
-                  <Text style={{ alignSelf: "center" }}>Getting Location</Text>
+                   <Text style={{fontFamily: "Gotham_Medium_Regular",
+ alignSelf: "center" }}>Getting Location</Text>
                   <ActivityIndicator
                     size="small"
                     style={{ alignSelf: "center" }}
@@ -123,7 +136,8 @@ const PickUpLocation = ({
                     justifyContent: "space-between",
                   }}
                 >
-                  <Text style={{ alignSelf: "center" }}>Getting Location</Text>
+                   <Text style={{fontFamily: "Gotham_Medium_Regular",
+ alignSelf: "center" }}>Getting Location</Text>
                   <ActivityIndicator
                     size="small"
                     style={{ alignSelf: "center" }}

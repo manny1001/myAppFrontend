@@ -22,7 +22,15 @@ const TripDetails = ({
   console.log(driverduration);
   return (
     <>
-      <Text style={{ fontSize: RFValue(24), fontWeight: "600" }}>Details</Text>
+      <Text
+        style={{
+          fontFamily: "Gotham_Medium_Regular",
+          fontSize: RFValue(24),
+          fontWeight: "600",
+        }}
+      >
+        Details
+      </Text>
       <Text>
         {name} {clientLastName}
       </Text>

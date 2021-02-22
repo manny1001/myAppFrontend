@@ -70,7 +70,14 @@ export const SendTipModal = ({ TipModalVisible, settTipModalVisible }) => {
                   alignSelf: "center",
                 }}
               >
-                <Text style={{ fontWeight: "bold" }}>Name</Text>
+                <Text
+                  style={{
+                    fontFamily: "Gotham_Medium_Regular",
+                    fontWeight: "bold",
+                  }}
+                >
+                  Name
+                </Text>
                 <Text>John Keneddy</Text>
               </View>
               <View
@@ -81,7 +88,14 @@ export const SendTipModal = ({ TipModalVisible, settTipModalVisible }) => {
                   alignSelf: "center",
                 }}
               >
-                <Text style={{ fontWeight: "bold" }}>Registration</Text>
+                <Text
+                  style={{
+                    fontFamily: "Gotham_Medium_Regular",
+                    fontWeight: "bold",
+                  }}
+                >
+                  Registration
+                </Text>
                 <Text>CX 01 BC GP</Text>
               </View>
               <View
@@ -92,7 +106,14 @@ export const SendTipModal = ({ TipModalVisible, settTipModalVisible }) => {
                   alignSelf: "center",
                 }}
               >
-                <Text style={{ fontWeight: "bold" }}>Vehicle Type</Text>
+                <Text
+                  style={{
+                    fontFamily: "Gotham_Medium_Regular",
+                    fontWeight: "bold",
+                  }}
+                >
+                  Vehicle Type
+                </Text>
                 <Text>Hyundai i20</Text>
               </View>
             </View>

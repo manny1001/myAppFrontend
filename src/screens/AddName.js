@@ -29,7 +29,11 @@ const AddNames = (props) => {
           flex: 1,
         }}
       >
-        <Text style={{ alignSelf: "center" }}>Please add a Username.</Text>
+        <Text
+          style={{ fontFamily: "Gotham_Medium_Regular", alignSelf: "center" }}
+        >
+          Please add a Username.
+        </Text>
         <TextInput
           style={{
             backgroundColor: "#f3f3f3",

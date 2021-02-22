@@ -56,7 +56,13 @@ const Payments = () => {
       <View style={{ flex: 1 }}>
         {data && data.getRequestHistory.length === 0 && (
           <View style={styles.container}>
-            <Text style={{ alignSelf: "center", flexWrap: "wrap" }}>
+            <Text
+              style={{
+                fontFamily: "Gotham_Medium_Regular",
+                alignSelf: "center",
+                flexWrap: "wrap",
+              }}
+            >
               Seems like you havent request a trip yet...
             </Text>
           </View>

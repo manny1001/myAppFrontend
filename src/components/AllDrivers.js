@@ -34,30 +34,56 @@ const Drivers = (props) => {
         }}
         style={{
           flexDirection: "row",
-          height: hp(25),
+          flex: 1,
           alignSelf: "center",
           justifyContent: "space-between",
           width: wp(80),
-          padding: wp(4),
         }}
       >
-        <View style={styles.driverDetails}>
-          <Text style={{ fontWeight: "bold" }}>Name</Text>
-          <Text>
+        <View
+          style={{
+            flex: 1,
+            justifyContent: "space-between",
+            height: hp(28),
+          }}
+        >
+          <Text
+            style={{ fontFamily: "Gotham_Medium_Regular", fontWeight: "bold" }}
+          >
+            Name
+          </Text>
+          <Text style={{ fontFamily: "Gotham_Medium_Regular" }}>
             {name} {surname}
           </Text>
-          <Text style={{ fontWeight: "bold", alignSelf: "flex-start" }}>
+          <Text
+            style={{
+              fontFamily: "Gotham_Medium_Regular",
+              fontWeight: "bold",
+            }}
+          >
             Cellphone
           </Text>
-          <Text>{cellphone}</Text>
-          <Text style={{ fontWeight: "bold" }}>Registration</Text>
-          <Text>{registration}</Text>
-          <Text style={{ fontWeight: "bold" }}>Model</Text>
-          <Text>{model}</Text>
+          <Text style={{ fontFamily: "Gotham_Medium_Regular" }}>
+            {cellphone}
+          </Text>
+          <Text
+            style={{ fontFamily: "Gotham_Medium_Regular", fontWeight: "bold" }}
+          >
+            Registration
+          </Text>
+          <Text style={{ fontFamily: "Gotham_Medium_Regular" }}>
+            {registration}
+          </Text>
+          <Text
+            style={{ fontFamily: "Gotham_Medium_Regular", fontWeight: "bold" }}
+          >
+            Model
+          </Text>
+          <Text style={{ fontFamily: "Gotham_Medium_Regular" }}>{model}</Text>
         </View>
         <View
           style={{
-            flex: 0.75,
+            flex: 1,
             justifyContent: "space-around",
           }}
         >
@@ -73,7 +99,11 @@ const Drivers = (props) => {
             }}
             source={{ uri: picture }}
           />
-          <Text style={{ alignSelf: "center" }}>7 mins away</Text>
+          <Text
+            style={{ fontFamily: "Gotham_Medium_Regular", alignSelf: "center" }}
+          >
+            7 mins away
+          </Text>
         </View>
       </TouchableOpacity>
     );
@@ -102,7 +132,11 @@ export class AllDrivers extends React.Component {
       return (
         <View style={{ alignSelf: "center", justifyContent: "center" }}>
           <ActivityIndicator size="large" style={{ alignSelf: "center" }} />
-          <Text style={{ alignSelf: "center" }}>Searching for drivers...</Text>
+          <Text
+            style={{ fontFamily: "Gotham_Medium_Regular", alignSelf: "center" }}
+          >
+            Searching for drivers...
+          </Text>
         </View>
       );
     return (
@@ -111,15 +145,20 @@ export class AllDrivers extends React.Component {
           justifyContent: "space-between",
           flexDirection: "column",
           alignSelf: "center",
-          height: hp(30),
+          flex: 1,
           width: wp(80),
         }}
       >
         {DriverDetails.length !== 0 && DriverDetails.length !== 1 && (
-          <Text style={{ alignSelf: "center" }}>Swipe for more</Text>
+          <Text
+            style={{ fontFamily: "Gotham_Medium_Regular", alignSelf: "center" }}
+          >
+            Swipe for more
+          </Text>
         )}
         {/*  <TouchableOpacity style={{ alignSelf: "center" }}>
-            <Text style={{ alignSelf: "center" }}>{"<--"}</Text>
+             <Text style={{fontFamily: "Gotham_Medium_Regular",
+ alignSelf: "center" }}>{"<--"}</Text>
           </TouchableOpacity> */}
         <FlatList
           /* ref={(ref) => {

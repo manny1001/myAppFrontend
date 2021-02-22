@@ -19,7 +19,11 @@ const CallDriver = () => {
         },
       ]}
     >
-      <Text style={{ alignSelf: "center" }}>Call your driver</Text>
+      <Text
+        style={{ fontFamily: "Gotham_Medium_Regular", alignSelf: "center" }}
+      >
+        Call your driver
+      </Text>
     </TouchableOpacity>
   );
 };

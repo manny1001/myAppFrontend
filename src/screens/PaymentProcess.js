@@ -148,7 +148,14 @@ export default function (props) {
             },
           ]}
         >
-          <Text style={{ marginBottom: 100, fontSize: 18, fontWeight: "600" }}>
+          <Text
+            style={{
+              fontFamily: "Gotham_Medium_Regular",
+              marginBottom: 100,
+              fontSize: 18,
+              fontWeight: "600",
+            }}
+          >
             Payment successful, please proceeed to track your driver...
           </Text>
           <Button

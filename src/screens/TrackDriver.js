@@ -154,7 +154,12 @@ const TrackDriver = ({ navigation }) => {
               justifyContent: "center",
             }}
           >
-            <Text style={{ alignSelf: "center" }}>
+            <Text
+              style={{
+                fontFamily: "Gotham_Medium_Regular",
+                alignSelf: "center",
+              }}
+            >
               Enjoy your trip let us know if anything goes wrong
             </Text>
 

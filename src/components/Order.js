@@ -100,10 +100,22 @@ const Order = (props) => {
                   marginLeft: wp(4),
                 }}
               >
-                <Text style={{ color: "silver", fontSize: RFValue(14) }}>
+                <Text
+                  style={{
+                    fontFamily: "Gotham_Medium_Regular",
+                    color: "silver",
+                    fontSize: RFValue(14),
+                  }}
+                >
                   ID:
                 </Text>
-                <Text style={{ color: "black", fontSize: RFValue(16) }}>
+                <Text
+                  style={{
+                    fontFamily: "Gotham_Medium_Regular",
+                    color: "black",
+                    fontSize: RFValue(16),
+                  }}
+                >
                   {uuidTrip.slice(3, 7)}
                 </Text>
               </View>
@@ -204,7 +216,13 @@ const Order = (props) => {
                   justifyContent: "center",
                 }}
               >
-                <Text style={{ alignSelf: "center", color: "silver" }}>
+                <Text
+                  style={{
+                    fontFamily: "Gotham_Medium_Regular",
+                    alignSelf: "center",
+                    color: "silver",
+                  }}
+                >
                   View
                 </Text>
               </TouchableOpacity>
@@ -226,7 +244,13 @@ const Order = (props) => {
                     justifyContent: "center",
                   }}
                 >
-                  <Text style={{ alignSelf: "center", color: "silver" }}>
+                  <Text
+                    style={{
+                      fontFamily: "Gotham_Medium_Regular",
+                      alignSelf: "center",
+                      color: "silver",
+                    }}
+                  >
                     Send Tip
                   </Text>
                 </TouchableOpacity>

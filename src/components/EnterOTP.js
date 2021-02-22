@@ -36,7 +36,14 @@ const EnterOTP = () => {
       >
         OTP is: 4545
       </Text>
-      <Text style={{ textAlign: "center", fontSize: 30, color: "white" }}>
+      <Text
+        style={{
+          fontFamily: "Gotham_Medium_Regular",
+          textAlign: "center",
+          fontSize: 30,
+          color: "white",
+        }}
+      >
         Verification Code
       </Text>
       <Text
