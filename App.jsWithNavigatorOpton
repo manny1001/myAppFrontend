@@ -27,11 +27,8 @@ const Home = lazy(() => import("./src/navigation/Home"));
 const Settings = lazy(() => import("./src/./navigation/More"));
 const Payments = lazy(() => import("./src/./navigation/Payments"));
 const AuthStack = lazy(() => import("./src/navigation/Auth"));
-/* const httpLink = createHttpLink({
-  uri: "https://agile-woodland-33090.herokuapp.com/",
-}); */
 const httpLink = createHttpLink({
-  uri: "http://192.168.8.125:22000/graphql",
+  uri: "https://agile-woodland-33090.herokuapp.com/",
 });
 const authLink = setContext(async (_, { headers }) => {
   const token = await AsyncStorage.getItem("accessToken");
@@ -187,7 +184,70 @@ const App = (props) => {
                         options={{ headerShown: false }}
                       />
                     </Stack.Navigator>
+                  ) : windowWidth > 800 ? (
+                    <Stack.Navigator>
+                      <Stack.Screen
+                        name="ScreenTooBig"
+                        component={() => {
+                          return (
+                            <Stack.Navigator>
+                              <Stack.Screen
+                                name="Auth"
+                                component={() => {
+                                  return (
+                                    <View
+                                      style={{
+                                        justifyContent: "center",
+                                        flex: 1,
+                                      }}
+                                    >
+                                      <Text
+                                        style={{
+                                          alignSelf: "center",
+                                          fontSize: 50,
+                                        }}
+                                      >
+                                        Drawer Navigator goes here.. Still Under
+                                        Construction , use a smaller screen
+                                        device.
+                                      </Text>
+                                    </View>
+                                  );
+                                }}
+                                options={{ headerShown: false }}
+                              />
+                            </Stack.Navigator>
+                          );
+                        }}
+                        options={{ headerShown: false }}
+                      />
+                    </Stack.Navigator>
                   ) : (
+                    /* <Drawer.Navigator
+                      gestureEnabled={true}
+                      initialRouteName="Home"
+                      drawerType={"permanent"}
+                    >
+                      <Drawer.Screen
+                        name="Home"
+                        component={(props) => (
+                          <Home windowWidth={windowWidth} {...props} />
+                        )}
+                      />
+                      <Drawer.Screen
+                        name="Payments"
+                        component={(props) => <Payments {...props} />}
+                      />
+                      <Drawer.Screen
+                        name="Profile"
+                        component={(props) => <Profile {...props} />}
+                      />
+                      <Drawer.Screen
+                        name="Settings"
+                        component={(props) => <Settings {...props} />}
+                      />
+                    </Drawer.Navigator> */
+
                     <AppStack.Navigator
                       tabBarOptions={{
                         keyboardHidesTabBar: true,

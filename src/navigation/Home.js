@@ -15,7 +15,7 @@ const HomeStack = (props) => {
 
   const Stack = createStackNavigator();
   return (
-    <Stack.Navigator initialRouteName="Ride">
+    <Stack.Navigator>
       <Stack.Screen
         name="Ride"
         component={() => <Ride {...props} />}

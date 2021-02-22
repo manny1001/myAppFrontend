@@ -55,7 +55,7 @@ const ProfileStack = (props) => {
   }
   if (data && data.currentUser)
     return (
-      <View style={styles.container}>
+      <View style={[styles.container]}>
         <Image
           blurRadius={5}
           source={{ uri: data.currentUser.picture }}
@@ -129,7 +129,6 @@ const ProfileStack = (props) => {
           title={"Update"}
           buttonStyle={{
             alignSelf: "center",
-            flex: 1,
           }}
         />
       </View>

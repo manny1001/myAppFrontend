@@ -71,15 +71,15 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "space-between",
     backgroundColor: "#f2f2f2",
-    padding: wp(10),
+    padding: wp(5),
   },
   inputContainerStyle: {
     backgroundColor: "#f3f3f3",
     fontSize: RFValue(13),
   },
   inputStyle: {
-    backgroundColor: "#f3f3f3",
     height: hp(6),
+    backgroundColor: "#f2f2f2",
   },
 });
 
