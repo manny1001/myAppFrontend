@@ -15,7 +15,6 @@ const AddNames = (props) => {
   const [name, setusername] = React.useState(null);
   const [updateProfile] = useMutation(UPDATE_USERNAME, {
     refetchQueries: [{ query: GET_PROFILE }],
-    onCompleted: () => console.log(updateProfile),
   });
   React.useEffect(() => {
     GetData("useruuid").then((value) => setuseruuid(value));

@@ -14,7 +14,7 @@ import {
   GET_DRIVERS,
 } from "../../src/utilites/Queries";
 import { GetData, StoreData } from "../../src/utilites/GFunctions";
-import Loader from "../../src/components/Loader";
+import { LoadingContent } from "../../src/components/Loader";
 import styles from "../styles/styles";
 const AddName = lazy(() => import("../../src/screens/AddName"));
 const BigButton = lazy(() => import("../../src/components/Buttons"));
@@ -54,7 +54,7 @@ export default function (props) {
   }, [DATA && DATA.allDriver]);
 
   if (Loading || loading) {
-    return <Loader />;
+    return <LoadingContent />;
   }
   if (userName === "" || userName === null) return <AddName />;
   return (

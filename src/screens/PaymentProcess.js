@@ -2,7 +2,7 @@ import React, { lazy, useState } from "react";
 import { View, Text, Button, TouchableOpacity } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useQuery, useMutation } from "@apollo/client";
-import Loader from "../../src/components/Loader";
+import { LoadingContent } from "../../src/components/Loader";
 import { GetData, StoreData } from "../../src/utilites/GFunctions";
 import * as WebBrowser from "expo-web-browser";
 import {
@@ -132,6 +132,7 @@ export default function (props) {
     StopQuery === true && stopPolling();
     StopQuery === false && startPolling();
   }, [StopQuery, timeOutValue]);
+
   if (data && data.getCardPaymentResult[0]) {
     /* setvisibleModal(true); */
     if (data && data.getCardPaymentResult[0].status === "Paid,WaitingDriver")
@@ -163,10 +164,10 @@ export default function (props) {
 
     /*   */
   }
-  if (requestID === null) return <Loader />;
+  if (requestID === null) return <LoadingContent />;
   if (paymentMethod === "Card" && !data.getCardPaymentResult[0]) {
     return (
-      <View style={{ flex: 1 }}>
+      <View style={styles.container}>
         <TouchableOpacity
           style={{
             marginTop: 20,
@@ -174,7 +175,7 @@ export default function (props) {
             borderRadius: 20,
           }}
           onPress={() => {
-            setpaymentMethod(""), StopPolling();
+            setpaymentMethod("Cash"), StopPolling(), setselectedValue("Cash");
           }}
         >
           <Text
@@ -186,7 +187,7 @@ export default function (props) {
           </Text>
         </TouchableOpacity>
 
-        <Loader />
+        <LoadingContent />
       </View>
     );
   }
@@ -194,7 +195,7 @@ export default function (props) {
   const handleCardPayment = async () => {
     setpaymentMethod("Card");
     await WebBrowser.openBrowserAsync(
-      `http://192.168.8.125:3000?${token}?${totalAmount}?${uuidTrip}`
+      `https://drippypayments.netlify.app/?${token}?${totalAmount}?${uuidTrip}`
     );
   };
 
@@ -208,12 +209,14 @@ export default function (props) {
       ) : (
         <View style={styles.container}>
           {/* Cash or Card header depending on selection */}
-          <PaymentMethodHeader
+          {/* <PaymentMethodHeader
             selectedValue={selectedValue}
             onValueChange={(val) => {
-              setcardselected(false), setselectedValue(val);
+              setcardselected(false),
+                setselectedValue(val),
+                setpaymentMethod(val);
             }}
-          />
+          /> */}
           {/*Select you payment method */}
           {selectedValue === "Select" && (
             <SelectPaymentMethod
@@ -226,6 +229,26 @@ export default function (props) {
           {/* Payment method CASH*/}
           {paymentMethod === "Cash" && (
             <>
+              <TouchableOpacity
+                style={{
+                  marginTop: 20,
+                  borderWidth: 2,
+                  borderRadius: 20,
+                }}
+                onPress={() => {
+                  setpaymentMethod("Card"),
+                    StartPolling(),
+                    setselectedValue("Card");
+                }}
+              >
+                <Text
+                  style={{
+                    alignSelf: "center",
+                  }}
+                >
+                  Switch to card payment
+                </Text>
+              </TouchableOpacity>
               <CashSelectedText
                 text={
                   "You have chosen to pay cash, payment is due upon arrival."

@@ -33,6 +33,7 @@ const ProfileStack = (props) => {
     data && data.currentUser.workaddress
   );
   const { loading, data, error } = useQuery(GET_PROFILE, {
+    fetchPolicy: "network",
     onCompleted: () => {
       setUUID(data && data.currentUser.uuid);
     },
