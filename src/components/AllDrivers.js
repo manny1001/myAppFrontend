@@ -10,6 +10,7 @@ import {
 const windowWidth = Dimensions.get("window").width;
 import styles from "../styles/styles";
 import { Avatar } from "react-native-elements";
+import { RFPercentage } from "react-native-responsive-fontsize";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -52,7 +53,7 @@ const Drivers = (props) => {
           >
             Name
           </Text>
-          <Text style={{ fontFamily: "Gotham_Medium_Regular" }}>
+          <Text>
             {name} {surname}
           </Text>
           <Text
@@ -63,23 +64,19 @@ const Drivers = (props) => {
           >
             Cellphone
           </Text>
-          <Text style={{ fontFamily: "Gotham_Medium_Regular" }}>
-            {cellphone}
-          </Text>
+          <Text>{cellphone}</Text>
           <Text
             style={{ fontFamily: "Gotham_Medium_Regular", fontWeight: "bold" }}
           >
             Registration
           </Text>
-          <Text style={{ fontFamily: "Gotham_Medium_Regular" }}>
-            {registration}
-          </Text>
+          <Text>{registration}</Text>
           <Text
             style={{ fontFamily: "Gotham_Medium_Regular", fontWeight: "bold" }}
           >
             Model
           </Text>
-          <Text style={{ fontFamily: "Gotham_Medium_Regular" }}>{model}</Text>
+          <Text>{model}</Text>
         </View>
         <View
           style={{
@@ -111,23 +108,8 @@ const Drivers = (props) => {
 };
 
 export class AllDrivers extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isPressed: 1,
-      DriversAvailable: [],
-    };
-  }
-  goIndex = () => {
-    this.flatList_Ref.scrollToIndex({ animated: true, index: 1 });
-  };
   render() {
-    const {
-      DriverDetails,
-      setClickedDriver,
-      context,
-      flatListRef,
-    } = this.props;
+    const { DriverDetails, setClickedDriver, context } = this.props;
     if (DriverDetails.length === 0)
       return (
         <View style={{ alignSelf: "center", justifyContent: "center" }}>
@@ -145,26 +127,23 @@ export class AllDrivers extends React.Component {
           justifyContent: "space-between",
           flexDirection: "column",
           alignSelf: "center",
-          flex: 1,
+          flex: 0.5,
           width: wp(80),
         }}
       >
         {DriverDetails.length !== 0 && DriverDetails.length !== 1 && (
           <Text
-            style={{ fontFamily: "Gotham_Medium_Regular", alignSelf: "center" }}
+            style={{
+              fontFamily: "Gotham_Medium_Regular",
+              alignSelf: "center",
+              fontSize: RFPercentage(2),
+            }}
           >
             Swipe for more
           </Text>
         )}
-        {/*  <TouchableOpacity style={{ alignSelf: "center" }}>
-             <Text style={{fontFamily: "Gotham_Medium_Regular",
- alignSelf: "center" }}>{"<--"}</Text>
-          </TouchableOpacity> */}
+
         <FlatList
-          /* ref={(ref) => {
-              let flatListRef = React.useRef("");
-              flatListRef = ref;
-            }} */
           snapToAlignment={"start"}
           snapToInterval={windowWidth}
           decelerationRate={"fast"}

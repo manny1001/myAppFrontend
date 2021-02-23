@@ -28,6 +28,7 @@ const Order = (props) => {
       style={{
         flexDirection: "column",
         justifyContent: "flex-start",
+        marginTop: hp(2),
         flex: 1,
         width: wp(80),
         alignSelf: "center",

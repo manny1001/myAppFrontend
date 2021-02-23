@@ -1,9 +1,5 @@
 import React, { useState, lazy } from "react";
 import { Text, ActivityIndicator, View, Keyboard } from "react-native";
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from "react-native-responsive-screen";
 const AddName = lazy(() => import("../../src/screens/AddName"));
 import { Avatar, Image } from "react-native-elements";
 import Loader from "../components/Loader";
@@ -55,7 +51,7 @@ const ProfileStack = (props) => {
   }
   if (data && data.currentUser)
     return (
-      <View style={[styles.container]}>
+      <View style={styles.container}>
         <Image
           blurRadius={5}
           source={{ uri: data.currentUser.picture }}
@@ -80,13 +76,13 @@ const ProfileStack = (props) => {
           defaultValue={data.currentUser.name}
           label={"Username"}
           onChangeText={(text) => setusername(text)}
-          selectionColor={"blue"}
         />
         <InputField
           style={styles.inputStyle}
           keyboardType={"phone-pad"}
           defaultValue={data.currentUser.cellphone}
           label={"Cellphone"}
+          placeholder={"012 345 6789"}
           onChangeText={(text) => setcellphone(text)}
         />
         <InputField
@@ -112,7 +108,7 @@ const ProfileStack = (props) => {
         />
 
         <BigButton
-          disabled={LOADING === true ? true : false}
+          /*    disabled={LOADING === true ? true : false} */
           onPress={() => {
             Keyboard.dismiss(),
               updateProfile({

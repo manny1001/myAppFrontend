@@ -39,7 +39,6 @@ const Destination = ({
 
             <View
               style={{
-                height: hp(10),
                 alignSelf: "stretch",
                 flexDirection: "row",
                 justifyContent: "space-around",
@@ -76,21 +75,27 @@ const Destination = ({
                     : context.state.destination}
                 </Text>
               )}
-              {DestinationSelected === true && (
-                <TouchableOpacity
-                  onPress={() => {
-                    {
-                      this.setState({ DestinationSelected: false }),
-                        this.setState({ destination: "" }),
-                        this.setState({ value: null });
-                    }
-                  }}
+              <TouchableOpacity
+                onPress={() => {
+                  {
+                    setDestinationSelected(!DestinationSelected);
+                  }
+                }}
+                style={{
+                  justifyContent: "center",
+                  alignSelf: "center",
+                }}
+              >
+                <Text
                   style={{
-                    justifyContent: "center",
-                    alignSelf: "center",
+                    padding: wp(2.5),
+                    fontFamily: "Gotham_Medium_Regular",
+                    textDecorationLine: "underline",
                   }}
-                ></TouchableOpacity>
-              )}
+                >
+                  Switch
+                </Text>
+              </TouchableOpacity>
             </View>
           </View>
         );

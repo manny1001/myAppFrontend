@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
   TopInfo: {
     width: wp(32),
     height: wp(32),
-    alignSelf: "center",
+    alignSelf: "flex-end",
     borderRadius: wp(16),
     flexDirection: "column",
     justifyContent: "center",

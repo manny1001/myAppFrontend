@@ -4,12 +4,18 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-export const Input = ({ containerStyle, style, label, text }) => (
+export const Input = ({
+  containerStyle,
+  style,
+  label,
+  defaultValue,
+  onChangeText,
+}) => (
   <TextInput
-    containerStyle={containerStyle}
+    mode={"outlined"}
     style={style}
-    label={label}
-    onChangeText={(text) => setText(text)}
+    onChangeText={onChangeText}
+    selectionColor={"blue"}
   />
 );
 

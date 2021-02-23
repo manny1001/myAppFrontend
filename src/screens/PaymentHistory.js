@@ -1,26 +1,13 @@
 import React, { useState, lazy } from "react";
-import {
-  FlatList,
-  ScrollView,
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-} from "react-native";
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from "react-native-responsive-screen";
-import { StoreData, GetData } from "../../src/utilites/GFunctions";
+import { Text } from "react-native";
+import { StoreData } from "../../src/utilites/GFunctions";
 import { useQuery } from "@apollo/client";
 import { GET_REQUEST_HISTORY, GET_USER_UUID } from "../../src/utilites/Queries";
-import Modal from "modal-enhanced-react-native-web";
-import styles from "../styles/styles";
 import Loader from "../components/Loader";
-const OrderReceipt = lazy(() => import("../../src/screens/OrderReceipt.js"));
-const SendTipModal = lazy(() => import("../../src/components/SendTipModal"));
-const Order = lazy(() => import("../../src/components/Order"));
 
+const PaymentHistoryPresentational = lazy(() =>
+  import("../components/PaymentHistoryPresentational")
+);
 const Payments = () => {
   const [currentUserUUID, setcurrentUserUUID] = useState("");
   const { data: DATA, loading: LOADING } = useQuery(GET_USER_UUID, {
@@ -37,53 +24,20 @@ const Payments = () => {
   const [TipModalVisible, settTipModalVisible] = useState();
   if (error) return <Text>{error.message}</Text>;
   if (loading) return <Loader />;
-  return (
-    <>
-      <Modal
-        isVisible={visibleModal}
-        onBackdropPress={() => setvisibleModal(false)}
-      >
-        <OrderReceipt
-          onPress={() => setvisibleModal(false)}
-          orderObject={orderObject.item}
-        />
-      </Modal>
-      <SendTipModal
+  if (data)
+    return (
+      <PaymentHistoryPresentational
+        visibleModal={visibleModal}
+        orderObject={orderObject}
         TipModalVisible={TipModalVisible}
+        data={data}
+        onBackdropPress={() => setvisibleModal(false)}
+        setvisibleModal={(val) => setvisibleModal(val)}
         settTipModalVisible={() => settTipModalVisible(false)}
+        setorderObject={(val) => setorderObject(val)}
       />
-
-      <View style={{ flex: 1 }}>
-        {data && data.getRequestHistory.length === 0 && (
-          <View style={styles.container}>
-            <Text
-              style={{
-                fontFamily: "Gotham_Medium_Regular",
-                alignSelf: "center",
-                flexWrap: "wrap",
-              }}
-            >
-              Seems like you havent request a trip yet...
-            </Text>
-          </View>
-        )}
-        {data && data.getRequestHistory.length !== 0 && (
-          <FlatList
-            data={data.getRequestHistory}
-            renderItem={(item) => (
-              <Order
-                setvisibleModal={setvisibleModal}
-                settTipModalVisible={settTipModalVisible}
-                setorderObject={setorderObject}
-                item={item}
-              />
-            )}
-            keyExtractor={(item) => item.id}
-          />
-        )}
-      </View>
-    </>
-  );
+    );
+  else return <Text>Unknown Error</Text>;
 };
 
 export default Payments;

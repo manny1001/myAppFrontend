@@ -158,13 +158,15 @@ const PickUpLocation = ({
               )} */}
 
               <TouchableOpacity onPress={() => setIsClicked()}>
-                <View
+                <Text
                   style={{
-                    width: wp(10),
-                    height: wp(10),
-                    borderWidth: wp(1),
+                    padding: wp(2.5),
+                    fontFamily: "Gotham_Medium_Regular",
+                    textDecorationLine: "underline",
                   }}
-                />
+                >
+                  Switch
+                </Text>
               </TouchableOpacity>
             </View>
           </View>

@@ -15,11 +15,13 @@ import {
 } from "../../src/utilites/Queries";
 import { GetData, StoreData } from "../../src/utilites/GFunctions";
 import { LoadingContent } from "../../src/components/Loader";
-import styles from "../styles/styles";
+import { useRoute } from "@react-navigation/native";
 const AddName = lazy(() => import("../../src/screens/AddName"));
 const BigButton = lazy(() => import("../../src/components/Buttons"));
 const Driver = lazy(() => import("../components/SelectDriver"));
-
+const ConfrimPresentational = lazy(() =>
+  import("../components/ConfrimPresentational")
+);
 export default function (props) {
   const [distance, setDistance] = React.useState("");
   const [totalAmount, setTotalAmount] = React.useState(18000);
@@ -30,7 +32,6 @@ export default function (props) {
   const [loading, setLoading] = useState(false);
   const { data, loading: Loading } = useQuery(GET_PROFILE, {
     onCompleted: () => {
-      setLoading(Loading);
       StoreData("userID", data.currentUser._id);
       StoreData("useruuid", data.currentUser.uuid),
         StoreData("name", data.currentUser.name),
@@ -40,105 +41,29 @@ export default function (props) {
     notifyOnNetworkStatusChange: true,
   });
 
-  const { error, data: DATA, stopPolling, startPolling } = useQuery(
-    GET_DRIVERS,
-    {
-      fetchPolicy: "network-only",
-      notifyOnNetworkStatusChange: true,
-      pollInterval: 200,
-    }
-  );
+  const { error, data: DATA, stopPolling } = useQuery(GET_DRIVERS, {
+    fetchPolicy: "network-only",
+    notifyOnNetworkStatusChange: true,
+    pollInterval: 200,
+  });
   React.useEffect(() => {
     GetData("location").then((location) => setlocation(location));
     GetData("destination").then((destination) => setdestination(destination));
   }, [DATA && DATA.allDriver]);
-
   if (Loading || loading) {
     return <LoadingContent />;
   }
-  if (userName === "" || userName === null) return <AddName />;
+  if (userName === null || userName.length === 0) return <AddName />;
   return (
-    <ContextConsumer>
-      {(context) => {
-        return (
-          <View style={styles.container}>
-            <Text style={styles.heading2}>Departure</Text>
-            <Text style={styles.locations}>{location}</Text>
-            <Text style={styles.heading2}>Destination</Text>
-            <Text style={styles.locations}>{destination}</Text>
-
-            {context.state.totalDriversOnline !== 0 && (
-              <View style={{ flexDirection: "row" }}>
-                <Text
-                  style={{
-                    fontSize: RFValue(16),
-                    fontWeight: "bold",
-                    fontFamily: "Gotham_Medium_Regular",
-                  }}
-                >
-                  {context.state.driveruuid === "" ? `Available Drivers` : ""}
-                </Text>
-                {context.state.driveruuid === "" ? (
-                  <Text
-                    style={{
-                      fontSize: RFPercentage(2.5),
-                      marginLeft: wp(5),
-                      fontWeight: "bold",
-                      fontFamily: "Gotham_Medium_Regular",
-                    }}
-                  >
-                    {context.state.totalDriversOnline}
-                  </Text>
-                ) : (
-                  <TouchableOpacity
-                    onPress={() => {
-                      context.dispatch({
-                        type: "SAVE_DRIVERUUID",
-                        driveruuid: "",
-                      });
-                    }}
-                  >
-                    <Text
-                      style={{
-                        fontSize: RFValue(18),
-                        fontWeight: "bold",
-                        fontFamily: "Gotham_Medium_Regular",
-                      }}
-                    >
-                      Change
-                    </Text>
-                  </TouchableOpacity>
-                )}
-              </View>
-            )}
-
-            <View style={{ height: hp(30) }}>
-              <Driver context={context} error={error} data={DATA} />
-            </View>
-
-            <BigButton
-              disabled={context.state.driveruuid === "" ? true : false}
-              title={"Next" + " " + "\n" + "R" + " " + totalAmount}
-              onPress={() => {
-                setLoading(true),
-                  stopPolling(),
-                  newTripRequest({
-                    variables: {
-                      uuid: data && data.currentUser.uuid,
-                      name: data && data.currentUser.name,
-                      cellphone: data && data.currentUser.cellphone,
-                      location: location,
-                      destination: destination,
-                      uuidDriver: context.state.driveruuid,
-                    },
-                  });
-                setLoading(false);
-                props.navigation.navigate("Payment");
-              }}
-            />
-          </View>
-        );
-      }}
-    </ContextConsumer>
+    <ConfrimPresentational
+      {...props}
+      data={data}
+      newTripRequest={newTripRequest}
+      stopPolling={() => stopPolling()}
+      destination={destination}
+      location={location}
+      error={error}
+      DATA={DATA}
+    />
   );
 }

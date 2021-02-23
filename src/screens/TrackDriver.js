@@ -7,7 +7,6 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { RFPercentage } from "react-native-responsive-fontsize";
-import * as Animatable from "react-native-animatable";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -15,27 +14,35 @@ import {
 import { ContextConsumer } from "../../src/context/Context";
 import Loader from "../components/Loader";
 import { CountdownCircleTimer } from "react-native-countdown-circle-timer";
-import Modal from "modal-enhanced-react-native-web";
 import { useQuery, useMutation } from "@apollo/client";
 import { DRIVERS_LIVELOCATION, ALERT_EMAIL } from "../../src/utilites/Queries";
 import { GetData } from "../../src/utilites/GFunctions";
 import { StackActions } from "@react-navigation/native";
-import { LinearGradient } from "expo-linear-gradient";
 import styles from "../styles/styles";
-const BigButton = lazy(() => import("../components/Buttons"));
-const Chat = lazy(() => import("../components/ChatApp"));
+const AreYouSureYouArrivedModal = lazy(() =>
+  import("../components/AreYouSureYouArrivedModal")
+);
+const StandByForCallModal = lazy(() =>
+  import("../components/StandByForCallModal")
+);
+const HaveYouArrivedModal = lazy(() =>
+  import("../components/HaveYouArrivedModal")
+);
+const DriverNotArrived = lazy(() =>
+  import("../components/DriverNotArrived.js")
+);
+const RatingModal = lazy(() => import("../components/RatingModal"));
 const DriversInfo = lazy(() => import("../../src/components/DriversInfo"));
 const CallDriver = lazy(() => import("../components/CallDriver"));
 const ProfilePicture = lazy(() => import("../components/ProfilePicture"));
-const RatingScreen = lazy(() => import("./Rating"));
-const TrackDriver = ({ navigation }) => {
+const TrackDriver = ({ navigation, LiveTripDetails }) => {
   const [RatingModalVIsibile, setRatingModalVIsibile] = useState(false);
   const [destinationArrived, setdestinationArrived] = React.useState(false);
-  const [clickCount, setClickCount] = React.useState(1);
+  const [clickCount, setclickCount] = useState(null);
   const [sureModalVisible, setsureModalVisible] = React.useState(false);
   const [driverArrived, setDriverArrived] = React.useState(false);
-  const [driverNotArrived, setdriverNotArrived] = React.useState(null);
   const [modalVisible, setmodalVisible] = React.useState(false);
+  const [driverNotArrived, setdriverNotArrived] = React.useState(null);
   const [useruuid, setuseruuid] = React.useState(null);
   const [uuidTrip, setuuidTrip] = React.useState(null);
   const [driverRegistration, setDriverRegistration] = useState(null);
@@ -43,13 +50,6 @@ const TrackDriver = ({ navigation }) => {
   const [EmergencyAlert] = useMutation(ALERT_EMAIL);
   const { loading, error, data, stopPolling } = useQuery(DRIVERS_LIVELOCATION, {
     onCompleted: () => {
-      /* if (
-          data &&
-          data.driversLocation[0] &&
-          data.driversLocation[0].driverremainingtime === "0"
-        ) {
-          stopPolling();
-        } */
       if (
         data &&
         data.driversLocation[0] &&
@@ -62,7 +62,6 @@ const TrackDriver = ({ navigation }) => {
             JSON.parse(data.driversLocation[0].driverremainingtime)
         );
       }
-      /* console.log(data); */
     },
     variables: {
       uuidUser: useruuid,
@@ -72,17 +71,7 @@ const TrackDriver = ({ navigation }) => {
     notifyOnNetworkStatusChange: true,
     fetchPolicy: "network-only",
   });
-  const zoomOut3 = {
-    0: { opacity: 0, scale: 0.0 },
-    0.5: {
-      opacity: 0.2,
-      scale: 0.0,
-    },
-    1: {
-      opacity: 0,
-      scale: 0.5,
-    },
-  };
+
   React.useEffect(() => {
     GetData("useruuid").then((value) => setuseruuid(value));
     GetData("uuidTrip").then((value) => setuuidTrip(value));
@@ -103,6 +92,71 @@ const TrackDriver = ({ navigation }) => {
   if (error) return <Text>Error</Text>;
   return (
     <View style={styles.container}>
+      <LiveTripDetails
+        data={data}
+        driverArrived={driverArrived}
+        loading={loading}
+        setsureModalVisible={setsureModalVisible}
+        driverNotArrived={driverNotArrived}
+        setdriverNotArrived={setdriverNotArrived}
+        setmodalVisible={setmodalVisible}
+        EmergencyAlert={EmergencyAlert}
+        setdestinationArrived={setdestinationArrived}
+      />
+      <DriverNotArrived
+        driverArrived={driverArrived}
+        data={data}
+        uuidTrip={uuidTrip}
+        useruuid={useruuid}
+      />
+      <HaveYouArrivedModal
+        setsureModalVisible={setsureModalVisible}
+        setRatingModalVIsibile={setRatingModalVIsibile}
+        EmergencyAlert={EmergencyAlert}
+        data={data}
+        destinationArrived={destinationArrived}
+        setdestinationArrived={setdestinationArrived}
+      />
+
+      <StandByForCallModal
+        setmodalVisible={setmodalVisible}
+        setDriverArrived={setDriverArrived}
+        modalVisible={modalVisible}
+      />
+      <RatingModal
+        RatingModalVIsibile={RatingModalVIsibile}
+        onPress={() => {
+          setRatingModalVIsibile(false),
+            navigation.navigate("Payments"),
+            navigation.dispatch(StackActions.replace("Ride"));
+        }}
+      />
+      <AreYouSureYouArrivedModal
+        sureModalVisible={sureModalVisible}
+        onPress={() => {
+          setsureModalVisible(false), setDriverArrived(true);
+        }}
+        setsureModalVisible={() => setsureModalVisible(false)}
+        setDriverArrived={() => setDriverArrived(false)}
+      />
+    </View>
+  );
+};
+
+export default function ({ navigation }) {
+  const LiveTripDetails = ({
+    data,
+    driverArrived,
+    loading,
+    driverNotArrived,
+    setsureModalVisible,
+    setdriverNotArrived,
+    setmodalVisible,
+    EmergencyAlert,
+    clickCount,
+    setdestinationArrived,
+  }) => {
+    return (
       <View
         style={{
           width: wp(100),
@@ -166,7 +220,8 @@ const TrackDriver = ({ navigation }) => {
             <TouchableOpacity
               disabled={clickCount === 3 ? true : false}
               onPress={() => {
-                EmergencyAlert({
+                setdestinationArrived(true);
+                /* EmergencyAlert({
                   variables: {
                     uuidTrip: data && data.driversLocation[0].uuidTrip,
                     message: `${data && data.driversLocation[0].name} , ${
@@ -182,7 +237,7 @@ const TrackDriver = ({ navigation }) => {
                     }, TripUUID : `,
                     status: data && data.driversLocation[0].status,
                   },
-                });
+                }); */
               }}
             >
               <Text
@@ -349,9 +404,8 @@ const TrackDriver = ({ navigation }) => {
                       <TouchableOpacity
                         onPress={() => {
                           {
-                            setdriverNotArrived(true),
-                              setmodalVisible(true),
-                              EmergencyAlert({
+                            setdriverNotArrived(true), setmodalVisible(true);
+                            /* EmergencyAlert({
                                 variables: {
                                   uuidTrip:
                                     data && data.driversLocation[0].uuidTrip,
@@ -372,7 +426,7 @@ const TrackDriver = ({ navigation }) => {
                                   status:
                                     data && data.driversLocation[0].status,
                                 },
-                              });
+                              }); */
                           }
                         }}
                       >
@@ -409,303 +463,18 @@ const TrackDriver = ({ navigation }) => {
           </View>
         )}
       </View>
-
-      <View
-        style={{
-          width: driverArrived === true ? wp(50) : wp(85),
-          flex: 1,
-          alignSelf: "center",
-
-          justifyContent: "center",
-        }}
-      >
-        {driverArrived === false && (
-          <Chat uuidTrip={uuidTrip} userUUID={useruuid} />
-        )}
-        {driverArrived === true && (
-          <View style={{ flex: 1, baclgroundColor: "pink" }}>
-            <CountdownCircleTimer
-              containerStyle={{
-                alignSelf: "center",
-                flex: 1,
-                baclgroundColor: "pink",
-              }}
-              styles={{ borderWidth: null, alignSelf: "center" }}
-              onComplete={() => {}}
-              size={wp(50)}
-              isPlaying={true}
-              duration={
-                data &&
-                data.driversLocation[0] &&
-                data.driversLocation[0].drivercustomerarrivaltime
-              }
-              colors={[
-                ["#004777", 0.4],
-                ["#F7B801", 0.4],
-                ["#A30000", 0.2],
-              ]}
-            >
-              {({ remainingTime, animatedColor }) => {
-                return (
-                  <Animated.View
-                    style={{
-                      borderWidth: null,
-                      borderRadius: wp(0),
-                      flex: 1,
-                      justifyContent: "center",
-                    }}
-                  >
-                    {remainingTime > 10 && (
-                      <Animated.Text
-                        style={{
-                          color: animatedColor,
-                          alignSelf: "center",
-                          fontSize: RFPercentage(3),
-                        }}
-                      >
-                        Arriving in
-                      </Animated.Text>
-                    )}
-                    {remainingTime <= 10 && remainingTime !== 0 && (
-                      <Animated.Text
-                        style={{
-                          color: animatedColor,
-                          alignSelf: "center",
-                          fontSize: RFPercentage(3),
-                        }}
-                      >
-                        Almost there
-                      </Animated.Text>
-                    )}
-
-                    <Animated.Text
-                      style={{
-                        color: animatedColor,
-                        alignSelf: "center",
-                        fontSize: RFPercentage(3),
-                        fontWeight: "bold",
-                      }}
-                    >
-                      {(remainingTime / 60).toFixed(2).split(".")[0]} mins
-                    </Animated.Text>
-                  </Animated.View>
-                );
-              }}
-            </CountdownCircleTimer>
-          </View>
-        )}
-      </View>
-
-      <Modal
-        backgroundColor={"#f2f2f2"}
-        isVisible={destinationArrived}
-        onBackdropPress={() => setsureModalVisible(false)}
-      >
-        <View
-          style={{
-            flex: 1,
-            justifyContent: "center",
-            alignItems: "center",
-            backgroundColor: "#f2f2f2",
-          }}
-        >
-          <Text
-            style={{
-              fontSize: RFPercentage(5),
-              alignSelf: "center",
-              width: wp(75),
-            }}
-          >
-            Have you arrived safely?
-          </Text>
-          <BigButton
-            onPress={() => {
-              setRatingModalVIsibile(true), setsureModalVisible(false);
-            }}
-            title={"Yes"}
-            titleStyle={{
-              fontWeight: "bold",
-              fontSize: RFPercentage(3),
-            }}
-            containerStyle={{
-              top: hp(10),
-            }}
-            buttonStyle={{
-              height: hp(10),
-              width: wp(80),
-              alignSelf: "center",
-            }}
-          />
-          <BigButton
-            onPress={() => {
-              setsureModalVisible(false);
-              EmergencyAlert({
-                variables: {
-                  uuidTrip: data && data.driversLocation[0].uuidTrip,
-                  message: `${data && data.driversLocation[0].name} , ${
-                    data && data.driversLocation[0].cellphone
-                  } , I did not arrive safely , please help , DriverName : ${
-                    data && data.driversLocation[0].drivername
-                  } , DriverCellphone : ${
-                    data && data.driversLocation[0].driversCellphone
-                  } ,DriversImage : ${
-                    data &&
-                    data.driversLocation[0].data &&
-                    data.driversLocation[0].driverImage
-                  }, TripUUID : `,
-                  status: data && data.driversLocation[0].status,
-                },
-              });
-            }}
-            title={"No"}
-            titleStyle={{
-              fontWeight: "bold",
-              fontSize: RFPercentage(3),
-            }}
-            containerStyle={{
-              top: hp(15),
-            }}
-            buttonStyle={{
-              height: hp(10),
-              width: wp(80),
-              alignSelf: "center",
-            }}
-          />
-        </View>
-      </Modal>
-      <Modal
-        backgroundColor={"#f2f2f2"}
-        isVisible={modalVisible}
-        onBackdropPress={() => setmodalVisible(false)}
-      >
-        <View
-          style={{
-            flex: 1,
-            justifyContent: "center",
-            alignItems: "center",
-            backgroundColor: "#f2f2f2",
-          }}
-        >
-          <Text
-            style={{
-              fontSize: RFPercentage(5),
-              alignSelf: "center",
-              width: wp(75),
-            }}
-          >
-            One of our call center agents will get back to you within the next 5
-            mins
-          </Text>
-          <BigButton
-            onPress={() => {
-              setmodalVisible(false), setDriverArrived(false);
-            }}
-            title={"Okay"}
-            titleStyle={{
-              fontWeight: "bold",
-              fontSize: RFPercentage(3),
-            }}
-            containerStyle={{
-              top: hp(20),
-            }}
-            buttonStyle={{
-              height: hp(10),
-              width: wp(80),
-              alignSelf: "center",
-            }}
-          />
-        </View>
-      </Modal>
-      <Modal isVisible={RatingModalVIsibile} onBackdropPress={() => {}}>
-        <RatingScreen
-          onPress={() => {
-            setRatingModalVIsibile(false),
-              navigation.dispatch(StackActions.replace("Trip"));
-          }}
-        />
-      </Modal>
-      <Modal isVisible={sureModalVisible} onBackdropPress={() => {}}>
-        <View
-          style={{
-            flex: 1,
-            justifyContent: "center",
-            alignItems: "center",
-            backgroundColor: "#f2f2f2",
-          }}
-        >
-          <Text
-            style={{
-              fontSize: RFPercentage(5),
-              alignSelf: "center",
-              width: wp(75),
-            }}
-          >
-            Are you sure your driver has arrived?
-          </Text>
-          <BigButton
-            onPress={() => {
-              setsureModalVisible(false), setDriverArrived(true);
-            }}
-            title={"Yes"}
-            titleStyle={{
-              fontWeight: "bold",
-              fontSize: RFPercentage(3),
-            }}
-            containerStyle={{
-              top: hp(10),
-            }}
-            buttonStyle={{
-              height: hp(10),
-              width: wp(80),
-              alignSelf: "center",
-            }}
-          />
-          <BigButton
-            onPress={() => {
-              setsureModalVisible(false), setDriverArrived(false);
-              EmergencyAlert({
-                variables: {
-                  uuidTrip: data && data.driversLocation[0].uuidTrip,
-                  message: `${data && data.driversLocation[0].name} , ${
-                    data && data.driversLocation[0].cellphone
-                  } , Driver has not yet arrived , second time I am contacting you , please assist... , DriverName : ${
-                    data && data.driversLocation[0].drivername
-                  } , DriverCellphone : ${
-                    data && data.driversLocation[0].driversCellphone
-                  } ,DriversImage : ${
-                    data &&
-                    data.driversLocation[0].data &&
-                    data.driversLocation[0].driverImage
-                  }, TripUUID : `,
-                  status: data && data.driversLocation[0].status,
-                },
-              });
-            }}
-            title={"No"}
-            titleStyle={{
-              fontWeight: "bold",
-              fontSize: RFPercentage(3),
-            }}
-            containerStyle={{
-              top: hp(15),
-            }}
-            buttonStyle={{
-              height: hp(10),
-              width: wp(80),
-              alignSelf: "center",
-            }}
-          />
-        </View>
-      </Modal>
-    </View>
-  );
-};
-
-export default function ({ navigation }) {
+    );
+  };
   return (
     <ContextConsumer>
       {(context) => {
-        return <TrackDriver context={context} navigation={navigation} />;
+        return (
+          <TrackDriver
+            context={context}
+            navigation={navigation}
+            LiveTripDetails={LiveTripDetails}
+          />
+        );
       }}
     </ContextConsumer>
   );

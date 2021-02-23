@@ -13,6 +13,9 @@ import {
 } from "../../src/utilites/Queries";
 import * as Linking from "expo-linking";
 import styles from "../styles/styles";
+const SwitchPaymentTypeButton = lazy(() =>
+  import("../components/SwitchPaymentTypeButton")
+);
 const PaymentButton = lazy(() => import("../../src/components/PaymentButton"));
 const SelectPaymentMethod = lazy(() =>
   import("../components/SelectPaymentMethod")
@@ -76,6 +79,13 @@ export default function (props) {
       fetchPolicy: "network-only",
     }
   );
+  const handleCardPayment = async () => {
+    setpaymentMethod("Card");
+    await WebBrowser.openBrowserAsync(
+      `https://drippypayments.netlify.app/?${token}?${totalAmount}?${uuidTrip}`
+    );
+  };
+
   const {
     data,
     error,
@@ -122,6 +132,7 @@ export default function (props) {
     });
   }, [paymentMethod]);
   React.useEffect(() => {
+    //CountDown timer for driver to respond
     /* const Value = setTimeout(() => setTimeoutValue(timeOutValue - 1), 1000);
     if (timeOutValue === 0) {
       clearTimeout(Value);
@@ -132,9 +143,8 @@ export default function (props) {
     StopQuery === true && stopPolling();
     StopQuery === false && startPolling();
   }, [StopQuery, timeOutValue]);
-
-  if (data && data.getCardPaymentResult[0]) {
-    /* setvisibleModal(true); */
+  if (requestID === null) return <LoadingContent />;
+  /* if (data && data.getCardPaymentResult[0]) {
     if (data && data.getCardPaymentResult[0].status === "Paid,WaitingDriver")
       return (
         <View
@@ -168,43 +178,20 @@ export default function (props) {
           />
         </View>
       );
-
-    /*   */
-  }
-  if (requestID === null) return <LoadingContent />;
+  } */
   if (paymentMethod === "Card" && !data.getCardPaymentResult[0]) {
     return (
       <View style={styles.container}>
-        <TouchableOpacity
-          style={{
-            marginTop: 20,
-            borderWidth: 2,
-            borderRadius: 20,
-          }}
+        <SwitchPaymentTypeButton
+          text={"cash"}
           onPress={() => {
-            setpaymentMethod("Cash"), StopPolling(), setselectedValue("Cash");
+            setpaymentMethod("Cash"), setselectedValue("Cash");
           }}
-        >
-          <Text
-            style={{
-              alignSelf: "center",
-            }}
-          >
-            Switch to cash payment
-          </Text>
-        </TouchableOpacity>
-
+        />
         <LoadingContent />
       </View>
     );
   }
-
-  const handleCardPayment = async () => {
-    setpaymentMethod("Card");
-    await WebBrowser.openBrowserAsync(
-      `https://drippypayments.netlify.app/?${token}?${totalAmount}?${uuidTrip}`
-    );
-  };
 
   return (
     <>
@@ -215,15 +202,6 @@ export default function (props) {
         />
       ) : (
         <View style={styles.container}>
-          {/* Cash or Card header depending on selection */}
-          {/* <PaymentMethodHeader
-            selectedValue={selectedValue}
-            onValueChange={(val) => {
-              setcardselected(false),
-                setselectedValue(val),
-                setpaymentMethod(val);
-            }}
-          /> */}
           {/*Select you payment method */}
           {selectedValue === "Select" && (
             <SelectPaymentMethod
@@ -236,26 +214,12 @@ export default function (props) {
           {/* Payment method CASH*/}
           {paymentMethod === "Cash" && (
             <>
-              <TouchableOpacity
-                style={{
-                  marginTop: 20,
-                  borderWidth: 2,
-                  borderRadius: 20,
-                }}
+              <SwitchPaymentTypeButton
+                text={"card"}
                 onPress={() => {
-                  setpaymentMethod("Card"),
-                    StartPolling(),
-                    setselectedValue("Card");
+                  setpaymentMethod("Card"), setselectedValue("Card");
                 }}
-              >
-                <Text
-                  style={{
-                    alignSelf: "center",
-                  }}
-                >
-                  Switch to card payment
-                </Text>
-              </TouchableOpacity>
+              />
               <CashSelectedText
                 text={
                   "You have chosen to pay cash, payment is due upon arrival."

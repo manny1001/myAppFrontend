@@ -26,12 +26,12 @@ const BigButton = ({
     style={{
       shadowColor: "rgba(0,0,0, .4)", // IOS
       shadowOffset: { height: 3, width: 3 }, // IOS
-      shadowOpacity: 0.5, // IOS
+      shadowOpacity: 0.25, // IOS
       shadowRadius: 1, //IOS
-      backgroundColor: background === "NONE" ? "" : "#84cfd1",
-      elevation: 3, // Android
+      backgroundColor: disabled ? "#cccccc" : "#84cfd1",
+      elevation: 2, // Android
       width: wp(80),
-      height: hp(7),
+      height: hp(5),
       justifyContent: "center",
       borderRadius: wp(20),
       alignItems: "center",
