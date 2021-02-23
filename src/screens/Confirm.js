@@ -28,7 +28,7 @@ export default function (props) {
   const [location, setlocation] = React.useState("");
   const [destination, setdestination] = React.useState("");
   const [userName, setUserName] = useState("");
-  const [newTripRequest] = useMutation(NEW_REQUEST);
+  const [newTripRequest, { called }] = useMutation(NEW_REQUEST);
   const [loading, setLoading] = useState(false);
   const { data, loading: Loading } = useQuery(GET_PROFILE, {
     onCompleted: () => {
@@ -64,6 +64,7 @@ export default function (props) {
       location={location}
       error={error}
       DATA={DATA}
+      called={called}
     />
   );
 }

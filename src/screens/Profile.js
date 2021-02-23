@@ -108,7 +108,7 @@ const ProfileStack = (props) => {
         />
 
         <BigButton
-          /*    disabled={LOADING === true ? true : false} */
+          disabled={LOADING === true ? true : false}
           onPress={() => {
             Keyboard.dismiss(),
               updateProfile({

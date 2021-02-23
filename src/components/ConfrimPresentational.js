@@ -22,6 +22,7 @@ const ConfrimPresentational = ({
   newTripRequest,
   data,
   navigation,
+  called,
 }) => {
   return (
     <ContextConsumer>
@@ -86,21 +87,25 @@ const ConfrimPresentational = ({
             <Driver context={context} error={error} data={DATA} />
 
             <BigButton
-              disabled={context.state.driveruuid === "" ? true : false}
+              disabled={
+                context.state.driveruuid === "" || called === true
+                  ? true
+                  : false
+              }
               title={"Next"}
               onPress={() => {
                 stopPolling(), console.log(navigation);
-                /* newTripRequest({
-                    variables: {
-                      uuid: data && data.currentUser.uuid,
-                      name: data && data.currentUser.name,
-                      cellphone: data && data.currentUser.cellphone,
-                      location: location,
-                      destination: destination,
-                      uuidDriver: context.state.driveruuid,
-                    },
-                  });
-                navigation.navigate("Payment"); */
+                newTripRequest({
+                  variables: {
+                    uuid: data && data.currentUser.uuid,
+                    name: data && data.currentUser.name,
+                    cellphone: data && data.currentUser.cellphone,
+                    location: location,
+                    destination: destination,
+                    uuidDriver: context.state.driveruuid,
+                  },
+                });
+                navigation.navigate("Payment");
               }}
             />
           </View>
