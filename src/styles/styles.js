@@ -1,13 +1,18 @@
 import React from "react";
 import { RFValue } from "react-native-responsive-fontsize";
 import { StyleSheet } from "react-native";
-import { Dimensions } from "react-native";
+import { RFPercentage } from "react-native-responsive-fontsize";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 
 const styles = StyleSheet.create({
+  loadingGify: { height: hp(70), width: wp(100), alignSelf: "center" },
+  tabStyle: {},
+  tabBarLabelStyles: { fontSize: RFPercentage(2) },
+  tabBarStyle: { height: hp(8) },
+  tabIconStyle: { color: "black" },
   iconStyle: {
     flex: 0.16,
     justifyContent: "center",

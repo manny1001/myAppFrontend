@@ -22,13 +22,13 @@ import { GetData } from "./src/utilites/GFunctions";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-
-import { StoreData } from "./src/utilites/GFunctions";
+import styles from "./src/styles/styles";
 const Profile = lazy(() => import("./src/screens/Profile"));
 const Home = lazy(() => import("./src/navigation/Home"));
 const Settings = lazy(() => import("./src/./navigation/More"));
 const Payments = lazy(() => import("./src/./navigation/Payments"));
 const AuthStack = lazy(() => import("./src/navigation/Auth"));
+const TabIcon = lazy(() => import("./src/components/TabIcon.js"));
 const httpLink = createHttpLink({
   uri: "https://agile-woodland-33090.herokuapp.com/",
 });
@@ -206,35 +206,42 @@ const App = (props) => {
                     <AppStack.Navigator
                       tabBarOptions={{
                         keyboardHidesTabBar: true,
+                        style: styles.tabBarStyle,
+                        activeBackgroundColor: "#C4C0FF",
+                        tabStyle: styles.tabStyle,
+                        labelStyle: styles.tabBarLabelStyles,
+                        showLabel: false,
                       }}
+                      backBehavior="history"
+
+                      /* sceneContainerStyle={{ borderWidth: 0.1 }} */
                     >
                       <AppStack.Screen
                         name="Home"
-                        /* component={() => <Home windowWidth={windowWidth} />} */
                         component={Home}
                         options={{
-                          tabBarLabel: "Home",
+                          tabBarIcon: () => <TabIcon name={"home"} />,
                         }}
                       />
                       <AppStack.Screen
                         name="Payments"
                         component={Payments}
                         options={{
-                          tabBarLabel: "Payments",
+                          tabBarIcon: () => <TabIcon name={"payment"} />,
                         }}
                       />
                       <AppStack.Screen
                         name="Profile"
                         component={Profile}
                         options={{
-                          tabBarLabel: "Profile",
+                          tabBarIcon: () => <TabIcon name={"person"} />,
                         }}
                       />
                       <AppStack.Screen
                         name="Settings"
                         component={Settings}
                         options={{
-                          tabBarLabel: "More",
+                          tabBarIcon: () => <TabIcon name={"more"} />,
                         }}
                       />
                     </AppStack.Navigator>

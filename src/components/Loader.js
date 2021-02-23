@@ -1,21 +1,20 @@
 import React, { useState, lazy, Suspense } from "react";
-import { View, Text, StyleSheet, ActivityIndicator } from "react-native";
+import { View, Text, Image, ActivityIndicator } from "react-native";
 import { RFPercentage } from "react-native-responsive-fontsize";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
+import styles from "../styles/styles";
 const Loader = () => {
   return (
-    <View
-      style={{
-        height: hp(100),
-        width: wp(100),
-        justifyContent: "center",
-        backgroundColor: "#f2f2f2",
-      }}
-    >
-      <ActivityIndicator color="#84cfd1" size="large" />
+    <View style={[styles.container, { justifyContent: "center" }]}>
+      {/* <ActivityIndicator color="#6c63ff" size="large" /> */}
+      {/* <Image
+        style={styles.loadingGify}
+        source={require("../../assets/gifys/4V0b.gif")}
+      /> */}
+
       <Text
         style={{
           marginTop: hp(4),
@@ -31,15 +30,8 @@ const Loader = () => {
 };
 export const LoadingContent = () => {
   return (
-    <View
-      style={{
-        height: hp(100),
-        width: wp(100),
-        justifyContent: "center",
-        backgroundColor: "#f2f2f2",
-      }}
-    >
-      <ActivityIndicator color="#84cfd1" size="large" />
+    <View style={[styles.container, { justifyContent: "center" }]}>
+      <ActivityIndicator color="#6c63ff" size="large" />
       <Text
         style={{
           marginTop: hp(4),

@@ -28,7 +28,7 @@ const BigButton = ({
       shadowOffset: { height: 3, width: 3 }, // IOS
       shadowOpacity: 0.25, // IOS
       shadowRadius: 1, //IOS
-      backgroundColor: disabled ? "#cccccc" : "#84cfd1",
+      backgroundColor: disabled ? "#cccccc" : "#6c63ff",
       elevation: 2, // Android
       width: wp(80),
       height: hp(7),
