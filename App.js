@@ -29,12 +29,12 @@ const Home = lazy(() => import("./src/navigation/Home"));
 const Settings = lazy(() => import("./src/./navigation/More"));
 const Payments = lazy(() => import("./src/./navigation/Payments"));
 const AuthStack = lazy(() => import("./src/navigation/Auth"));
-/* const httpLink = createHttpLink({
-  uri: "https://agile-woodland-33090.herokuapp.com/",
-}); */
 const httpLink = createHttpLink({
-  uri: "http://192.168.8.125:22000/graphql",
+  uri: "https://agile-woodland-33090.herokuapp.com/",
 });
+/* const httpLink = createHttpLink({
+  uri: "http://192.168.8.125:22000/graphql",
+}); */
 const authLink = setContext(async (_, { headers }) => {
   const token = await AsyncStorage.getItem("accessToken");
   return {

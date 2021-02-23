@@ -31,7 +31,7 @@ const BigButton = ({
       backgroundColor: disabled ? "#cccccc" : "#84cfd1",
       elevation: 2, // Android
       width: wp(80),
-      height: hp(5),
+      height: hp(7),
       justifyContent: "center",
       borderRadius: wp(20),
       alignItems: "center",
