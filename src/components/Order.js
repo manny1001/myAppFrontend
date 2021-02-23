@@ -37,15 +37,11 @@ const Order = (props) => {
       <View
         style={{
           backgroundColor: "white",
-          alignSelf: "center",
-          elevation: 50,
-          width: wp(95),
-          borderRadius: wp(1),
+          alignSelf: "stretch",
         }}
       >
         <View
           style={{
-            width: wp(95),
             height: hp(5),
             flexDirection: "row",
             alignItems: "center",
@@ -88,8 +84,8 @@ const Order = (props) => {
             <View
               style={{
                 flexDirection: "row",
-                width: wp(95),
-                justifyContent: "space-between",
+                justifyContent: "space-around",
+                alignSelf: "stretch",
               }}
             >
               <View
@@ -97,8 +93,6 @@ const Order = (props) => {
                   flexDirection: "column",
                   height: hp(6),
                   justifyContent: "space-between",
-                  width: wp(26),
-                  marginLeft: wp(4),
                 }}
               >
                 <Text
@@ -125,14 +119,12 @@ const Order = (props) => {
                   flexDirection: "column",
                   height: hp(6),
                   justifyContent: "space-between",
-                  width: wp(30),
-                  marginLeft: wp(4),
                 }}
               >
                 <Text
                   style={{
                     color: "silver",
-                    marginRight: wp(4),
+
                     fontSize: RFValue(14),
                   }}
                 >
@@ -141,7 +133,7 @@ const Order = (props) => {
                 <Text
                   style={{
                     color: "black",
-                    marginRight: wp(5),
+
                     fontSize: RFValue(16),
                     alignSelf: "center",
                   }}
@@ -155,14 +147,11 @@ const Order = (props) => {
                   flexDirection: "column",
                   height: hp(6),
                   justifyContent: "space-between",
-                  width: wp(25),
-                  marginLeft: wp(4),
                 }}
               >
                 <Text
                   style={{
                     color: "silver",
-                    marginRight: wp(5),
                     fontSize: RFValue(14),
                   }}
                 >
@@ -171,7 +160,6 @@ const Order = (props) => {
                 <Text
                   style={{
                     color: "black",
-                    marginRight: wp(5),
                     fontSize: RFValue(18),
                     color:
                       status === "Complete" ? (

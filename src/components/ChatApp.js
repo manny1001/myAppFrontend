@@ -25,7 +25,7 @@ function Chat({ userUUID, driverUUID, uuidTrip }) {
       uuidtrip: uuidTrip,
       uuid: userUUID,
     },
-    pollInterval: 10000000,
+    pollInterval: 1000,
     notifyOnNetworkStatusChange: true,
     onCompleted: () => {
       /*       console.log(data); */

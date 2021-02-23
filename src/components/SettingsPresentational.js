@@ -23,7 +23,7 @@ const SettingsPresentational = ({ props, DATA, AysncLogout }) => {
           flex: 1,
           alignSelf: "center",
         }}
-        style={{}}
+        style={{ marginTop: hp(5) }}
         data={DATA}
         renderItem={({ item }) => (
           <TouchableOpacity

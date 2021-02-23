@@ -1,5 +1,5 @@
 import React, { lazy } from "react";
-import { View, Text } from "react-native";
+import { View, Text, Animated } from "react-native";
 import Modal from "modal-enhanced-react-native-web";
 import TextInput from "../../src/components/TextInput";
 import { useMutation } from "@apollo/client";

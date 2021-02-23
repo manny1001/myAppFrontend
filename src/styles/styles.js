@@ -76,8 +76,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "space-between",
-    backgroundColor: "#f2f2f2",
-    padding: wp(5),
+    /*  backgroundColor: "#f2f2f2", */
+    alignSelf: "stretch",
+    marginRight: wp(10),
+    marginLeft: wp(10),
+    marginTop: hp(1),
+    marginBottom: hp(1),
   },
   inputContainerStyle: {
     backgroundColor: "#f3f3f3",

@@ -29,14 +29,11 @@ const BigButton = ({
       shadowOpacity: 0.25, // IOS
       shadowRadius: 1, //IOS
       backgroundColor: disabled ? "#cccccc" : "#6c63ff",
-      elevation: 2, // Android
-      width: wp(80),
       height: hp(7),
       justifyContent: "center",
       borderRadius: wp(20),
-      alignItems: "center",
       flexDirection: "row",
-      alignSelf: "center",
+      alignSelf: "stretch",
     }}
   >
     <Text
@@ -44,7 +41,7 @@ const BigButton = ({
         fontWeight: "bold",
         alignSelf: "center",
         color: "white",
-        fontSize: wp(5),
+        fontSize: RFPercentage(2.5),
       }}
     >
       {title}

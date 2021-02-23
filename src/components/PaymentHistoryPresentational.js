@@ -29,7 +29,7 @@ const PaymentHistoryPresentational = ({
         settTipModalVisible={settTipModalVisible()}
       />
 
-      <View style={styles.container}>
+      <View style={[styles.container, { marginTop: 50 }]}>
         {data && data.getRequestHistory.length === 0 && (
           <View style={styles.container}>
             <Text

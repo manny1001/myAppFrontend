@@ -34,7 +34,7 @@ const Payments = lazy(() => import("./src/screens/PaymentHistory.js"));
   uri: "https://agile-woodland-33090.herokuapp.com/",
 }); */
 const httpLink = createHttpLink({
-  uri: "http://192.168.8.125:22000/graphql",
+  uri: "http://localhost:22000/graphql",
 });
 const authLink = setContext(async (_, { headers }) => {
   const token = await AsyncStorage.getItem("accessToken");
