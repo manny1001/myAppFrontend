@@ -17,17 +17,18 @@ class AcceptTandCs extends Component {
   }
   render() {
     return (
-      <View style={styles.container}>
+      <View style={[styles.container, {}]}>
         <AcceptTermsImage />
         <View
           style={{
             width: wp(60),
             flexDirection: "row",
-            justifyContent: "space-around",
+            justifyContent: "space-evenly",
             alignSelf: "center",
           }}
         >
           <AcceptTermsButton
+            isAccepted={this.state.isAccepted}
             onPress={() => {
               this.setState({ isAccepted: !this.state.isAccepted });
             }}

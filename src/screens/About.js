@@ -11,7 +11,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import { RFValue } from "react-native-responsive-fontsize";
+import { RFValue, RFPercentage } from "react-native-responsive-fontsize";
 import styles from "../styles/styles";
 const About = (props) => {
   const DATA = [
@@ -48,18 +48,17 @@ const About = (props) => {
             <View style={{ flexDirection: "column", alignSelf: "center" }}>
               <Text
                 style={{
-                  fontSize: RFValue(18),
-
-                  fontWeight: "400",
+                  fontFamily: "Gotham_Medium_Regular",
+                  fontSize: RFPercentage(3),
                 }}
               >
                 {item.title}
               </Text>
               <Text
                 style={{
-                  fontSize: RFValue(12),
-
-                  fontWeight: "300",
+                  fontFamily: "Gotham_Medium_Regular",
+                  fontSize: RFPercentage(1.5),
+                  marginTop: hp(1),
                 }}
               >
                 {item.description}

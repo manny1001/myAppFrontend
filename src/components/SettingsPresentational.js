@@ -11,11 +11,11 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import { RFValue } from "react-native-responsive-fontsize";
+import { RFPercentage } from "react-native-responsive-fontsize";
 import styles from "../styles/styles";
 import BigButton from "../components/Buttons";
 import { ContextConsumer } from "../../src/context/Context";
-const SettingsPresentational = ({ props, DATA }) => {
+const SettingsPresentational = ({ props, DATA, AysncLogout }) => {
   return (
     <View style={styles.container}>
       <FlatList
@@ -43,8 +43,8 @@ const SettingsPresentational = ({ props, DATA }) => {
             {item.icon}
             <Text
               style={{
-                fontSize: RFValue(18),
-                fontWeight: "400",
+                fontFamily: "Gotham_Medium_Regular",
+                fontSize: RFPercentage(3),
               }}
             >
               {item.title}

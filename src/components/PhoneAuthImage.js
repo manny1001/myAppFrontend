@@ -1,5 +1,5 @@
 import React from "react";
-import { View } from "react-native";
+import { View, Text } from "react-native";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -8,12 +8,15 @@ const PhoneAuthImage = () => {
   return (
     <View
       style={{
+        width: wp(90),
+        height: hp(60),
         alignSelf: "center",
-        flex: 1,
-        width: wp(100),
-        resizeMode: "contain",
+        borderWidth: wp(0.5),
+        justifyContent: "center",
       }}
-    />
+    >
+      <Text style={{ alignSelf: "center" }}>Image</Text>
+    </View>
   );
 };
 

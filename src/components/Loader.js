@@ -19,8 +19,8 @@ const Loader = () => {
         style={{
           marginTop: hp(4),
           alignSelf: "center",
+          fontFamily: "Gotham_Medium_Regular",
           fontSize: RFPercentage(3),
-          fontWeight: "400",
         }}
       >
         App loading...

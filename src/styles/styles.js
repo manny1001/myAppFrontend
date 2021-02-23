@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
   heading5: {
     alignSelf: "center",
     fontSize: RFValue(14),
-    color: "#84cfd1",
+    color: "black",
   },
   container: {
     flex: 1,

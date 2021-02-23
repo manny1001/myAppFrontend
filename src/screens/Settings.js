@@ -35,7 +35,7 @@ const Usersettings = (props) => {
     <SettingsPresentational
       props={props}
       DATA={DATA}
-      AysncLogout={AysncLogout}
+      AysncLogout={() => AysncLogout()}
     />
   );
 };
