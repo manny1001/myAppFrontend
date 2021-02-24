@@ -8,8 +8,8 @@ import {
 import { RFPercentage } from "react-native-responsive-fontsize";
 import { ContextConsumer } from "..//context/Context";
 import { RFValue } from "react-native-responsive-fontsize";
-
-import styles from "../styles/styles";
+import { StoreData } from "../utilites/GFunctions";
+import styles from "../styles";
 const AddName = lazy(() => import("../../src/screens/AddName"));
 const BigButton = lazy(() => import("../../src/components/Buttons"));
 const Driver = lazy(() => import("../components/SelectDriver"));
@@ -25,6 +25,7 @@ const ConfrimPresentational = ({
   called,
 }) => {
   const [personalDriver, setPersonalDriver] = React.useState(null);
+  const [clickedDriver, setClickedDriver] = React.useState(null);
   return (
     <ContextConsumer>
       {(context) => {
@@ -49,9 +50,9 @@ const ConfrimPresentational = ({
                     fontFamily: "Gotham_Medium_Regular",
                   }}
                 >
-                  {context.state.driveruuid === "" ? `Available Drivers` : ""}
+                  {clickedDriver === null ? `Available Drivers` : ""}
                 </Text>
-                {context.state.driveruuid === "" ? (
+                {clickedDriver === null ? (
                   <Text
                     style={{
                       fontSize: RFPercentage(2.5),
@@ -65,10 +66,7 @@ const ConfrimPresentational = ({
                 ) : (
                   <TouchableOpacity
                     onPress={() => {
-                      context.dispatch({
-                        type: "SAVE_DRIVERUUID",
-                        driveruuid: "",
-                      });
+                      setClickedDriver(null), setPersonalDriver(null);
                     }}
                   >
                     <Text
@@ -85,9 +83,15 @@ const ConfrimPresentational = ({
               </View>
             )}
 
-            <Driver context={context} error={error} data={DATA} />
+            <Driver
+              context={context}
+              error={error}
+              data={DATA}
+              clickedDriver={clickedDriver}
+              setClickedDriver={(val) => setClickedDriver(val)}
+            />
 
-            {context.state.driveruuid !== "" && personalDriver === null && (
+            {clickedDriver !== null && personalDriver === null && (
               <TouchableOpacity
                 onPress={() => setPersonalDriver("javssa")}
                 style={{
@@ -111,7 +115,7 @@ const ConfrimPresentational = ({
                 </Text>
               </TouchableOpacity>
             )}
-            {context.state.driveruuid !== "" && personalDriver !== null && (
+            {clickedDriver !== null && personalDriver !== null && (
               <TouchableOpacity
                 onPress={() => setPersonalDriver(null)}
                 style={{
@@ -138,23 +142,27 @@ const ConfrimPresentational = ({
 
             <BigButton
               disabled={
-                context.state.driveruuid === "" || called === true
-                  ? true
-                  : false
+                clickedDriver === null || called === true ? true : false
               }
               title={"Next"}
               onPress={() => {
-                stopPolling(), console.log(navigation);
-                newTripRequest({
-                  variables: {
-                    uuid: data && data.currentUser.uuid,
-                    name: data && data.currentUser.name,
-                    cellphone: data && data.currentUser.cellphone,
-                    location: location,
-                    destination: destination,
-                    uuidDriver: context.state.driveruuid,
-                  },
-                });
+                context.dispatch({
+                  type: "SAVE_DRIVERUUID",
+                  driveruuid: clickedDriver && clickedDriver.item.uuid,
+                }),
+                  stopPolling(),
+                  newTripRequest({
+                    variables: {
+                      uuid: data && data.currentUser.uuid,
+                      name: data && data.currentUser.name,
+                      cellphone: data && data.currentUser.cellphone,
+                      location: location,
+                      destination: destination,
+                      uuidDriver: clickedDriver && clickedDriver.item.uuid,
+                    },
+                  }).then((data) =>
+                    StoreData("uuidTrip", data.data.newTripRequest)
+                  );
                 navigation.navigate("Payment");
               }}
             />

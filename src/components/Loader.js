@@ -5,10 +5,21 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import styles from "../styles/styles";
+import styles from "../styles";
 const Loader = () => {
   return (
-    <View style={[styles.container, { justifyContent: "center", margin: 0 }]}>
+    <View
+      style={[
+        styles.container,
+        {
+          justifyContent: "center",
+          marginRight: 0,
+          marginLeft: 0,
+          marginTop: 0,
+          marginBottom: 0,
+        },
+      ]}
+    >
       {/* <ActivityIndicator color="#6c63ff" size="large" /> */}
       {/* <Image
         style={styles.loadingGify}
@@ -30,14 +41,25 @@ const Loader = () => {
 };
 export const LoadingContent = () => {
   return (
-    <View style={[styles.container, { justifyContent: "center" }]}>
-      <ActivityIndicator color="#6c63ff" size="large" />
+    <View
+      style={[
+        styles.container,
+        {
+          justifyContent: "center",
+          marginRight: 0,
+          marginLeft: 0,
+          marginTop: 0,
+          marginBottom: 0,
+        },
+      ]}
+    >
+      {/* <ActivityIndicator color="#6c63ff" size="large" /> */}
       <Text
         style={{
           marginTop: hp(4),
           alignSelf: "center",
+          fontFamily: "Gotham_Medium_Regular",
           fontSize: RFPercentage(3),
-          fontWeight: "400",
         }}
       >
         Awaiting Response...

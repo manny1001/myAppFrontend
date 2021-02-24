@@ -2,9 +2,9 @@ import React, { useState, lazy } from "react";
 import { Text, ActivityIndicator, View, Keyboard } from "react-native";
 const AddName = lazy(() => import("../../src/screens/AddName"));
 import { Avatar, Image } from "react-native-elements";
-import Loader from "../components/Loader";
+import { LoadingContent } from "../components/Loader";
 import InputField from "../../src/components/TextInput";
-import styles from "../styles/styles";
+import styles from "../styles";
 import { useQuery, useMutation } from "@apollo/client";
 import { GET_PROFILE, UPDATE_PROFILE } from "../../src/utilites/Queries";
 const BigButton = lazy(() => import("../components/Buttons"));
@@ -41,7 +41,7 @@ const ProfileStack = (props) => {
 
   const [name, setusername] = React.useState(data && data.currentUser.name);
 
-  if (loading) return <Loader />;
+  if (loading) return <LoadingContent />;
   if (error) return <Text>{error.message}</Text>;
   if (
     (data && data.currentUser.name === null) ||

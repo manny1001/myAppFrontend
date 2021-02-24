@@ -5,7 +5,7 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 const BigButton = lazy(() => import("../../src/components/Buttons"));
-import styles from "../styles/styles";
+import styles from "../styles";
 const AcceptTermsButton = lazy(() =>
   import("../../src/components/AcceptTermsButton")
 );

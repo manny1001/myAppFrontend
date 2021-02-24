@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 const windowWidth = Dimensions.get("window").width;
-import styles from "../styles/styles";
+import styles from "../styles";
 import { Avatar } from "react-native-elements";
 import { RFPercentage } from "react-native-responsive-fontsize";
 import {
@@ -30,8 +30,7 @@ const Drivers = (props) => {
     return (
       <TouchableOpacity
         onPress={() => {
-          setClickedDriver(props),
-            context.dispatch({ type: "SAVE_DRIVERUUID", driveruuid: uuid });
+          setClickedDriver(props);
         }}
         style={{
           flexDirection: "row",
@@ -107,7 +106,7 @@ const Drivers = (props) => {
   }
 };
 
-export class AllDrivers extends React.Component {
+class AllDrivers extends React.Component {
   render() {
     const { DriverDetails, setClickedDriver, context } = this.props;
     if (DriverDetails.length === 0)
@@ -166,3 +165,4 @@ export class AllDrivers extends React.Component {
     );
   }
 }
+export default AllDrivers;

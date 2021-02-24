@@ -6,7 +6,7 @@ import {
   TextInput,
   Text,
 } from "react-native";
-import styles from "../styles/styles";
+import styles from "../styles";
 const Feedback = (props) => {
   const [feedback, setfeedBack] = useState("");
 

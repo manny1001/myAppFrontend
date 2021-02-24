@@ -12,7 +12,7 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import { RFValue, RFPercentage } from "react-native-responsive-fontsize";
-import styles from "../styles/styles";
+import styles from "../styles";
 const About = (props) => {
   const DATA = [
     {

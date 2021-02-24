@@ -12,13 +12,13 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import { ContextConsumer } from "../../src/context/Context";
-import Loader from "../components/Loader";
+import { LoadingContent } from "../components/Loader";
 import { CountdownCircleTimer } from "react-native-countdown-circle-timer";
 import { useQuery, useMutation } from "@apollo/client";
 import { DRIVERS_LIVELOCATION, ALERT_EMAIL } from "../../src/utilites/Queries";
 import { GetData } from "../../src/utilites/GFunctions";
 import { StackActions } from "@react-navigation/native";
-import styles from "../styles/styles";
+import styles from "../styles";
 const AreYouSureYouArrivedModal = lazy(() =>
   import("../components/AreYouSureYouArrivedModal")
 );
@@ -71,24 +71,24 @@ const TrackDriver = ({ navigation, LiveTripDetails }) => {
     notifyOnNetworkStatusChange: true,
     fetchPolicy: "network-only",
   });
-
   React.useEffect(() => {
     GetData("useruuid").then((value) => setuseruuid(value));
     GetData("uuidTrip").then((value) => setuuidTrip(value));
   });
+   if (
+     data &&
+     data.driversLocation &&
+     data.driversLocation[0] &&
+     data.driversLocation[0].driverremainingtime === null
+   ) {
+     return <LoadingContent />;
+   }
   if (
     (data && data.driversLocation === undefined) ||
     (data && data.driversLocation[0] === undefined)
   )
-    return <Loader />;
-  if (
-    data &&
-    data.driversLocation &&
-    data.driversLocation[0] &&
-    data.driversLocation[0].driverremainingtime === null
-  ) {
-    return <Loader />;
-  }
+    return <LoadingContent />;
+ 
   if (error) return <Text>Error</Text>;
   return (
     <View style={styles.container}>

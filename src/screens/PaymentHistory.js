@@ -3,7 +3,7 @@ import { Text } from "react-native";
 import { StoreData } from "../../src/utilites/GFunctions";
 import { useQuery } from "@apollo/client";
 import { GET_REQUEST_HISTORY, GET_USER_UUID } from "../../src/utilites/Queries";
-import Loader from "../components/Loader";
+import { LoadingContent } from "../components/Loader";
 
 const PaymentHistoryPresentational = lazy(() =>
   import("../components/PaymentHistoryPresentational")
@@ -23,7 +23,7 @@ const Payments = () => {
   const [orderObject, setorderObject] = useState({});
   const [TipModalVisible, settTipModalVisible] = useState();
   if (error) return <Text>{error.message}</Text>;
-  if (loading) return <Loader />;
+  if (loading) return <LoadingContent />;
   if (data)
     return (
       <PaymentHistoryPresentational

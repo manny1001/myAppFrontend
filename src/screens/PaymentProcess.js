@@ -12,7 +12,7 @@ import {
   CREATE_CHECKOUT,
 } from "../../src/utilites/Queries";
 import * as Linking from "expo-linking";
-import styles from "../styles/styles";
+import styles from "../styles";
 const SwitchPaymentTypeButton = lazy(() =>
   import("../components/SwitchPaymentTypeButton")
 );
@@ -39,7 +39,6 @@ export default function (props) {
   const [totalAmount, settotalAmount] = React.useState("88000");
   const [StopQuery, setStopQuery] = useState(false);
   const [requestID, setRequestid] = useState(null);
-  const [uuidTrip, setuuidTrip] = useState(null);
   const [timeOutValue, setTimeoutValue] = React.useState(500);
   const [selectedcard, setselectedCard] = React.useState(null);
   const [driverName, setDriverName] = React.useState(null);
@@ -47,6 +46,8 @@ export default function (props) {
   const [cardselected, setcardselected] = React.useState(false);
   const [driverduration, setdriverduration] = React.useState(null);
   const [model, setModel] = React.useState(null);
+  const [uuidTrip, setuuidTrip] = React.useState(null);
+
   const [driverRegistration, setdriverregistration] = React.useState(null);
   const [token, settoken] = useState(null);
   const [PayOrConfirm] = useMutation(PAYMENT_CONFIRMATION);
@@ -55,11 +56,10 @@ export default function (props) {
   const { data: DATA, stopPolling, startPolling } = useQuery(
     GET_DRIVER_RESPONSE,
     {
-      variables: { uuidUser: userUUID },
+      variables: { uuidUser: userUUID, uuidTrip: uuidTrip },
       pollInterval: 100,
       onCompleted: () => {
         setRequestid(DATA.getDriverRequestResponse.id),
-          setuuidTrip(DATA.getDriverRequestResponse.uuidTrip),
           DATA.getDriverRequestResponse.uuidTrip &&
             StoreData("uuidTrip", DATA.getDriverRequestResponse.uuidTrip);
         DATA.getDriverRequestResponse.driverduration &&
@@ -102,7 +102,6 @@ export default function (props) {
     startPolling: StartPolling,
   } = useQuery(GET_CARD_PAYMENT_RESULT, {
     onCompleted: () => {},
-    skip: true,
     variables: {
       uuidTrip: "d80602cd-87fc-40d6-aca7-25fe02388107",
       totalAmount: "88000",
@@ -114,7 +113,7 @@ export default function (props) {
   });
 
   React.useEffect(() => {
-    /*  paymentMethod === "Card" && StartPolling(500); */
+    paymentMethod === "Card" && StartPolling(500);
     AsyncStorage.multiGet([
       "cellphone",
       "name",
@@ -124,6 +123,7 @@ export default function (props) {
       "useruuid",
       "destination",
       "accessToken",
+      "uuidTrip",
     ]).then((response) => {
       setclientCellNumber(response[0][1]);
       setname(response[1][1]);
@@ -133,6 +133,7 @@ export default function (props) {
       setUSERUUID(response[5][1]);
       setdestination(response[6][1]);
       settoken(response[7][1]);
+      setuuidTrip(response[8][1]);
     });
   }, [paymentMethod]);
   React.useEffect(() => {
@@ -149,42 +150,42 @@ export default function (props) {
   }, [StopQuery, timeOutValue]);
   if (requestID === null) return <LoadingContent />;
   if (LOADINGS) return <LoadingContent />;
-  if (/* paymentMethod === "Card" && !data.getCardPaymentResult[0] */ null) {
-    /* if (data && data.getCardPaymentResult[0]) {
-    if (data && data.getCardPaymentResult[0].status === "Paid,WaitingDriver")
-      return (
-        <View
-          style={[
-            styles.container,
-            {
-              flex: 1,
-              width: 400,
-              alignSelf: "center",
-              justifyContent: "center",
-            },
-          ]}
-        >
-          <Text
-            style={{
-              fontFamily: "Gotham_Medium_Regular",
-              marginBottom: 100,
-              fontSize: 18,
-              fontWeight: "600",
-            }}
+  if (paymentMethod === "Card" && !data.getCardPaymentResult[0]) {
+    if (data && data.getCardPaymentResult[0]) {
+      if (data && data.getCardPaymentResult[0].status === "Paid,WaitingDriver")
+        return (
+          <View
+            style={[
+              styles.container,
+              {
+                flex: 1,
+                width: 400,
+                alignSelf: "center",
+                justifyContent: "center",
+              },
+            ]}
           >
-            Payment successful, please proceeed to track your driver...
-          </Text>
-          <Button
-            onPress={() => {
-              stopPolling(),
-                StopPolling(),
-                props.props.navigation.navigate("TrackDriver");
-            }}
-            title={"Next"}
-          />
-        </View>
-      );
-  } */
+            <Text
+              style={{
+                fontFamily: "Gotham_Medium_Regular",
+                marginBottom: 100,
+                fontSize: 18,
+                fontWeight: "600",
+              }}
+            >
+              Payment successful, please proceeed to track your driver...
+            </Text>
+            <Button
+              onPress={() => {
+                stopPolling(),
+                  StopPolling(),
+                  props.props.navigation.navigate("TrackDriver");
+              }}
+              title={"Next"}
+            />
+          </View>
+        );
+    }
     return (
       <View style={styles.container}>
         <SwitchPaymentTypeButton

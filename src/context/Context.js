@@ -133,6 +133,7 @@ class Context extends Component {
           () => StoreData("useruuid", action.useruuid)
         );
       case "SAVE_DRIVERUUID":
+        console.log(action);
         return this.setState((state) => ({
           sessionArray: {
             ...this.state.sessionArray,

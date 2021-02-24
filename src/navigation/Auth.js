@@ -1,38 +1,26 @@
-import React, { lazy } from "react";
-import { createStackNavigator } from "@react-navigation/stack";
+import {
+  React,
+  PhoneAuth,
+  AuthStackNavigator,
+  AcceptTandCs,
+  Suspense,
+  Loader,
+} from "../api/constants";
 
-const PhoneAuth = lazy(() => import("../screens/PhoneAuth"));
-import { Context, ContextConsumer } from "../../src/context/Context";
-const AcceptTandCs = lazy(() => import("../screens/TermsAndConditions"));
-const AuthenticationStack = ({ setAppLoading }) => {
-  const AuthStack = createStackNavigator();
+const AuthenticationStack = ({ context }) => {
   return (
-    <ContextConsumer>
-      {(context) => {
-        return (
-          <AuthStack.Navigator>
-            <AuthStack.Screen
-              name="AcceptTandCs"
-              component={(props) => (
-                <AcceptTandCs {...props} context={context} />
-              )}
-              options={{ headerShown: false }}
-            />
-            <AuthStack.Screen
-              name="PhoneAuth"
-              component={(props) => (
-                <PhoneAuth
-                  {...props}
-                  context={context}
-                  setAppLOading={setAppLoading}
-                />
-              )}
-              options={{ headerShown: false }}
-            />
-          </AuthStack.Navigator>
-        );
-      }}
-    </ContextConsumer>
+    <AuthStackNavigator.Navigator>
+      <AuthStackNavigator.Screen
+        name="AcceptTandCs"
+        component={(props) => <AcceptTandCs {...props} context={context} />}
+        options={{ headerShown: false }}
+      />
+      <AuthStackNavigator.Screen
+        name="PhoneAuth"
+        component={(props) => <PhoneAuth {...props} context={context} />}
+        options={{ headerShown: false }}
+      />
+    </AuthStackNavigator.Navigator>
   );
 };
 export default AuthenticationStack;

@@ -5,7 +5,7 @@ const PickUpLocation = lazy(() =>
   import("../../src/components/PickUpLocation")
 );
 const Destination = lazy(() => import("../../src/components/Destination"));
-import styles from "../styles/styles";
+import styles from "../styles";
 const BigButton = lazy(() => import("../../src/components/Buttons"));
 const Confirmation = ({
   isClicked,

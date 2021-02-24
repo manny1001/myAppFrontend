@@ -1,7 +1,7 @@
 import React, { lazy } from "react";
 import { View } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import styles from "../styles/styles";
+import styles from "../styles";
 const SettingsPresentational = lazy(() =>
   import("../components/SettingsPresentational")
 );

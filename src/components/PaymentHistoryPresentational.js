@@ -1,6 +1,6 @@
 //import liraries
 import React, { lazy } from "react";
-import styles from "../styles/styles";
+import styles from "../styles";
 import Modal from "modal-enhanced-react-native-web";
 import { FlatList, View, Text } from "react-native";
 const OrderReceipt = lazy(() => import("../../src/screens/OrderReceipt.js"));

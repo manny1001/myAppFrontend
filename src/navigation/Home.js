@@ -1,25 +1,18 @@
-import React, { useState, lazy, Suspense } from "react";
-import { Dimensions, TouchableOpacity, Text } from "react-native";
 import {
-  createStackNavigator,
-  TransitionPresets,
-  useFocusEffect,
-} from "@react-navigation/stack";
-/* import Header from "../../src/components/Header"; */
-const Ride = lazy(() => import("../screens/StartRide"));
-const TrackDriver = lazy(() => import("../screens/TrackDriver"));
-const Rating = lazy(() => import("../screens/Rating"));
-const Confirm = lazy(() => import("../screens/Confirm"));
-const Payment = lazy(() => import("../screens/PaymentProcess"));
-const AddName = lazy(() => import("../screens/AddName"));
+  React,
+  ContextConsumer,
+  Stack,
+  Ride,
+  TrackDriver,
+  Rating,
+  Confirm,
+  Payment,
+  AddName,
+} from "../api/constants";
 
-import { ContextConsumer } from "../../src/context/Context";
 const HomeStack = (props) => {
-  const { windowWidth } = props;
-
-  const Stack = createStackNavigator();
   return (
-    <Stack.Navigator  >
+    <Stack.Navigator>
       <Stack.Screen
         name="Ride"
         component={() => <Ride {...props} />}
@@ -27,7 +20,7 @@ const HomeStack = (props) => {
       />
       <Stack.Screen
         name="Confirm"
-        component={Confirm}
+        component={(props) => <Confirm {...props} />}
         options={{ headerShown: false }}
       />
       <Stack.Screen

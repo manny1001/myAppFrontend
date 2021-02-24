@@ -9,6 +9,7 @@ import { Avatar } from "react-native-elements";
 const ClickedDriver = (props) => {
   const { name, surname, cellphone, picture, registration, model, status } =
     props.clickedDriver && props.clickedDriver.item;
+
   {
     if (status !== "Online") return <></>;
     return (

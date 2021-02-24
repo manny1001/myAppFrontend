@@ -93,8 +93,8 @@ export const GET_NEW_DRIVER = gql`
   }
 `;
 export const GET_DRIVER_RESPONSE = gql`
-  query GETDRIVERESPONSE($uuidUser: String!) {
-    getDriverRequestResponse(uuidUser: $uuidUser) {
+  query GETDRIVERESPONSE($uuidUser: String!, $uuidTrip: String!) {
+    getDriverRequestResponse(uuidUser: $uuidUser, uuidTrip: $uuidTrip) {
       id
       uuidDriver
       uuidUser
