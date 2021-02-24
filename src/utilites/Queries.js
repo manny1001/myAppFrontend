@@ -211,3 +211,10 @@ export const ALERT_EMAIL = gql`
     alertEmail(uuidTrip: $uuidTrip, message: $message, status: $status)
   }
 `;
+export const CREATE_CHECKOUT = gql`
+  mutation createCheckoutSession {
+    createCheckoutSession {
+      id
+    }
+  }
+`;

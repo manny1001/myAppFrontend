@@ -8,7 +8,7 @@ import {
 import styles from "../styles/styles";
 const Loader = () => {
   return (
-    <View style={[styles.container, { justifyContent: "center" }]}>
+    <View style={[styles.container, { justifyContent: "center", margin: 0 }]}>
       {/* <ActivityIndicator color="#6c63ff" size="large" /> */}
       {/* <Image
         style={styles.loadingGify}

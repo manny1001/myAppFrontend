@@ -24,6 +24,7 @@ const ConfrimPresentational = ({
   navigation,
   called,
 }) => {
+  const [personalDriver, setPersonalDriver] = React.useState(null);
   return (
     <ContextConsumer>
       {(context) => {
@@ -85,6 +86,55 @@ const ConfrimPresentational = ({
             )}
 
             <Driver context={context} error={error} data={DATA} />
+
+            {context.state.driveruuid !== "" && personalDriver === null && (
+              <TouchableOpacity
+                onPress={() => setPersonalDriver("javssa")}
+                style={{
+                  flexDirection: "row",
+                  alignSelf: "stretch",
+                  justifyContent: "space-evenly",
+                  margin: 5,
+                  borderWidth: 2,
+                  backgroundColor: personalDriver !== null && "black",
+                }}
+              >
+                <Text
+                  style={{
+                    padding: 5,
+                    color: personalDriver !== null && "white",
+                    alignSelf: "stretch",
+                    width: "90",
+                  }}
+                >
+                  Make personal driver
+                </Text>
+              </TouchableOpacity>
+            )}
+            {context.state.driveruuid !== "" && personalDriver !== null && (
+              <TouchableOpacity
+                onPress={() => setPersonalDriver(null)}
+                style={{
+                  flexDirection: "row",
+                  alignSelf: "stretch",
+                  justifyContent: "space-evenly",
+                  margin: 5,
+                  borderWidth: 2,
+                  backgroundColor: personalDriver !== null && "black",
+                }}
+              >
+                <Text
+                  style={{
+                    padding: 5,
+                    color: personalDriver !== null && "white",
+                    alignSelf: "stretch",
+                    width: "90",
+                  }}
+                >
+                  Remove personal driver
+                </Text>
+              </TouchableOpacity>
+            )}
 
             <BigButton
               disabled={

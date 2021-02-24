@@ -1,6 +1,10 @@
 import React, { useState, lazy, Suspense } from "react";
 import { Dimensions, TouchableOpacity, Text } from "react-native";
-import { createStackNavigator } from "@react-navigation/stack";
+import {
+  createStackNavigator,
+  TransitionPresets,
+  useFocusEffect,
+} from "@react-navigation/stack";
 /* import Header from "../../src/components/Header"; */
 const Ride = lazy(() => import("../screens/StartRide"));
 const TrackDriver = lazy(() => import("../screens/TrackDriver"));
@@ -15,7 +19,7 @@ const HomeStack = (props) => {
 
   const Stack = createStackNavigator();
   return (
-    <Stack.Navigator>
+    <Stack.Navigator  >
       <Stack.Screen
         name="Ride"
         component={() => <Ride {...props} />}

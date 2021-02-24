@@ -8,6 +8,11 @@ import {
 } from "react-native-responsive-screen";
 
 const styles = StyleSheet.create({
+  urgencyButton: {
+    borderWidth: wp(0.3),
+    padding: wp(1.5),
+    borderRadius: wp(5),
+  },
   loadingGify: { height: hp(70), width: wp(100), alignSelf: "center" },
   tabStyle: {},
   tabBarLabelStyles: { fontSize: RFPercentage(2) },
@@ -76,7 +81,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "space-between",
-    /*  backgroundColor: "#f2f2f2", */
+    backgroundColor: "#f2f2f2",
     alignSelf: "stretch",
     marginRight: wp(10),
     marginLeft: wp(10),

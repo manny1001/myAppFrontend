@@ -9,7 +9,7 @@ import {
   GET_DRIVER_RESPONSE,
   PAYMENT_CONFIRMATION,
   GET_CARD_PAYMENT_RESULT,
-  PAYMENT_REQUEST,
+  CREATE_CHECKOUT,
 } from "../../src/utilites/Queries";
 import * as Linking from "expo-linking";
 import styles from "../styles/styles";
@@ -50,6 +50,7 @@ export default function (props) {
   const [driverRegistration, setdriverregistration] = React.useState(null);
   const [token, settoken] = useState(null);
   const [PayOrConfirm] = useMutation(PAYMENT_CONFIRMATION);
+
   const [visibleModal, setvisibleModal] = React.useState(false);
   const { data: DATA, stopPolling, startPolling } = useQuery(
     GET_DRIVER_RESPONSE,
@@ -79,13 +80,19 @@ export default function (props) {
       fetchPolicy: "network-only",
     }
   );
+  const [
+    createCheckout,
+    { data: DATAS, loading: LOADINGS, error: ERRORS },
+  ] = useMutation(CREATE_CHECKOUT, {});
+
   const handleCardPayment = async () => {
     setpaymentMethod("Card");
-    await WebBrowser.openBrowserAsync(
-      `https://drippypayments.netlify.app/?${token}?${totalAmount}?${uuidTrip}`
-    );
+    await createCheckout().then((checkout) => {
+      WebBrowser.openBrowserAsync(
+        `http://drippypayments.netlify.app/?${token}?${totalAmount}?${uuidTrip}?${checkout.data.createCheckoutSession.id}`
+      );
+    });
   };
-
   const {
     data,
     error,
@@ -94,11 +101,8 @@ export default function (props) {
     stopPolling: StopPolling,
     startPolling: StartPolling,
   } = useQuery(GET_CARD_PAYMENT_RESULT, {
-    onCompleted: () => {
-      /* if (paymentMethod !== "Card") {
-        StopPolling();
-      } */
-    },
+    onCompleted: () => {},
+    skip: true,
     variables: {
       uuidTrip: "d80602cd-87fc-40d6-aca7-25fe02388107",
       totalAmount: "88000",
@@ -110,7 +114,7 @@ export default function (props) {
   });
 
   React.useEffect(() => {
-    paymentMethod === "Card" && StartPolling(500);
+    /*  paymentMethod === "Card" && StartPolling(500); */
     AsyncStorage.multiGet([
       "cellphone",
       "name",
@@ -144,7 +148,9 @@ export default function (props) {
     StopQuery === false && startPolling();
   }, [StopQuery, timeOutValue]);
   if (requestID === null) return <LoadingContent />;
-  /* if (data && data.getCardPaymentResult[0]) {
+  if (LOADINGS) return <LoadingContent />;
+  if (/* paymentMethod === "Card" && !data.getCardPaymentResult[0] */ null) {
+    /* if (data && data.getCardPaymentResult[0]) {
     if (data && data.getCardPaymentResult[0].status === "Paid,WaitingDriver")
       return (
         <View
@@ -179,7 +185,6 @@ export default function (props) {
         </View>
       );
   } */
-  if (paymentMethod === "Card" && !data.getCardPaymentResult[0]) {
     return (
       <View style={styles.container}>
         <SwitchPaymentTypeButton

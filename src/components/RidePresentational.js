@@ -1,5 +1,5 @@
 import React, { Component, lazy } from "react";
-import { View, Text } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 import { ContextConsumer } from "../context/Context";
 const PickUpLocation = lazy(() =>
   import("../../src/components/PickUpLocation")
@@ -23,6 +23,8 @@ const Confirmation = ({
   setdestination,
   navigation,
 }) => {
+  const [isFocused, setisFocused] = React.useState("green");
+
   return (
     <ContextConsumer>
       {(context) => {
@@ -82,6 +84,51 @@ const Confirmation = ({
               destination={destination}
               getTripInfo={() => getTripInfo()}
             />
+            <View
+              style={{
+                flexDirection: "row",
+                alignSelf: "stretch",
+                justifyContent: "space-evenly",
+                margin: 5,
+              }}
+            >
+              <TouchableOpacity onFocus={() => setisFocused("green")}>
+                <Text
+                  style={[
+                    styles.urgencyButton,
+                    {
+                      borderColor: isFocused === "green" ? "black" : "#f4f4f4",
+                    },
+                  ]}
+                >
+                  I'M CHILLED
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity onFocus={() => setisFocused("blue")}>
+                <Text
+                  style={[
+                    styles.urgencyButton,
+                    {
+                      borderColor: isFocused === "blue" ? "black" : "#f4f4f4",
+                    },
+                  ]}
+                >
+                  KINDA RUSHING
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity onFocus={() => setisFocused("red")}>
+                <Text
+                  style={[
+                    styles.urgencyButton,
+                    {
+                      borderColor: isFocused === "red" ? "black" : "#f4f4f4",
+                    },
+                  ]}
+                >
+                  I'M LATE
+                </Text>
+              </TouchableOpacity>
+            </View>
 
             <BigButton
               disabled={

@@ -3,6 +3,7 @@ import React, { lazy, Suspense } from "react";
 import { Context, ContextConsumer } from "./src/context/Context";
 import { useMediaQuery } from "react-responsive";
 import { View, Text, Dimensions } from "react-native";
+import { useNavigationState } from "@react-navigation/native";
 import {
   ApolloClient,
   InMemoryCache,
@@ -15,6 +16,7 @@ import { useFonts } from "expo-font";
 import Modal from "modal-enhanced-react-native-web";
 import NetInfo from "@react-native-community/netinfo";
 import { NavigationContainer } from "@react-navigation/native";
+import { StackActions, useNavigation } from "@react-navigation/native";
 import * as Linking from "expo-linking";
 import Loader from "./src/components/Loader";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -106,19 +108,12 @@ const App = (props) => {
   const [windowWidth, setwindowWidth] = React.useState(null);
   const [windowHeight, setwindowHeight] = React.useState(null);
   const [isConnected, setIsConnected] = React.useState(false);
+  const isReadyRef = React.createRef();
+  const navigationRef = React.createRef();
+  const routeNameRef = React.createRef();
   const [loaded] = useFonts({
     Gotham_Medium_Regular: require("./assets/fonts/Gotham_Medium_Regular.ttf"),
   });
-  React.useEffect(() => {
-    /* const addListener = async () => {
-      try {
-        let url = await Linking.getInitialURL();
-        this._handleRedirect({ url });
-      } catch (error) {
-        console.log("error: ", error);
-      }
-    }; */
-  }, []);
 
   React.useEffect(() => {
     const onChange = (result) => {
@@ -135,7 +130,8 @@ const App = (props) => {
       console.log("Is connected?", state.isConnected); */
     });
     return () => {
-      Dimensions.removeEventListener("change", onChange);
+      Dimensions.removeEventListener("change", onChange),
+        (isReadyRef.current = false);
     };
   }, [screenData]);
   const Stack = createStackNavigator();
@@ -159,13 +155,29 @@ const App = (props) => {
         }
       </Modal>
     );
-
   if (!loaded) {
     return null;
   }
-
   return (
-    <NavigationContainer linking={linkingApp}>
+    <NavigationContainer
+      ref={navigationRef}
+      onReady={() => {
+        routeNameRef.current = navigationRef.current.getCurrentRoute().name;
+        /*     navigationRef.current.reset("Confirm"); */
+      }}
+      onStateChange={() => {
+        const previousRouteName = routeNameRef.current;
+        const currentRouteName = navigationRef.current.getCurrentRoute().name;
+
+        if (previousRouteName !== currentRouteName) {
+          console.log(currentRouteName);
+        }
+
+        // Save the current route name for later comparision
+        routeNameRef.current = currentRouteName;
+      }}
+      linking={linkingApp}
+    >
       <ApolloProvider client={client}>
         <Context>
           <ContextConsumer>
