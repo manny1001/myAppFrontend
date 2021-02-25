@@ -1,10 +1,4 @@
-import React from "react";
-import { View, Text, StyleSheet } from "react-native";
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from "react-native-responsive-screen";
-import { RFPercentage } from "react-native-responsive-fontsize";
+import { React, View, Text, styles, RFPercentage } from "../api/constants";
 
 const DriversInfo = ({ DriverName, DriverCarModel, DriverRegistration }) => {
   return (
@@ -39,17 +33,5 @@ const DriversInfo = ({ DriverName, DriverCarModel, DriverRegistration }) => {
     </View>
   );
 };
-const styles = StyleSheet.create({
-  TopInfo: {
-    width: wp(32),
-    height: wp(32),
-    alignSelf: "flex-end",
-    borderRadius: wp(16),
-    flexDirection: "column",
-    justifyContent: "center",
-    borderColor: "red",
-    borderWidth: 6,
-    backgroundColor: "white",
-  },
-});
+
 export default DriversInfo;

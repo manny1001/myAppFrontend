@@ -1,12 +1,16 @@
-import React, { lazy } from "react";
-import { View, Text, ActivityIndicator, TouchableOpacity } from "react-native";
-import { RFPercentage } from "react-native-responsive-fontsize";
 import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from "react-native-responsive-screen";
-const GoogleAutoComplete = lazy(() => import("./GoogleAutoComplete"));
-import { ContextConsumer } from "../../src/context/Context";
+  React,
+  View,
+  Text,
+  ActivityIndicator,
+  TouchableOpacity,
+  RFPercentage,
+  wp,
+  hp,
+  GoogleAutoComplete,
+  ContextConsumer,
+} from "../api/constants";
+
 const PickUpLocation = ({
   isClicked,
   setLocationSelected,

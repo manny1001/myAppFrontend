@@ -1,11 +1,5 @@
-import React, { useState, lazy, Suspense } from "react";
-import { View, Text, Image, ActivityIndicator } from "react-native";
-import { RFPercentage } from "react-native-responsive-fontsize";
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from "react-native-responsive-screen";
-import styles from "../styles";
+import { React, View, Text, RFPercentage, hp, styles } from "../api/constants";
+
 const Loader = () => {
   return (
     <View

@@ -1,17 +1,16 @@
-//import liraries
-import React, { Component } from "react";
-import { View, Text, StyleSheet } from "react-native";
 import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from "react-native-responsive-screen";
-import {
+  React,
+  View,
+  Text,
+  wp,
+  hp,
   CodeField,
   Cursor,
   useBlurOnFulfill,
   useClearByFocusCell,
-} from "react-native-confirmation-code-field";
-import { RFValue, RFPercentage } from "react-native-responsive-fontsize";
+  RFPercentage,
+} from "../api/constants";
+
 const EnterOTP = () => {
   const CELL_COUNT = 4;
   const [value, setValue] = useState("");

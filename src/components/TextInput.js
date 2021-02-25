@@ -1,17 +1,7 @@
-import React from "react";
-import { TextInput } from "react-native-paper";
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from "react-native-responsive-screen";
-export const Input = ({
-  containerStyle,
-  style,
-  label,
-  defaultValue,
-  onChangeText,
-}) => (
-  <TextInput
+import { React, TEXTINPUT } from "../api/constants";
+
+export const Input = ({ style, onChangeText }) => (
+  <TEXTINPUT
     mode={"outlined"}
     style={style}
     onChangeText={onChangeText}
@@ -19,4 +9,4 @@ export const Input = ({
   />
 );
 
-export default TextInput;
+export default TEXTINPUT;

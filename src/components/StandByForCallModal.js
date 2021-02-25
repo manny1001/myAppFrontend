@@ -1,13 +1,13 @@
-//import liraries
-import React, { lazy } from "react";
-import { View, Text, StyleSheet } from "react-native";
-import Modal from "modal-enhanced-react-native-web";
 import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from "react-native-responsive-screen";
-import { RFPercentage } from "react-native-responsive-fontsize";
-const BigButton = lazy(() => import("../components/Buttons"));
+  React,
+  View,
+  Text,
+  Modal,
+  wp,
+  hp,
+  RFPercentage,
+  BigButton,
+} from "../api/constants";
 
 const StandByForCallModal = ({
   setmodalVisible,

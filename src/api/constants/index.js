@@ -1,8 +1,14 @@
-import React, { lazy, Suspense, useState, Component } from "react";
+import React, { lazy, Suspense, useState, Component, useCallback } from "react";
 import Loader from "../../components/Loader";
 import { Context, ContextConsumer } from "../../context/Context";
 import { useMutation, useQuery } from "@apollo/client";
-import { AirbnbRating, Button } from "react-native-elements";
+import {
+  AirbnbRating,
+  Button,
+  Header,
+  Avatar,
+  Image,
+} from "react-native-elements";
 import Modal from "modal-enhanced-react-native-web";
 import { useFonts } from "expo-font";
 import * as WebBrowser from "expo-web-browser";
@@ -19,12 +25,23 @@ import {
   createHttpLink,
 } from "@apollo/client";
 import { createDrawerNavigator } from "@react-navigation/drawer";
+
 import { createStackNavigator } from "@react-navigation/stack";
 import { RFValue, RFPercentage } from "react-native-responsive-fontsize";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import * as Linking from "expo-linking";
 import { setContext } from "@apollo/client/link/context";
+
+import {
+  CodeField,
+  Cursor,
+  useBlurOnFulfill,
+  useClearByFocusCell,
+} from "react-native-confirmation-code-field";
+import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
+import { Picker } from "@react-native-picker/picker";
+import { MaterialIcons } from "@expo/vector-icons";
 import {
   NEW_REQUEST,
   GET_DRIVERS,
@@ -40,8 +57,12 @@ import {
   UPDATE_PROFILE,
   USER_LOGIN,
   UPDATE_USERNAME,
+  GET_MESSAGES,
+  POST_MESSAGE,
+  GET_NEW_DRIVER,
 } from "../../utilites/Queries";
 import { NavigationContainer } from "@react-navigation/native";
+import Icon from "react-native-vector-icons/AntDesign";
 import {
   View,
   Text,
@@ -56,7 +77,7 @@ import {
   ScrollView,
 } from "react-native";
 import NetInfo from "@react-native-community/netinfo";
-import { Avatar, Image } from "react-native-elements";
+import { TextInput as TEXTINPUT } from "react-native-paper";
 import styles from "../../styles";
 import { StoreData, GetData } from "../../utilites/GFunctions";
 import { getTripInfo, getlocation } from "../../utilites/utilities";
@@ -66,10 +87,21 @@ export const InputField = lazy(() => import("../../components/TextInput"));
 export const Profile = lazy(() => import("../../screens/Profile"));
 export const Home = lazy(() => import("../../navigation/Home"));
 export const More = lazy(() => import("../../navigation/More"));
+export const ClickedDriver = lazy(() =>
+  import("../../components/ClickedDriver")
+);
+export const AllDrivers = lazy(() => import("../../components/AllDrivers"));
+export const OrderReceipt = lazy(() => import("../../screens/OrderReceipt.js"));
+export const SendTipModal = lazy(() => import("../../components/SendTipModal"));
+export const Order = lazy(() => import("../../components/Order"));
+export const RatingScreen = lazy(() => import("../../screens/Rating.js"));
 export const AuthStack = lazy(() => import("../../navigation/Auth"));
 export const TabIcon = lazy(() => import("../../components/TabIcon.js"));
 export const Payments = lazy(() => import("../../screens/PaymentHistory.js"));
+export const HeadingText = lazy(() => import("../../components/HeadingText"));
+export const MethodPicker = lazy(() => import("../../components/MethodPicker"));
 export const Settings = lazy(() => import("../../screens/Settings"));
+export const windowWidth = Dimensions.get("window").width;
 export const SettingsPresentational = lazy(() =>
   import("../../components/SettingsPresentational")
 );
@@ -95,6 +127,11 @@ export const BigButton = lazy(() => import("../../components/Buttons"));
 export const TimeAndDistance = lazy(() =>
   import("../../components/TimeAndDistance")
 );
+export const Chat = lazy(() => import("../../components/ChatApp"));
+export const GoogleAutoComplete = lazy(() =>
+  import("../../components/GoogleAutoComplete")
+);
+export const Driver = lazy(() => import("../../components/SelectDriver"));
 export const ConfrimPresentational = lazy(() =>
   import("../../components/ConfrimPresentational")
 );
@@ -187,6 +224,15 @@ const authLink = setContext(async (_, { headers }) => {
     },
   };
 });
+import {
+  Avatar as AVATAR,
+  GiftedChat,
+  Send,
+  MessageText,
+  Bubble,
+  SystemMessage,
+  Message,
+} from "react-native-gifted-chat";
 export const client = new ApolloClient({
   link: authLink.concat(httpLink),
   cache: new InMemoryCache(),
@@ -233,6 +279,9 @@ export {
   USER_LOGIN,
   UPDATE_PROFILE,
   UPDATE_USERNAME,
+  GET_MESSAGES,
+  POST_MESSAGE,
+  GET_NEW_DRIVER,
   LoadingContent,
   TouchableOpacity,
   WebBrowser,
@@ -256,4 +305,22 @@ export {
   ScrollView,
   AirbnbRating,
   Button,
+  useCallback,
+  AVATAR,
+  GiftedChat,
+  Send,
+  MessageText,
+  Bubble,
+  SystemMessage,
+  Message,
+  CodeField,
+  Cursor,
+  useBlurOnFulfill,
+  useClearByFocusCell,
+  GooglePlacesAutocomplete,
+  Header,
+  Picker,
+  Icon,
+  MaterialIcons,
+  TEXTINPUT,
 };

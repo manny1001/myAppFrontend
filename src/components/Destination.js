@@ -1,13 +1,16 @@
-//import liraries
-import React, { lazy } from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import { RFValue, RFPercentage } from "react-native-responsive-fontsize";
-const GoogleAutoComplete = lazy(() => import("./GoogleAutoComplete"));
-import { ContextConsumer } from "../../src/context/Context";
 import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from "react-native-responsive-screen";
+  React,
+  View,
+  Text,
+  TouchableOpacity,
+  RFValue,
+  RFPercentage,
+  ContextConsumer,
+  wp,
+  hp,
+  GoogleAutoComplete,
+} from "../api/constants";
+
 const Destination = ({
   getTripInfo,
   destination,
@@ -104,15 +107,4 @@ const Destination = ({
   );
 };
 
-// define your styles
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#2c3e50",
-  },
-});
-
-//make this component available to the app
 export default Destination;

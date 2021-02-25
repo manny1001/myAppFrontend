@@ -1,13 +1,13 @@
-//import liraries
-import React, { lazy } from "react";
-import { View, Text, StyleSheet } from "react-native";
-const BigButton = lazy(() => import("../components/Buttons"));
-import Modal from "modal-enhanced-react-native-web";
-import { RFPercentage } from "react-native-responsive-fontsize";
 import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from "react-native-responsive-screen";
+  React,
+  View,
+  Text,
+  BigButton,
+  Modal,
+  RFPercentage,
+  wp,
+  hp,
+} from "../api/constants";
 const AreYouSureYouArrivedModal = ({
   sureModalVisible,
   onPress,

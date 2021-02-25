@@ -1,8 +1,5 @@
-//import liraries
-import React, { lazy } from "react";
-import { Image, Text, StyleSheet } from "react-native";
-import styles from "../styles/index.js";
-import { MaterialIcons } from "@expo/vector-icons";
+import { React, styles, MaterialIcons } from "../api/constants";
+
 const TabIcon = ({ name, color, size }) => {
   return (
     <MaterialIcons

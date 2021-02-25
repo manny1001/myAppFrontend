@@ -1,7 +1,4 @@
-import React from "react";
-import { Text } from "react-native";
-import ClickedDriver from "../components/ClickedDriver";
-import AllDrivers from "../components/AllDrivers";
+import { React, Text, ClickedDriver, AllDrivers } from "../api/constants";
 
 export default function (props) {
   const { context, error, data, setClickedDriver, clickedDriver } = props;

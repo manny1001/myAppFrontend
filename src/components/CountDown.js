@@ -1,11 +1,13 @@
-import React from "react";
-import { CountdownCircleTimer } from "react-native-countdown-circle-timer";
-import { RFPercentage } from "react-native-responsive-fontsize";
-import { View, Animated, StyleSheet } from "react-native";
 import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from "react-native-responsive-screen";
+  React,
+  CountdownCircleTimer,
+  RFPercentage,
+  View,
+  Animated,
+  styles,
+  wp,
+} from "../api/constants";
+
 const CountDown = ({ onPress }) => {
   const [timerisPlaying, settimerisPlaying] = React.useState(true);
 
@@ -92,17 +94,4 @@ const CountDown = ({ onPress }) => {
   );
 };
 
-const styles = StyleSheet.create({
-  TopInfo: {
-    width: wp(32),
-    height: wp(32),
-    alignSelf: "center",
-    borderRadius: wp(16),
-    flexDirection: "column",
-    justifyContent: "center",
-    borderColor: "red",
-    borderWidth: wp(1),
-    backgroundColor: "white",
-  },
-});
 export default CountDown;

@@ -1,6 +1,4 @@
-//import liraries
-import React from "react";
-import { Text, TouchableOpacity } from "react-native";
+import { React, Text, TouchableOpacity } from "../api/constants";
 
 const SwitchPaymentTypeButton = ({ text, onPress }) => {
   return (

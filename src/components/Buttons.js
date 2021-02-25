@@ -1,12 +1,11 @@
-//import liraries
-import React, { Component, useState } from "react";
-import { Button, ThemeProvider } from "react-native-elements";
-import { TouchableOpacity, Text } from "react-native";
-import { RFPercentage } from "react-native-responsive-fontsize";
 import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from "react-native-responsive-screen";
+  React,
+  wp,
+  hp,
+  Text,
+  TouchableOpacity,
+  RFPercentage,
+} from "../api/constants";
 
 const BigButton = ({
   background,

@@ -1,13 +1,12 @@
-//import liraries
-import React, { lazy } from "react";
-import { View, Animated, Text, StyleSheet } from "react-native";
-const Chat = lazy(() => import("../components/ChatApp"));
-import { CountdownCircleTimer } from "react-native-countdown-circle-timer";
 import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from "react-native-responsive-screen";
-import { RFPercentage } from "react-native-responsive-fontsize";
+  React,
+  View,
+  Animated,
+  CountdownCircleTimer,
+  RFPercentage,
+  wp,
+  Chat,
+} from "../api/constants";
 
 const DriverNotArrived = ({ driverArrived, data, uuidTrip, useruuid }) => {
   return (
@@ -98,15 +97,5 @@ const DriverNotArrived = ({ driverArrived, data, uuidTrip, useruuid }) => {
     </View>
   );
 };
-// define your styles
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#2c3e50",
-  },
-});
 
-//make this component available to the app
 export default DriverNotArrived;

@@ -1,7 +1,5 @@
-import React, { useEffect, useState, lazy } from "react";
-import { widthPercentageToDP as wp } from "react-native-responsive-screen";
-import Icon from "react-native-vector-icons/AntDesign";
-const BigButton = lazy(() => import("../../src/components/Buttons"));
+import { React, wp, BigButton, Icon } from "../api/constants";
+
 const PaymentButton = ({
   navigation,
   uuidTrip,

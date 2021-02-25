@@ -1,23 +1,25 @@
-import React, { useState, useCallback, useEffect } from "react";
-import { ActivityIndicator } from "react-native";
 import {
+  React,
+  useState,
+  useCallback,
+  ActivityIndicator,
   GiftedChat,
   Send,
   MessageText,
   Bubble,
-  Avatar,
   SystemMessage,
   Message,
-} from "react-native-gifted-chat";
-import { useQuery, useMutation } from "@apollo/client";
-import { GET_MESSAGES, POST_MESSAGE } from "../../src/utilites/Queries";
-import { GetData } from "../utilites/GFunctions";
-import { RFPercentage } from "react-native-responsive-fontsize";
-import { Text, View } from "react-native";
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from "react-native-responsive-screen";
+  useQuery,
+  useMutation,
+  GET_MESSAGES,
+  POST_MESSAGE,
+  GetData,
+  RFPercentage,
+  Text,
+  wp,
+  hp,
+} from "../api/constants";
+
 function Chat({ userUUID, driverUUID, uuidTrip }) {
   const [userID, setUserID] = useState(null);
   const { data, loading, error, stopPolling } = useQuery(GET_MESSAGES, {
@@ -28,7 +30,6 @@ function Chat({ userUUID, driverUUID, uuidTrip }) {
     pollInterval: 1000,
     notifyOnNetworkStatusChange: true,
     onCompleted: () => {
-      /*       console.log(data); */
       setMessages(data.messages);
     },
   });

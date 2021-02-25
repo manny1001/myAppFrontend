@@ -1,10 +1,4 @@
-import React from "react";
-import { View, StyleSheet } from "react-native";
-import { Header } from "react-native-elements";
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from "react-native-responsive-screen";
+import { React, Header, hp } from "../api/constants";
 
 const TopHeader = ({
   Opacityvalue,
@@ -31,5 +25,3 @@ const TopHeader = ({
 };
 
 export default TopHeader;
-
-const styles = StyleSheet.create({});

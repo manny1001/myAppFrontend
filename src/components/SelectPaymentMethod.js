@@ -1,10 +1,11 @@
-import React, { Component, lazy } from "react";
-import { View, Text, TouchableOpacity, Button, Modal } from "react-native";
 import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from "react-native-responsive-screen";
-import { RFValue } from "react-native-responsive-fontsize";
+  React,
+  Text,
+  TouchableOpacity,
+  wp,
+  hp,
+  RFValue,
+} from "../api/constants";
 
 const SelectedPaymentMethod = ({ onCardPress, onCashPress }) => {
   return (

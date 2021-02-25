@@ -1,20 +1,17 @@
-import React from "react";
 import {
+  React,
   View,
   Text,
   FlatList,
   ActivityIndicator,
-  Dimensions,
   TouchableOpacity,
-} from "react-native";
-const windowWidth = Dimensions.get("window").width;
-import styles from "../styles";
-import { Avatar } from "react-native-elements";
-import { RFPercentage } from "react-native-responsive-fontsize";
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from "react-native-responsive-screen";
+  wp,
+  hp,
+  RFPercentage,
+  Avatar,
+  windowWidth,
+} from "../api/constants";
+
 const Drivers = (props) => {
   const { setClickedDriver, context } = props;
   const {

@@ -1,11 +1,13 @@
-//import liraries
-import React from "react";
-import { Text, View, StyleSheet, ActivityIndicator } from "react-native";
 import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from "react-native-responsive-screen";
-import { Avatar } from "react-native-elements";
+  React,
+  Text,
+  View,
+  ActivityIndicator,
+  wp,
+  hp,
+  Avatar,
+} from "../api/constants";
+
 const ClickedDriver = (props) => {
   const { name, surname, cellphone, picture, registration, model, status } =
     props.clickedDriver && props.clickedDriver.item;

@@ -1,14 +1,17 @@
-import React, { useState } from "react";
-import { Text, StyleSheet, View, Image } from "react-native";
-import Modal from "modal-enhanced-react-native-web";
 import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from "react-native-responsive-screen";
-import { RFValue } from "react-native-responsive-fontsize";
-import { TextInput } from "react-native-paper";
+  React,
+  useState,
+  Text,
+  StyleSheet,
+  View,
+  Modal,
+  wp,
+  hp,
+  RFValue,
+  TextInput,
+  BigButton,
+} from "../api/constants";
 
-import { Button } from "react-native-elements";
 export const SendTipModal = ({ TipModalVisible, settTipModalVisible }) => {
   const [tipAmount, setTipAmonut] = useState("");
   return (
@@ -160,13 +163,16 @@ export const SendTipModal = ({ TipModalVisible, settTipModalVisible }) => {
               height: hp(15),
             }}
           >
-            <Button
+            <BigButton
+              buttonStyle={{
+                width: wp(80),
+                alignSelf: "center",
+              }}
+              titleStyle={{ fontWeight: "bold" }}
+              title={"Send Tip"}
               onPress={() => {
                 settTipModalVisible(false);
               }}
-              style={{ alignSelf: "center" }}
-              title={"Send Tip"}
-              type="outline"
             />
           </View>
         </View>

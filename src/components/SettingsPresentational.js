@@ -1,20 +1,16 @@
-//import liraries
-import React, { Component } from "react";
 import {
+  React,
   View,
   Text,
-  StyleSheet,
   FlatList,
   TouchableOpacity,
-} from "react-native";
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from "react-native-responsive-screen";
-import { RFPercentage } from "react-native-responsive-fontsize";
-import styles from "../styles";
-import BigButton from "../components/Buttons";
-import { ContextConsumer } from "../../src/context/Context";
+  hp,
+  RFPercentage,
+  styles,
+  BigButton,
+  ContextConsumer,
+} from "../api/constants";
+
 const SettingsPresentational = ({ props, DATA, AysncLogout }) => {
   return (
     <View style={styles.container}>

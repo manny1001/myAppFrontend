@@ -1,9 +1,4 @@
-import React from "react";
-import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from "react-native-responsive-screen";
+import { React, GooglePlacesAutocomplete, hp } from "../api/constants";
 
 const GoogleAutoComplete = ({
   currentLocation,

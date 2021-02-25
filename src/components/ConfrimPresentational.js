@@ -1,18 +1,18 @@
-//import liraries
-import React, { lazy, Component, useState } from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from "react-native-responsive-screen";
-import { RFPercentage } from "react-native-responsive-fontsize";
-import { ContextConsumer } from "..//context/Context";
-import { RFValue } from "react-native-responsive-fontsize";
-import { StoreData } from "../utilites/GFunctions";
-import styles from "../styles";
-const AddName = lazy(() => import("../../src/screens/AddName"));
-const BigButton = lazy(() => import("../../src/components/Buttons"));
-const Driver = lazy(() => import("../components/SelectDriver"));
+  React,
+  Text,
+  View,
+  TouchableOpacity,
+  wp,
+  RFPercentage,
+  ContextConsumer,
+  RFValue,
+  StoreData,
+  styles,
+  BigButton,
+  Driver,
+} from "../api/constants";
+
 const ConfrimPresentational = ({
   destination,
   location,

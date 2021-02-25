@@ -1,16 +1,14 @@
-import React, { Component } from "react";
 import {
+  React,
   View,
   Text,
   StyleSheet,
   FlatList,
   TouchableOpacity,
-} from "react-native";
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from "react-native-responsive-screen";
-import { RFValue } from "react-native-responsive-fontsize";
+  wp,
+  hp,
+  RFValue,
+} from "../api/constants";
 
 const FlatListSettings = (props, onPress1) => {
   return (

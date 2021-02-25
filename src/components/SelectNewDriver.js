@@ -1,19 +1,21 @@
-import React, { lazy } from "react";
-import { View, Text, StyleSheet } from "react-native";
 import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from "react-native-responsive-screen";
-import { RFValue, RFPercentage } from "react-native-responsive-fontsize";
-import { ContextConsumer } from "../../src/context/Context";
-import { GET_NEW_DRIVER } from "../../src/utilites/Queries";
-import { useMutation } from "@apollo/client";
-import { GetData } from "../../src/utilites/GFunctions";
-const Driver = lazy(() => import("../../src/components/SelectDriver.js"));
-const BigButton = lazy(() => import("./Buttons"));
+  React,
+  View,
+  Text,
+  wp,
+  RFValue,
+  RFPercentage,
+  ContextConsumer,
+  GET_NEW_DRIVER,
+  useMutation,
+  GetData,
+  Driver,
+  BigButton,
+  styles,
+} from "../api/constants";
 
 const SelectNewDriver = ({ totalAmount, navigation }) => {
-  const [updateDriver, { loading, error }] = useMutation(GET_NEW_DRIVER);
+  const [updateDriver, { error }] = useMutation(GET_NEW_DRIVER);
   if (error) return <Text>{error.message}</Text>;
   const [useruuid, setuseruuid] = React.useState("");
   React.useEffect(() => {
@@ -98,15 +100,4 @@ const SelectNewDriver = ({ totalAmount, navigation }) => {
   );
 };
 
-// define your styles
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#f2f2f2",
-  },
-});
-
-//make this component available to the app
 export default SelectNewDriver;

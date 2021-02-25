@@ -1,11 +1,15 @@
-//import liraries
-import React, { lazy } from "react";
-import styles from "../styles";
-import Modal from "modal-enhanced-react-native-web";
-import { FlatList, View, Text } from "react-native";
-const OrderReceipt = lazy(() => import("../../src/screens/OrderReceipt.js"));
-const SendTipModal = lazy(() => import("../../src/components/SendTipModal"));
-const Order = lazy(() => import("../../src/components/Order"));
+import {
+  React,
+  styles,
+  Modal,
+  FlatList,
+  View,
+  Text,
+  OrderReceipt,
+  SendTipModal,
+  Order,
+} from "../api/constants";
+
 const PaymentHistoryPresentational = ({
   visibleModal,
   orderObject,
