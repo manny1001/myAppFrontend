@@ -19,6 +19,7 @@ const Loader = () => {
           marginLeft: 0,
           marginTop: 0,
           marginBottom: 0,
+          backgroundColor: "#723BF0",
         },
       ]}
     >
@@ -44,6 +45,7 @@ export const LoadingContent = () => {
           marginRight: 0,
           marginLeft: 0,
           marginTop: 0,
+          backgroundColor: "#723BF0",
           marginBottom: 0,
         },
       ]}

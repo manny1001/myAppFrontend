@@ -1,5 +1,6 @@
 import {
   React,
+  View,
   Text,
   StoreData,
   useQuery,
@@ -9,6 +10,7 @@ import {
   PaymentHistoryPresentational,
   useState,
   Indicator,
+  styles,
 } from "../api/constants";
 
 const Payments = () => {
@@ -25,8 +27,12 @@ const Payments = () => {
   const [visibleModal, setvisibleModal] = useState(false);
   const [orderObject, setorderObject] = useState({});
   const [TipModalVisible, settTipModalVisible] = useState();
-  if (error) return <Text>{error.message}</Text>;
-  if (loading) return <Indicator />;
+  if (loading)
+    return (
+      <View style={styles.container}>
+        <Indicator />
+      </View>
+    );
   if (data)
     return (
       <PaymentHistoryPresentational

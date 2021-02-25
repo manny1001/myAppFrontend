@@ -12,6 +12,9 @@ import {
   ConfrimPresentational,
   useMutation,
   useQuery,
+  View,
+  styles,
+  Indicator,
 } from "../api/constants";
 
 export default function (props) {
@@ -42,7 +45,11 @@ export default function (props) {
     GetData("destination").then((destination) => setdestination(destination));
   });
   if (Loading) {
-    return <LoadingContent />;
+    return (
+      <View style={styles.container}>
+        <Indicator />
+      </View>
+    );
   }
   if (userName === null || userName.length === 0) return <AddName />;
   return (

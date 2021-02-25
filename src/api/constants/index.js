@@ -210,12 +210,12 @@ export const PhoneAuthImage = lazy(() =>
 );
 export const navigationRef = React.createRef();
 export const routeNameRef = React.createRef();
-/* const httpLink = createHttpLink({
-  uri: "https://agile-woodland-33090.herokuapp.com/",
-}); */
 const httpLink = createHttpLink({
-  uri: "http://localhost:22000/graphql",
+  uri: "https://agile-woodland-33090.herokuapp.com/",
 });
+/* const httpLink = createHttpLink({
+  uri: "http://localhost:22000/graphql",
+}); */
 export const Stack = createStackNavigator();
 export const AppStack = createBottomTabNavigator();
 export const AuthStackNavigator = createStackNavigator();

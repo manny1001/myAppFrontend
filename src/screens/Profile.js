@@ -16,6 +16,7 @@ import {
   useQuery,
   useMutation,
   InputField,
+  Indicator,
 } from "../api/constants/";
 
 /* const firebaseConfig = {
@@ -51,7 +52,12 @@ const ProfileStack = (props) => {
 
   const [name, setusername] = React.useState(data && data.currentUser.name);
 
-  if (loading) return <LoadingContent />;
+  if (loading)
+    return (
+      <View style={styles.container}>
+        <Indicator />
+      </View>
+    );
   if (error) return <Text>{error.message}</Text>;
   if (
     (data && data.currentUser.name === null) ||
