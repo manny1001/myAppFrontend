@@ -1,18 +1,14 @@
-import React from "react";
 import {
+  React,
   View,
   Text,
-  StyleSheet,
   FlatList,
   TouchableOpacity,
-} from "react-native";
+  styles,
+  RFPercentage,
+  hp,
+} from "../api/constants";
 
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from "react-native-responsive-screen";
-import { RFValue, RFPercentage } from "react-native-responsive-fontsize";
-import styles from "../styles";
 const About = (props) => {
   const DATA = [
     {

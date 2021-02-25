@@ -22,7 +22,7 @@ const CallDriver = () => {
       <Text
         style={{ fontFamily: "Gotham_Medium_Regular", alignSelf: "center" }}
       >
-        Call your driver
+        Call driver
       </Text>
     </TouchableOpacity>
   );

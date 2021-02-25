@@ -1,9 +1,5 @@
-import React, { Component, lazy } from "react";
+import { React, Location, StackActions, StartRide } from "../api/constants";
 /* import { getTripInfo, getlocation } from "../../src/utilites/utilities"; */
-import { StoreData } from "../utilites/GFunctions";
-import * as Location from "expo-location";
-const StartRide = lazy(() => import("../components/RidePresentational"));
-import { StackActions } from "@react-navigation/native";
 
 export default function (props) {
   const { navigation } = props;

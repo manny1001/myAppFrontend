@@ -3,8 +3,6 @@ import {
   PhoneAuth,
   AuthStackNavigator,
   AcceptTandCs,
-  Suspense,
-  Loader,
 } from "../api/constants";
 
 const AuthenticationStack = ({ context }) => {

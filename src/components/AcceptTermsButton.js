@@ -1,9 +1,5 @@
-import React from "react";
-import { TouchableOpacity, View } from "react-native";
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from "react-native-responsive-screen";
+import { React, TouchableOpacity, View, wp } from "../api/constants";
+
 const AcceptTermsButton = ({ onPress, isAccepted }) => {
   return (
     <TouchableOpacity onPress={onPress}>

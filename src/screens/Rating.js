@@ -1,10 +1,15 @@
-import React, { useState } from "react";
-import { Text, View, StyleSheet } from "react-native";
-import { Rating, AirbnbRating, Button } from "react-native-elements";
 import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from "react-native-responsive-screen";
+  React,
+  useState,
+  Text,
+  View,
+  StyleSheet,
+  AirbnbRating,
+  Button,
+  wp,
+  hp,
+} from "../api/constants";
+
 export default function RatingScreen(props) {
   const [visibleModal, setvisibleModal] = useState(false);
   return (

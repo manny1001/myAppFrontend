@@ -13,7 +13,7 @@ import {
   styles,
   Profile,
   Home,
-  Settings,
+  More,
   AuthStack,
   TabIcon,
   Payments,
@@ -114,7 +114,7 @@ const App = () => {
                     />
                     <AppStack.Screen
                       name="More"
-                      component={Settings}
+                      component={More}
                       options={{
                         tabBarIcon: () => <TabIcon name={"more"} />,
                       }}

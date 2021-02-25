@@ -1,15 +1,18 @@
-import React from "react";
-import { Text, View, TouchableOpacity } from "react-native";
 import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from "react-native-responsive-screen";
-import TextInput from "../../src/components/TextInput";
-import { GetData } from "../../src/utilites/GFunctions";
-import BigButton from "../../src/components/Buttons.js";
-import { RFPercentage } from "react-native-responsive-fontsize";
-import { useMutation } from "@apollo/client";
-import { GET_PROFILE, UPDATE_USERNAME } from "../../src/utilites/Queries";
+  React,
+  Text,
+  View,
+  wp,
+  hp,
+  TextInput,
+  GetData,
+  BigButton,
+  RFPercentage,
+  useMutation,
+  GET_PROFILE,
+  UPDATE_USERNAME,
+} from "../api/constants";
+
 const AddNames = (props) => {
   const [useruuid, setuseruuid] = React.useState("");
   const [name, setusername] = React.useState(null);

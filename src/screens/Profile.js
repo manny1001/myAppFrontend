@@ -1,13 +1,23 @@
-import React, { useState, lazy } from "react";
-import { Text, ActivityIndicator, View, Keyboard } from "react-native";
-const AddName = lazy(() => import("../../src/screens/AddName"));
-import { Avatar, Image } from "react-native-elements";
-import { LoadingContent } from "../components/Loader";
-import InputField from "../../src/components/TextInput";
-import styles from "../styles";
-import { useQuery, useMutation } from "@apollo/client";
-import { GET_PROFILE, UPDATE_PROFILE } from "../../src/utilites/Queries";
-const BigButton = lazy(() => import("../components/Buttons"));
+import {
+  React,
+  useState,
+  Text,
+  ActivityIndicator,
+  View,
+  Keyboard,
+  AddName,
+  Avatar,
+  Image,
+  LoadingContent,
+  BigButton,
+  GET_PROFILE,
+  UPDATE_PROFILE,
+  styles,
+  useQuery,
+  useMutation,
+  InputField,
+} from "../api/constants/";
+
 /* const firebaseConfig = {
   apiKey: "AIzaSyAg87r_eLnJFPhQ9TTar2KGIKKWk6DKY9E",
   authDomain: "blobtest-36ff6.firebaseapp.com",

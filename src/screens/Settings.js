@@ -1,10 +1,5 @@
-import React, { lazy } from "react";
-import { View } from "react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import styles from "../styles";
-const SettingsPresentational = lazy(() =>
-  import("../components/SettingsPresentational")
-);
+import { React, AsyncStorage, SettingsPresentational } from "../api/constants";
+
 const AysncLogout = async () => {
   try {
     await AsyncStorage.removeItem("accessToken");
@@ -15,19 +10,14 @@ const AysncLogout = async () => {
 };
 const Usersettings = (props) => {
   const DATA = [
-    /* {
-      id: "1",
-      icon: <View style={styles.iconStyle}></View>,
-      title: "Notifications",
-    }, */
     {
       id: "2",
-      icon: <View style={styles.iconStyle}></View>,
+      icon: <></>, //iconStyle
       title: "Feedback",
     },
     {
       id: "3",
-      icon: <View style={styles.iconStyle}></View>,
+      icon: <></>, //iconStyle
       title: "About",
     },
   ];

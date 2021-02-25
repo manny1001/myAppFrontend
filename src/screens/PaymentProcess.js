@@ -1,32 +1,30 @@
-import React, { lazy, useState } from "react";
-import { View, Text, Button, TouchableOpacity } from "react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useQuery, useMutation } from "@apollo/client";
-import { LoadingContent } from "../../src/components/Loader";
-import { GetData, StoreData } from "../../src/utilites/GFunctions";
-import * as WebBrowser from "expo-web-browser";
 import {
+  React,
+  View,
+  Text,
+  Button,
+  AsyncStorage,
+  useQuery,
+  useMutation,
+  LoadingContent,
+  StoreData,
+  WebBrowser,
   GET_DRIVER_RESPONSE,
   PAYMENT_CONFIRMATION,
   GET_CARD_PAYMENT_RESULT,
   CREATE_CHECKOUT,
-} from "../../src/utilites/Queries";
-import * as Linking from "expo-linking";
-import styles from "../styles";
-const SwitchPaymentTypeButton = lazy(() =>
-  import("../components/SwitchPaymentTypeButton")
-);
-const PaymentButton = lazy(() => import("../../src/components/PaymentButton"));
-const SelectPaymentMethod = lazy(() =>
-  import("../components/SelectPaymentMethod")
-);
-const PaymentMethodHeader = lazy(() =>
-  import("../components/PaymentMethodHeader")
-);
-const CashSelectedText = lazy(() => import("../components/CashSelectedText"));
-const TripDetails = lazy(() => import("../components/TripDetails"));
+  styles,
+  SwitchPaymentTypeButton,
+  PaymentButton,
+  CashSelectedText,
+  TripDetails,
+  SelectNewDriver,
+  PaymentMethodHeader,
+  PaymentSuccessful,
+  useState,
+  SelectPaymentMethod,
+} from "../api/constants/";
 
-const SelectNewDriver = lazy(() => import("../components/SelectNewDriver"));
 export default function (props) {
   const [userUUID, setUSERUUID] = React.useState("");
   const [cellphone, setclientCellNumber] = React.useState("");
@@ -52,7 +50,6 @@ export default function (props) {
   const [token, settoken] = useState(null);
   const [PayOrConfirm] = useMutation(PAYMENT_CONFIRMATION);
 
-  const [visibleModal, setvisibleModal] = React.useState(false);
   const { data: DATA, stopPolling, startPolling } = useQuery(
     GET_DRIVER_RESPONSE,
     {
@@ -95,10 +92,6 @@ export default function (props) {
   };
   const {
     data,
-    error,
-    loading,
-    refetch,
-    stopPolling: StopPolling,
     startPolling: StartPolling,
   } = useQuery(GET_CARD_PAYMENT_RESULT, {
     onCompleted: () => {},
@@ -153,38 +146,7 @@ export default function (props) {
   if (paymentMethod === "Card" && !data.getCardPaymentResult[0]) {
     if (data && data.getCardPaymentResult[0]) {
       if (data && data.getCardPaymentResult[0].status === "Paid,WaitingDriver")
-        return (
-          <View
-            style={[
-              styles.container,
-              {
-                flex: 1,
-                width: 400,
-                alignSelf: "center",
-                justifyContent: "center",
-              },
-            ]}
-          >
-            <Text
-              style={{
-                fontFamily: "Gotham_Medium_Regular",
-                marginBottom: 100,
-                fontSize: 18,
-                fontWeight: "600",
-              }}
-            >
-              Payment successful, please proceeed to track your driver...
-            </Text>
-            <Button
-              onPress={() => {
-                stopPolling(),
-                  StopPolling(),
-                  props.props.navigation.navigate("TrackDriver");
-              }}
-              title={"Next"}
-            />
-          </View>
-        );
+        return <PaymentSuccessful />;
     }
     return (
       <View style={styles.container}>

@@ -1,20 +1,23 @@
-import React from "react";
-import { RFValue } from "react-native-responsive-fontsize";
 import { StyleSheet } from "react-native";
-import { RFPercentage } from "react-native-responsive-fontsize";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
+import { RFValue, RFPercentage } from "react-native-responsive-fontsize";
 
 const styles = StyleSheet.create({
+  AcceptTandCs: {
+    width: wp(60),
+    flexDirection: "row",
+    justifyContent: "space-evenly",
+    alignSelf: "center",
+  },
   urgencyButton: {
     borderWidth: wp(0.3),
     padding: wp(1.5),
     borderRadius: wp(5),
   },
   loadingGify: { height: hp(70), width: wp(100), alignSelf: "center" },
-  tabStyle: {},
   tabBarLabelStyles: { fontSize: RFPercentage(2) },
   tabBarStyle: { height: hp(8) },
   tabIconStyle: { color: "black" },
@@ -43,9 +46,8 @@ const styles = StyleSheet.create({
     fontFamily: "Gotham_Medium_Regular",
   },
   timeAndDistanceContainer: {
-    justifyContent: "space-between",
-    width: wp(55),
-    alignSelf: "center",
+    justifyContent: "center",
+    alignSelf: "stretch",
     flexDirection: "row",
   },
   profileAvatarContainer: {

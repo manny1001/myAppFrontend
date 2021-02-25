@@ -1,17 +1,18 @@
-import React, { lazy } from "react";
-import { View, Text, Animated } from "react-native";
-import Modal from "modal-enhanced-react-native-web";
-import TextInput from "../../src/components/TextInput";
-import { useMutation } from "@apollo/client";
-import { USER_LOGIN } from "../../src/utilites/Queries";
-import EnterOTP from "../components/EnterOTP";
-import { StoreData } from "../../src/utilites/GFunctions";
-import styles from "../styles";
-import Loader from "../components/Loader";
-const BigButton = lazy(() => import("../../src/components/Buttons"));
-const PhoneAuthImage = lazy(() =>
-  import("../../src/components/PhoneAuthImage")
-);
+import {
+  View,
+  Text,
+  React,
+  Modal,
+  InputField,
+  useMutation,
+  USER_LOGIN,
+  StoreData,
+  styles,
+  Loader,
+  BigButton,
+  PhoneAuthImage,
+} from "../api/constants";
+
 const PhoneAuth = ({ context }) => {
   /* function smsOtp(cellphone, otp) {
     let number = "27" + cellphone.slice(1, 10);
@@ -38,7 +39,7 @@ const PhoneAuth = ({ context }) => {
     <View style={styles.container}>
       <Modal style={styles.modal} isVisible={visibleModal}></Modal>
       <PhoneAuthImage />
-      <TextInput
+      <InputField
         maxLength={10}
         style={styles.cellphoneTextInput}
         keyboardType={"number-pad"}

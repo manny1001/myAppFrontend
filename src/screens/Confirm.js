@@ -1,16 +1,19 @@
-import React, { lazy, useState } from "react";
-import { useMutation, useQuery } from "@apollo/client";
 import {
+  React,
+  lazy,
+  useState,
   NEW_REQUEST,
   GET_PROFILE,
   GET_DRIVERS,
-} from "../../src/utilites/Queries";
-import { GetData, StoreData } from "../../src/utilites/GFunctions";
-import { LoadingContent } from "../../src/components/Loader";
-const AddName = lazy(() => import("../../src/screens/AddName"));
-const ConfrimPresentational = lazy(() =>
-  import("../components/ConfrimPresentational")
-);
+  GetData,
+  StoreData,
+  LoadingContent,
+  AddName,
+  ConfrimPresentational,
+  useMutation,
+  useQuery,
+} from "../api/constants";
+
 export default function (props) {
   const [distance, setDistance] = React.useState("");
   const [totalAmount, setTotalAmount] = React.useState(18000);

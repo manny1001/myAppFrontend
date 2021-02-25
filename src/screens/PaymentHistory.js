@@ -1,13 +1,15 @@
-import React, { useState, lazy } from "react";
-import { Text } from "react-native";
-import { StoreData } from "../../src/utilites/GFunctions";
-import { useQuery } from "@apollo/client";
-import { GET_REQUEST_HISTORY, GET_USER_UUID } from "../../src/utilites/Queries";
-import { LoadingContent } from "../components/Loader";
+import {
+  React,
+  Text,
+  StoreData,
+  useQuery,
+  GET_REQUEST_HISTORY,
+  GET_USER_UUID,
+  LoadingContent,
+  PaymentHistoryPresentational,
+  useState,
+} from "../api/constants";
 
-const PaymentHistoryPresentational = lazy(() =>
-  import("../components/PaymentHistoryPresentational")
-);
 const Payments = () => {
   const [currentUserUUID, setcurrentUserUUID] = useState("");
   const { data: DATA, loading: LOADING } = useQuery(GET_USER_UUID, {

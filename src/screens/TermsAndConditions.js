@@ -1,15 +1,16 @@
-import React, { Component, lazy } from "react";
-import { TouchableOpacity, Text, View } from "react-native";
 import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from "react-native-responsive-screen";
-const BigButton = lazy(() => import("../../src/components/Buttons"));
-import styles from "../styles";
-const AcceptTermsButton = lazy(() =>
-  import("../../src/components/AcceptTermsButton")
-);
-const AcceptTermsImage = lazy(() => import("../components/AcceptTermsImage"));
+  React,
+  Component,
+  TouchableOpacity,
+  Text,
+  View,
+  wp,
+  BigButton,
+  styles,
+  AcceptTermsButton,
+  AcceptTermsImage,
+} from "../api/constants";
+
 class AcceptTandCs extends Component {
   constructor(props) {
     super(props);
@@ -17,16 +18,9 @@ class AcceptTandCs extends Component {
   }
   render() {
     return (
-      <View style={[styles.container, {}]}>
+      <View style={styles.container}>
         <AcceptTermsImage />
-        <View
-          style={{
-            width: wp(60),
-            flexDirection: "row",
-            justifyContent: "space-evenly",
-            alignSelf: "center",
-          }}
-        >
+        <View style={styles.AcceptTandCs}>
           <AcceptTermsButton
             isAccepted={this.state.isAccepted}
             onPress={() => {

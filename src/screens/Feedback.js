@@ -1,12 +1,13 @@
-import React, { Component, useState } from "react";
 import {
+  React,
   View,
   TouchableOpacity,
-  StyleSheet,
   TextInput,
   Text,
-} from "react-native";
-import styles from "../styles";
+  styles,
+  useState,
+} from "../api/constants";
+
 const Feedback = (props) => {
   const [feedback, setfeedBack] = useState("");
 

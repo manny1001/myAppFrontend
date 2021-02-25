@@ -1,18 +1,16 @@
-import React, { useState } from "react";
 import {
+  React,
+  styles,
   Text,
   View,
-  StyleSheet,
-  FlatList,
   ScrollView,
-  TouchableOpacity,
-} from "react-native";
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from "react-native-responsive-screen";
-import { RFValue, RFPercentage } from "react-native-responsive-fontsize";
-import BigButton from "../components/Buttons.js";
+  wp,
+  hp,
+  RFValue,
+  RFPercentage,
+  BigButton,
+} from "../api/constants";
+
 export default function App(props) {
   const { onPress, orderObject } = props;
   /*  const {
@@ -250,11 +248,3 @@ export default function App(props) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "space-around",
-    backgroundColor: "white",
-  },
-});
