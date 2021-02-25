@@ -5,6 +5,7 @@ import {
   Text,
   TouchableOpacity,
   RFPercentage,
+  View,
 } from "../api/constants";
 
 const BigButton = ({
@@ -17,35 +18,44 @@ const BigButton = ({
   buttonStyle,
   disabled,
 }) => (
-  <TouchableOpacity
-    disabled={disabled}
-    containerStyle={[containerStyle, { justifyContent: "center" }]}
-    activeOpacity={activeOpacity}
-    onPress={onPress}
+  <View
     style={{
-      shadowColor: "rgba(0,0,0, .4)", // IOS
-      shadowOffset: { height: 3, width: 3 }, // IOS
-      shadowOpacity: 0.25, // IOS
-      shadowRadius: 1, //IOS
-      backgroundColor: disabled ? "#cccccc" : "#6c63ff",
-      height: hp(7),
-      justifyContent: "center",
-      borderRadius: wp(20),
-      flexDirection: "row",
       alignSelf: "stretch",
+      flexDirection: "row",
+      justifyContent: "center",
     }}
   >
-    <Text
+    <TouchableOpacity
+      disabled={disabled}
+      containerStyle={[containerStyle, { justifyContent: "center" }]}
+      activeOpacity={activeOpacity}
+      onPress={onPress}
       style={{
-        fontWeight: "bold",
-        alignSelf: "center",
-        color: "white",
-        fontSize: RFPercentage(2.5),
+        shadowColor: "rgba(0,0,0, .4)", // IOS
+        shadowOffset: { height: 3, width: 3 }, // IOS
+        shadowOpacity: 0.25, // IOS
+        shadowRadius: 1, //IOS
+        backgroundColor: disabled ? "#cccccc" : "#723BF0",
+        height: hp(7),
+        justifyContent: "center",
+        borderRadius: wp(20),
+        flexDirection: "row",
+        alignSelf: "stretch",
+        width: "50%",
       }}
     >
-      {title}
-    </Text>
-  </TouchableOpacity>
+      <Text
+        style={{
+          fontWeight: "bold",
+          alignSelf: "center",
+          color: "white",
+          fontSize: RFPercentage(2.5),
+        }}
+      >
+        {title}
+      </Text>
+    </TouchableOpacity>
+  </View>
 );
 
 export default BigButton;

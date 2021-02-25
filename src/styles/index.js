@@ -6,16 +6,32 @@ import {
 import { RFValue, RFPercentage } from "react-native-responsive-fontsize";
 
 const styles = StyleSheet.create({
+  HeaderText: {
+    alignSelf: "center",
+    color: "white",
+    fontSize: "25px",
+    fontWeight: "bold",
+  },
+  HeaderSubText: { alignSelf: "center", color: "white" },
+  Header: {
+    height: hp(7),
+    backgroundColor: "#723BF0",
+    justifyContent: "center",
+    flexDirection: "column",
+    alignSelf: "stretch",
+    alignItems: "flex-start",
+  },
   AcceptTandCs: {
     width: wp(60),
     flexDirection: "row",
     justifyContent: "space-evenly",
     alignSelf: "center",
   },
-  urgencyButton: {
+  urgencyButton: { padding: 5 },
+  urgencyText: {
     borderWidth: wp(0.3),
-    padding: wp(1.5),
     borderRadius: wp(5),
+    padding: 5,
   },
   loadingGify: { height: hp(70), width: wp(100), alignSelf: "center" },
   tabBarLabelStyles: { fontSize: RFPercentage(2) },

@@ -1,5 +1,5 @@
 import {
-  Text,
+  Header,
   client,
   ApolloProvider,
   NavigationContainer,
@@ -72,6 +72,7 @@ const App = () => {
                     name="Auth"
                     component={() => (
                       <Suspense fallback={Loader()}>
+                        <Header />
                         <AuthStack context={context} />
                       </Suspense>
                     )}
@@ -80,6 +81,7 @@ const App = () => {
                 </Stack.Navigator>
               ) : (
                 <Suspense fallback={Loader()}>
+                  <Header />
                   <AppStack.Navigator
                     tabBarOptions={{
                       keyboardHidesTabBar: true,

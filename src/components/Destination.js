@@ -24,7 +24,6 @@ const Destination = ({
         return (
           <View
             style={{
-              height: hp(15),
               flexDirection: "column",
               justifyContent: "center",
               flex: 1,
@@ -44,7 +43,7 @@ const Destination = ({
               style={{
                 alignSelf: "stretch",
                 flexDirection: "row",
-                justifyContent: "space-around",
+                justifyContent: "space-between",
               }}
             >
               {DestinationSelected === false ? (
@@ -64,15 +63,7 @@ const Destination = ({
                   />
                 </>
               ) : (
-                <Text
-                  numberOfLines={3}
-                  style={{
-                    width: wp(55),
-                    alignSelf: "center",
-
-                    fontSize: RFValue(14),
-                  }}
-                >
+                <Text style={{ alignSelf: "center" }}>
                   {destination !== null
                     ? destination
                     : context.state.destination}

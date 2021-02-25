@@ -6,44 +6,54 @@ const Urgency = () => {
       style={{
         flexDirection: "row",
         alignSelf: "stretch",
-        justifyContent: "space-evenly",
+        justifyContent: "space-around",
         margin: 5,
       }}
     >
-      <TouchableOpacity onFocus={() => setisFocused("green")}>
+      <TouchableOpacity
+        style={styles.urgencyButton}
+        onFocus={() => setisFocused("green")}
+      >
         <Text
           style={[
-            styles.urgencyButton,
+            styles.urgencyText,
             {
               borderColor: isFocused === "green" ? "black" : "#f4f4f4",
             },
           ]}
         >
-          I'M CHILLED
+          CHILLED
         </Text>
       </TouchableOpacity>
-      <TouchableOpacity onFocus={() => setisFocused("blue")}>
+
+      <TouchableOpacity
+        style={styles.urgencyButton}
+        onFocus={() => setisFocused("blue")}
+      >
         <Text
           style={[
-            styles.urgencyButton,
+            styles.urgencyText,
             {
               borderColor: isFocused === "blue" ? "black" : "#f4f4f4",
             },
           ]}
         >
-          KINDA RUSHING
+          RUSHING
         </Text>
       </TouchableOpacity>
-      <TouchableOpacity onFocus={() => setisFocused("red")}>
+      <TouchableOpacity
+        style={styles.urgencyButton}
+        onFocus={() => setisFocused("red")}
+      >
         <Text
           style={[
-            styles.urgencyButton,
+            styles.urgencyText,
             {
               borderColor: isFocused === "red" ? "black" : "#f4f4f4",
             },
           ]}
         >
-          I'M LATE
+          LATE
         </Text>
       </TouchableOpacity>
     </View>

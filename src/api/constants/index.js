@@ -2,13 +2,7 @@ import React, { lazy, Suspense, useState, Component, useCallback } from "react";
 import Loader from "../../components/Loader";
 import { Context, ContextConsumer } from "../../context/Context";
 import { useMutation, useQuery } from "@apollo/client";
-import {
-  AirbnbRating,
-  Button,
-  Header,
-  Avatar,
-  Image,
-} from "react-native-elements";
+import { AirbnbRating, Button, Avatar, Image } from "react-native-elements";
 import Modal from "modal-enhanced-react-native-web";
 import { useFonts } from "expo-font";
 import * as WebBrowser from "expo-web-browser";
@@ -102,6 +96,8 @@ export const HeadingText = lazy(() => import("../../components/HeadingText"));
 export const MethodPicker = lazy(() => import("../../components/MethodPicker"));
 export const Settings = lazy(() => import("../../screens/Settings"));
 export const windowWidth = Dimensions.get("window").width;
+export const Header = lazy(() => import("../../components/Header"));
+
 export const SettingsPresentational = lazy(() =>
   import("../../components/SettingsPresentational")
 );
@@ -318,7 +314,6 @@ export {
   useBlurOnFulfill,
   useClearByFocusCell,
   GooglePlacesAutocomplete,
-  Header,
   Picker,
   Icon,
   MaterialIcons,

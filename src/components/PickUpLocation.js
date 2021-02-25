@@ -42,10 +42,9 @@ const PickUpLocation = ({
             </Text>
             <View
               style={{
-                height: hp(10),
                 alignSelf: "stretch",
                 flexDirection: "row",
-                justifyContent: "space-around",
+                justifyContent: "space-between",
               }}
             >
               {isClicked === false ? (
@@ -70,7 +69,7 @@ const PickUpLocation = ({
                     />
                   </View>
                 ) : (
-                  <Text>{currentLocation}</Text>
+                  <Text style={{ alignSelf: "center" }}>{currentLocation}</Text>
                 )
               ) : (
                 <GoogleAutoComplete

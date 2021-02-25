@@ -6,7 +6,7 @@ const Loader = () => {
       style={[
         styles.container,
         {
-          justifyContent: "center",
+          justifyContent: "space-between",
           marginRight: 0,
           marginLeft: 0,
           marginTop: 0,
@@ -14,6 +14,10 @@ const Loader = () => {
         },
       ]}
     >
+      <View style={styles.Header}>
+        <Text style={styles.HeaderText}>Chauffeur</Text>
+        <Text style={styles.HeaderSubText}>self-driven , customer service</Text>
+      </View>
       {/* <ActivityIndicator color="#6c63ff" size="large" /> */}
       {/* <Image
         style={styles.loadingGify}
@@ -22,10 +26,9 @@ const Loader = () => {
 
       <Text
         style={{
-          marginTop: hp(4),
           alignSelf: "center",
-          fontFamily: "Gotham_Medium_Regular",
           fontSize: RFPercentage(3),
+          marginBottom: hp(65),
         }}
       >
         App loading...

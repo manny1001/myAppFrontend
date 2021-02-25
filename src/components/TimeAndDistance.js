@@ -5,11 +5,28 @@ const TimeAndDistance = ({ time, distance }) => {
     <View style={styles.timeAndDistanceContainer}>
       <Text
         style={{
-          fontFamily: "Gotham_Medium_Regular",
           alignSelf: "center",
         }}
       >
-        {time} 15 mins and {distance}10 km to destination.
+        {time}
+        <Text
+          style={{
+            fontFamily: "Gotham_Medium_Regular",
+            alignSelf: "center",
+          }}
+        >
+          15
+        </Text>
+        mins and{" "}
+        <Text
+          style={{
+            fontFamily: "Gotham_Medium_Regular",
+            alignSelf: "center",
+          }}
+        >
+          10 km
+        </Text>
+        {distance} to destination.
       </Text>
     </View>
   );

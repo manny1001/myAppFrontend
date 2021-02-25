@@ -1,4 +1,4 @@
-import { React, Header, hp } from "../api/constants";
+import { React, View, Text, hp, styles } from "../api/constants";
 
 const TopHeader = ({
   Opacityvalue,
@@ -8,19 +8,10 @@ const TopHeader = ({
   RightComponent,
 }) => {
   return (
-    <>
-      <Header
-        backgroundColor={backColor ? backColor : "#f2f2f2"}
-        containerStyle={{
-          flexDirection: "row",
-          zIndex: 100,
-          height: hp(10),
-        }}
-        leftComponent={LeftComponent}
-        centerComponent={CenterComponent}
-        rightComponent={RightComponent}
-      />
-    </>
+    <View style={styles.Header}>
+      <Text style={styles.HeaderText}>Chauffeur</Text>
+      <Text style={styles.HeaderSubText}>self-driven , customer service</Text>
+    </View>
   );
 };
 
