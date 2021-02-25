@@ -3,6 +3,7 @@ import {
   PhoneAuth,
   AuthStackNavigator,
   AcceptTandCs,
+  Header,
 } from "../api/constants";
 
 const AuthenticationStack = ({ context }) => {
@@ -11,12 +12,12 @@ const AuthenticationStack = ({ context }) => {
       <AuthStackNavigator.Screen
         name="AcceptTandCs"
         component={(props) => <AcceptTandCs {...props} context={context} />}
-        options={{ headerShown: false }}
+        options={{ header: () => <Header /> }}
       />
       <AuthStackNavigator.Screen
         name="PhoneAuth"
         component={(props) => <PhoneAuth {...props} context={context} />}
-        options={{ headerShown: false }}
+        options={{ header: () => <Header /> }}
       />
     </AuthStackNavigator.Navigator>
   );

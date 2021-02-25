@@ -35,8 +35,8 @@ const styles = StyleSheet.create({
   },
   loadingGify: { height: hp(70), width: wp(100), alignSelf: "center" },
   tabBarLabelStyles: { fontSize: RFPercentage(2) },
-  tabBarStyle: { height: hp(8) },
-  tabIconStyle: { color: "black" },
+  tabBarStyle: { height: hp(8), backgroundColor: "#723BF0" },
+  tabIconStyle: { color: "#E8ECFD" },
   iconStyle: {
     flex: 0.16,
     justifyContent: "center",
@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
     alignContent: "center",
   },
   cellphoneTextInput: {
-    backgroundColor: "#f3f3f3",
+    backgroundColor: "#723BF0",
     alignSelf: "center",
     width: wp(60),
     height: hp(6),
@@ -99,20 +99,16 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "space-between",
-    backgroundColor: "#f2f2f2",
+    backgroundColor: "#723BF0",
     alignSelf: "stretch",
-    marginRight: wp(10),
-    marginLeft: wp(10),
-    marginTop: hp(1),
-    marginBottom: hp(1),
   },
   inputContainerStyle: {
-    backgroundColor: "#f3f3f3",
+    backgroundColor: "#723BF0",
     fontSize: RFValue(13),
   },
   inputStyle: {
     height: hp(8),
-    backgroundColor: "#f2f2f2",
+    backgroundColor: "#723BF0",
   },
 });
 

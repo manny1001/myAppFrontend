@@ -8,6 +8,7 @@ import {
   LoadingContent,
   PaymentHistoryPresentational,
   useState,
+  Indicator,
 } from "../api/constants";
 
 const Payments = () => {
@@ -25,7 +26,7 @@ const Payments = () => {
   const [orderObject, setorderObject] = useState({});
   const [TipModalVisible, settTipModalVisible] = useState();
   if (error) return <Text>{error.message}</Text>;
-  if (loading) return <LoadingContent />;
+  if (loading) return <Indicator />;
   if (data)
     return (
       <PaymentHistoryPresentational

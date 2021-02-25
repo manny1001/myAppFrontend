@@ -1,4 +1,12 @@
-import { React, View, Text, RFPercentage, hp, styles } from "../api/constants";
+import {
+  React,
+  View,
+  Text,
+  RFPercentage,
+  hp,
+  styles,
+  Indicator,
+} from "../api/constants";
 
 const Loader = () => {
   return (
@@ -18,21 +26,11 @@ const Loader = () => {
         <Text style={styles.HeaderText}>Chauffeur</Text>
         <Text style={styles.HeaderSubText}>self-driven , customer service</Text>
       </View>
-      {/* <ActivityIndicator color="#6c63ff" size="large" /> */}
+      <Indicator />
       {/* <Image
         style={styles.loadingGify}
         source={require("../../assets/gifys/4V0b.gif")}
       /> */}
-
-      <Text
-        style={{
-          alignSelf: "center",
-          fontSize: RFPercentage(3),
-          marginBottom: hp(65),
-        }}
-      >
-        App loading...
-      </Text>
     </View>
   );
 };
@@ -59,7 +57,7 @@ export const LoadingContent = () => {
           fontSize: RFPercentage(3),
         }}
       >
-        Awaiting Response...
+        Please wait...
       </Text>
     </View>
   );

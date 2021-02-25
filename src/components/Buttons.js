@@ -35,13 +35,14 @@ const BigButton = ({
         shadowOffset: { height: 3, width: 3 }, // IOS
         shadowOpacity: 0.25, // IOS
         shadowRadius: 1, //IOS
-        backgroundColor: disabled ? "#cccccc" : "#723BF0",
+        backgroundColor: "#4c09b7",
         height: hp(7),
         justifyContent: "center",
         borderRadius: wp(20),
         flexDirection: "row",
         alignSelf: "stretch",
         width: "50%",
+        display: "hidden",
       }}
     >
       <Text

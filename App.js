@@ -72,7 +72,6 @@ const App = () => {
                     name="Auth"
                     component={() => (
                       <Suspense fallback={Loader()}>
-                        <Header />
                         <AuthStack context={context} />
                       </Suspense>
                     )}
@@ -82,11 +81,13 @@ const App = () => {
               ) : (
                 <Suspense fallback={Loader()}>
                   <Header />
+
                   <AppStack.Navigator
                     tabBarOptions={{
                       keyboardHidesTabBar: true,
                       style: styles.tabBarStyle,
-                      activeBackgroundColor: "#C4C0FF",
+                      activeBackgroundColor: "#4c09b7",
+
                       tabStyle: styles.tabStyle,
                       labelStyle: styles.tabBarLabelStyles,
                       showLabel: false,

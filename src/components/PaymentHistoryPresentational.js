@@ -33,19 +33,17 @@ const PaymentHistoryPresentational = ({
         settTipModalVisible={settTipModalVisible()}
       />
 
-      <View style={[styles.container, { marginTop: 50 }]}>
+      <View style={[styles.container, {}]}>
         {data && data.getRequestHistory.length === 0 && (
-          <View style={styles.container}>
-            <Text
-              style={{
-                fontFamily: "Gotham_Medium_Regular",
-                alignSelf: "center",
-                flexWrap: "wrap",
-              }}
-            >
-              Seems like you havent request a trip yet...
-            </Text>
-          </View>
+          <Text
+            style={{
+              fontFamily: "Gotham_Medium_Regular",
+              alignSelf: "center",
+              flexWrap: "wrap",
+            }}
+          >
+            Seems like you havent request a trip yet...
+          </Text>
         )}
         {data && data.getRequestHistory.length !== 0 && (
           <FlatList

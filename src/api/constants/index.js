@@ -127,6 +127,15 @@ export const Chat = lazy(() => import("../../components/ChatApp"));
 export const GoogleAutoComplete = lazy(() =>
   import("../../components/GoogleAutoComplete")
 );
+export const Indicator = () => {
+  return (
+    <ActivityIndicator
+      color="#6c63ff"
+      size="large"
+      style={{ position: "absolute", top: "50%", left: "50%" }}
+    />
+  );
+};
 export const Driver = lazy(() => import("../../components/SelectDriver"));
 export const ConfrimPresentational = lazy(() =>
   import("../../components/ConfrimPresentational")
