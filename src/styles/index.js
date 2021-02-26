@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
   TopInfo: {
     width: wp(32),
     height: wp(32),
-    alignSelf: "center",
+    alignSelf: "strecentertch",
     borderRadius: wp(16),
     flexDirection: "column",
     justifyContent: "center",
@@ -53,12 +53,10 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   heading2: {
-    fontSize: RFValue(16),
     fontWeight: "bold",
     fontFamily: "Gotham_Medium_Regular",
   },
   locations: {
-    fontSize: RFValue(13),
     fontFamily: "Gotham_Medium_Regular",
   },
   timeAndDistanceContainer: {
@@ -107,8 +105,12 @@ const styles = StyleSheet.create({
     fontSize: RFValue(13),
   },
   inputStyle: {
-    height: hp(8),
     backgroundColor: "#723BF0",
+    width: wp(80),
+    alignSelf: "center",
+    borderRadius: wp(5),
+    borderWidth: wp(1),
+    borderColor: "#1436D2",
   },
 });
 

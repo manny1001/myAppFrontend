@@ -13,7 +13,7 @@ import {
   styles,
 } from "../api/constants";
 
-const Payments = () => {
+const Payments = (props) => {
   const [currentUserUUID, setcurrentUserUUID] = useState("");
   const { data: DATA, loading: LOADING } = useQuery(GET_USER_UUID, {
     onCompleted: () => {
@@ -36,6 +36,7 @@ const Payments = () => {
   if (data)
     return (
       <PaymentHistoryPresentational
+        {...props}
         visibleModal={visibleModal}
         orderObject={orderObject}
         TipModalVisible={TipModalVisible}

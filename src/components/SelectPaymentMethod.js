@@ -14,15 +14,13 @@ const SelectedPaymentMethod = ({ onCardPress, onCashPress }) => {
         onPress={onCardPress}
         style={{
           position: "absolute",
-          zIndex: 100,
-          top: hp(52),
+          top: hp(50),
           left: wp(25),
         }}
       >
         <Text
           style={{
-            fontSize: RFValue(18),
-            fontWeight: "500",
+            fontWeight: "bold",
           }}
         >
           Card
@@ -32,15 +30,13 @@ const SelectedPaymentMethod = ({ onCardPress, onCashPress }) => {
         onPress={onCashPress}
         style={{
           position: "absolute",
-          zIndex: 100,
-          top: hp(52),
+          top: hp(50),
           right: wp(30),
         }}
       >
         <Text
           style={{
-            fontSize: RFValue(18),
-            fontWeight: "500",
+            fontWeight: "bold",
           }}
         >
           Cash

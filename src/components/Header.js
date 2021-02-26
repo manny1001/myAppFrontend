@@ -9,7 +9,7 @@ const TopHeader = ({
 }) => {
   return (
     <View style={styles.Header}>
-      <Text style={styles.HeaderText}>Chauffeur</Text>
+      <Text style={styles.HeaderText}>YoChauffeur</Text>
       <Text style={styles.HeaderSubText}>self-driven , customer service</Text>
     </View>
   );

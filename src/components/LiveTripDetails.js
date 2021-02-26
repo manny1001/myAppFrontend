@@ -6,6 +6,7 @@ import {
   CallDriver,
   ProfilePicture,
   CountdownTillDriverArrives,
+  EmergencyButton,
 } from "../api/constants";
 
 const LiveTripDetails = ({
@@ -15,6 +16,10 @@ const LiveTripDetails = ({
   EmergencyAlert,
   clickCount,
   setdestinationArrived,
+  driverNotArrived,
+  setdriverNotArrived,
+  setmodalVisible,
+  setsureModalVisible,
 }) => {
   return (
     <View
@@ -69,7 +74,14 @@ const LiveTripDetails = ({
       )}
 
       {driverArrived === false && (
-        <CountdownTillDriverArrives data={data} loading={loading} />
+        <CountdownTillDriverArrives
+          data={data}
+          loading={loading}
+          driverNotArrived={driverNotArrived}
+          setdriverNotArrived={setdriverNotArrived}
+          setmodalVisible={setmodalVisible}
+          setsureModalVisible={setsureModalVisible}
+        />
       )}
     </View>
   );

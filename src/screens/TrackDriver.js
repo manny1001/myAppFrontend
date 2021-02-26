@@ -11,7 +11,7 @@ import {
   GetData,
   StackActions,
   styles,
-  AreYouSureYouArrivedModal,
+  AreYouSureDriverArrivedModal,
   StandByForCallModal,
   HaveYouArrivedModal,
   DriverNotArrived,
@@ -80,12 +80,12 @@ const TrackDriver = ({ navigation, LiveTripDetails }) => {
         data={data}
         driverArrived={driverArrived}
         loading={loading}
-        setsureModalVisible={setsureModalVisible}
+        setsureModalVisible={(val) => setsureModalVisible(val)}
         driverNotArrived={driverNotArrived}
-        setdriverNotArrived={setdriverNotArrived}
-        setmodalVisible={setmodalVisible}
+        setdriverNotArrived={(val) => setdriverNotArrived(val)}
+        setmodalVisible={(val) => setmodalVisible(val)}
         EmergencyAlert={EmergencyAlert}
-        setdestinationArrived={setdestinationArrived}
+        setdestinationArrived={(val) => setdestinationArrived(val)}
       />
       <DriverNotArrived
         driverArrived={driverArrived}
@@ -115,7 +115,7 @@ const TrackDriver = ({ navigation, LiveTripDetails }) => {
             navigation.dispatch(StackActions.replace("Ride"));
         }}
       />
-      <AreYouSureYouArrivedModal
+      <AreYouSureDriverArrivedModal
         sureModalVisible={sureModalVisible}
         onPress={() => {
           setsureModalVisible(false), setDriverArrived(true);

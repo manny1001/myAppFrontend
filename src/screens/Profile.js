@@ -15,7 +15,8 @@ import {
   styles,
   useQuery,
   useMutation,
-  InputField,
+  TEXTINPUT,
+  wp,
   Indicator,
 } from "../api/constants/";
 
@@ -28,6 +29,11 @@ import {
 }; */
 
 const ProfileStack = (props) => {
+  const textTheme = {
+    roundness: wp(5),
+    colors: { text: "#2B0345", placeholder: "white" },
+  };
+  const [isActive, setIsActive] = React.useState(false);
   const [uuid, setUUID] = useState(null);
   const [cellphone, setcellphone] = React.useState(
     data && data.currentUser.cellphone
@@ -86,14 +92,16 @@ const ProfileStack = (props) => {
           }
         />
 
-        <InputField
+        <TEXTINPUT
+          theme={textTheme}
           style={styles.inputStyle}
           keyboardType={"default"}
           defaultValue={data.currentUser.name}
           label={"Username"}
           onChangeText={(text) => setusername(text)}
         />
-        <InputField
+        <TEXTINPUT
+          theme={textTheme}
           style={styles.inputStyle}
           keyboardType={"phone-pad"}
           defaultValue={data.currentUser.cellphone}
@@ -101,21 +109,24 @@ const ProfileStack = (props) => {
           placeholder={"012 345 6789"}
           onChangeText={(text) => setcellphone(text)}
         />
-        <InputField
+        <TEXTINPUT
+          theme={textTheme}
           style={styles.inputStyle}
           keyboardType={"email-address"}
           defaultValue={data.currentUser.email}
           label={"Email"}
           onChangeText={(text) => setemail(text)}
         />
-        <InputField
+        <TEXTINPUT
+          theme={textTheme}
           style={styles.inputStyle}
           keyboardType={"default"}
           defaultValue={data.currentUser.homeaddress}
           label={"Home address"}
           onChangeText={(text) => sethomeaddress(text)}
         />
-        <InputField
+        <TEXTINPUT
+          theme={textTheme}
           style={styles.inputStyle}
           keyboardType={"default"}
           defaultValue={data.currentUser.workaddress}

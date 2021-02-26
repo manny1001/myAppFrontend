@@ -37,7 +37,6 @@ const CountDown = ({ onPress }) => {
           return (
             <Animated.View
               style={{
-                borderRadius: wp(80),
                 flex: 1,
                 justifyContent: "center",
               }}
@@ -47,7 +46,6 @@ const CountDown = ({ onPress }) => {
                   style={{
                     color: animatedColor,
                     alignSelf: "center",
-                    fontSize: RFPercentage(3),
                   }}
                 >
                   Arriving in
@@ -58,7 +56,6 @@ const CountDown = ({ onPress }) => {
                   style={{
                     color: animatedColor,
                     alignSelf: "center",
-                    fontSize: RFPercentage(3),
                   }}
                 >
                   Almost there
@@ -69,7 +66,6 @@ const CountDown = ({ onPress }) => {
                   style={{
                     color: animatedColor,
                     alignSelf: "center",
-                    fontSize: RFPercentage(2.5),
                   }}
                 >
                   Driver has arrived
@@ -79,7 +75,6 @@ const CountDown = ({ onPress }) => {
                 style={{
                   color: animatedColor,
                   alignSelf: "center",
-                  fontSize: RFPercentage(4),
                   fontWeight: "bold",
                 }}
               >

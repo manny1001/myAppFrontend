@@ -2,12 +2,18 @@ import { React, View, Text, styles, RFPercentage } from "../api/constants";
 
 const DriversInfo = ({ DriverName, DriverCarModel, DriverRegistration }) => {
   return (
-    <View style={styles.TopInfo}>
+    <View
+      style={[
+        styles.TopInfo,
+        {
+          backgroundColor: null,
+        },
+      ]}
+    >
       <Text
         style={{
           alignSelf: "center",
           flexDirection: "column",
-          fontSize: RFPercentage(2),
         }}
       >
         {DriverName}
@@ -16,14 +22,12 @@ const DriversInfo = ({ DriverName, DriverCarModel, DriverRegistration }) => {
         style={{
           alignSelf: "center",
           flexDirection: "column",
-          fontSize: RFPercentage(2),
         }}
       >
         {DriverCarModel}
       </Text>
       <Text
         style={{
-          fontSize: RFPercentage(2),
           alignSelf: "center",
           fontWeight: "700",
         }}

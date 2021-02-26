@@ -23,10 +23,6 @@ const Loader = () => {
         },
       ]}
     >
-      <View style={styles.Header}>
-        <Text style={styles.HeaderText}>Chauffeur</Text>
-        <Text style={styles.HeaderSubText}>self-driven , customer service</Text>
-      </View>
       <Indicator />
       {/* <Image
         style={styles.loadingGify}
@@ -55,8 +51,6 @@ export const LoadingContent = () => {
         style={{
           marginTop: hp(4),
           alignSelf: "center",
-          fontFamily: "Gotham_Medium_Regular",
-          fontSize: RFPercentage(3),
         }}
       >
         Please wait...

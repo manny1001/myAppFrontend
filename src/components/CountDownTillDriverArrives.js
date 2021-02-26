@@ -7,14 +7,26 @@ import {
   Animated,
   wp,
   hp,
-  RFPercentage,
+  TouchableOpacity,
 } from "../api/constants";
-const CountDownTillDriverArrives = ({ data, loading }) => {
+const CountDownTillDriverArrives = ({
+  data,
+  loading,
+  driverNotArrived,
+  setdriverNotArrived,
+  setmodalVisible,
+  setsureModalVisible,
+}) => {
   return (
     <View
       style={[
         styles.TopInfo,
-        { alignSelf: "center", borderWidth: null, backgroundColor: "" },
+        {
+          alignSelf: "center",
+          borderWidth: null,
+          backgroundColor: "",
+          marginBottom: hp(9),
+        },
       ]}
     >
       {data &&
@@ -22,8 +34,8 @@ const CountDownTillDriverArrives = ({ data, loading }) => {
         data.driversLocation[0].driverremainingtime !== "0" &&
         !loading && (
           <CountdownCircleTimer
+            strokeWidth={wp(2)}
             /*   initialRemainingTime={timeRemaining} */
-            styles={{ borderWidth: null }}
             onComplete={() => {
               settimeRemaining(0);
             }}
@@ -71,7 +83,6 @@ const CountDownTillDriverArrives = ({ data, loading }) => {
                       style={{
                         color: animatedColor,
                         alignSelf: "center",
-                        fontSize: RFPercentage(3),
                       }}
                     >
                       Arriving in
@@ -82,7 +93,6 @@ const CountDownTillDriverArrives = ({ data, loading }) => {
                       style={{
                         color: animatedColor,
                         alignSelf: "center",
-                        fontSize: RFPercentage(3),
                       }}
                     >
                       Almost there
@@ -93,7 +103,6 @@ const CountDownTillDriverArrives = ({ data, loading }) => {
                     style={{
                       color: animatedColor,
                       alignSelf: "center",
-                      fontSize: RFPercentage(3),
                       fontWeight: "bold",
                     }}
                   >
@@ -112,13 +121,13 @@ const CountDownTillDriverArrives = ({ data, loading }) => {
             style={{
               justifyContent: "center",
               width: wp(42),
-              height: hp(20),
+              height: hp(10),
+              bottom: hp(3),
             }}
           >
             <Text
               style={{
                 alignSelf: "center",
-                fontSize: RFPercentage(3),
                 flex: 1,
                 textAlign: "center",
                 fontWeight: "bold",
@@ -138,7 +147,6 @@ const CountDownTillDriverArrives = ({ data, loading }) => {
                 <Text
                   style={{
                     alignSelf: "center",
-                    fontSize: RFPercentage(5),
                     flex: 1,
                     textAlign: "center",
                     color: "green",
@@ -181,7 +189,6 @@ const CountDownTillDriverArrives = ({ data, loading }) => {
                   <Text
                     style={{
                       alignSelf: "center",
-                      fontSize: RFPercentage(5),
                       flex: 1,
                       textAlign: "center",
                       fontWeight: "bold",
@@ -196,10 +203,9 @@ const CountDownTillDriverArrives = ({ data, loading }) => {
                 <Text
                   style={{
                     alignSelf: "center",
-                    fontSize: RFPercentage(1.5),
-                    flex: 1,
                     textAlign: "center",
-                    width: wp(10),
+                    width: wp(23),
+                    height: wp(10),
                   }}
                 >
                   Standby for a call...

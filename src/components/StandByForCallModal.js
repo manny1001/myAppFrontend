@@ -32,12 +32,24 @@ const StandByForCallModal = ({
           style={{
             fontSize: RFPercentage(5),
             alignSelf: "center",
+            width: wp(70),
+            backgroundColor: "#5C77F0",
+            padding: wp(10),
             width: wp(75),
           }}
         >
-          One of our call center agents will get back to you within the next 5
-          mins
+          A call center agent will get back to you within 5 mins.
         </Text>
+      </View>
+      <View
+        style={{
+          flex: 0.5,
+          width: wp(90),
+          justifyContent: "center",
+          alignSelf: "center",
+          backgroundColor: "#f2f2f2",
+        }}
+      >
         <BigButton
           onPress={() => {
             setmodalVisible(false), setDriverArrived(false);

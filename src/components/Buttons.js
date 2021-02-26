@@ -50,7 +50,6 @@ const BigButton = ({
           fontWeight: "bold",
           alignSelf: "center",
           color: "white",
-          fontSize: RFPercentage(2.5),
         }}
       >
         {title}

@@ -27,19 +27,31 @@ const HaveYouArrivedModal = ({
         style={{
           flex: 1,
           justifyContent: "center",
-          alignItems: "center",
           backgroundColor: "#f2f2f2",
+          alignItems: "center",
         }}
       >
         <Text
           style={{
             fontSize: RFPercentage(5),
             alignSelf: "center",
-            width: wp(75),
+            width: wp(70),
+            backgroundColor: "#5C77F0",
+            padding: wp(10),
           }}
         >
-          Have you arrived safely?
+          Hi! John,{"\n"}Have you arrived safely?
         </Text>
+      </View>
+      <View
+        style={{
+          flex: 0.5,
+          justifyContent: "space-around",
+          width: wp(90),
+          backgroundColor: "#f2f2f2",
+          alignSelf: "center",
+        }}
+      >
         <BigButton
           onPress={() => {
             setRatingModalVIsibile(true),

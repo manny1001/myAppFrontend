@@ -25,21 +25,13 @@ const PickUpLocation = ({
         return (
           <View
             style={{
-              height: hp(15),
               flexDirection: "column",
               justifyContent: "center",
               flex: 1,
               alignSelf: "stretch",
             }}
           >
-            <Text
-              style={{
-                fontFamily: "Gotham_Medium_Regular",
-                fontSize: RFPercentage(3),
-              }}
-            >
-              Pickup
-            </Text>
+            <Text>Pickup</Text>
             <View
               style={{
                 alignSelf: "stretch",
@@ -54,14 +46,7 @@ const PickUpLocation = ({
                       justifyContent: "space-between",
                     }}
                   >
-                    <Text
-                      style={{
-                        fontFamily: "Gotham_Medium_Regular",
-                        alignSelf: "center",
-                      }}
-                    >
-                      Getting Location
-                    </Text>
+                    <Text>Getting Location</Text>
                     <ActivityIndicator
                       size="small"
                       style={{ alignSelf: "center" }}
@@ -69,7 +54,7 @@ const PickUpLocation = ({
                     />
                   </View>
                 ) : (
-                  <Text style={{ alignSelf: "center" }}>{currentLocation}</Text>
+                  <Text>{currentLocation}</Text>
                 )
               ) : (
                 <GoogleAutoComplete
@@ -164,7 +149,6 @@ const PickUpLocation = ({
                 <Text
                   style={{
                     padding: wp(2.5),
-                    fontFamily: "Gotham_Medium_Regular",
                     textDecorationLine: "underline",
                   }}
                 >

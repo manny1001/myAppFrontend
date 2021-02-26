@@ -18,12 +18,12 @@ const EmergencyButton = ({
       style={{
         width: wp(100),
         alignSelf: "center",
-        justifyContent: "center",
+        justifyContent: "space-between",
+        height: hp(10),
       }}
     >
       <Text
         style={{
-          fontFamily: "Gotham_Medium_Regular",
           alignSelf: "center",
         }}
       >

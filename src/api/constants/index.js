@@ -59,7 +59,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/AntDesign";
 import {
   View,
-  Text,
+  Text as TEXT,
   Dimensions,
   TouchableOpacity,
   StyleSheet,
@@ -81,6 +81,16 @@ export const InputField = lazy(() => import("../../components/TextInput"));
 export const Profile = lazy(() => import("../../screens/Profile"));
 export const Home = lazy(() => import("../../navigation/Home"));
 export const More = lazy(() => import("../../navigation/More"));
+export const Text = ({ style, children }) => {
+  return (
+    <TEXT
+      style={[style, { fontFamily: "Gotham_Medium_Regular", color: "#E8ECFD" }]}
+    >
+      {children}
+    </TEXT>
+  );
+};
+/*   */
 export const ClickedDriver = lazy(() =>
   import("../../components/ClickedDriver")
 );
@@ -185,7 +195,7 @@ export const PaymentHistoryPresentational = lazy(() =>
   import("../../components/PaymentHistoryPresentational")
 );
 export const AreYouSureYouArrivedModal = lazy(() =>
-  import("../../components/AreYouSureYouArrivedModal")
+  import("../../components/AreYouSureDriverArrivedModal")
 );
 export const StandByForCallModal = lazy(() =>
   import("../../components/StandByForCallModal")
@@ -210,12 +220,12 @@ export const PhoneAuthImage = lazy(() =>
 );
 export const navigationRef = React.createRef();
 export const routeNameRef = React.createRef();
-const httpLink = createHttpLink({
-  uri: "https://agile-woodland-33090.herokuapp.com/",
-});
 /* const httpLink = createHttpLink({
-  uri: "http://localhost:22000/graphql",
+  uri: "https://agile-woodland-33090.herokuapp.com/",
 }); */
+const httpLink = createHttpLink({
+  uri: "http://localhost:22000/graphql",
+});
 export const Stack = createStackNavigator();
 export const AppStack = createBottomTabNavigator();
 export const AuthStackNavigator = createStackNavigator();
@@ -249,7 +259,6 @@ export {
   Suspense,
   ApolloProvider,
   View,
-  Text,
   Dimensions,
   createDrawerNavigator,
   createStackNavigator,

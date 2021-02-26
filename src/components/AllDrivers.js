@@ -44,34 +44,21 @@ const Drivers = (props) => {
             height: hp(28),
           }}
         >
-          <Text
-            style={{ fontFamily: "Gotham_Medium_Regular", fontWeight: "bold" }}
-          >
-            Name
-          </Text>
+          <Text style={{ fontWeight: "bold" }}>Name</Text>
           <Text>
             {name} {surname}
           </Text>
           <Text
             style={{
-              fontFamily: "Gotham_Medium_Regular",
               fontWeight: "bold",
             }}
           >
             Cellphone
           </Text>
           <Text>{cellphone}</Text>
-          <Text
-            style={{ fontFamily: "Gotham_Medium_Regular", fontWeight: "bold" }}
-          >
-            Registration
-          </Text>
+          <Text style={{ fontWeight: "bold" }}>Registration</Text>
           <Text>{registration}</Text>
-          <Text
-            style={{ fontFamily: "Gotham_Medium_Regular", fontWeight: "bold" }}
-          >
-            Model
-          </Text>
+          <Text style={{ fontWeight: "bold" }}>Model</Text>
           <Text>{model}</Text>
         </View>
         <View
@@ -92,11 +79,7 @@ const Drivers = (props) => {
             }}
             source={{ uri: picture }}
           />
-          <Text
-            style={{ fontFamily: "Gotham_Medium_Regular", alignSelf: "center" }}
-          >
-            7 mins away
-          </Text>
+          <Text style={{ alignSelf: "center" }}>7 mins away</Text>
         </View>
       </TouchableOpacity>
     );
@@ -125,14 +108,13 @@ class AllDrivers extends React.Component {
           alignSelf: "center",
           flex: 0.5,
           width: wp(80),
+          overflow: "hidden",
         }}
       >
         {DriverDetails.length !== 0 && DriverDetails.length !== 1 && (
           <Text
             style={{
-              fontFamily: "Gotham_Medium_Regular",
               alignSelf: "center",
-              fontSize: RFPercentage(2),
             }}
           >
             Swipe for more

@@ -33,7 +33,11 @@ const ConfrimPresentational = ({
           <View
             style={[
               styles.container,
-              { justifyContent: "space-between", flex: 1 },
+              {
+                justifyContent: "space-between",
+                flex: 1,
+                alignSelf: "stretch",
+              },
             ]}
           >
             <Text style={styles.heading2}>Departure</Text>
@@ -45,7 +49,6 @@ const ConfrimPresentational = ({
               <View style={{ flexDirection: "row" }}>
                 <Text
                   style={{
-                    fontSize: RFValue(16),
                     fontWeight: "bold",
                     fontFamily: "Gotham_Medium_Regular",
                   }}
@@ -55,7 +58,6 @@ const ConfrimPresentational = ({
                 {clickedDriver === null ? (
                   <Text
                     style={{
-                      fontSize: RFPercentage(2.5),
                       marginLeft: wp(5),
                       fontWeight: "bold",
                       fontFamily: "Gotham_Medium_Regular",
@@ -71,7 +73,6 @@ const ConfrimPresentational = ({
                   >
                     <Text
                       style={{
-                        fontSize: RFValue(18),
                         fontWeight: "bold",
                         fontFamily: "Gotham_Medium_Regular",
                       }}
@@ -132,7 +133,6 @@ const ConfrimPresentational = ({
                     padding: 5,
                     color: personalDriver !== null && "white",
                     alignSelf: "stretch",
-                    width: "90",
                   }}
                 >
                   Remove personal driver

@@ -18,6 +18,7 @@ import {
   Text,
   wp,
   hp,
+  AVATAR,
 } from "../api/constants";
 
 function Chat({ userUUID, driverUUID, uuidTrip }) {
@@ -81,7 +82,6 @@ function Chat({ userUUID, driverUUID, uuidTrip }) {
           {...props}
           containerStyle={{
             left: {
-              backgroundColor: "green",
               alignItems: "flex-start",
               width: wp(40),
             },
@@ -114,7 +114,7 @@ function Chat({ userUUID, driverUUID, uuidTrip }) {
       )} */
       user={{ _id: userID }}
       renderAvatar={(props) => (
-        <Avatar
+        <AVATAR
           {...props}
           containerStyle={{
             left: {},

@@ -8,31 +8,45 @@ import {
   wp,
   hp,
 } from "../api/constants";
-const AreYouSureYouArrivedModal = ({
+const AreYouSureDriverArrivedModal = ({
   sureModalVisible,
   onPress,
   setsureModalVisible,
   setDriverArrived,
 }) => {
   return (
-    <Modal isVisible={sureModalVisible} onBackdropPress={() => {}}>
+    <Modal
+      style={{ backgroundColor: "#f2f2f2" }}
+      isVisible={sureModalVisible}
+      onBackdropPress={() => {}}
+    >
       <View
         style={{
           flex: 1,
           justifyContent: "center",
           alignItems: "center",
-          backgroundColor: "#f2f2f2",
         }}
       >
         <Text
           style={{
             fontSize: RFPercentage(5),
             alignSelf: "center",
-            width: wp(75),
+            width: wp(70),
+            backgroundColor: "#5C77F0",
+            padding: wp(10),
           }}
         >
           Are you sure your driver has arrived?
         </Text>
+      </View>
+      <View
+        style={{
+          flex: 0.5,
+          justifyContent: "space-around",
+          width: wp(90),
+          alignSelf: "center",
+        }}
+      >
         <BigButton
           onPress={() => onPress()}
           title={"Yes"}
@@ -40,13 +54,10 @@ const AreYouSureYouArrivedModal = ({
             fontWeight: "bold",
             fontSize: RFPercentage(3),
           }}
-          containerStyle={{
-            top: hp(10),
-          }}
+          containerStyle={{}}
           buttonStyle={{
             height: hp(10),
-            width: wp(80),
-            alignSelf: "center",
+            width: wp(90),
           }}
         />
         <BigButton
@@ -75,17 +86,13 @@ const AreYouSureYouArrivedModal = ({
             fontWeight: "bold",
             fontSize: RFPercentage(3),
           }}
-          containerStyle={{
-            top: hp(15),
-          }}
           buttonStyle={{
             height: hp(10),
-            width: wp(80),
-            alignSelf: "center",
+            width: wp(90),
           }}
         />
       </View>
     </Modal>
   );
 };
-export default AreYouSureYouArrivedModal;
+export default AreYouSureDriverArrivedModal;

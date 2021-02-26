@@ -30,14 +30,7 @@ const Destination = ({
               alignSelf: "stretch",
             }}
           >
-            <Text
-              style={{
-                fontFamily: "Gotham_Medium_Regular",
-                fontSize: RFPercentage(3),
-              }}
-            >
-              Destination
-            </Text>
+            <Text>Destination</Text>
 
             <View
               style={{
@@ -63,7 +56,7 @@ const Destination = ({
                   />
                 </>
               ) : (
-                <Text style={{ alignSelf: "center" }}>
+                <Text>
                   {destination !== null
                     ? destination
                     : context.state.destination}

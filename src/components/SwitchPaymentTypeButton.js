@@ -7,6 +7,7 @@ const SwitchPaymentTypeButton = ({ text, onPress }) => {
         marginTop: 20,
         borderWidth: 2,
         borderRadius: 20,
+        borderColor: "#EDCD42",
       }}
       onPress={onPress}
     >

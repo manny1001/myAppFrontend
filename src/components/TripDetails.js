@@ -14,18 +14,9 @@ const TripDetails = ({
   registration,
   timeRequested,
 }) => {
-  console.log(driverduration);
   return (
     <>
-      <Text
-        style={{
-          fontFamily: "Gotham_Medium_Regular",
-          fontSize: RFValue(24),
-          fontWeight: "600",
-        }}
-      >
-        Details
-      </Text>
+      <Text style={{}}>Details</Text>
       <Text>
         {name} {clientLastName}
       </Text>

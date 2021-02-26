@@ -11,12 +11,15 @@ const CallDriver = () => {
           alignSelf: "center",
           borderRadius: wp(4),
           borderColor: "green",
-          backgroundColor: "#f2f2f2",
+          backgroundColor: null,
         },
       ]}
     >
       <Text
-        style={{ fontFamily: "Gotham_Medium_Regular", alignSelf: "center" }}
+        style={{
+          alignSelf: "center",
+          color: "#EF4C63",
+        }}
       >
         Call driver
       </Text>
