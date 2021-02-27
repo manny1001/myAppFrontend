@@ -54,7 +54,6 @@ const AreYouSureDriverArrivedModal = ({
             fontWeight: "bold",
             fontSize: RFPercentage(3),
           }}
-          containerStyle={{}}
           buttonStyle={{
             height: hp(10),
             width: wp(90),
@@ -62,7 +61,7 @@ const AreYouSureDriverArrivedModal = ({
         />
         <BigButton
           onPress={() => {
-            setsureModalVisible(), setDriverArrived();
+            setsureModalVisible(false), setDriverArrived(false);
             /* EmergencyAlert({
                 variables: {
                   uuidTrip: data && data.driversLocation[0].uuidTrip,

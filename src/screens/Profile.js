@@ -30,7 +30,7 @@ import {
 
 const ProfileStack = (props) => {
   const textTheme = {
-    roundness: wp(5),
+    roundness: wp(2),
     colors: { text: "#2B0345", placeholder: "white" },
   };
   const [isActive, setIsActive] = React.useState(false);

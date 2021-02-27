@@ -117,7 +117,7 @@ function Chat({ userUUID, driverUUID, uuidTrip }) {
         <AVATAR
           {...props}
           containerStyle={{
-            left: {},
+            left: { borderWidth: 1, borderRadius: wp(20) },
             right: {},
           }}
           imageStyle={{

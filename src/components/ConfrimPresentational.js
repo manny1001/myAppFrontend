@@ -23,6 +23,7 @@ const ConfrimPresentational = ({
   data,
   navigation,
   called,
+  urgency,
 }) => {
   const [personalDriver, setPersonalDriver] = React.useState(null);
   const [clickedDriver, setClickedDriver] = React.useState(null);
@@ -159,11 +160,12 @@ const ConfrimPresentational = ({
                       location: location,
                       destination: destination,
                       uuidDriver: clickedDriver && clickedDriver.item.uuid,
+                      urgency: urgency,
                     },
-                  }).then((data) =>
-                    StoreData("uuidTrip", data.data.newTripRequest)
-                  );
-                navigation.navigate("Payment");
+                  }).then((data) => {
+                    navigation.navigate("Payment"),
+                      StoreData("uuidTrip", data.data.newTripRequest);
+                  });
               }}
             />
           </View>

@@ -1,5 +1,5 @@
 import { React, TouchableOpacity, Text, View, styles } from "../api/constants/";
-const Urgency = () => {
+const Urgency = ({ setUrgency }) => {
   const [isFocused, setisFocused] = React.useState("green");
   return (
     <View
@@ -12,7 +12,9 @@ const Urgency = () => {
     >
       <TouchableOpacity
         style={styles.urgencyButton}
-        onFocus={() => setisFocused("green")}
+        onFocus={() => {
+          setisFocused("green"), setUrgency("Chilled");
+        }}
       >
         <Text
           style={[
@@ -28,7 +30,9 @@ const Urgency = () => {
 
       <TouchableOpacity
         style={styles.urgencyButton}
-        onFocus={() => setisFocused("blue")}
+        onFocus={() => {
+          setisFocused("blue"), setUrgency("Rushing");
+        }}
       >
         <Text
           style={[
@@ -43,7 +47,9 @@ const Urgency = () => {
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.urgencyButton}
-        onFocus={() => setisFocused("red")}
+        onFocus={() => {
+          setisFocused("red"), setUrgency("Late");
+        }}
       >
         <Text
           style={[

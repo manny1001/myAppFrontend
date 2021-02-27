@@ -8,6 +8,7 @@ import {
   styles,
   TimeAndDistance,
   Urgency,
+  StoreData,
 } from "../api/constants/";
 
 const Confirmation = ({
@@ -25,6 +26,8 @@ const Confirmation = ({
   setDestinationSelected,
   setdestination,
   navigation,
+  urgency,
+  setUrgency,
 }) => {
   return (
     <ContextConsumer>
@@ -58,14 +61,16 @@ const Confirmation = ({
               destination={destination}
               getTripInfo={() => getTripInfo()}
             />
-            <Urgency />
+            <Urgency setUrgency={setUrgency} />
 
             <BigButton
               disabled={
                 location === null || destination === null ? true : false
               }
               onPress={() => {
-                navigation.navigate("Confirm");
+                {
+                  StoreData("Urgency", urgency), navigation.navigate("Confirm");
+                }
               }}
               title={"Next"}
               titleStyle={{ fontWeight: "bold" }}

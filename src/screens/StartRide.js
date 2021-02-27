@@ -18,7 +18,7 @@ export default function (props) {
   const [time, settime] = React.useState(null);
   const [DestinationSelected, setDestinationSelected] = React.useState(true);
   const [isClicked, setisClicked] = React.useState(false);
-
+  const [urgency, setUrgency] = React.useState(null);
   const setCurrentLocationHandler = (val) => {
     setcurrentLocation(val);
   };
@@ -38,6 +38,8 @@ export default function (props) {
       DestinationSelected={DestinationSelected}
       setDestinationSelected={setDestinationSelected}
       setdestination={setdestination}
+      urgency={urgency}
+      setUrgency={(val) => setUrgency(val)}
     />
   );
 }

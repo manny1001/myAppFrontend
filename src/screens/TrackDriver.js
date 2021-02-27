@@ -20,11 +20,11 @@ import {
 } from "../api/constants";
 
 const TrackDriver = ({ navigation, LiveTripDetails }) => {
-  const [RatingModalVIsibile, setRatingModalVIsibile] = useState(false);
+  const [RatingModalVIsibile, setRatingModalVIsibile] = useState(true);
   const [destinationArrived, setdestinationArrived] = React.useState(false);
   const [clickCount, setclickCount] = useState(null);
   const [sureModalVisible, setsureModalVisible] = React.useState(false);
-  const [driverArrived, setDriverArrived] = React.useState(false);
+  const [driverArrived, setDriverArrived] = React.useState(true);
   const [modalVisible, setmodalVisible] = React.useState(false);
   const [driverNotArrived, setdriverNotArrived] = React.useState(null);
   const [useruuid, setuseruuid] = React.useState(null);
@@ -92,6 +92,7 @@ const TrackDriver = ({ navigation, LiveTripDetails }) => {
         data={data}
         uuidTrip={uuidTrip}
         useruuid={useruuid}
+        loading={loading}
       />
       <HaveYouArrivedModal
         setsureModalVisible={setsureModalVisible}
@@ -115,6 +116,7 @@ const TrackDriver = ({ navigation, LiveTripDetails }) => {
             navigation.dispatch(StackActions.replace("Ride"));
         }}
       />
+
       <AreYouSureDriverArrivedModal
         sureModalVisible={sureModalVisible}
         onPress={() => {

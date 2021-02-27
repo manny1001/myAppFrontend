@@ -1,14 +1,22 @@
 import {
   React,
   View,
+  Text,
   Animated,
   CountdownCircleTimer,
   RFPercentage,
   wp,
   Chat,
+  styles,
 } from "../api/constants";
 
-const DriverNotArrived = ({ driverArrived, data, uuidTrip, useruuid }) => {
+const DriverNotArrived = ({
+  driverArrived,
+  data,
+  uuidTrip,
+  useruuid,
+  loading,
+}) => {
   return (
     <View
       style={{
@@ -22,8 +30,9 @@ const DriverNotArrived = ({ driverArrived, data, uuidTrip, useruuid }) => {
       {driverArrived === false && (
         <Chat uuidTrip={uuidTrip} userUUID={useruuid} />
       )}
-      {driverArrived === true && (
+      {driverArrived === true && !loading && (
         <View style={{ flex: 1, baclgroundColor: "pink" }}>
+          <Text style={styles.onRouteDestination}>Time till arrival</Text>
           <CountdownCircleTimer
             containerStyle={{
               alignSelf: "center",

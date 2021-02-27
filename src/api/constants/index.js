@@ -194,7 +194,7 @@ export const StartRide = lazy(() =>
 export const PaymentHistoryPresentational = lazy(() =>
   import("../../components/PaymentHistoryPresentational")
 );
-export const AreYouSureYouArrivedModal = lazy(() =>
+export const AreYouSureDriverArrivedModal = lazy(() =>
   import("../../components/AreYouSureDriverArrivedModal")
 );
 export const StandByForCallModal = lazy(() =>

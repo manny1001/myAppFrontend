@@ -54,7 +54,7 @@ export default function (props) {
     GET_DRIVER_RESPONSE,
     {
       variables: { uuidUser: userUUID, uuidTrip: uuidTrip },
-      pollInterval: 100,
+      pollInterval: 150,
       onCompleted: () => {
         setRequestid(DATA.getDriverRequestResponse.id),
           DATA.getDriverRequestResponse.uuidTrip &&
@@ -90,20 +90,20 @@ export default function (props) {
       );
     });
   };
-  const {
-    data,
-    startPolling: StartPolling,
-  } = useQuery(GET_CARD_PAYMENT_RESULT, {
-    onCompleted: () => {},
-    variables: {
-      uuidTrip: "d80602cd-87fc-40d6-aca7-25fe02388107",
-      totalAmount: "88000",
-      paymentMethod: "Card",
-    },
-    pollInterval: 500,
-    notifyOnNetworkStatusChange: true,
-    fetchPolicy: "network-only",
-  });
+  const { data, startPolling: StartPolling } = useQuery(
+    GET_CARD_PAYMENT_RESULT,
+    {
+      skip: true,
+      variables: {
+        uuidTrip: "d80602cd-87fc-40d6-aca7-25fe02388107",
+        totalAmount: "88000",
+        paymentMethod: "Card",
+      },
+      pollInterval: 500,
+      notifyOnNetworkStatusChange: true,
+      fetchPolicy: "network-only",
+    }
+  );
 
   React.useEffect(() => {
     paymentMethod === "Card" && StartPolling(500);
@@ -141,6 +141,7 @@ export default function (props) {
     StopQuery === true && stopPolling();
     StopQuery === false && startPolling();
   }, [StopQuery, timeOutValue]);
+  console.log(requestID);
   if (requestID === null) return <LoadingContent />;
   if (LOADINGS) return <LoadingContent />;
   if (paymentMethod === "Card" && !data.getCardPaymentResult[0]) {
@@ -221,6 +222,7 @@ export default function (props) {
               paymentMethod={paymentMethod}
               totalAmount={totalAmount}
               uuidTrip={uuidTrip && uuidTrip}
+              stopPolling={() => stopPolling()}
             />
           )}
           {/*       Cancel selected Card */}

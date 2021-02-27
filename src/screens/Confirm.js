@@ -20,6 +20,7 @@ import {
 export default function (props) {
   const [distance, setDistance] = React.useState("");
   const [totalAmount, setTotalAmount] = React.useState(18000);
+  const [urgency, setUrgency] = React.useState(null);
   const [location, setlocation] = React.useState("");
   const [destination, setdestination] = React.useState("");
   const [userName, setUserName] = useState("");
@@ -43,6 +44,7 @@ export default function (props) {
   React.useEffect(() => {
     GetData("location").then((location) => setlocation(location));
     GetData("destination").then((destination) => setdestination(destination));
+    GetData("Urgency").then((urgency) => setUrgency(urgency));
   });
   if (Loading) {
     return (
@@ -63,6 +65,7 @@ export default function (props) {
       error={error}
       DATA={DATA}
       called={called}
+      urgency={urgency}
     />
   );
 }

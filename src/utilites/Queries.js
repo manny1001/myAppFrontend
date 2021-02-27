@@ -76,6 +76,7 @@ export const NEW_REQUEST = gql`
     $location: String
     $destination: String
     $uuidDriver: String
+    $urgency: String
   ) {
     newTripRequest(
       uuid: $uuid
@@ -84,6 +85,7 @@ export const NEW_REQUEST = gql`
       location: $location
       destination: $destination
       uuidDriver: $uuidDriver
+      urgency: $urgency
     )
   }
 `;
