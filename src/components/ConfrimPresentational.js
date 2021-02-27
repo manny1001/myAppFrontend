@@ -8,9 +8,14 @@ import {
   ContextConsumer,
   RFValue,
   StoreData,
+  GetData,
   styles,
   BigButton,
   Driver,
+  NEW_PERSONAL_DRIVER,
+  useMutation,
+  AsyncStorage,
+  MyPersonalDriver,
 } from "../api/constants";
 
 const ConfrimPresentational = ({
@@ -24,9 +29,15 @@ const ConfrimPresentational = ({
   navigation,
   called,
   urgency,
+  personalDriver,
+  setPersonalDriver,
 }) => {
-  const [personalDriver, setPersonalDriver] = React.useState(null);
+  const [newPersonalDriver, { called: CALLED }] = useMutation(
+    NEW_PERSONAL_DRIVER
+  );
+  const [driverDistance, setDriverDistancce] = React.useState(500);
   const [clickedDriver, setClickedDriver] = React.useState(null);
+  console.log(personalDriver === null);
   return (
     <ContextConsumer>
       {(context) => {
@@ -46,104 +57,141 @@ const ConfrimPresentational = ({
             <Text style={styles.heading2}>Destination</Text>
             <Text style={styles.locations}>{destination}</Text>
 
-            {context.state.totalDriversOnline !== 0 && (
-              <View style={{ flexDirection: "row" }}>
-                <Text
-                  style={{
-                    fontWeight: "bold",
-                    fontFamily: "Gotham_Medium_Regular",
-                  }}
-                >
-                  {clickedDriver === null ? `Available Drivers` : ""}
-                </Text>
-                {clickedDriver === null ? (
-                  <Text
-                    style={{
-                      marginLeft: wp(5),
-                      fontWeight: "bold",
-                      fontFamily: "Gotham_Medium_Regular",
-                    }}
-                  >
-                    {context.state.totalDriversOnline}
-                  </Text>
-                ) : (
-                  <TouchableOpacity
-                    onPress={() => {
-                      setClickedDriver(null), setPersonalDriver(null);
-                    }}
-                  >
+            {personalDriver === null ||
+              (driverDistance > 100 && (
+                <>
+                  <View style={{ flexDirection: "row" }}>
                     <Text
                       style={{
                         fontWeight: "bold",
                         fontFamily: "Gotham_Medium_Regular",
                       }}
                     >
-                      Change
+                      {clickedDriver === null ? `Available Drivers` : ""}
+                    </Text>
+                    {clickedDriver === null ? (
+                      <Text
+                        style={{
+                          marginLeft: wp(5),
+                          fontWeight: "bold",
+                          fontFamily: "Gotham_Medium_Regular",
+                        }}
+                      >
+                        {context.state.totalDriversOnline}
+                      </Text>
+                    ) : (
+                      <TouchableOpacity
+                        onPress={() => {
+                          setClickedDriver(null), setPersonalDriver(null);
+                        }}
+                      >
+                        <Text
+                          style={{
+                            fontWeight: "bold",
+                            fontFamily: "Gotham_Medium_Regular",
+                          }}
+                        >
+                          Change
+                        </Text>
+                      </TouchableOpacity>
+                    )}
+                  </View>
+                  <Driver
+                    context={context}
+                    error={error}
+                    data={DATA}
+                    clickedDriver={clickedDriver}
+                    setClickedDriver={(val) => setClickedDriver(val)}
+                  />
+                </>
+              ))}
+            {personalDriver !== null && driverDistance < 100 && (
+              <>
+                <View style={styles.personalDriverHeadingView}>
+                  <Text style={styles.headingLeft}>Your personal Chauffer</Text>
+                  <TouchableOpacity
+                    onPress={() => {
+                      StoreData("PersonalDriver", null);
+                    }}
+                    style={styles.headingRight}
+                  >
+                    Remove Chauffer
+                  </TouchableOpacity>
+                </View>
+                <MyPersonalDriver />
+              </>
+            )}
+
+            <ContextConsumer>
+              {(context) => {
+                return personalDriver === null ? (
+                  <TouchableOpacity
+                    onPress={() => {
+                      /*  console.log(clickedDriver && clickedDriver.item.uuid); */
+                      newPersonalDriver({
+                        variables: {
+                          driveruuid: clickedDriver && clickedDriver.item.uuid,
+                          customerUUID: data && data.currentUser.uuid,
+                        },
+                      });
+                      context.dispatch({
+                        type: "SAVE_PERSONAL_DRIVER",
+                        personalDriver:
+                          clickedDriver && clickedDriver.item.uuid,
+                      });
+                    }}
+                    style={{
+                      flexDirection: "row",
+                      alignSelf: "stretch",
+                      justifyContent: "space-evenly",
+
+                      borderWidth: 2,
+                      backgroundColor: "black",
+                    }}
+                  >
+                    <Text
+                      style={{
+                        padding: 5,
+                        color: "white",
+                        alignSelf: "stretch",
+                        width: "90",
+                      }}
+                    >
+                      Make personal Chauffer
                     </Text>
                   </TouchableOpacity>
-                )}
-              </View>
-            )}
+                ) : (
+                  <TouchableOpacity
+                    onPress={() => {}}
+                    style={{
+                      flexDirection: "row",
+                      alignSelf: "stretch",
+                      justifyContent: "space-evenly",
 
-            <Driver
-              context={context}
-              error={error}
-              data={DATA}
-              clickedDriver={clickedDriver}
-              setClickedDriver={(val) => setClickedDriver(val)}
-            />
-
-            {clickedDriver !== null && personalDriver === null && (
-              <TouchableOpacity
-                onPress={() => setPersonalDriver("javssa")}
-                style={{
-                  flexDirection: "row",
-                  alignSelf: "stretch",
-                  justifyContent: "space-evenly",
-                  margin: 5,
-                  borderWidth: 2,
-                  backgroundColor: personalDriver !== null && "black",
-                }}
-              >
-                <Text
-                  style={{
-                    padding: 5,
-                    color: personalDriver !== null && "white",
-                    alignSelf: "stretch",
-                    width: "90",
-                  }}
-                >
-                  Make personal driver
-                </Text>
-              </TouchableOpacity>
-            )}
-            {clickedDriver !== null && personalDriver !== null && (
-              <TouchableOpacity
-                onPress={() => setPersonalDriver(null)}
-                style={{
-                  flexDirection: "row",
-                  alignSelf: "stretch",
-                  justifyContent: "space-evenly",
-                  margin: 5,
-                  borderWidth: 2,
-                  backgroundColor: personalDriver !== null && "black",
-                }}
-              >
-                <Text
-                  style={{
-                    padding: 5,
-                    color: personalDriver !== null && "white",
-                    alignSelf: "stretch",
-                  }}
-                >
-                  Remove personal driver
-                </Text>
-              </TouchableOpacity>
-            )}
+                      borderWidth: 2,
+                      backgroundColor: "black",
+                    }}
+                  >
+                    <Text
+                      style={{
+                        padding: 5,
+                        color: "white",
+                        alignSelf: "stretch",
+                        width: "90",
+                      }}
+                    >
+                      "information goes here...."
+                    </Text>
+                  </TouchableOpacity>
+                );
+              }}
+            </ContextConsumer>
 
             <BigButton
               disabled={
-                clickedDriver === null || called === true ? true : false
+                clickedDriver === null || called === true || CALLED === true
+                  ? true
+                  : false
               }
               title={"Next"}
               onPress={() => {
@@ -159,12 +207,16 @@ const ConfrimPresentational = ({
                       cellphone: data && data.currentUser.cellphone,
                       location: location,
                       destination: destination,
-                      uuidDriver: clickedDriver && clickedDriver.item.uuid,
+                      uuidDriver:
+                        (clickedDriver && clickedDriver.item.uuid) ||
+                        (personalDriver &&
+                          driverDistance < 100 &&
+                          personalDriver),
                       urgency: urgency,
                     },
-                  }).then((data) => {
+                  }).then((DATA) => {
                     navigation.navigate("Payment"),
-                      StoreData("uuidTrip", data.data.newTripRequest);
+                      StoreData("uuidTrip", DATA.data.newTripRequest);
                   });
               }}
             />

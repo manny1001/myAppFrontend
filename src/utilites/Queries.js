@@ -29,6 +29,11 @@ export const GET_PROFILE = gql`
     }
   }
 `;
+export const NEW_PERSONAL_DRIVER = gql`
+  mutation newPersonalDriver($driveruuid: String!, $customerUUID: String!) {
+    newPersonalDriver(driveruuid: $driveruuid, customerUUID: $customerUUID)
+  }
+`;
 export const UPDATE_PROFILE = gql`
   mutation updateProfile(
     $uuidUser: String!

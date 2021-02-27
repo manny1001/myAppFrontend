@@ -54,6 +54,7 @@ import {
   GET_MESSAGES,
   POST_MESSAGE,
   GET_NEW_DRIVER,
+  NEW_PERSONAL_DRIVER,
 } from "../../utilites/Queries";
 import { NavigationContainer } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/AntDesign";
@@ -107,7 +108,9 @@ export const MethodPicker = lazy(() => import("../../components/MethodPicker"));
 export const Settings = lazy(() => import("../../screens/Settings"));
 export const windowWidth = Dimensions.get("window").width;
 export const Header = lazy(() => import("../../components/Header"));
-
+export const MyPersonalDriver = lazy(() =>
+  import("../../components/MyPersonalDriver")
+);
 export const SettingsPresentational = lazy(() =>
   import("../../components/SettingsPresentational")
 );
@@ -296,6 +299,7 @@ export {
   GET_MESSAGES,
   POST_MESSAGE,
   GET_NEW_DRIVER,
+  NEW_PERSONAL_DRIVER,
   LoadingContent,
   TouchableOpacity,
   WebBrowser,

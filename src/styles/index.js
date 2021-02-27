@@ -6,6 +6,26 @@ import {
 import { RFValue, RFPercentage } from "react-native-responsive-fontsize";
 
 const styles = StyleSheet.create({
+  headingLeft: {
+    fontWeight: "bold",
+    fontFamily: "Gotham_Medium_Regular",
+
+    alignSelf: "center",
+  },
+  headingRight: {
+    alignSelf: "center",
+    borderWidth: wp(0.4),
+    borderRadius: wp(20),
+    margin: wp(2),
+    padding: wp(2),
+    fontFamily: "Gotham_Medium_Regular",
+    color: "white",
+  },
+  personalDriverHeadingView: {
+    alignItems: "center",
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
   ratingHeading: { color: "black", alignSelf: "center" },
   /* container: {
     flex: 1,

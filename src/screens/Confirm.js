@@ -24,6 +24,7 @@ export default function (props) {
   const [location, setlocation] = React.useState("");
   const [destination, setdestination] = React.useState("");
   const [userName, setUserName] = useState("");
+  const [personalDriver, setPersonalDriver] = React.useState(null);
   const [newTripRequest, { called }] = useMutation(NEW_REQUEST);
   const { data, loading: Loading } = useQuery(GET_PROFILE, {
     onCompleted: () => {
@@ -45,6 +46,9 @@ export default function (props) {
     GetData("location").then((location) => setlocation(location));
     GetData("destination").then((destination) => setdestination(destination));
     GetData("Urgency").then((urgency) => setUrgency(urgency));
+    GetData("PersonalDriver").then((value) =>
+      setPersonalDriver(JSON.parse(value))
+    );
   });
   if (Loading) {
     return (
@@ -66,6 +70,8 @@ export default function (props) {
       DATA={DATA}
       called={called}
       urgency={urgency}
+      personalDriver={personalDriver}
+      setPersonalDriver={(val) => setPersonalDriver(val)}
     />
   );
 }

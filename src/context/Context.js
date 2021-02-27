@@ -29,6 +29,7 @@ class Context extends Component {
       totalDriversOnline: null,
       windowWidth: null,
       windowHeight: null,
+      personalDriver: null,
     },
   };
   componentDidMount() {
@@ -66,14 +67,17 @@ class Context extends Component {
 
   dispatch = (action) => {
     switch (action.type) {
-      case "WINDOW_HEIGHT":
+      case "SAVE_PERSONAL_DRIVER":
         console.log(action);
-        return this.setState((state) => ({
-          sessionArray: {
-            ...this.state.sessionArray,
-            windowHeight: action.windowHeight,
-          },
-        }));
+        return this.setState(
+          (state) => ({
+            sessionArray: {
+              ...this.state.sessionArray,
+              personalDriver: action.personalDriver,
+            },
+          }),
+          () => StoreData("PersonalDriver", action.personalDriver)
+        );
       case "WINDOW_WIDTH":
         console.log(action);
         return this.setState((state) => ({
