@@ -53,14 +53,15 @@ export default function (props) {
   const { data: DATA, stopPolling, startPolling } = useQuery(
     GET_DRIVER_RESPONSE,
     {
-      variables: { uuidUser: userUUID, uuidTrip: uuidTrip },
-      pollInterval: 150,
+      variables: {
+        uuidUser: userUUID,
+        uuidTrip: uuidTrip,
+      },
+      pollInterval: 5000,
       onCompleted: () => {
         setRequestid(DATA.getDriverRequestResponse.id),
-          DATA.getDriverRequestResponse.uuidTrip &&
-            StoreData("uuidTrip", DATA.getDriverRequestResponse.uuidTrip);
-        DATA.getDriverRequestResponse.driverduration &&
-          setdriverduration(DATA.getDriverRequestResponse.driverduration);
+          DATA.getDriverRequestResponse.driverduration &&
+            setdriverduration(DATA.getDriverRequestResponse.driverduration);
         DATA.getDriverRequestResponse.drivername &&
           setDriverName(DATA.getDriverRequestResponse.drivername);
         DATA.getDriverRequestResponse.drivername &&
@@ -81,7 +82,6 @@ export default function (props) {
     createCheckout,
     { data: DATAS, loading: LOADINGS, error: ERRORS },
   ] = useMutation(CREATE_CHECKOUT, {});
-
   const handleCardPayment = async () => {
     setpaymentMethod("Card");
     await createCheckout().then((checkout) => {
@@ -141,12 +141,16 @@ export default function (props) {
     StopQuery === true && stopPolling();
     StopQuery === false && startPolling();
   }, [StopQuery, timeOutValue]);
-  console.log(requestID);
   if (requestID === null) return <LoadingContent />;
   if (LOADINGS) return <LoadingContent />;
-  if (paymentMethod === "Card" && !data.getCardPaymentResult[0]) {
-    if (data && data.getCardPaymentResult[0]) {
-      if (data && data.getCardPaymentResult[0].status === "Paid,WaitingDriver")
+  if (paymentMethod === "Card") {
+    if (data && data.getCardPaymentResult && data.getCardPaymentResult[0]) {
+      if (
+        data &&
+        data.getCardPaymentResult &&
+        data.getCardPaymentResult[0] &&
+        data.getCardPaymentResult[0].status === "Paid,WaitingDriver"
+      )
         return <PaymentSuccessful />;
     }
     return (

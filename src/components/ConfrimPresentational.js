@@ -31,13 +31,15 @@ const ConfrimPresentational = ({
   urgency,
   personalDriver,
   setPersonalDriver,
+  driveruuid,
+  loading,
+  DATAS,
 }) => {
   const [newPersonalDriver, { called: CALLED }] = useMutation(
     NEW_PERSONAL_DRIVER
   );
   const [driverDistance, setDriverDistancce] = React.useState(500);
   const [clickedDriver, setClickedDriver] = React.useState(null);
-  console.log(personalDriver === null);
   return (
     <ContextConsumer>
       {(context) => {
@@ -52,21 +54,27 @@ const ConfrimPresentational = ({
               },
             ]}
           >
-            <Text style={styles.heading2}>Departure</Text>
-            <Text style={styles.locations}>{location}</Text>
-            <Text style={styles.heading2}>Destination</Text>
-            <Text style={styles.locations}>{destination}</Text>
-
-            {personalDriver === null ||
-              (driverDistance > 100 && (
-                <>
-                  <View style={{ flexDirection: "row" }}>
-                    <Text
-                      style={{
-                        fontWeight: "bold",
-                        fontFamily: "Gotham_Medium_Regular",
-                      }}
-                    >
+            <View
+              style={{
+                justifyContent: "space-between",
+                flex: 1,
+                alignSelf: "stretch",
+                padding: wp(5),
+              }}
+            >
+              <Text style={styles.heading1}>Departure</Text>
+              <Text style={styles.locations}>{location}</Text>
+              <Text style={styles.heading1}>Destination</Text>
+              <Text style={styles.locations}>{destination}</Text>
+              {personalDriver === null /* || */ && (
+                /* driverDistance > 100 */ /* && */ <>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <Text style={styles.heading1}>
                       {clickedDriver === null ? `Available Drivers` : ""}
                     </Text>
                     {clickedDriver === null ? (
@@ -81,6 +89,9 @@ const ConfrimPresentational = ({
                       </Text>
                     ) : (
                       <TouchableOpacity
+                        style={{
+                          alignSelf: "flex-end",
+                        }}
                         onPress={() => {
                           setClickedDriver(null), setPersonalDriver(null);
                         }}
@@ -96,6 +107,7 @@ const ConfrimPresentational = ({
                       </TouchableOpacity>
                     )}
                   </View>
+
                   <Driver
                     context={context}
                     error={error}
@@ -104,120 +116,117 @@ const ConfrimPresentational = ({
                     setClickedDriver={(val) => setClickedDriver(val)}
                   />
                 </>
-              ))}
-            {personalDriver !== null && driverDistance < 100 && (
-              <>
-                <View style={styles.personalDriverHeadingView}>
-                  <Text style={styles.headingLeft}>Your personal Chauffer</Text>
-                  <TouchableOpacity
-                    onPress={() => {
-                      StoreData("PersonalDriver", null);
-                    }}
-                    style={styles.headingRight}
-                  >
-                    Remove Chauffer
-                  </TouchableOpacity>
-                </View>
-                <MyPersonalDriver />
-              </>
-            )}
-
-            <ContextConsumer>
-              {(context) => {
-                return personalDriver === null ? (
-                  <TouchableOpacity
-                    onPress={() => {
-                      /*  console.log(clickedDriver && clickedDriver.item.uuid); */
-                      newPersonalDriver({
-                        variables: {
-                          driveruuid: clickedDriver && clickedDriver.item.uuid,
-                          customerUUID: data && data.currentUser.uuid,
-                        },
-                      });
-                      context.dispatch({
-                        type: "SAVE_PERSONAL_DRIVER",
-                        personalDriver:
-                          clickedDriver && clickedDriver.item.uuid,
-                      });
-                    }}
-                    style={{
-                      flexDirection: "row",
-                      alignSelf: "stretch",
-                      justifyContent: "space-evenly",
-
-                      borderWidth: 2,
-                      backgroundColor: "black",
-                    }}
-                  >
-                    <Text
-                      style={{
-                        padding: 5,
-                        color: "white",
-                        alignSelf: "stretch",
-                        width: "90",
-                      }}
-                    >
-                      Make personal Chauffer
+              )}
+              {personalDriver !== null && (
+                <>
+                  <View style={styles.personalDriverHeadingView}>
+                    <Text style={styles.headingLeft}>
+                      Your personal Chauffer
                     </Text>
-                  </TouchableOpacity>
-                ) : (
-                  <TouchableOpacity
-                    onPress={() => {}}
+                    <TouchableOpacity
+                      onPress={() => {
+                        StoreData("PersonalDriver", null);
+                      }}
+                      style={styles.headingRight}
+                    >
+                      Remove Chauffer
+                    </TouchableOpacity>
+                  </View>
+                  <MyPersonalDriver loading={loading} DATAS={DATAS} />
+                </>
+              )}
+              {personalDriver === null && clickedDriver !== null ? (
+                <TouchableOpacity
+                  onPress={() => {
+                    /*  console.log(clickedDriver && clickedDriver.item.uuid); */
+                    newPersonalDriver({
+                      variables: {
+                        driveruuid: clickedDriver && clickedDriver.item.uuid,
+                        customerUUID: data && data.currentUser.uuid,
+                      },
+                    });
+                    context.dispatch({
+                      type: "SAVE_PERSONAL_DRIVER",
+                      personalDriver: clickedDriver && clickedDriver.item.uuid,
+                    });
+                  }}
+                  style={{
+                    flexDirection: "row",
+                    alignSelf: "stretch",
+                    justifyContent: "space-evenly",
+                    width: wp(70),
+                    alignSelf: "center",
+                    borderWidth: 2,
+                    backgroundColor: "black",
+                  }}
+                >
+                  <Text
                     style={{
-                      flexDirection: "row",
+                      padding: 5,
+                      color: "white",
                       alignSelf: "stretch",
-                      justifyContent: "space-evenly",
-
-                      borderWidth: 2,
-                      backgroundColor: "black",
+                      width: "90",
                     }}
                   >
-                    <Text
-                      style={{
-                        padding: 5,
-                        color: "white",
-                        alignSelf: "stretch",
-                        width: "90",
-                      }}
-                    >
-                      "information goes here...."
-                    </Text>
-                  </TouchableOpacity>
-                );
-              }}
-            </ContextConsumer>
+                    Make personal Chauffer
+                  </Text>
+                </TouchableOpacity>
+              ) : (
+                <TouchableOpacity
+                  onPress={() => {}}
+                  style={{
+                    flexDirection: "row",
+                    alignSelf: "stretch",
+                    justifyContent: "space-evenly",
+                    width: wp(70),
+                    alignSelf: "center",
+                    borderWidth: 2,
+                    backgroundColor: "black",
+                  }}
+                >
+                  <Text
+                    style={{
+                      padding: 5,
+                      color: "white",
+                      alignSelf: "stretch",
+                      width: "90",
+                    }}
+                  >
+                    "something something"
+                  </Text>
+                </TouchableOpacity>
+              )}
+            </View>
 
             <BigButton
               disabled={
-                clickedDriver === null || called === true || CALLED === true
-                  ? true
-                  : false
+                clickedDriver === null && personalDriver === null ? true : false
               }
               title={"Next"}
               onPress={() => {
-                context.dispatch({
-                  type: "SAVE_DRIVERUUID",
-                  driveruuid: clickedDriver && clickedDriver.item.uuid,
-                }),
+                newTripRequest({
+                  variables: {
+                    uuid: data && data.currentUser.uuid,
+                    name: data && data.currentUser.name,
+                    cellphone: data && data.currentUser.cellphone,
+                    location: location,
+                    destination: destination,
+                    uuidDriver: clickedDriver && clickedDriver.item.uuid,
+                    urgency: urgency,
+                  },
+                }).then((DATA) => {
                   stopPolling(),
-                  newTripRequest({
-                    variables: {
-                      uuid: data && data.currentUser.uuid,
-                      name: data && data.currentUser.name,
-                      cellphone: data && data.currentUser.cellphone,
-                      location: location,
-                      destination: destination,
-                      uuidDriver:
-                        (clickedDriver && clickedDriver.item.uuid) ||
-                        (personalDriver &&
-                          driverDistance < 100 &&
-                          personalDriver),
-                      urgency: urgency,
-                    },
-                  }).then((DATA) => {
-                    navigation.navigate("Payment"),
-                      StoreData("uuidTrip", DATA.data.newTripRequest);
-                  });
+                    context.dispatch({
+                      type: "SAVE_DRIVERUUID",
+                      driveruuid: clickedDriver && clickedDriver.item.uuid,
+                    });
+                  context.dispatch({
+                    type: "SAVE_ACTIVEREQUEST",
+                    activeRequest: true,
+                  }),
+                    StoreData("uuidTrip", DATA.data.newTripRequest);
+                });
+                navigation.navigate("Payment");
               }}
             />
           </View>

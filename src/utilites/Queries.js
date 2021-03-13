@@ -3,8 +3,20 @@ import { gql } from "@apollo/client";
 export const GET_USER_UUID = gql`
   query {
     currentUser {
-      _id
       uuid
+    }
+  }
+`;
+export const CURRENT_DRIVER = gql`
+  query driver($driveruuid: String!) {
+    driver(driveruuid: $driveruuid) {
+      name
+      surname
+      cellphone
+      picture
+      registration
+      model
+      status
     }
   }
 `;
@@ -99,8 +111,15 @@ export const GET_NEW_DRIVER = gql`
     selectNewDriver(driveruuid: $driveruuid, useruuid: $useruuid)
   }
 `;
+export const CHECK_FOR_ACTIVE_REQUEST = gql`
+  query GETDRIVERESPONSE($uuidUser: String!, $uuidTrip: String) {
+    getDriverRequestResponse(uuidUser: $uuidUser, uuidTrip: $uuidTrip) {
+      status
+    }
+  }
+`;
 export const GET_DRIVER_RESPONSE = gql`
-  query GETDRIVERESPONSE($uuidUser: String!, $uuidTrip: String!) {
+  query GETDRIVERESPONSE($uuidUser: String!, $uuidTrip: String) {
     getDriverRequestResponse(uuidUser: $uuidUser, uuidTrip: $uuidTrip) {
       id
       uuidDriver

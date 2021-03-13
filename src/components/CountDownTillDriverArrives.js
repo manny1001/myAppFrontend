@@ -34,12 +34,12 @@ const CountDownTillDriverArrives = ({
         data.driversLocation[0].driverremainingtime !== "0" &&
         !loading && (
           <CountdownCircleTimer
-            strokeWidth={wp(2)}
+            strokeWidth={wp(2.1)}
             /*   initialRemainingTime={timeRemaining} */
             onComplete={() => {
               settimeRemaining(0);
             }}
-            size={wp(34)}
+            size={wp(26)}
             isPlaying={true}
             duration={
               data &&

@@ -6,6 +6,18 @@ import {
 import { RFValue, RFPercentage } from "react-native-responsive-fontsize";
 
 const styles = StyleSheet.create({
+  startRideMainSection: {
+    flexDirection: "column",
+    justifyContent: "center",
+    flex: 1,
+    alignSelf: "stretch",
+    padding: wp(5),
+  },
+  switchButton: {
+    padding: wp(2.5),
+    fontFamily: "Gotham_Medium_Regular",
+    alignSelf: "center",
+  },
   headingLeft: {
     fontWeight: "bold",
     fontFamily: "Gotham_Medium_Regular",
@@ -44,7 +56,7 @@ const styles = StyleSheet.create({
   HeaderText: {
     alignSelf: "center",
     color: "white",
-    fontSize: "25px",
+    fontSize: 25,
     fontWeight: "bold",
   },
   HeaderSubText: { alignSelf: "center", color: "white" },
@@ -62,11 +74,17 @@ const styles = StyleSheet.create({
     justifyContent: "space-evenly",
     alignSelf: "center",
   },
-  urgencyButton: { padding: 5 },
+  urgencyButton: {
+    padding: 5,
+    borderRadius: 25,
+    elevation: 6,
+    shadowOpacity: 0.2,
+    justifyContent: "center",
+  },
   urgencyText: {
-    borderWidth: wp(0.3),
     borderRadius: wp(5),
     padding: 5,
+    alignSelf: "center",
   },
   loadingGify: { height: hp(70), width: wp(100), alignSelf: "center" },
   tabBarLabelStyles: { fontSize: RFPercentage(2) },
@@ -79,13 +97,17 @@ const styles = StyleSheet.create({
   TopInfo: {
     width: wp(32),
     height: wp(32),
-    alignSelf: "strecentertch",
+    alignSelf: "stretch",
     borderRadius: wp(16),
     flexDirection: "column",
     justifyContent: "center",
     borderColor: "red",
     borderWidth: wp(1),
     backgroundColor: "white",
+  },
+  heading1: {
+    fontWeight: "bold",
+    fontSize: wp(),
   },
   heading2: {
     fontWeight: "bold",
@@ -95,6 +117,7 @@ const styles = StyleSheet.create({
     fontFamily: "Gotham_Medium_Regular",
   },
   timeAndDistanceContainer: {
+    padding: wp(2.5),
     justifyContent: "center",
     alignSelf: "stretch",
     flexDirection: "row",

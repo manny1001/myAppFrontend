@@ -1,4 +1,5 @@
 import {
+  AsyncStorage,
   Header,
   client,
   ApolloProvider,
@@ -20,8 +21,12 @@ import {
   linkingApp,
   Stack,
   AppStack,
+  CHECK_FOR_ACTIVE_REQUEST,
+  GET_USER_UUID,
+  useQuery,
   navigationRef,
   routeNameRef,
+  GetData,
   CheckDataConnectionModal,
 } from "./src/api/constants";
 
@@ -31,13 +36,13 @@ const App = () => {
     Gotham_Medium_Regular: require("./assets/fonts/Gotham_Medium_Regular.ttf"),
   });
 
-  React.useEffect(() => {
+  React.useEffect(async () => {
     NetInfo.addEventListener((state) => {
       setIsConnected(state.isConnected);
     });
   }, []);
-
-  if (isConnected === false || !loaded)
+  if (!loaded) return <Loader />;
+  if (isConnected === false)
     return (
       <Suspense fallback={Loader()}>
         <CheckDataConnectionModal isConnected={isConnected} />
@@ -57,7 +62,7 @@ const App = () => {
         if (previousRouteName !== currentRouteName) {
           console.log(currentRouteName);
         }
-
+              
         routeNameRef.current = currentRouteName;
       }} */
       linking={linkingApp}

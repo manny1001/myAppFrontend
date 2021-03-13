@@ -23,7 +23,7 @@ class Context extends Component {
       AcceptedTCs: false,
       driveruuid: "",
       useruuid: "",
-      activeRequest: false,
+      activeRequest: null,
       driverArrived: false,
       isPlaying: false,
       totalDriversOnline: null,
@@ -36,20 +36,14 @@ class Context extends Component {
     const RestoreAsync = async () => {
       try {
         const userToken = await AsyncStorage.getItem("accessToken");
-        const Active = await AsyncStorage.getItem("activeRequest");
-        const isPlaying = await AsyncStorage.getItem("isPlaying");
+
         /*         setIsplaying(isPlaying); */
         /* context.dispatch({
         type: "SAVE_ISPLAYING",
         isPlaying: JSON.parse(isPlaying),
-      });
-      context.dispatch({
-        type: "SAVE_ACTIVEREQUEST",
-        activeRequest: JSON.parse(Active),
-      });
- */ this.dispatch(
-          { type: "RESTORE_TOKEN", userToken: userToken }
-        );
+      }); */
+
+        this.dispatch({ type: "RESTORE_TOKEN", userToken: userToken });
       } catch (e) {
         console.log(e);
       }
@@ -61,14 +55,13 @@ class Context extends Component {
         // saving error
       }
     };
+
     /* StoreData(null); */
     RestoreAsync();
   }
-
   dispatch = (action) => {
     switch (action.type) {
       case "SAVE_PERSONAL_DRIVER":
-        console.log(action);
         return this.setState(
           (state) => ({
             sessionArray: {

@@ -1,13 +1,22 @@
-import { React, TouchableOpacity, Text, View, styles } from "../api/constants/";
+import {
+  React,
+  TouchableOpacity,
+  Text,
+  View,
+  styles,
+  wp,
+  hp,
+} from "../api/constants/";
 const Urgency = ({ setUrgency }) => {
-  const [isFocused, setisFocused] = React.useState("green");
+  const [isFocused, setisFocused] = React.useState(null);
   return (
     <View
       style={{
         flexDirection: "row",
         alignSelf: "stretch",
         justifyContent: "space-around",
-        margin: 5,
+        height: hp(5),
+        marginBottom: hp(3),
       }}
     >
       <TouchableOpacity
@@ -17,10 +26,15 @@ const Urgency = ({ setUrgency }) => {
         }}
       >
         <Text
+          color={isFocused === "green" ? "white" : "#d3d3d3"}
           style={[
             styles.urgencyText,
             {
-              borderColor: isFocused === "green" ? "black" : "#f4f4f4",
+              shadowColor: "white",
+              shadowRadius: isFocused === "green" ? 10 : 5,
+              shadowOpacity: isFocused === "green" ? 0.7 : 0.3,
+              borderColor: isFocused === "green" ? "#f4f4f4" : null,
+              borderWidth: isFocused === "green" ? wp(0.5) : null,
             },
           ]}
         >
@@ -35,10 +49,15 @@ const Urgency = ({ setUrgency }) => {
         }}
       >
         <Text
+          color={isFocused === "blue" ? "white" : "#d3d3d3"}
           style={[
             styles.urgencyText,
             {
-              borderColor: isFocused === "blue" ? "black" : "#f4f4f4",
+              shadowColor: "white",
+              shadowRadius: isFocused === "blue" ? 10 : 5,
+              shadowOpacity: isFocused === "blue" ? 0.7 : 0.3,
+              borderColor: isFocused === "blue" ? "#f4f4f4" : null,
+              borderWidth: isFocused === "blue" ? wp(0.5) : null,
             },
           ]}
         >
@@ -52,10 +71,15 @@ const Urgency = ({ setUrgency }) => {
         }}
       >
         <Text
+          color={isFocused === "red" ? "white" : "#d3d3d3"}
           style={[
             styles.urgencyText,
             {
-              borderColor: isFocused === "red" ? "black" : "#f4f4f4",
+              shadowColor: "white",
+              shadowRadius: isFocused === "red" ? 10 : 5,
+              shadowOpacity: isFocused === "red" ? 0.7 : 0.3,
+              borderColor: isFocused === "red" ? "#f4f4f4" : null,
+              borderWidth: isFocused === "red" ? wp(0.5) : null,
             },
           ]}
         >

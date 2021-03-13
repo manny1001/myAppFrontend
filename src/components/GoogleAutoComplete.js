@@ -37,7 +37,7 @@ const GoogleAutoComplete = ({
       }}
       debounce={200}
       styles={{
-        container: { alignSelf: "center" },
+        container: { alignSelf: "stretch" },
         textInputContainer: {
           backgroundColor: "transparent",
           borderColor: null,
