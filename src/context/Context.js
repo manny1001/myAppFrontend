@@ -23,32 +23,27 @@ class Context extends Component {
       AcceptedTCs: false,
       driveruuid: "",
       useruuid: "",
-      activeRequest: false,
+      activeRequest: null,
       driverArrived: false,
       isPlaying: false,
       totalDriversOnline: null,
       windowWidth: null,
       windowHeight: null,
+      personalDriver: null,
     },
   };
   componentDidMount() {
     const RestoreAsync = async () => {
       try {
         const userToken = await AsyncStorage.getItem("accessToken");
-        const Active = await AsyncStorage.getItem("activeRequest");
-        const isPlaying = await AsyncStorage.getItem("isPlaying");
+
         /*         setIsplaying(isPlaying); */
         /* context.dispatch({
         type: "SAVE_ISPLAYING",
         isPlaying: JSON.parse(isPlaying),
-      });
-      context.dispatch({
-        type: "SAVE_ACTIVEREQUEST",
-        activeRequest: JSON.parse(Active),
-      });
- */ this.dispatch(
-          { type: "RESTORE_TOKEN", userToken: userToken }
-        );
+      }); */
+
+        this.dispatch({ type: "RESTORE_TOKEN", userToken: userToken });
       } catch (e) {
         console.log(e);
       }
@@ -60,20 +55,22 @@ class Context extends Component {
         // saving error
       }
     };
+
     /* StoreData(null); */
     RestoreAsync();
   }
-
   dispatch = (action) => {
     switch (action.type) {
-      case "WINDOW_HEIGHT":
-        console.log(action);
-        return this.setState((state) => ({
-          sessionArray: {
-            ...this.state.sessionArray,
-            windowHeight: action.windowHeight,
-          },
-        }));
+      case "SAVE_PERSONAL_DRIVER":
+        return this.setState(
+          (state) => ({
+            sessionArray: {
+              ...this.state.sessionArray,
+              personalDriver: action.personalDriver,
+            },
+          }),
+          () => StoreData("PersonalDriver", action.personalDriver)
+        );
       case "WINDOW_WIDTH":
         console.log(action);
         return this.setState((state) => ({

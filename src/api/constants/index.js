@@ -1,11 +1,10 @@
 import React, { lazy, Suspense, useState, Component, useCallback } from "react";
-import Loader from "../../components/Loader";
 import { Context, ContextConsumer } from "../../context/Context";
 import { useMutation, useQuery } from "@apollo/client";
 import { AirbnbRating, Button, Avatar, Image } from "react-native-elements";
-import Modal from "modal-enhanced-react-native-web";
 import { useFonts } from "expo-font";
 import * as WebBrowser from "expo-web-browser";
+import Modal from "modal-enhanced-react-native-web";
 import * as Location from "expo-location";
 import {
   widthPercentageToDP as wp,
@@ -19,7 +18,7 @@ import {
   createHttpLink,
 } from "@apollo/client";
 import { createDrawerNavigator } from "@react-navigation/drawer";
-
+import * as Notifications from "expo-notifications";
 import { createStackNavigator } from "@react-navigation/stack";
 import { RFValue, RFPercentage } from "react-native-responsive-fontsize";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -54,6 +53,9 @@ import {
   GET_MESSAGES,
   POST_MESSAGE,
   GET_NEW_DRIVER,
+  NEW_PERSONAL_DRIVER,
+  CURRENT_DRIVER,
+  CHECK_FOR_ACTIVE_REQUEST,
 } from "../../utilites/Queries";
 import { NavigationContainer } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/AntDesign";
@@ -76,21 +78,29 @@ import styles from "../../styles";
 import { StoreData, GetData } from "../../utilites/GFunctions";
 import { getTripInfo, getlocation } from "../../utilites/utilities";
 import { LoadingContent } from "../../components/Loader";
+import Loader from "../../components/Loader";
+import Constants from "expo-constants";
 import { StackActions } from "@react-navigation/native";
 export const InputField = lazy(() => import("../../components/TextInput"));
 export const Profile = lazy(() => import("../../screens/Profile"));
 export const Home = lazy(() => import("../../navigation/Home"));
 export const More = lazy(() => import("../../navigation/More"));
-export const Text = ({ style, children }) => {
+export const Text = ({ style, children, color }) => {
   return (
     <TEXT
-      style={[style, { fontFamily: "Gotham_Medium_Regular", color: "#E8ECFD" }]}
+      style={[
+        style,
+        {
+          fontFamily: "Gotham_Medium_Regular",
+          color: color ? color : "#E8ECFD",
+        },
+      ]}
     >
       {children}
     </TEXT>
   );
 };
-/*   */
+
 export const ClickedDriver = lazy(() =>
   import("../../components/ClickedDriver")
 );
@@ -107,7 +117,9 @@ export const MethodPicker = lazy(() => import("../../components/MethodPicker"));
 export const Settings = lazy(() => import("../../screens/Settings"));
 export const windowWidth = Dimensions.get("window").width;
 export const Header = lazy(() => import("../../components/Header"));
-
+export const MyPersonalDriver = lazy(() =>
+  import("../../components/MyPersonalDriver")
+);
 export const SettingsPresentational = lazy(() =>
   import("../../components/SettingsPresentational")
 );
@@ -172,7 +184,7 @@ export const PaymentSuccessful = lazy(() =>
   import("../../components/PaymentSuccessful")
 );
 export const CountdownTillDriverArrives = lazy(() =>
-  import("../../components/CountdownTillDriverArrives")
+  import("../../components/CountDownTillDriverArrives")
 );
 export const EmergencyButton = lazy(() =>
   import("../../components/EmergencyButton")
@@ -296,6 +308,9 @@ export {
   GET_MESSAGES,
   POST_MESSAGE,
   GET_NEW_DRIVER,
+  NEW_PERSONAL_DRIVER,
+  CURRENT_DRIVER,
+  CHECK_FOR_ACTIVE_REQUEST,
   LoadingContent,
   TouchableOpacity,
   WebBrowser,
@@ -336,4 +351,6 @@ export {
   Icon,
   MaterialIcons,
   TEXTINPUT,
+  Constants,
+  Notifications,
 };

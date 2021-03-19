@@ -10,7 +10,6 @@ export const linkingApp = {
       screens: {
         HomeStack: {
           path: "home",
-          initialRouteName: "Ride",
           screens: {
             Ride: { path: "Ride" },
             Cart: { path: "Cart" },
@@ -18,9 +17,7 @@ export const linkingApp = {
             ConfirmRide: { path: "ConfirmRide" },
             ProductItem: { path: "ProductItem" },
             TripPayment: { path: "TripPayment" },
-            AddName: { path: "AddName" },
-            AddEmail: { path: "AddEmail" },
-            TrackDriver: { path: "TrackDriver" },
+            TrackDriver: { path: "scscsc" },
           },
         },
         Profile: { path: "Profile" },

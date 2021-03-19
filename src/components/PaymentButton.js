@@ -33,8 +33,6 @@ const PaymentButton = ({
             paymentMethod: paymentMethod,
           },
         }),
-          /* context.dispatch({ type: "SAVE_ISPLAYING", isPlaying: true }),
-          context.dispatch({ type: "SAVE_ACTIVEREQUEST", activeRequest: true }), */
           stopPolling(),
           navigation.navigate("TrackDriver");
       }}

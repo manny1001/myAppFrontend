@@ -45,6 +45,7 @@ const ProfileStack = (props) => {
   const [workaddress, setworkaddress] = React.useState(
     data && data.currentUser.workaddress
   );
+  const [name, setusername] = React.useState(data && data.currentUser.name);
   const { loading, data, error } = useQuery(GET_PROFILE, {
     fetchPolicy: "network",
     onCompleted: () => {
@@ -55,8 +56,6 @@ const ProfileStack = (props) => {
     refetchQueries: [{ query: GET_PROFILE }],
     onCompleted: () => alert("Profile Succesfully Updated"),
   });
-
-  const [name, setusername] = React.useState(data && data.currentUser.name);
 
   if (loading)
     return (

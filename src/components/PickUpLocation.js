@@ -9,6 +9,7 @@ import {
   hp,
   GoogleAutoComplete,
   ContextConsumer,
+  styles,
 } from "../api/constants";
 
 const PickUpLocation = ({
@@ -29,9 +30,10 @@ const PickUpLocation = ({
               justifyContent: "center",
               flex: 1,
               alignSelf: "stretch",
+              padding: wp(5),
             }}
           >
-            <Text>Pickup</Text>
+            <Text style={styles.heading1}>Pickup</Text>
             <View
               style={{
                 alignSelf: "stretch",
@@ -70,92 +72,10 @@ const PickUpLocation = ({
                   getTripInfo={getTripInfo}
                 />
               )}
-
-              {/* {location === "" ? (
-                <View
-                  style={{
-                    justifyContent: "space-between",
-                  }}
-                >
-                   <Text style={{fontFamily: "Gotham_Medium_Regular",
- alignSelf: "center" }}>Getting Location</Text>
-                  <ActivityIndicator
-                    size="small"
-                    style={{ alignSelf: "center" }}
-                    color={"green"}
-                  />
-                </View>
-              ) : (
-                <Text>{location}</Text>
-              )} */}
-              {/* {isClicked === false ? (
-                <Text>{context.state.location}</Text>
-              ) : (
-                <GoogleAutoComplete
-                  placeholder={"where should we find you?"}
-                  setAddress={(val) => setCurrentLocation(val)}
-                  setSelected={(val) => {}}
-                  setisClicked={setisClicked}
-                  dispatchAddress={(data) => {
-                    context.dispatch({
-                      type: "SAVE_PICKUPLOCATION",
-                      payload: data,
-                    });
-                  }}
-                />
-              )} */}
-
-              {/* {isClicked === true ? (
-                <GoogleAutoComplete
-                  placeholder={"where should we find you?"}
-                  setAddress={(val) => setCurrentLocation(val)}
-                  setSelected={(val) => {}}
-                  setisClicked={setisClicked}
-                  dispatchAddress={(data) => {
-                    context.dispatch({
-                      type: "SAVE_PICKUPLOCATION",
-                      payload: data,
-                    });
-                  }}
-                />
-              ) : context.state.location === "" ? (
-                <View
-                  style={{
-                    justifyContent: "space-between",
-                  }}
-                >
-                   <Text style={{fontFamily: "Gotham_Medium_Regular",
- alignSelf: "center" }}>Getting Location</Text>
-                  <ActivityIndicator
-                    size="small"
-                    style={{ alignSelf: "center" }}
-                    color={"green"}
-                  />
-                </View>
-              ) : (
-                <Text
-                  numberOfLines={3}
-                  style={{
-                    alignSelf: "center",
-
-                    fontSize: RFValue(14),
-                  }}
-                >
-                  {location !== null ? location : context.state.location}
-                </Text>
-              )} */}
-
-              <TouchableOpacity onPress={() => setIsClicked()}>
-                <Text
-                  style={{
-                    padding: wp(2.5),
-                    textDecorationLine: "underline",
-                  }}
-                >
-                  Switch
-                </Text>
-              </TouchableOpacity>
             </View>
+            <TouchableOpacity onPress={() => setIsClicked()}>
+              <Text style={styles.switchButton}>Switch</Text>
+            </TouchableOpacity>
           </View>
         );
       }}

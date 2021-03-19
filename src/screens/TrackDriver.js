@@ -20,11 +20,11 @@ import {
 } from "../api/constants";
 
 const TrackDriver = ({ navigation, LiveTripDetails }) => {
-  const [RatingModalVIsibile, setRatingModalVIsibile] = useState(true);
+  const [RatingModalVIsibile, setRatingModalVIsibile] = useState(false);
   const [destinationArrived, setdestinationArrived] = React.useState(false);
   const [clickCount, setclickCount] = useState(null);
   const [sureModalVisible, setsureModalVisible] = React.useState(false);
-  const [driverArrived, setDriverArrived] = React.useState(true);
+  const [driverArrived, setDriverArrived] = React.useState(false);
   const [modalVisible, setmodalVisible] = React.useState(false);
   const [driverNotArrived, setdriverNotArrived] = React.useState(null);
   const [useruuid, setuseruuid] = React.useState(null);

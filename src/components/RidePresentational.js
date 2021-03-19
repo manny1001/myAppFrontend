@@ -9,6 +9,7 @@ import {
   TimeAndDistance,
   Urgency,
   StoreData,
+  GetData,
 } from "../api/constants/";
 
 const Confirmation = ({
@@ -32,6 +33,9 @@ const Confirmation = ({
   return (
     <ContextConsumer>
       {(context) => {
+        GetData("activeRequest").then((data) => {
+          console.log(typeof JSON.parse(data));
+        });
         return (
           <View style={styles.container}>
             <PickUpLocation
@@ -46,7 +50,6 @@ const Confirmation = ({
             {location !== null && destination !== null && (
               <TimeAndDistance time={time} distance={distance} />
             )}
-
             <Destination
               setsavedLocationVisible={() => setsavedLocationVisible(true)}
               DestinationSelected={DestinationSelected}

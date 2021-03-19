@@ -15,6 +15,7 @@ import {
   View,
   styles,
   Indicator,
+  CURRENT_DRIVER,
 } from "../api/constants";
 
 export default function (props) {
@@ -24,7 +25,9 @@ export default function (props) {
   const [location, setlocation] = React.useState("");
   const [destination, setdestination] = React.useState("");
   const [userName, setUserName] = useState("");
+  const [personalDriver, setPersonalDriver] = React.useState(null);
   const [newTripRequest, { called }] = useMutation(NEW_REQUEST);
+  const [driveruuid, setDriveruuid] = useState(null);
   const { data, loading: Loading } = useQuery(GET_PROFILE, {
     onCompleted: () => {
       StoreData("userID", data.currentUser._id);
@@ -35,7 +38,9 @@ export default function (props) {
     fetchPolicy: "network-only",
     notifyOnNetworkStatusChange: true,
   });
-
+  const { data: DATAS, loading, error: ERRORS } = useQuery(CURRENT_DRIVER, {
+    variables: { driveruuid: driveruuid },
+  });
   const { error, data: DATA, stopPolling } = useQuery(GET_DRIVERS, {
     fetchPolicy: "network-only",
     notifyOnNetworkStatusChange: true,
@@ -45,6 +50,10 @@ export default function (props) {
     GetData("location").then((location) => setlocation(location));
     GetData("destination").then((destination) => setdestination(destination));
     GetData("Urgency").then((urgency) => setUrgency(urgency));
+    /*    GetData("PersonalDriver").then((value) =>
+      setPersonalDriver(JSON.parse(value))
+    ); */
+    GetData("PersonalDriver").then((value) => setDriveruuid(value));
   });
   if (Loading) {
     return (
@@ -66,6 +75,11 @@ export default function (props) {
       DATA={DATA}
       called={called}
       urgency={urgency}
+      personalDriver={personalDriver}
+      setPersonalDriver={(val) => setPersonalDriver(val)}
+      driveruuid={driveruuid}
+      loading={loading}
+      DATAS={DATAS}
     />
   );
 }
