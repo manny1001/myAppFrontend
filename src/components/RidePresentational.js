@@ -30,12 +30,11 @@ const Confirmation = ({
   urgency,
   setUrgency,
 }) => {
+  console.log(currentLocation);
   return (
     <ContextConsumer>
       {(context) => {
-        GetData("activeRequest").then((data) => {
-          console.log(typeof JSON.parse(data));
-        });
+        GetData("activeRequest").then((data) => {});
         return (
           <View style={styles.container}>
             <PickUpLocation
