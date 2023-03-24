@@ -236,7 +236,8 @@ export const routeNameRef = React.createRef();
   uri: "https://agile-woodland-33090.herokuapp.com/",
 }); */
 const httpLink = createHttpLink({
-  uri: "http://192.168.8.100:22000/graphql",
+  uri: "http://10.10.4.142:22000/graphql",
+  credentials: 'include',
 });
 export const Stack = createStackNavigator();
 export const AppStack = createBottomTabNavigator();
@@ -263,7 +264,10 @@ import {
 export const client = new ApolloClient({
   link: authLink.concat(httpLink),
   cache: new InMemoryCache(),
-  credentials: "same-origin",
+  credentials: 'include',
+  fetchOptions: {
+    mode: "",
+  },
 });
 export {
   React,

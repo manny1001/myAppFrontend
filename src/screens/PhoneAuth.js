@@ -51,6 +51,7 @@ const PhoneAuth = ({ context }) => {
       <BigButton
         disabled={cellphone.length !== 10 || called === true ? true : false}
         onPress={() => {
+          debugger;
           StoreData("cellphone", cellphone),
             login({ variables: { cellphone, type: "user" } })
               .then(({ data }) => {
