@@ -236,7 +236,7 @@ export const routeNameRef = React.createRef();
   uri: "https://agile-woodland-33090.herokuapp.com/",
 }); */
 const httpLink = createHttpLink({
-  uri: "http://192.168.167.2:22000/graphql",
+  uri: "http://10.10.4.127:22000/graphql",
   credentials: 'include',
 });
 export const Stack = createStackNavigator();

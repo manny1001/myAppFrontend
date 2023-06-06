@@ -78,6 +78,7 @@ export default function (props) {
       fetchPolicy: "network-only",
     }
   );
+  console.log(DATA)
   const [
     createCheckout,
     { data: DATAS, loading: LOADINGS, error: ERRORS },

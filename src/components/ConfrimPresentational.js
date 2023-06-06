@@ -35,9 +35,8 @@ const ConfrimPresentational = ({
   loading,
   DATAS,
 }) => {
-  const [newPersonalDriver, { called: CALLED }] = useMutation(
-    NEW_PERSONAL_DRIVER
-  );
+  const [newPersonalDriver, { called: CALLED }] =
+    useMutation(NEW_PERSONAL_DRIVER);
   const [driverDistance, setDriverDistancce] = React.useState(500);
   const [clickedDriver, setClickedDriver] = React.useState(null);
   return (
@@ -209,8 +208,9 @@ const ConfrimPresentational = ({
                     uuid: data && data.currentUser.uuid,
                     name: data && data.currentUser.name,
                     cellphone: data && data.currentUser.cellphone,
-                    location: location,
-                    destination: destination,
+                    location:
+                      "0A 2nd Road, Halfway House Estate, Midrand, 1685, South Africa",
+                    destination: "Carlswald Midrand, South Africa",
                     uuidDriver: clickedDriver && clickedDriver.item.uuid,
                     urgency: urgency,
                   },
