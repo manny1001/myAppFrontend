@@ -50,39 +50,36 @@ export default function (props) {
   const [token, settoken] = useState(null);
   const [PayOrConfirm] = useMutation(PAYMENT_CONFIRMATION);
 
-  const { data: DATA, stopPolling, startPolling } = useQuery(
-    GET_DRIVER_RESPONSE,
-    {
-      variables: {
-        uuidUser: userUUID,
-        uuidTrip: uuidTrip,
-      },
-      pollInterval: 5000,
-      onCompleted: () => {
-        setRequestid(DATA.getDriverRequestResponse.id),
-          DATA.getDriverRequestResponse.driverduration &&
-            setdriverduration(DATA.getDriverRequestResponse.driverduration);
-        DATA.getDriverRequestResponse.drivername &&
-          setDriverName(DATA.getDriverRequestResponse.drivername);
-        DATA.getDriverRequestResponse.drivername &&
-          setDriverSurName(DATA.getDriverRequestResponse.driversurname);
-        DATA.getDriverRequestResponse.driverregistration &&
-          setdriverregistration(
-            DATA.getDriverRequestResponse.driverregistration
-          );
-        DATA.getDriverRequestResponse.model &&
-          setModel(DATA.getDriverRequestResponse.model);
-        requestID !== null && uuidTrip !== null && setStopQuery(true);
-      },
-      notifyOnNetworkStatusChange: true,
-      fetchPolicy: "network-only",
-    }
-  );
-  console.log(DATA)
-  const [
-    createCheckout,
-    { data: DATAS, loading: LOADINGS, error: ERRORS },
-  ] = useMutation(CREATE_CHECKOUT, {});
+  const {
+    data: DATA,
+    stopPolling,
+    startPolling,
+  } = useQuery(GET_DRIVER_RESPONSE, {
+    variables: {
+      uuidUser: userUUID,
+      uuidTrip: uuidTrip,
+    },
+    pollInterval: 5000,
+    onCompleted: () => {
+      setRequestid(DATA.getDriverRequestResponse.id),
+        DATA.getDriverRequestResponse.driverduration &&
+          setdriverduration(DATA.getDriverRequestResponse.driverduration);
+      DATA.getDriverRequestResponse.drivername &&
+        setDriverName(DATA.getDriverRequestResponse.drivername);
+      DATA.getDriverRequestResponse.drivername &&
+        setDriverSurName(DATA.getDriverRequestResponse.driversurname);
+      DATA.getDriverRequestResponse.driverregistration &&
+        setdriverregistration(DATA.getDriverRequestResponse.driverregistration);
+      DATA.getDriverRequestResponse.model &&
+        setModel(DATA.getDriverRequestResponse.model);
+      requestID !== null && uuidTrip !== null && setStopQuery(true);
+    },
+    notifyOnNetworkStatusChange: true,
+    fetchPolicy: "network-only",
+  });
+  console.log(DATA);
+  const [createCheckout, { data: DATAS, loading: LOADINGS, error: ERRORS }] =
+    useMutation(CREATE_CHECKOUT, {});
   const handleCardPayment = async () => {
     setpaymentMethod("Card");
     await createCheckout().then((checkout) => {
@@ -106,9 +103,9 @@ export default function (props) {
     }
   );
 
-  React.useEffect(() => {
+  React.useEffect(async () => {
     paymentMethod === "Card" && StartPolling(500);
-    AsyncStorage.multiGet([
+    await AsyncStorage.multiGet([
       "cellphone",
       "name",
       "location",

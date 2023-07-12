@@ -58,7 +58,7 @@ const TrackDriver = ({ navigation, LiveTripDetails }) => {
   React.useEffect(() => {
     GetData("useruuid").then((value) => setuseruuid(value));
     GetData("uuidTrip").then((value) => setuuidTrip(value));
-  });
+  }, []);
   if (
     data &&
     data.driversLocation &&

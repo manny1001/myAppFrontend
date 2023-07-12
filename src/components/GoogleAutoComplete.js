@@ -11,7 +11,7 @@ const GoogleAutoComplete = ({
 }) => {
   return (
     <GooglePlacesAutocomplete
-      keyboardShouldPersistTaps={true}
+      keyboardShouldPersistTaps={"always"}
       listViewDisplayed={false}
       fetchDetails={true}
       placeholder={placeholder}
@@ -32,8 +32,7 @@ const GoogleAutoComplete = ({
       }}
       requestUrl={{
         useOnPlatform: "web",
-        url:
-          "https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api",
+        url: "https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api",
       }}
       debounce={200}
       styles={{

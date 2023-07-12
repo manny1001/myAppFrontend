@@ -51,8 +51,8 @@ const App = () => {
 
   return (
     <NavigationContainer
-      /* ref={navigationRef} */
-      /* onReady={() => {
+      ref={navigationRef}
+      onReady={() => {
         routeNameRef.current = navigationRef.current.getCurrentRoute().name;
       }}
       onStateChange={() => {
@@ -62,9 +62,9 @@ const App = () => {
         if (previousRouteName !== currentRouteName) {
           console.log(currentRouteName);
         }
-              
+
         routeNameRef.current = currentRouteName;
-      }} */
+      }}
       linking={linkingApp}
     >
       <ApolloProvider client={client}>
