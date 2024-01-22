@@ -36,7 +36,7 @@ class Context extends Component {
     const RestoreAsync = async () => {
       try {
         const userToken = await AsyncStorage.getItem("accessToken");
-        console.log(userToken);
+        console.log('userToken',userToken);
         /*         setIsplaying(isPlaying); */
         /* context.dispatch({
         type: "SAVE_ISPLAYING",

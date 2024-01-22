@@ -35,7 +35,7 @@ const HomeStack = (props) => {
       >
         <Stack.Screen
           name="Ride"
-          component={() => <Ride {...props} />}
+          component={(props) => <Ride {...props} />}
           options={{ headerShown: false }}
         />
         <Stack.Screen
@@ -53,19 +53,19 @@ const HomeStack = (props) => {
           name="Payment"
           component={(props) => (
             <ContextConsumer>
-              {(context) => <Payment context={context} props={props} />}
+              {(context) => <Payment context={context} {...props} />}
             </ContextConsumer>
           )}
           options={{ headerShown: false }}
         />
         <Stack.Screen
           name="AddName"
-          component={AddName}
+          component={(props) => <AddName {...props} />}
           options={{ headerShown: false }}
         />
         <Stack.Screen
           name="TrackDriver"
-          component={TrackDriver}
+          component={(props) => <TrackDriver {...props} />}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>

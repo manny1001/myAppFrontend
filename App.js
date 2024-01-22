@@ -35,12 +35,15 @@ const App = () => {
   const [loaded] = useFonts({
     Gotham_Medium_Regular: require("./assets/fonts/Gotham_Medium_Regular.ttf"),
   });
+  React.useEffect(() => {
+    async function checkConnectivity() {
+      await NetInfo.addEventListener((state) => {
+        setIsConnected(state.isConnected);
+      });
+    }
+    checkConnectivity();
+  }, [isConnected]);
 
-  React.useEffect(async () => {
-    NetInfo.addEventListener((state) => {
-      setIsConnected(state.isConnected);
-    });
-  }, []);
   if (!loaded) return <Loader />;
   if (isConnected === false)
     return (
@@ -52,18 +55,18 @@ const App = () => {
   return (
     <NavigationContainer
       ref={navigationRef}
-      onReady={() => {
+      /* onReady={() => {
         routeNameRef.current = navigationRef.current.getCurrentRoute().name;
-      }}
+      }} */
       onStateChange={() => {
-        const previousRouteName = routeNameRef.current;
+        /* const previousRouteName = routeNameRef.current;
         const currentRouteName = navigationRef.current.getCurrentRoute().name;
 
         if (previousRouteName !== currentRouteName) {
-          console.log(currentRouteName);
+          console.log('currentRouteName',currentRouteName);
         }
 
-        routeNameRef.current = currentRouteName;
+        routeNameRef.current = currentRouteName; */
       }}
       linking={linkingApp}
     >
@@ -85,8 +88,6 @@ const App = () => {
                 </Stack.Navigator>
               ) : (
                 <Suspense fallback={Loader()}>
-                  <Header />
-
                   <AppStack.Navigator
                     tabBarOptions={{
                       keyboardHidesTabBar: true,

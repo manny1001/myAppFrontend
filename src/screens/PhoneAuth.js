@@ -46,6 +46,7 @@ const PhoneAuth = ({ context }) => {
         label="eg. 012 345 6789"
         text={cellphone}
         onChangeText={(text) => setcellphone(text)}
+        value={cellphone}
       />
 
       <BigButton

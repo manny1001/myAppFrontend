@@ -10,6 +10,8 @@ import {
   Urgency,
   StoreData,
   GetData,
+  Header,
+
 } from "../api/constants/";
 
 const Confirmation = ({
@@ -30,8 +32,8 @@ const Confirmation = ({
   urgency,
   setUrgency,
 }) => {
-  console.log(currentLocation);
-  console.log(destination);
+  /*  console.log(currentLocation);
+  console.log(destination); */
 
   return (
     <ContextConsumer>
@@ -39,6 +41,8 @@ const Confirmation = ({
         GetData("activeRequest").then((data) => {});
         return (
           <View style={styles.container}>
+            <Header />
+
             <PickUpLocation
               setIsClicked={() => setisClicked(!isClicked)}
               isClicked={isClicked}

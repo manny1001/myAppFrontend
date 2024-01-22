@@ -11,6 +11,7 @@ import {
   useMutation,
   GET_PROFILE,
   UPDATE_USERNAME,
+  StyleSheet,
 } from "../api/constants";
 
 const AddNames = (props) => {
@@ -32,11 +33,9 @@ const AddNames = (props) => {
           flex: 1,
         }}
       >
-        <Text
-          style={{ fontFamily: "Gotham_Medium_Regular", alignSelf: "center" }}
-        >
-          Please add a Username.
-        </Text>
+        <View style={styles.textStyle}>
+          <label style={styles.textStyle}>Please add a Username.</label>
+        </View>
         <TextInput
           style={{
             backgroundColor: "#f3f3f3",
@@ -44,6 +43,8 @@ const AddNames = (props) => {
             width: wp(80),
             height: hp(7),
             fontSize: RFPercentage(2),
+            borderColor: "#000000",
+            borderWidth: "2px",
           }}
           keyboardType={"default"}
           label={"Username"}
@@ -74,5 +75,10 @@ const AddNames = (props) => {
     </>
   );
 };
-
+const styles = StyleSheet.create({
+  textStyle: {
+    color: "#000",
+    alignSelf: "center",
+  },
+});
 export default AddNames;
