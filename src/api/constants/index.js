@@ -1,4 +1,4 @@
-import React, { lazy, Suspense, useState, Component, useCallback } from "react";
+import React, { lazy, Suspense, useState, Component, useCallback,useLazyQuery  } from "react";
 import { Context, ContextConsumer } from "../../context/Context";
 import { useMutation, useQuery } from "@apollo/client";
 import { AirbnbRating, Button, Avatar, Image } from "react-native-elements";
@@ -357,4 +357,5 @@ export {
   TEXTINPUT,
   Constants,
   Notifications,
+  useLazyQuery
 };

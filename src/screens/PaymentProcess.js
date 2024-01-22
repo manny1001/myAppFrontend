@@ -56,28 +56,35 @@ export default function (props) {
     startPolling,
   } = useQuery(GET_DRIVER_RESPONSE, {
     variables: {
-      uuidUser: userUUID,
-      uuidTrip: uuidTrip,
+      uuidUser: "770b54ed-d8ce-49f1-9b1e-5c6cd21ae0a5",
+      uuidTrip: "d7402dc9-8722-4f33-b2df-645b172a7c22",
     },
     pollInterval: 5000,
-    onCompleted: () => {
-      setRequestid(DATA.getDriverRequestResponse.id),
-        DATA.getDriverRequestResponse.driverduration &&
-          setdriverduration(DATA.getDriverRequestResponse.driverduration);
-      DATA.getDriverRequestResponse.drivername &&
-        setDriverName(DATA.getDriverRequestResponse.drivername);
-      DATA.getDriverRequestResponse.drivername &&
-        setDriverSurName(DATA.getDriverRequestResponse.driversurname);
-      DATA.getDriverRequestResponse.driverregistration &&
-        setdriverregistration(DATA.getDriverRequestResponse.driverregistration);
-      DATA.getDriverRequestResponse.model &&
-        setModel(DATA.getDriverRequestResponse.model);
+    onCompleted: (driverResponse) => {
+      console.log(driverResponse);
+      console.log("uuidUser", userUUID);
+      console.log("uuidTrip", uuidTrip);
+      console.log(DATA);
+      setRequestid(driverResponse.getDriverRequestResponse.id),
+        driverResponse.getDriverRequestResponse.driverduration &&
+          setdriverduration(
+            driverResponse.getDriverRequestResponse.driverduration
+          );
+      driverResponse.getDriverRequestResponse.drivername &&
+        setDriverName(driverResponse.getDriverRequestResponse.drivername);
+      driverResponse.getDriverRequestResponse.drivername &&
+        setDriverSurName(driverResponse.getDriverRequestResponse.driversurname);
+      driverResponse.getDriverRequestResponse.driverregistration &&
+        setdriverregistration(
+          driverResponse.getDriverRequestResponse.driverregistration
+        );
+      driverResponse.getDriverRequestResponse.model &&
+        setModel(driverResponse.getDriverRequestResponse.model);
       requestID !== null && uuidTrip !== null && setStopQuery(true);
     },
     notifyOnNetworkStatusChange: true,
     fetchPolicy: "network-only",
   });
-  console.log(DATA);
   const [createCheckout, { data: DATAS, loading: LOADINGS, error: ERRORS }] =
     useMutation(CREATE_CHECKOUT, {});
   const handleCardPayment = async () => {
@@ -103,8 +110,9 @@ export default function (props) {
     }
   );
 
-  React.useEffect(async () => {
+  /* React.useEffect(async () => {
     paymentMethod === "Card" && StartPolling(500);
+    console.log(paymentMethod);
     await AsyncStorage.multiGet([
       "cellphone",
       "name",
@@ -120,25 +128,25 @@ export default function (props) {
       setname(response[1][1]);
       setlocation(response[2][1]);
       settimeRequested(response[3][1]);
-      /* settotalAmount(response[4][1]); */
+      settotalAmount(response[4][1]);
       setUSERUUID(response[5][1]);
       setdestination(response[6][1]);
       settoken(response[7][1]);
       setuuidTrip(response[8][1]);
     });
-  }, [paymentMethod]);
-  React.useEffect(() => {
+  }, [paymentMethod]); */
+  /*  React.useEffect(() => {
     //CountDown timer for driver to respond
-    /* const Value = setTimeout(() => setTimeoutValue(timeOutValue - 1), 1000);
+    const Value = setTimeout(() => setTimeoutValue(timeOutValue - 1), 1000);
     if (timeOutValue === 0) {
       clearTimeout(Value);
       setStopQuery(true);
       props.context.dispatch({ type: "SAVE_DRIVERUUID", driveruuid: "" });
-    } */
+    }
 
     StopQuery === true && stopPolling();
     StopQuery === false && startPolling();
-  }, [StopQuery, timeOutValue]);
+  }, [StopQuery, timeOutValue]); */
   if (requestID === null) return <LoadingContent />;
   if (LOADINGS) return <LoadingContent />;
   if (paymentMethod === "Card") {

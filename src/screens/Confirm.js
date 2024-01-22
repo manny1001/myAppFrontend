@@ -16,55 +16,49 @@ import {
   styles,
   Indicator,
   CURRENT_DRIVER,
+  currentLocation,
+  destination,
 } from "../api/constants";
 
 export default function (props) {
+  console.log(props.currentLocation);
+  console.log(props.destination);
   const [distance, setDistance] = React.useState("");
   const [totalAmount, setTotalAmount] = React.useState(18000);
   const [urgency, setUrgency] = React.useState(null);
-  const [location, setlocation] = React.useState("");
-  const [destination, setdestination] = React.useState("");
+  const [currentLocation, setcurrentLocation] = React.useState(
+    props.currentLocation
+  );
+  const [destination, setdestination] = React.useState(props.destination);
   const [userName, SetUserName] = useState("");
   const [personalDriver, setPersonalDriver] = React.useState(null);
   const [newTripRequest, { called }] = useMutation(NEW_REQUEST);
   const [driveruuid, setDriveruuid] = useState(null);
-  const { data, loading: Loading } = useQuery(GET_PROFILE, {
-    
-    /* onCompleted: () => {
-      console.log("data", data);
+
+  const {
+    data,
+    loading: Loading,
+    error: profileerrors,
+  } = useQuery(GET_PROFILE, {
+    fetchPolicy: "network",
+    onCompleted: (profile) => {
+      console.log("profile", profile);
       console.log("Loading", Loading);
 
-      StoreData("userID", data.currentUser._id);
-      StoreData("useruuid", data.currentUser.uuid);
-      StoreData("name", data.currentUser.name);
-      SetUserName(data?.currentUser?.name);
-    }, */
+      StoreData("userID", profile.currentUser._id);
+      StoreData("useruuid", profile.currentUser.uuid);
+      StoreData("name", profile.currentUser.name);
+      SetUserName(profile.currentUser?.name);
+    },
   });
-  /* if (data != undefined) {
-    console.log("data", data);
-    console.log("Loading", Loading);
 
-    StoreData("userID", data.currentUser._id);
-    StoreData("useruuid", data.currentUser.uuid);
-    StoreData("name", data.currentUser.name);
-    SetUserName(data?.currentUser?.name);
-  } */
-  React.useEffect(() => {
-    async function getUser() {
-      StoreData("userID", data?.currentUser?._id);
-      StoreData("useruuid", data?.currentUser?.uuid);
-      StoreData("name", data?.currentUser?.name);
-      SetUserName(data?.currentUser?.name);
-    }
-    getUser();
-  }, [data]);
-  const {
+  /* const {
     data: DATAS,
     loading,
     error: ERRORS,
   } = useQuery(CURRENT_DRIVER, {
     variables: { driveruuid: driveruuid },
-  });
+  }); */
   const {
     error,
     data: DATA,
@@ -72,18 +66,7 @@ export default function (props) {
   } = useQuery(GET_DRIVERS, {
     fetchPolicy: "network-only",
     notifyOnNetworkStatusChange: true,
-    /*  pollInterval: 200, */
-  });
-  React.useEffect(() => {
-    GetData("location").then((location) => setlocation(location));
-    GetData("destination").then((destination) => setdestination(destination));
-    GetData("Urgency").then((urgency) => setUrgency(urgency));
-    GetData("PersonalDriver").then((value) => {
-      if (value) {
-        console.log(value);
-      }
-    });
-    /*   GetData("PersonalDriver").then((value) => setDriveruuid(value)); */
+    pollInterval: 200,
   });
   if (Loading) {
     return (
@@ -92,7 +75,7 @@ export default function (props) {
       </View>
     );
   }
-  if (userName === null || userName.length === 0) return <AddName />;
+  /* if (userName === null || userName.length === 0) return <AddName />; */
   return (
     <ConfrimPresentational
       {...props}
@@ -100,7 +83,7 @@ export default function (props) {
       newTripRequest={newTripRequest}
       stopPolling={() => stopPolling()}
       destination={destination}
-      location={location}
+      location={currentLocation}
       error={error}
       DATA={DATA}
       called={called}
@@ -108,8 +91,8 @@ export default function (props) {
       personalDriver={personalDriver}
       setPersonalDriver={(val) => setPersonalDriver(val)}
       driveruuid={driveruuid}
-      loading={loading}
-      DATAS={DATAS}
+      loading={Loading}
+      /* DATAS={DATAS} */
     />
   );
 }

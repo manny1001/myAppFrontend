@@ -23,6 +23,7 @@ const Confirmation = ({
   setCurrentLocationHandler,
   getTripInfo,
   destination,
+  location,
   time,
   distance,
   DestinationSelected,
@@ -32,8 +33,8 @@ const Confirmation = ({
   urgency,
   setUrgency,
 }) => {
-  /*  console.log(currentLocation);
-  console.log(destination); */
+   console.log(currentLocation);
+  console.log(destination);
 
   return (
     <ContextConsumer>

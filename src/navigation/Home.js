@@ -18,7 +18,12 @@ import { useFocusEffect } from "@react-navigation/native";
 const HomeStack = (props) => {
   const [activeRequest, setActiveRequest] = React.useState(null);
   const [loading, setLoading] = React.useState(true);
-
+  const [currentLocation, setcurrentLocation] = React.useState(
+    "0A 2nd Road, Halfway House Estate, Midrand, 1685, South Africa"
+  );
+  const [destination, setdestination] = React.useState(
+    "Carlswald Midrand, South Africa"
+  );
   React.useEffect(() => {
     setLoading(true);
     AsyncStorage.getItem("activeRequest").then((Active) =>
@@ -31,16 +36,29 @@ const HomeStack = (props) => {
   if (loading === false)
     return (
       <Stack.Navigator
-        initialRouteName={activeRequest === true ? "TrackDriver" : "Ride"}
+        /* initialRouteName={activeRequest === true ? "TrackDriver" : "Ride"} */
+        initialRouteName={"Payment"}
       >
         <Stack.Screen
           name="Ride"
-          component={(props) => <Ride {...props} />}
+          component={(props) => (
+            <Ride
+              {...props}
+              currentLocation={currentLocation}
+              destination={destination}
+            />
+          )}
           options={{ headerShown: false }}
         />
         <Stack.Screen
           name="Confirm"
-          component={(props) => <Confirm {...props} />}
+          component={(props) => (
+            <Confirm
+              {...props}
+              currentLocation={currentLocation}
+              destination={destination}
+            />
+          )}
           options={{ headerShown: false }}
         />
         <Stack.Screen
