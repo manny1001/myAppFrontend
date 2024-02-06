@@ -24,21 +24,30 @@ const HomeStack = (props) => {
   const [destination, setdestination] = React.useState(
     "Carlswald Midrand, South Africa"
   );
+  const [routeName, setrouteName] = React.useState(null);
   React.useEffect(() => {
     setLoading(true);
-    AsyncStorage.getItem("activeRequest").then((Active) =>
-      setActiveRequest(false)
-    );
+    const initialRouteName = () => {
+      AsyncStorage.getItem("activeRequest").then((Active) => {
+        var routeName = "";
+        setActiveRequest(Active);
+        if (Active == "true") {
+          routeName = "TrackDriver";
+        } else {
+          routeName = "Ride";
+        }
+        setrouteName(routeName);
+        return routeName;
+      });
+    };
+    initialRouteName();
     setLoading(false);
   }, []);
-  /*   console.log(activeRequest); */
+
   if (loading === true) return <p></p>;
   if (loading === false)
     return (
-      <Stack.Navigator
-        /* initialRouteName={activeRequest === true ? "TrackDriver" : "Ride"} */
-        initialRouteName={"Payment"}
-      >
+      <Stack.Navigator initialRouteName={routeName}>
         <Stack.Screen
           name="Ride"
           component={(props) => (

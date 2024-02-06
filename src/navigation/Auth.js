@@ -9,11 +9,11 @@ import {
 const AuthenticationStack = ({ context }) => {
   return (
     <AuthStackNavigator.Navigator>
-      <AuthStackNavigator.Screen
+      {/* <AuthStackNavigator.Screen
         name="AcceptTandCs"
         component={(props) => <AcceptTandCs {...props} context={context} />}
         options={{ header: () => <Header /> }}
-      />
+      /> */}
       <AuthStackNavigator.Screen
         name="PhoneAuth"
         component={(props) => <PhoneAuth {...props} context={context} />}

@@ -33,7 +33,8 @@ const TrackDriver = ({ navigation, LiveTripDetails }) => {
   const [timeRemaining, settimeRemaining] = React.useState(null);
   const [EmergencyAlert] = useMutation(ALERT_EMAIL);
   const { loading, error, data, stopPolling } = useQuery(DRIVERS_LIVELOCATION, {
-    onCompleted: () => {
+    onCompleted: (locationResponse) => {
+      console.log("locationResponse", locationResponse);
       if (
         data &&
         data.driversLocation[0] &&
@@ -51,7 +52,7 @@ const TrackDriver = ({ navigation, LiveTripDetails }) => {
       uuidUser: useruuid,
       uuidTrip: uuidTrip,
     },
-    pollInterval: 2800,
+    /* pollInterval: 2800, */
     notifyOnNetworkStatusChange: true,
     fetchPolicy: "network-only",
   });

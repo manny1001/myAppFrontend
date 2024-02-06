@@ -1,9 +1,14 @@
-import { React, wp, BigButton, Icon } from "../api/constants";
-
+import {
+  React,
+  wp,
+  BigButton,
+  Icon,
+  PAYMENT_CONFIRMATION,
+  useMutation,
+} from "../api/constants";
 const PaymentButton = ({
   navigation,
   uuidTrip,
-  PayOrConfirm,
   setselectedCard,
   paymentMethod,
   totalAmount,
@@ -11,6 +16,15 @@ const PaymentButton = ({
   context,
   stopPolling,
 }) => {
+  const [PayOrConfirm] = useMutation(PAYMENT_CONFIRMATION);
+  console.log(
+    "uuidTrip: ",
+    uuidTrip,
+    " totalAmount:",
+    totalAmount,
+    " paymentMethod: ",
+    paymentMethod
+  );
   return (
     <BigButton
       icon={<Icon name="Safety" size={24} color="black" />}
@@ -32,9 +46,10 @@ const PaymentButton = ({
             totalAmount: totalAmount,
             paymentMethod: paymentMethod,
           },
-        }),
-          stopPolling(),
+        }).then(() => {
           navigation.navigate("TrackDriver");
+          console.log("done");
+        });
       }}
     />
   );

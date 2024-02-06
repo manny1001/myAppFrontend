@@ -33,9 +33,6 @@ const Confirmation = ({
   urgency,
   setUrgency,
 }) => {
-   console.log(currentLocation);
-  console.log(destination);
-
   return (
     <ContextConsumer>
       {(context) => {

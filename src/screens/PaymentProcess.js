@@ -1,4 +1,3 @@
- 
 import {
   React,
   View,
@@ -50,7 +49,6 @@ export default function (props) {
 
   const [driverRegistration, setdriverregistration] = React.useState(null);
   const [token, settoken] = useState(null);
-  const [PayOrConfirm] = useMutation(PAYMENT_CONFIRMATION);
 
   const {
     data: DATA,
@@ -109,7 +107,7 @@ export default function (props) {
       skip: true,
       variables: {
         uuidTrip: "d7402dc9-8722-4f33-b2df-645b172a7c22",
-        totalAmount: "88000",
+        totalAmount: totalAmount,
         paymentMethod: "Card",
       },
       /* pollInterval: 10000, */
@@ -126,7 +124,7 @@ export default function (props) {
         "name",
         "location",
         "timeRequested",
-        "totalAmount",
+        /*  "totalAmount", */
         "useruuid",
         "destination",
         "accessToken",
@@ -137,16 +135,16 @@ export default function (props) {
         setname(response[1][1]);
         setlocation(response[2][1]);
         settimeRequested(response[3][1]);
-        settotalAmount(response[4][1]);
-        setUSERUUID(response[5][1]);
-        setdestination(response[6][1]);
-        settoken(response[7][1]);
-        setuuidTrip(response[8][1]);
+        /* settotalAmount(response[4][1]); */
+        setUSERUUID(response[4][1]);
+        setdestination(response[5][1]);
+        settoken(response[6][1]);
+        setuuidTrip(response[7][1]);
       });
     }
     checkConnectivity();
   }, [paymentMethod]);
-  if (paymentMethod === "Card") {
+ /*  if (paymentMethod === "Card") {
     if (data && data.getCardPaymentResult && data.getCardPaymentResult[0]) {
       if (
         data &&
@@ -167,7 +165,7 @@ export default function (props) {
         <LoadingContent />
       </View>
     );
-  }
+  } */
 
   return (
     <>
@@ -188,12 +186,12 @@ export default function (props) {
           )}
           {paymentMethod === "Cash" && (
             <View style={styles.container}>
-              <SwitchPaymentTypeButton
+              {/* <SwitchPaymentTypeButton
                 text="card"
                 onPress={() => {
                   setpaymentMethod("Card"), setselectedValue("Card");
                 }}
-              />
+              /> */}
               <CashSelectedText text="You have chosen to pay cash, payment is due upon arrival." />
               <TripDetails
                 name={name}
@@ -212,7 +210,6 @@ export default function (props) {
               <PaymentButton
                 context={props.context}
                 navigation={props.navigation}
-                PayOrConfirm={PayOrConfirm}
                 selectedValue={selectedValue}
                 setselectedCard={setselectedCard}
                 paymentMethod={paymentMethod}
