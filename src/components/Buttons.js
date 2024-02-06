@@ -31,10 +31,10 @@ const BigButton = ({
       activeOpacity={activeOpacity}
       onPress={onPress}
       style={{
-        shadowColor: "rgba(0,0,0, .4)", // IOS
-        shadowOffset: { height: 3, width: 3 }, // IOS
-        shadowOpacity: 0.25, // IOS
-        shadowRadius: 1, //IOS
+        shadowColor: "rgba(0,0,0, .4)", 
+        shadowOffset: { height: 3, width: 3 }, 
+        shadowOpacity: 0.25, 
+        shadowRadius: 1, 
         backgroundColor: "#4c09b7",
         height: hp(7),
         justifyContent: "center",

@@ -1,3 +1,4 @@
+ 
 import {
   React,
   View,
@@ -23,6 +24,7 @@ import {
   PaymentSuccessful,
   useState,
   SelectPaymentMethod,
+  navigation,
 } from "../api/constants/";
 
 export default function (props) {
@@ -59,28 +61,34 @@ export default function (props) {
       uuidUser: "770b54ed-d8ce-49f1-9b1e-5c6cd21ae0a5",
       uuidTrip: "d7402dc9-8722-4f33-b2df-645b172a7c22",
     },
-    pollInterval: 5000,
+    /* pollInterval: 5000, */
     onCompleted: (driverResponse) => {
       console.log(driverResponse);
-      console.log("uuidUser", userUUID);
-      console.log("uuidTrip", uuidTrip);
-      console.log(DATA);
-      setRequestid(driverResponse.getDriverRequestResponse.id),
-        driverResponse.getDriverRequestResponse.driverduration &&
-          setdriverduration(
-            driverResponse.getDriverRequestResponse.driverduration
+      if (driverResponse.getDriverRequestResponse != null) {
+        setRequestid(driverResponse.getDriverRequestResponse.id),
+          driverResponse.getDriverRequestResponse.driverduration &&
+            setdriverduration(
+              driverResponse.getDriverRequestResponse.driverduration
+            );
+        driverResponse.getDriverRequestResponse.drivername &&
+          setDriverName(driverResponse.getDriverRequestResponse.drivername);
+        driverResponse.getDriverRequestResponse.drivername &&
+          setDriverSurName(
+            driverResponse.getDriverRequestResponse.driversurname
           );
-      driverResponse.getDriverRequestResponse.drivername &&
-        setDriverName(driverResponse.getDriverRequestResponse.drivername);
-      driverResponse.getDriverRequestResponse.drivername &&
-        setDriverSurName(driverResponse.getDriverRequestResponse.driversurname);
-      driverResponse.getDriverRequestResponse.driverregistration &&
-        setdriverregistration(
-          driverResponse.getDriverRequestResponse.driverregistration
-        );
-      driverResponse.getDriverRequestResponse.model &&
-        setModel(driverResponse.getDriverRequestResponse.model);
-      requestID !== null && uuidTrip !== null && setStopQuery(true);
+        driverResponse.getDriverRequestResponse.driverregistration &&
+          setdriverregistration(
+            driverResponse.getDriverRequestResponse.driverregistration
+          );
+        driverResponse.getDriverRequestResponse.model &&
+          setModel(driverResponse.getDriverRequestResponse.model);
+        requestID !== null && uuidTrip !== null && setStopQuery(true);
+      } else {
+        const history = useHistory();
+        console.log(history);
+
+        //navigate back to previous page if no driver response has been made
+      }
     },
     notifyOnNetworkStatusChange: true,
     fetchPolicy: "network-only",
@@ -100,55 +108,44 @@ export default function (props) {
     {
       skip: true,
       variables: {
-        uuidTrip: "d80602cd-87fc-40d6-aca7-25fe02388107",
+        uuidTrip: "d7402dc9-8722-4f33-b2df-645b172a7c22",
         totalAmount: "88000",
         paymentMethod: "Card",
       },
-      pollInterval: 500,
+      /* pollInterval: 10000, */
       notifyOnNetworkStatusChange: true,
       fetchPolicy: "network-only",
     }
   );
 
-  /* React.useEffect(async () => {
-    paymentMethod === "Card" && StartPolling(500);
-    console.log(paymentMethod);
-    await AsyncStorage.multiGet([
-      "cellphone",
-      "name",
-      "location",
-      "timeRequested",
-      "totalAmount",
-      "useruuid",
-      "destination",
-      "accessToken",
-      "uuidTrip",
-    ]).then((response) => {
-      setclientCellNumber(response[0][1]);
-      setname(response[1][1]);
-      setlocation(response[2][1]);
-      settimeRequested(response[3][1]);
-      settotalAmount(response[4][1]);
-      setUSERUUID(response[5][1]);
-      setdestination(response[6][1]);
-      settoken(response[7][1]);
-      setuuidTrip(response[8][1]);
-    });
-  }, [paymentMethod]); */
-  /*  React.useEffect(() => {
-    //CountDown timer for driver to respond
-    const Value = setTimeout(() => setTimeoutValue(timeOutValue - 1), 1000);
-    if (timeOutValue === 0) {
-      clearTimeout(Value);
-      setStopQuery(true);
-      props.context.dispatch({ type: "SAVE_DRIVERUUID", driveruuid: "" });
+  React.useEffect(() => {
+    async function checkConnectivity() {
+      paymentMethod === "Card" && StartPolling(10000);
+      await AsyncStorage.multiGet([
+        "cellphone",
+        "name",
+        "location",
+        "timeRequested",
+        "totalAmount",
+        "useruuid",
+        "destination",
+        "accessToken",
+        "uuidTrip",
+      ]).then((response) => {
+        console.log(response);
+        setclientCellNumber(response[0][1]);
+        setname(response[1][1]);
+        setlocation(response[2][1]);
+        settimeRequested(response[3][1]);
+        settotalAmount(response[4][1]);
+        setUSERUUID(response[5][1]);
+        setdestination(response[6][1]);
+        settoken(response[7][1]);
+        setuuidTrip(response[8][1]);
+      });
     }
-
-    StopQuery === true && stopPolling();
-    StopQuery === false && startPolling();
-  }, [StopQuery, timeOutValue]); */
-  if (requestID === null) return <LoadingContent />;
-  if (LOADINGS) return <LoadingContent />;
+    checkConnectivity();
+  }, [paymentMethod]);
   if (paymentMethod === "Card") {
     if (data && data.getCardPaymentResult && data.getCardPaymentResult[0]) {
       if (
@@ -162,7 +159,7 @@ export default function (props) {
     return (
       <View style={styles.container}>
         <SwitchPaymentTypeButton
-          text={"cash"}
+          text="cash"
           onPress={() => {
             setpaymentMethod("Cash"), setselectedValue("Cash");
           }}
@@ -181,7 +178,6 @@ export default function (props) {
         />
       ) : (
         <View style={styles.container}>
-          {/*Select you payment method */}
           {selectedValue === "Select" && (
             <SelectPaymentMethod
               onCardPress={() => handleCardPayment()}
@@ -190,52 +186,43 @@ export default function (props) {
               }}
             />
           )}
-          {/* Payment method CASH*/}
           {paymentMethod === "Cash" && (
-            <>
+            <View style={styles.container}>
               <SwitchPaymentTypeButton
-                text={"card"}
+                text="card"
                 onPress={() => {
                   setpaymentMethod("Card"), setselectedValue("Card");
                 }}
               />
-              <CashSelectedText
-                text={
-                  "You have chosen to pay cash, payment is due upon arrival."
-                }
-              />
+              <CashSelectedText text="You have chosen to pay cash, payment is due upon arrival." />
               <TripDetails
+                name={name}
+                clientLastName={""}
+                cellphone={cellphone}
+                location={location}
                 destination={destination}
                 driverduration={driverduration}
                 driverName={driverName}
                 driverSurName={driverSurname}
                 model={model}
                 registration={driverRegistration}
-                selectedValue={selectedValue}
-                name={name}
-                clientLastName={""}
-                cellphone={cellphone}
-                location={location}
                 timeRequested={timeRequested}
+                selectedValue={selectedValue}
               />
-            </>
+              <PaymentButton
+                context={props.context}
+                navigation={props.navigation}
+                PayOrConfirm={PayOrConfirm}
+                selectedValue={selectedValue}
+                setselectedCard={setselectedCard}
+                paymentMethod={paymentMethod}
+                totalAmount={totalAmount}
+                uuidTrip={uuidTrip && uuidTrip}
+                stopPolling={() => stopPolling()}
+              />
+            </View>
           )}
 
-          {/* Show button for payment method CASH or CARD*/}
-          {paymentMethod && selectedValue !== "Select" && (
-            <PaymentButton
-              context={props.props.context}
-              navigation={props.props.navigation}
-              PayOrConfirm={PayOrConfirm}
-              selectedValue={selectedValue}
-              setselectedCard={setselectedCard}
-              paymentMethod={paymentMethod}
-              totalAmount={totalAmount}
-              uuidTrip={uuidTrip && uuidTrip}
-              stopPolling={() => stopPolling()}
-            />
-          )}
-          {/*       Cancel selected Card */}
           {paymentMethod === "Card" && cardselected === true && (
             <CancelSelectedCard
               onPress={() => {

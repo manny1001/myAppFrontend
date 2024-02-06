@@ -5,11 +5,12 @@ import {
   wp,
   hp,
   RFValue,
+  View
 } from "../api/constants";
 
 const SelectedPaymentMethod = ({ onCardPress, onCashPress }) => {
   return (
-    <>
+    <View>
       <TouchableOpacity
         onPress={onCardPress}
         style={{
@@ -42,7 +43,7 @@ const SelectedPaymentMethod = ({ onCardPress, onCashPress }) => {
           Cash
         </Text>
       </TouchableOpacity>
-    </>
+    </View>
   );
 };
 

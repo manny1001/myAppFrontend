@@ -2,8 +2,7 @@ import { React, Location, StackActions, StartRide } from "../api/constants";
 /* import { getTripInfo, getlocation } from "../../src/utilites/utilities"; */
 
 export default function (props) {
-  console.log(props.currentLocation);
-  console.log(props.destination);
+ 
 
   const { navigation } = props;
   const pushAction = StackActions.push("Confirm");

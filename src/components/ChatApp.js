@@ -57,7 +57,7 @@ function Chat({ userUUID, driverUUID, uuidTrip }) {
 
   return (
     <GiftedChat
-      keyboardShouldPersistTaps={true}
+      keyboardShouldPersistTaps='always'
       onLoadEarlier={() => {
         <ActivityIndicator />;
       }}

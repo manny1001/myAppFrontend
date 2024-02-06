@@ -1,5 +1,5 @@
 //import liraries
-import { React, Text, RFValue } from "../api/constants";
+import { React, Text, View } from "../api/constants";
 
 const TripDetails = ({
   name,
@@ -14,8 +14,21 @@ const TripDetails = ({
   registration,
   timeRequested,
 }) => {
+  console.log(
+    name,
+    clientLastName,
+    cellphone,
+    location,
+    destination,
+    driverduration,
+    driverName,
+    driverSurName,
+    model,
+    registration,
+    timeRequested
+  );
   return (
-    <>
+    <View>
       <Text style={{}}>Details</Text>
       <Text>
         {name} {clientLastName}
@@ -30,7 +43,7 @@ const TripDetails = ({
       <Text>{registration}</Text>
       <Text>{timeRequested}</Text>
       <Text>{cellphone}</Text>
-    </>
+    </View>
   );
 };
 
