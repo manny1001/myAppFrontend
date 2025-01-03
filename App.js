@@ -35,7 +35,7 @@ const App = () => {
   const [loaded] = useFonts({
     Gotham_Medium_Regular: require("./assets/fonts/Gotham_Medium_Regular.ttf"),
   });
-  React.useEffect(() => {
+  /* React.useEffect(() => {
     async function checkConnectivity() {
       await NetInfo.addEventListener((state) => {
         setIsConnected(state.isConnected);
@@ -50,7 +50,7 @@ const App = () => {
       <Suspense fallback={Loader()}>
         <CheckDataConnectionModal isConnected={isConnected} />
       </Suspense>
-    );
+    ); */
 
   return (
     <NavigationContainer
