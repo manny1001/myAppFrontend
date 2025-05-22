@@ -30,7 +30,7 @@ const PhoneAuth = ({ context }) => {
         console.log(json);
       });
   } */
-  const [cellphone, setcellphone] = React.useState("0682621503");
+  const [cellphone, setcellphone] = React.useState("");
   const [login, { loading, error, called }] = useMutation(USER_LOGIN);
   const [visibleModal, setvisibleModal] = React.useState(false);
   if (loading) return <Loader />;
